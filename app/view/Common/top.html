@@ -323,13 +323,13 @@
                     <li class="openable bg-palette2" id="tax-nav-monitor">
                         <a href="javascript:;">
                             <span class="menu-content block">
-                                <span class="menu-icon"><i class="block fa fa-line-chart fa-lg"></i></span>
+                                <span class="menu-icon"><i class="fa fa-comments fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">实时舆情</span>
                                 <span class="submenu-icon"></span>
                             </span>
                             <span class="menu-content-hover block">Data</span>
                         </a>
-                        <ul class="submenu bg-palette4">
+                        <ul class="submenu bg-palette2">
                             {if condition="authority('DataMonitorInfo')"}
                             <li id="tax-nav-monitor-sub1">
                                 <a href="__PRO_PATH__/DataMonitor/info">
@@ -346,16 +346,16 @@
                     {/if}
 
                     {if condition="authority('DataWarn')"}
-                    <li class="openable bg-palette1" id="tax-nav-data-warn">
+                    <li class="openable bg-palette3" id="tax-nav-data-warn">
                         <a href="javascript:;">
                             <span class="menu-content block">
-                                <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
+                                <span class="menu-icon"><i class="fa fa-bell fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情预警</span>
                                 <span class="submenu-icon"></span>
                             </span>
-                            <span class="menu-content-hover block">Analysis</span>
+                            <span class="menu-content-hover block">Warn</span>
                         </a>
-                        <ul class="submenu bg-palette1">
+                        <ul class="submenu bg-palette3">
                             {if condition="authority('DataWarnInfo')"}
                             <li id="tax-nav-data-warn-sub1">
                                 <a href="__PRO_PATH__/DataMonitor/warn">
@@ -375,16 +375,16 @@
                     {/if}
 
                     {if condition="authority('DataAnalysis')"}
-                    <li class="openable bg-palette1" id="tax-nav-data-analysis">
+                    <li class="openable bg-palette4" id="tax-nav-data-analysis">
                         <a href="javascript:;">
                             <span class="menu-content block">
-                                <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
+                                <span class="menu-icon"><i class="fa fa-line-chart fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情分析</span>
                                 <span class="submenu-icon"></span>
                             </span>
                             <span class="menu-content-hover block">Analysis</span>
                         </a>
-                        <ul class="submenu bg-palette1">
+                        <ul class="submenu bg-palette4">
                             {if condition="authority('DataAnalysisTrend')"}
                             <li id="tax-nav-data-analysis-sub1">
                                 <a href="__PRO_PATH__/DataAnalysis/trend">
@@ -439,8 +439,8 @@
                     {/if}
 
                     {if condition="authority('DataReport')"}
-                    <li class="openable bg-palette3" id="tax-nav-data-report">
-                        <a href="javascript:;">
+                    <li class="bg-palette1" id="tax-nav-data-report">
+                        <a href="__PRO_PATH__/DataReport/index">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情报告</span>
@@ -451,7 +451,7 @@
                     {/if}
 
                     {if condition="authority('Task')"}
-                    <li class="openable bg-palette3" id="tax-nav-task">
+                    <li class="openable bg-palette2" id="tax-nav-task">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-cloud fa-lg"></i></span>
@@ -460,7 +460,7 @@
                             </span>
                             <span class="menu-content-hover block">Task</span>
                         </a>
-                        <ul class="submenu bg-palette4">
+                        <ul class="submenu bg-palette2">
                             {if condition="authority('TaskInfo')"}
                             <li id="tax-nav-task-sub1">
                                 <a href="__PRO_PATH__/Task/index">
@@ -479,7 +479,7 @@
                     </li>
                     {/if}
 
-                    <li class="openable bg-palette4" id="tax-nav-warehouse">
+                    <li class="openable bg-palette3" id="tax-nav-warehouse">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-bank fa-lg"></i></span>
@@ -488,7 +488,7 @@
                             </span>
                             <span class="menu-content-hover block">Warehouse</span>
                         </a>
-                        <ul class="submenu bg-palette4">
+                        <ul class="submenu bg-palette3">
                             {if condition="authority('Theme')"}
                             <li id="tax-nav-warehouse-sub2">
                                 <a href="__PRO_PATH__/Theme/index">
@@ -502,8 +502,9 @@
                             {/if}
                         </ul>
                     </li>
+
                     {if condition="authority('DataProcess')"}
-                    <li class="openable bg-palette1" id="tax-nav-data-process">
+                    <li class="openable bg-palette4" id="tax-nav-data-process">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
@@ -521,6 +522,56 @@
                             <li id="tax-nav-data-process-sub2">
                                 <a href="__PRO_PATH__/DataProcess/update_backup">
                                     <span class="submenu-label">更新备份</span>
+                                </a>
+                            </li>
+                            {/if}
+                        </ul>
+                    </li>
+                    {/if}
+
+                    {if condition="authority('Inform')"}
+                    <li class="bg-palette1" id="tax-nav-inform">
+                        <a href="__PRO_PATH__/Inform/index">
+                            <span class="menu-content block">
+                                <span class="menu-icon"><i class="fa fa-envelope fa-lg"></i></span>
+								<span class="text m-left-sm">通知公告</span>
+                            </span>
+                            <span class="menu-content-hover block">Inform</span>
+                        </a>
+                    </li>
+                    {/if}
+
+                    {if condition="authority('OperationLog')"}
+                    <li class="bg-palette2" id="tax-nav-log">
+                        <a href="__PRO_PATH__/OperationLog/index">
+                            <span class="menu-content block">
+                                <span class="menu-icon"><i class="fa fa-bookmark-o fa-lg"></i></span>
+								<span class="text m-left-sm">操作日志</span>
+                            </span>
+                            <span class="menu-content-hover block">Log</span>
+                        </a>
+                    </li>
+                    {/if}
+
+                    {if condition="authority('Account')"}
+                    <li class="openable bg-palette3" id="tax-nav-account">
+                        <a href="javascript:;">
+                            <span class="menu-content block">
+                                <span class="menu-icon"><i class="fa fa-user fa-lg"></i></span>
+								<span class="text m-left-sm">账户信息</span>
+                                <span class="submenu-icon"></span>
+                            </span>
+                            <span class="menu-content-hover block">Account</span>
+                        </a>
+                        <ul class="submenu bg-palette3">
+                            {if condition="authority('ChangePwd')"}
+                            <li id="tax-nav-account-sub1"><a href="__PRO_PATH__/UserAdmin/changePwd"><span
+                                    class="submenu-label">修改密码</span></a></li>
+                            {/if}
+                            {if condition="authority('AccountEdit')"}
+                            <li id="tax-nav-account-sub2">
+                                <a href="__PRO_PATH__/UserAdmin/editInfo">
+                                    <span class="submenu-label">编辑信息</span>
                                 </a>
                             </li>
                             {/if}
