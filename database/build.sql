@@ -25,6 +25,7 @@ CREATE DATABASE if NOT EXISTS `vox`;
 
 USE `vox`;
 
+
 # Dump of table vox_theme_1
 # ------------------------------------------------------------
 
@@ -179,14 +180,15 @@ CREATE TABLE `vox_website` (
 
 
 
-# Dump of table vox_log
+# Dump of table vox_operationlog
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `vox_log`;
+DROP TABLE IF EXISTS `vox_operationlog`;
 
-CREATE TABLE `vox_log` (
+CREATE TABLE `vox_operationlog` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` VARCHAR(100) DEFAULT NULL COMMENT '名称',
+  `IP` VARCHAR(20) DEFAULT NULL COMMENT 'IP地址',
   `action_id` INT DEFAULT NULL COMMENT '外键，操作对象',
   `actiontime` INT DEFAULT NULL COMMENT '操作时间',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
@@ -199,6 +201,7 @@ CREATE TABLE `vox_log` (
 
 
 # Dump of table vox_data
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `vox_data`;
 
@@ -209,17 +212,22 @@ CREATE TABLE `vox_data` (
   `task_id` INT DEFAULT NULL COMMENT '任务编号',
   `title` varchar(100) COMMENT '标题',
   `content` text COMMENT '内容',
-  `event` TEXT DEFAULT NULL COMMENT '事件',
-  `website` VARCHAR(100) DEFAULT NULL COMMENT '网址',
-  `snapshoot` VARCHAR(100) DEFAULT NULL COMMENT '快照',
-  `time` INT DEFAULT NULL COMMENT '时间',
+  `source` VARCHAR(100) DEFAULT NULL COMMENT '来源',
+  `media_type` VARCHAR(100) DEFAULT NULL COMMENT '媒体类型',
+  `nature` VARCHAR(100) DEFAULT NULL COMMENT '舆情属性',
+  `url` VARCHAR(100) DEFAULT NULL COMMENT '网址',
+  `relevance` VARCHAR(100) DEFAULT NULL COMMENT '关联度',
+  `time` INT DEFAULT NULL COMMENT '发表时间',
+  `similar_num` INT DEFAULT NULL COMMENT '相似文章数',
+  `is_collect` TINYINT DEFAULT NULL COMMENT '是否收藏：1->是，2->否',
+  `is_warn` TINYINT DEFAULT NULL COMMENT '是否预警：1->是，2->否',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   FOREIGN KEY (theme_3_id) REFERENCES vox_theme_3(id),
   FOREIGN KEY (websitetype_id) REFERENCES vox_website_type(id),
-  FOREIGN KEY (task_id) REFERENCES vox_task(id)
+   FOREIGN KEY (task_id) REFERENCES vox_task(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -267,6 +275,7 @@ DROP TABLE IF EXISTS `vox_task`;
 
 CREATE TABLE `vox_task` (
    `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `name` VARCHAR(20) DEFAULT NULL COMMENT '名称',
     `loop` INT DEFAULT NULL COMMENT '循环周期',
    `begintime` INT DEFAULT NULL COMMENT '开始时间',
    `endtime` INT DEFAULT NULL COMMENT '结束时间',
