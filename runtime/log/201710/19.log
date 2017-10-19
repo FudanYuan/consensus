@@ -1,0 +1,127 @@
+[ 2017-10-19T21:26:59+08:00 ] 127.0.0.1 127.0.0.1 GET /
+[ log ] consensus.com/ [运行时间：0.075854s][吞吐率：13.18req/s] [内存消耗：2,726.94kb] [文件加载：49]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => '',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'consensus.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3236.0 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,ja;q=0.6',
+  'cookie' => 'PHPSESSID=h9m31a069uii7hsor9fo5buik5; thinkphp_show_page_trace=0|0; think_var=zh',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+	 * 首页
+	 * @return \think\response\View
+	 */
+Method [ <user> public method index ] {
+  @@ /Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/controller/Index.php 17 - 50
+}
+
+[ info ] [ VIEW ] /Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Index/index.html [ array (
+  0 => 'count',
+  1 => 'task',
+  2 => 'theme_company',
+  3 => 'news',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => '/Applications/XAMPP/xamppfiles/htdocs/git_consensus/runtime/log/',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000258s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_company` [ RunTime:0.003018s ]
+[ sql ] [ SQL ] SELECT count(id) as c_count FROM `tax_company` WHERE  (  status <> 2 )  [ RunTime:0.001923s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.001820s ]
+[ sql ] [ SQL ] SELECT count(id) as t3_count FROM `tax_theme_3` WHERE  (  status <> 2 )  [ RunTime:0.000361s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_data` [ RunTime:0.002165s ]
+[ sql ] [ SQL ] SELECT count(id) as data FROM `tax_data` WHERE  (  status <> 2 )  [ RunTime:0.001592s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_website` [ RunTime:0.001674s ]
+[ sql ] [ SQL ] SELECT count(id) as url FROM `tax_website`  [ RunTime:0.000142s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_task` [ RunTime:0.001877s ]
+[ sql ] [ SQL ] SELECT count(id) as task FROM `tax_task`  [ RunTime:0.000144s ]
+[ sql ] [ SQL ] SELECT count(id) as t_num FROM `tax_data` WHERE  (  status <> 2 )  [ RunTime:0.001716s ]
+[ sql ] [ SQL ] SELECT count(id) as lw_num FROM `tax_data` WHERE  (  status <> 2 )  AND `createtime` BETWEEN 1507478400 AND 1508083200  [ RunTime:0.001835s ]
+[ sql ] [ SQL ] SELECT count(id) as tw_num FROM `tax_data` WHERE  (  status <> 2 )  AND `createtime` >  1508083200  [ RunTime:0.002174s ]
+[ sql ] [ SQL ] SELECT count(id) as ty_num FROM `tax_data` WHERE  (  status <> 2 )  AND `createtime` >  1483200000  [ RunTime:0.001453s ]
+[ sql ] [ SQL ] SELECT count(id) as t_num FROM `tax_website`  [ RunTime:0.000200s ]
+[ sql ] [ SQL ] SELECT count(id) as lw_num FROM `tax_website` WHERE  `createtime` BETWEEN 1507478400 AND 1508083200  [ RunTime:0.000206s ]
+[ sql ] [ SQL ] SELECT count(id) as tw_num FROM `tax_website` WHERE  `createtime` >  1508083200  [ RunTime:0.000149s ]
+[ sql ] [ SQL ] SELECT count(id) as ty_num FROM `tax_website` WHERE  `createtime` >  1483200000  [ RunTime:0.000146s ]
+[ sql ] [ SQL ] SELECT count(id) as tm_num FROM `tax_website` WHERE  `createtime` >  1506787200  [ RunTime:0.000163s ]
+[ sql ] [ SQL ] SELECT count(id) as t_num FROM `tax_theme_3` WHERE  (  status <> 2 )  [ RunTime:0.000188s ]
+[ sql ] [ SQL ] SELECT count(id) as lw_num FROM `tax_theme_3` WHERE  `createtime` BETWEEN 1507478400 AND 1508083200  AND (  status <> 2 )  [ RunTime:0.000168s ]
+[ sql ] [ SQL ] SELECT count(id) as tw_num FROM `tax_theme_3` WHERE  `createtime` >  1508083200  AND (  status <> 2 )  [ RunTime:0.000155s ]
+[ sql ] [ SQL ] SELECT count(id) as ty_num FROM `tax_theme_3` WHERE  (  status <> 2 )  AND `createtime` >  1483200000  [ RunTime:0.000203s ]
+[ sql ] [ SQL ] SELECT count(id) as tm_num FROM `tax_theme_3` WHERE  (  status <> 2 )  AND `createtime` >  1506787200  [ RunTime:0.000174s ]
+[ sql ] [ SQL ] SELECT count(id) as t_num FROM `tax_company` WHERE  (  status <> 2 )  [ RunTime:0.001928s ]
+[ sql ] [ SQL ] SELECT count(id) as lw_num FROM `tax_company` WHERE  (  status <> 2 )  AND `createtime` BETWEEN 1507478400 AND 1508083200  [ RunTime:0.001932s ]
+[ sql ] [ SQL ] SELECT count(id) as tw_num FROM `tax_company` WHERE  (  status <> 2 )  AND `createtime` >  1508083200  [ RunTime:0.001878s ]
+[ sql ] [ SQL ] SELECT count(id) as ty_num FROM `tax_company` WHERE  (  status <> 2 )  AND `createtime` >  1483200000  [ RunTime:0.002195s ]
+[ sql ] [ SQL ] SELECT count(id) as tm_num FROM `tax_company` WHERE  (  status <> 2 )  AND `createtime` >  1506787200  [ RunTime:0.002606s ]
+[ sql ] [ SQL ] SELECT count(id) as com_num FROM `tax_task` WHERE  (  taskstatus = 2 )  [ RunTime:0.000207s ]
+[ sql ] [ SQL ] SELECT count(id) as to_num FROM `tax_task` WHERE  (  taskstatus = 0 or taskstatus = 1 )  [ RunTime:0.000135s ]
+[ sql ] [ SQL ] SELECT count(id) as t_num FROM `tax_task`  [ RunTime:0.000121s ]
+[ sql ] [ SQL ] SELECT count(id) as com_num FROM `tax_task` WHERE  (  taskstatus = 2 )  [ RunTime:0.000135s ]
+[ sql ] [ SQL ] SELECT count(id) as t3_count FROM `tax_theme_3` WHERE  (  status <> 2 )  [ RunTime:0.000151s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.001419s ]
+[ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id,b.name as t2_name,b.t1_id,c.name as t1_name,count(d.c_id) as c_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id INNER JOIN tax_data d ON a.id=d.theme_3_id  WHERE  a.status <> 2  AND (  0 < a.createtime and a.createtime < 1508419619 ) GROUP BY d.theme_3_id ORDER BY count(d.c_id) desc LIMIT 140   [ RunTime:0.003162s ]
+
+---------------------------------------------------------------
