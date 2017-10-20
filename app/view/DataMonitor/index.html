@@ -176,8 +176,7 @@
                 new Vue({
                     el: '#data',
                     data: {
-                        list: data,
-
+                        list: data
                     }
                 });
             } else {
@@ -287,11 +286,7 @@
         console.log(id + ' ' + isCollected);
         $.post('__PRO_PATH__/DataMonitor/doCollect', {'id': id, 'is_collect' : isCollected}, function (res) {
             if(res.errorcode == 0){
-                if(res.is_collect){
-                    $('#collect_'+id).removeClass().addClass('fa fa-heart collected');
-                } else{
-                    $('#collect_'+id).removeClass().addClass('fa fa-heart');
-                }
+                submit();
             } else {
                 popWarn(res.msg);
             }
