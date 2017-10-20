@@ -83,8 +83,6 @@ class DataMonitor extends Common{
 
         $tags = D('Tag')->getList(['section' => 5]);
         $data = D('DataMonitor')->getDataCondition($cond_or,$cond_and,$order);
-//        mydump($cond_or);
-//        mydump($cond_and);
 
         $theme_list = D('Theme')->getT1List([],[],[]);
         $cond = [];
@@ -136,11 +134,47 @@ class DataMonitor extends Common{
         $stime = input('get.begintime_str', '');
         $etime = input('get.endtime_str', '');
         $order = input('get.sortCol', 'time');
-        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ''];
-        $list = [];
-        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        $cond_and = [];
+        $cond_or = [];
+
+        if($relevance != -1){
+            $cond_and['relevance'] = ['=', $relevance];
+        }
+
+        if($nature != -1){
+            $cond_and['nature'] = ['=', $nature];
+        }
+
+        if($area!=-1){
+            $cond_and['area'] = ['=',$area];
+        }
+        if($media_type != -1){
+            $cond_and['media_type'] = ['=',$media_type];
+        }
+        if($keywords){
+            $cond_or['title'] = ['like','%'.$keywords.'%'];
+            $cond_or['content'] = ['like','%'.$keywords.'%'];
+            $cond_or['source'] = ['like','%'.$keywords.'%'];
+            $cond_or['media_type'] = ['like','%'.$keywords.'%'];
+            $cond_or['nature']  = ['like','%'.$keywords.'%'];
+            $cond_or['url'] =['like','%'.$keywords.'%'];
+        }
+        if($stime && $etime){
+            $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
+        }
+        else if(!$stime && $etime){
+            $cond_and['a.createtime'] = ['between', [0, strtotime($etime)]];
+        }
+        else if($stime && !$etime){
+            $cond_and['a.createtime'] = ['between', [strtotime($stime), time()]];
+        }
+
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
+
+        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
+//        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+//        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+//        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }

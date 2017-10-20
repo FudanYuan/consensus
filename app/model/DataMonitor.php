@@ -106,6 +106,24 @@ class DataMonitor extends Model
         return $res;
     }
 
+    public function  publicList($cond_or,$cond_and,$order,$pag = 10){
+        if(!isset($cond_and['status'])){
+            $cond_and['status'] = ['<>', 2];
+        }
+        if($pag == -1){
+            $pag = $this->getDataNumber();
+        }
+        $res = $this->field('id,title,source,url,media_type,nature,
+            time as publishtime,similar_num,relevance,is_collect')
+            ->where($cond_and)
+            ->whereor($cond_or)
+            ->order($order)
+            ->select();
+//            ->paginate($this->getDataNumber());
+        return $res;
+
+    }
+
     /**
      * 获取数据table--Company
      * @param $id
