@@ -30,10 +30,8 @@ class DataMonitor extends Common{
      */
     public function info(){
         $params = input('get.');
-        $c_name = input('get.c_name', '');
         $theme2_id = input('get.theme_id',-1);
         $theme_3_id = input('get.theme_3_id',-1);
-        $tag_id = input('get.tag_id',-1);
         $keywords = input('get.keywords', '');
         $order = input('get.sortCol', 'a.id');
         $stime = input('get.begintime_str', '');
@@ -43,12 +41,8 @@ class DataMonitor extends Common{
         if(!$order) {
             $params['sortCol'] = 'a.id asc';
         }
-        if($c_name){
-            $cond_and['b.name'] = ['like','%'.$c_name.'%'];
-        }
         if($keywords){
             $cond_or['b.name'] = ['like','%'.$keywords.'%'];
-            $cond_or['c.name'] = ['like','%'.$keywords.'%'];
             $cond_or['d.name'] = ['like','%'.$keywords.'%'];
             $cond_or['e.name'] = ['like','%'.$keywords.'%'];
             $cond_or['a.url']  = ['like','%'.$keywords.'%'];
@@ -66,10 +60,6 @@ class DataMonitor extends Common{
             unset($cond_and['c.id']);
             $cond_and['a.id'] = ['=', $theme_3_id];
         }
-        if($tag_id != -1){
-            $cond = D('Tag')->getCompanyTag($tag_id);
-            $cond_and = array_merge($cond_and,$cond);
-        }
         if($stime && $etime){
             $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
         }
@@ -79,6 +69,7 @@ class DataMonitor extends Common{
         else if($stime && !$etime){
             $cond_and['a.createtime'] = ['between', [strtotime($stime), time()]];
         }
+
         $tags = D('Tag')->getList(['section' => 5]);
         $data = D('DataMonitor')->getDataCondition($cond_or,$cond_and,$order);
         $theme_list = D('Theme')->getT1List([],[],[]);
@@ -88,6 +79,7 @@ class DataMonitor extends Common{
             $theme_2_list = D('Theme')->getT2List([],$cond,[]);
             $theme_list[$i]['t1_content'] = $theme_2_list;
         }
+
         $ret = ['theme_list' => $theme_list, 'list' => $data, 'tags' => $tags,'cond' => $params];
         return view('', $ret);
     }

@@ -281,15 +281,14 @@ class Theme extends Model
         $cond = "$begin_time < a.createtime and a.createtime < $end_time";
         $res = $this->alias('a')->field(
             'a.id as t3_id,a.name as t3_name,a.t2_id,b.name as t2_name,b.t1_id,
-             c.name as t1_name,count(d.c_id) as c_count')
-            ->join('tax_theme_2 b', 'a.t2_id=b.id')
-            ->join('tax_theme_1 c', 'b.t1_id=c.id')
-            ->join('tax_data d', 'a.id=d.theme_3_id')
+             c.name as t1_name')
+            ->join('vox_theme_2 b', 'a.t2_id=b.id')
+            ->join('vox_theme_1 c', 'b.t1_id=c.id')
+            ->join('vox_data d', 'a.id=d.theme_3_id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)
             ->group('d.theme_3_id')
-            ->order('count(d.c_id) desc')
             ->limit($limit)
             ->select();
         return $res;

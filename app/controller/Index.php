@@ -18,7 +18,6 @@ class Index extends Common{
         //$data = input('get.')
         $data['limit'] = -1;
         $count = [];
-        $count['company'] =formatNum(D('Company')->getCompanyNumber());
         $count['theme'] = formatNum(D('Theme')->getT3Number());
         $count['data'] = formatNum(D('DataMonitor')->getDataNumber());
         $count['url'] = formatNum(D('WebSite')->getWebNumber());
@@ -28,7 +27,6 @@ class Index extends Common{
         $compare['data'] = formatNum(D('DataMonitor')->getPercentNumber());
         $compare['url'] = formatNum(D('WebSite')->getPercentNumber());
         $compare['theme'] = formatNum(D('Theme')->getPercentNumber());
-        $compare['company'] =formatNum(D('Company')->getPercentNumber());
 
         $task = [];
         $task['completed'] = formatNum(D('Task')->getCompletedNum());
