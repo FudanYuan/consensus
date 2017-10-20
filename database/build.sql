@@ -227,7 +227,7 @@ CREATE TABLE `vox_data` (
   `nature` VARCHAR(100) DEFAULT NULL COMMENT '舆情属性',
   `url` VARCHAR(100) DEFAULT NULL COMMENT '网址',
   `relevance` VARCHAR(100) DEFAULT NULL COMMENT '关联度',
-  `time` INT DEFAULT NULL COMMENT '发表时间',
+  `publishtime` INT DEFAULT NULL COMMENT '发表时间',
   `similar_num` INT DEFAULT NULL COMMENT '相似文章数',
   `is_collect` TINYINT DEFAULT NULL COMMENT '是否收藏：1->是，2->否',
   `is_warn` TINYINT DEFAULT NULL COMMENT '是否预警：1->是，2->否',
@@ -284,18 +284,18 @@ CREATE TABLE `vox_inform_user` (
 DROP TABLE IF EXISTS `vox_task`;
 
 CREATE TABLE `vox_task` (
-   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-    `name` VARCHAR(20) DEFAULT NULL COMMENT '名称',
-    `loop` INT DEFAULT NULL COMMENT '循环周期',
-   `begintime` INT DEFAULT NULL COMMENT '开始时间',
-   `endtime` INT DEFAULT NULL COMMENT '结束时间',
-   `task_num` INT DEFAULT NULL COMMENT '任务量',
-   `quantity_complete` INT DEFAULT NULL COMMENT '已完成数量',
-   `time_predict` INT DEFAULT NULL COMMENT '预计耗时',
-   `taskstatus` TINYINT DEFAULT NULL COMMENT '任务状态：0->正常；1->中断；2->结束',
-   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
-   `createtime` INT DEFAULT NULL COMMENT '创建时间',
-   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
+  `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` VARCHAR(20) DEFAULT NULL COMMENT '名称',
+  `loop` INT DEFAULT NULL COMMENT '循环周期',
+  `begintime` INT DEFAULT NULL COMMENT '开始时间',
+  `endtime` INT DEFAULT NULL COMMENT '结束时间',
+  `task_num` INT DEFAULT NULL COMMENT '任务量',
+  `quantity_complete` INT DEFAULT NULL COMMENT '已完成数量',
+  `time_predict` INT DEFAULT NULL COMMENT '预计耗时',
+  `taskstatus` TINYINT DEFAULT NULL COMMENT '任务状态：0->正常；1->中断；2->结束',
+  `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
+  `createtime` INT DEFAULT NULL COMMENT '创建时间',
+  `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
