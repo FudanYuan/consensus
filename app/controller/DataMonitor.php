@@ -92,6 +92,29 @@ class DataMonitor extends Common{
         return view('', $ret);
     }
 
+    /**
+     *  我的收藏
+     * @return \think\response\View
+     */
+    public function collect(){
+        return view('', []);
+    }
+
+    /**
+     * 舆情预警
+     * @return \think\response\View
+     */
+    public function warn(){
+        return view('', []);
+    }
+
+    /**
+     * 舆情设置
+     * @return \think\response\View
+     */
+    public function warn_config(){
+        return view('', []);
+    }
 
     /**
      * 获取数据量

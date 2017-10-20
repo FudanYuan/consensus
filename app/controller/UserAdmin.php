@@ -29,7 +29,28 @@ class UserAdmin extends Common{
 		}
 		return view('', []);
 	}
-	/**
+
+
+    /**
+     * 修改密码
+     * @return \think\response\View
+     */
+    public function changePwd()
+    {
+        return view('', []);
+    }
+
+    /**
+     * 编辑信息
+     * @return \think\response\View
+     */
+    public function editInfo()
+    {
+        return view('', []);
+    }
+
+
+    /**
 	 * 登出
 	 */
 	public function dologout(){

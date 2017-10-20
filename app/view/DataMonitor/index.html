@@ -1,363 +1,119 @@
 {include file="Common/top" title="首页" metas='' /}
 {include file="Common/search" /}
 <div class="main-container">
-    <div class="padding-md">
+    <div class="padding-md" style="overflow: auto">
         <ul class="breadcrumb">
-            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/"> 首页</a></li>
-            <li>数据监测</li>
-            <li>数据总览</li>
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
+            <li>实时舆情</li>
+            <li>全部舆情</li>
         </ul>
-        <!-- 时间轴 -->
-        <!--<div class="row">-->
-            <!--<form id="time-form">-->
-                <!--<div class="col-lg-12">-->
-                    <!--<label class="pull-left" style="text-align: center">时间<br/>范围</label>-->
-                    <!--<div class="form-group col-lg-5">-->
-                        <!--<input placeholder="开始时间" id="form-stime" name="begintime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">-->
-                    <!--</div>-->
-                    <!--<div class="form-group col-lg-5">-->
-                        <!--<input placeholder="结束时间" id="form-etime" name="endtime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">-->
-                    <!--</div>-->
-                    <!--<div class="form-group col-lg-1">-->
-                        <!--<a class="btn btn-info" id="searchBtn">-->
-                            <!--查询-->
-                            <!--<span hidden="hidden" id="searching_icon">-->
-                                <!--<i class="fa fa-spinner fa-pulse"></i>-->
-                            <!--</span>-->
-                        <!--</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
-        <!---->
+
         <!-- 搜索条件 -->
         <div class="list-search">
-            <form action="" class="form-inline" method="get" id="main-form">
+            <form action="" class="form-inline" method="get" id="main-form" >
                 <div class="form-group">
                     <label>时间范围：</label>
-                    <input placeholder="开始时间" id="form-stime" name="begintime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr" style="width:250px">
+                    <input placeholder="开始时间" id="form-stime" name="begintime_str" data-enable-time=false
+                           class="form-control flatpickr" style="width:100px">
                     <span> ~ </span>
-                    <input placeholder="结束时间" id="form-etime" name="endtime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr" style="width:250px">
+                    <input placeholder="结束时间" id="form-etime" name="endtime_str" data-enable-time=false
+                           class="form-control flatpickr" style="width:100px">
                 </div>
                 <div class="form-group">
-                    <a class="btn btn-info" id="searchBtn">
-                        查询
-                        <span hidden="hidden" id="searching_icon">
-                                <i class="fa fa-spinner fa-pulse"></i>
-                            </span>
-                    </a>
+                    <label for="relevance">舆情状态：</label>
+                    <div class="btn-group" data-toggle="buttons" id="relevance">
+                        <label class="btn btn-success" id="relevance-1" onclick="getRadioClicked('relevance', 0, -1)">
+                            <input type="radio" name="relevance" value="-1" checked>全部
+                        </label>
+                        <label class="btn btn-default" id="relevance0" onclick="getRadioClicked('relevance', 1, 0)">
+                            <input type="radio" name="relevance" value="0">相关性强
+                        </label>
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="nature">舆情属性：</label>
+                    <div class="btn-group" data-toggle="buttons" id="nature">
+                        <label class="btn btn-success" id="nature-1" onclick="getRadioClicked('nature', 0, -1)">
+                            <input type="radio" name="nature" value="-1" checked>全部
+                        </label>
+                        <label class="btn btn-default" id="nature0" onclick="getRadioClicked('nature', 1, 0)">
+                            <input type="radio" name="nature" value="0">正面
+                        </label>
+                        <label class="btn btn-default" id="nature1" onclick="getRadioClicked('nature', 2, 1)">
+                            <input type="radio" name="nature" value="1">中立
+                        </label>
+                        <label class="btn btn-default" id="nature2" onclick="getRadioClicked('nature', 3, 2)">
+                            <input type="radio" name="nature" value="2">负面
+                        </label>
+                    </div>
+                </div>
+
+                <br/><br/>
+                <div class="form-group">
+                    <label for="area">地域选择：</label>
+                    <select name="area" class="form-control" id="area" style="width:100px">
+                        <option value="-1">全部</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="media_type">媒体类型：</label>
+                    <select name="media_type" class="form-control" id="media_type" style="width:100px">
+                        <option value="-1">全部</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywords">关键词：</label>
+                    <input name="keywords" class="form-control" id="keywords" style="width:150px" value=""/>
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="sortCol" class="form-control" id="sortCol"
+                           value="{$cond.sortCol ?? ''}">
+                </div>
+
+                {if condition="authority('MonitorData_export')"}
+                <a href="__PRO_PATH__/DataMonitor/export" target="_blank" type="button"
+                   class="btn btn-default fr">导出</a>
+                {/if}
             </form>
         </div>
 
-        <!-- 企业监测 -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="smart-widget widget-green">
-                    <div class="smart-widget-header">
-                        企业监测
-                        <span class="smart-widget-option">
-                            <span class="refresh-icon-animated">
-                                <i class="fa fa-circle-o-notch fa-spin"></i>
-                            </span>
-                            <a href="javascript:;" class="widget-toggle-hidden-option">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                            <a href="javascript:;" class="widget-collapse-option" data-toggle="collapse">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a href="javascript:;" class="widget-refresh-option">
-                                <i class="fa fa-refresh"></i>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="smart-widget-inner">
-                        <div class="smart-widget-hidden-section">
-                            <ul class="widget-color-list clearfix">
-                                <li style="background-color:#20232b;" data-color="widget-dark"></li>
-                                <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
-                                <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
-                                <li style="background-color:#2baab1;" data-color="widget-green"></li>
-                                <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
-                                <li style="background-color:#fbc852;" data-color="widget-orange"></li>
-                                <li style="background-color:#e36159;" data-color="widget-red"></li>
-                                <li style="background-color:#7266ba;" data-color="widget-purple"></li>
-                                <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
-                                <li style="background-color:#fff;" data-color="reset"></li>
-                            </ul>
-                        </div>
-                        <!-- 企业-主题气泡图 -->
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <p id="bubble_num_limit" hidden="hidden">-1</p>
-                                <p id="bar_num_limit" hidden="hidden">-1</p>
-                                <p id="bar_theme_limit" hidden="hidden">-1</p>
-                                <p id="company_bar_theme_name" hidden="hidden">""</p>
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        显示数量<span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-left" role="menu">
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(1, 10)">Top 10</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(1, 20)">Top 20</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(1, 30)">Top 30</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(1, 40)">Top 40</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(1, 50)">Top 50</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(1, -1)">全部</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div id="company_theme_bubble_chart" class="echarts"
-                                                     style="height:300px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- ./smart-widget -->
-                            </div><!-- ./col -->
-                            <div class="col-lg-6">
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        显示数量<span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-left" role="menu">
-                                                        <li><a href="javascript:;" onclick="changeNumBar(10)">Top 10</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(20)">Top 20</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(30)">Top 30</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(40)">Top 40</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(50)">Top 50</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(-1)">全部</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="btn-group">
-                                                    <input placeholder="搜索企业">
-                                                </div>
-                                                <div id="company_theme_num_chart" class="echarts" style="height:300px;"></div>
-                                            </div>
-                                        </div>
-                                    </div><!-- ./smart-widget-inner -->
-                                </div><!-- ./smart-widget -->
-                            </div><!-- ./col -->
-                        </div>
-                    </div><!-- ./smart-widget-inner -->
-                </div><!-- ./smart-widget -->
-            </div><!-- ./col -->
-        </div>
-
-        <!-- 主题监测 -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="smart-widget widget-green">
-                    <div class="smart-widget-header">
-                        主题监测
-                        <span class="smart-widget-option">
-                            <span class="refresh-icon-animated">
-                                <i class="fa fa-circle-o-notch fa-spin"></i>
-                            </span>
-                            <a href="javascript:;" class="widget-toggle-hidden-option">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                            <a href="javascript:;" class="widget-collapse-option" data-toggle="collapse">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a href="javascript:;" class="widget-refresh-option">
-                                <i class="fa fa-refresh"></i>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="smart-widget-inner">
-                        <div class="smart-widget-hidden-section">
-                            <ul class="widget-color-list clearfix">
-                                <li style="background-color:#20232b;" data-color="widget-dark"></li>
-                                <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
-                                <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
-                                <li style="background-color:#2baab1;" data-color="widget-green"></li>
-                                <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
-                                <li style="background-color:#fbc852;" data-color="widget-orange"></li>
-                                <li style="background-color:#e36159;" data-color="widget-red"></li>
-                                <li style="background-color:#7266ba;" data-color="widget-purple"></li>
-                                <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
-                                <li style="background-color:#fff;" data-color="reset"></li>
-                            </ul>
-                        </div>
-                        <!-- 主题气泡图 -->
-                        <div class="row">
-                            <p id="theme_bubble_limit" hidden="hidden"></p>
-                            <div class="col-lg-6">
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        显示数量<span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-left" role="menu">
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(2, 10)">Top 10</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(2, 20)">Top 20</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(2, 30)">Top 30</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(2, 40)">Top 40</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(2, 50)">Top 50</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBubble(2, -1)">全部</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div id="theme_company_bubble_chart" class="echarts"
-                                                     style="height:300px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- ./col -->
-                            <div class="col-lg-6">
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        显示数量<span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-left" role="menu">
-                                                        <li><a href="javascript:;" onclick="changeNumBar(1, 10)">Top 10</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(1, 20)">Top 20</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(1, 30)">Top 30</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(1, 40)">Top 40</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(1, 50)">Top 50</a>
-                                                        </li>
-                                                        <li><a href="javascript:;" onclick="changeNumBar(1, -1)">全部</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="btn-group">
-                                                    <select name="theme_id" class="form-control" style="width:100px"
-                                                            id="select-theme_id" onchange="changeTheme()">
-                                                        <option value="-1">所有主题</option>
-                                                        {foreach name="theme_list" item="theme"}
-                                                        <option value="{$theme.id}" name="{$theme.name}">{$theme.name}</option>
-                                                        {/foreach}
-                                                    </select>
-                                                </div>
-                                                <div id="theme_company_count_chart" class="echarts" style="height:300px;"></div>
-                                            </div>
-                                        </div>
-                                    </div><!-- ./smart-widget-inner -->
-                                </div><!-- ./smart-widget -->
-                            </div><!-- ./col -->
-                        </div>
-
-                        <!-- 主题流向桑吉图 -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div id="theme_company_sankey_chart" class="echarts"
-                                                     style="height:400px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- ./col -->
-                        </div>
-                    </div><!-- ./smart-widget-inner -->
-                </div><!-- ./smart-widget -->
-            </div><!-- ./col -->
-        </div>
-
-        <!-- 网站监测-->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="smart-widget widget-green">
-                    <div class="smart-widget-header">
-                        网站监测
-                        <span class="smart-widget-option">
-                            <span class="refresh-icon-animated">
-                                <i class="fa fa-circle-o-notch fa-spin"></i>
-                            </span>
-                            <a href="javascript:;" class="widget-toggle-hidden-option">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                            <a href="javascript:;" class="widget-collapse-option" data-toggle="collapse">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a href="javascript:;" class="widget-refresh-option">
-                                <i class="fa fa-refresh"></i>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="smart-widget-inner">
-                        <div class="smart-widget-hidden-section">
-                            <ul class="widget-color-list clearfix">
-                                <li style="background-color:#20232b;" data-color="widget-dark"></li>
-                                <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
-                                <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
-                                <li style="background-color:#2baab1;" data-color="widget-green"></li>
-                                <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
-                                <li style="background-color:#fbc852;" data-color="widget-orange"></li>
-                                <li style="background-color:#e36159;" data-color="widget-red"></li>
-                                <li style="background-color:#7266ba;" data-color="widget-purple"></li>
-                                <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
-                                <li style="background-color:#fff;" data-color="reset"></li>
-                            </ul>
-                        </div>
-                        <!-- 网站类型饼形图 -->
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div id="webiste_type_pie_chart" class="echarts" style="height:400px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- ./smart-widget -->
-                            </div><!-- ./col -->
-                            <div class="col-lg-6">
-                                <div class="smart-widget widget-green">
-                                    <div class="smart-widget-inner">
-                                        <div class="smart-widget-body no-padding">
-                                            <div class="padding-sm">
-                                                <div id="webiste_type_theme_pie_chart" class="echarts" style="height:400px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- ./smart-widget -->
-                            </div><!-- ./col -->
-                        </div>
-                    </div><!-- ./smart-widget-inner -->
-                </div><!-- ./smart-widget -->
-            </div><!-- ./col -->
-        </div>
+        <!-- 数据表 -->
+        <table class="table table-hover" style="background:#fff;" id="data">
+            <thead>
+            <tr>
+                <th>标题</th>
+                <th>来源</th>
+                <th>媒体类型</th>
+                <th>舆情属性</th>
+                <th>发表时间
+                    <a href="javascript:;" id="sort_time" onclick="setSortCol('time')" title="asc">
+                        <i class="fa fa-sort" aria-hidden="true"></i>
+                    </a>
+                </th>
+                <th>关联度
+                    <a href="javascript:;" id="sort_relevance" onclick="setSortCol('relevance')" title="asc">
+                        <i class="fa fa-sort" aria-hidden="true"></i>
+                    </a>
+                </th>
+                <th>相似文章
+                    <a href="javascript:;" id="sort_similar_num" onclick="setSortCol('similar_num')" title="asc">
+                        <i class="fa fa-sort" aria-hidden="true"></i>
+                    </a>
+                </th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr v-for="model in list">
+                    <td>{{model.name}}</td>
+                    <td>{{model.url}}</td>
+                    <td>{{model.slogan}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div><!-- /main-container -->
 {include file="Common/popup_warn" /}
@@ -366,136 +122,128 @@
 {include file="Common/bottom" /}
 <script>
     $('#tax-nav-monitor').addClass('active open');
-    $('#tax-nav-monitor-sub0').addClass('active');
+    $('#tax-nav-monitor-sub1').addClass('active');
+    $(".flatpickr").flatpickr({time_24hr: true});
+    $('#form-stime').val('');
+    $('#form-etime').val('');
+    $('#sortCol').val('time');
+    var sort = $('#sortCol').val();
+    getSortCol(sort);
 
-    $('#name').val('{$cond.c_name ?? ""}');
-    $('#tag_id').val('{$cond.tag_id ?? -1}');
-    $('#theme_id').val('{$cond.theme_id ?? -1}');
-    $('#keywords').val('{$cond.keywords ?? ""}');
-
-    $(function () {
-        $('#bubble_num_limit').text(10);
-        $('#bar_num_limit').text(10);
-        $('#bar_theme_limit').text(-1);
-        $('#theme_bubble_limit').text(10);
-        getParams();
-        showCompanyBubble(params);
-        showCompanyBar(params);
-        showThemeBubble(params);
-        showThemeSankey(params);
-        showWebsitePie(params);
-        showWebsiteThemeCount(params);
-    });
-
-    // 参数初始化
     var params = {};
-    // 改变气泡图显示数量
-    function changeNumBubble(obj, num){
-        switch(obj){
-            case 1:
-                $('#bubble_num_limit').text(num);
-                getParams();
-                showCompanyBubble(params);
-                break;
-            case 2:
-                $('#theme_bubble_limit').text(num);
-                getParams();
-                showThemeBubble(params);
-                break;
-        }
-    }
-
-    // 改变柱形图显示数量
-    function changeNumBar(obj, num) {
-        obj = obj || 1;
-        switch(obj){
-            case 1:
-                $('#bar_num_limit').text(num);
-                getParams();
-                showCompanyBar(params);
-                break;
-
-        }
-    }
-
-    // 改变主题id
-    function changeTheme() {
-        var theme_id = $("#select-theme_id option:selected").val();
-        var theme_name = $("#select-theme_id option:selected").attr("name");
-        $('#bar_theme_limit').text(theme_id);
-        $('#company_bar_theme_name').text(theme_name);
+    function submit() {
         getParams();
-        showCompanyBar(params);
+        $.post('__PRO_PATH__/DataMonitor/index', params, function (res) {
+            if (res.errorcode == 0) {
+                params = res.params;
+                var data = res.data;
+                new Vue({
+                    el: '#data',
+                    data: {
+                        list: data
+                    }
+                });
+            } else {
+                new Vue({
+                    el: '#data',
+                    data: {
+                        list: {}
+                    }
+                });
+            }
+        });
+    }
+
+    submit();
+
+    // 获取点击按钮
+    function getRadioClicked(name, index, value) {
+        var valueOld = $("input[name="+name+"]:checked").val();
+        var eleOld = name + valueOld;
+        $('#'+eleOld).removeClass('btn-success').addClass('btn-default');
+        $('input[name='+name+']').eq(index).attr('checked', 'true');
+        var eleNew = name + value;
+        $('#'+eleNew).removeClass('btn-default').addClass('btn-success');
     }
 
     // 获取参数设置
-    function getParams(){
+    function getParams() {
         var data = $('#main-form').serializeArray();
-        $.each(data, function() {
+        $.each(data, function () {
             params[this.name] = this.value;
         });
-        var tblimit = $('#theme_bubble_limit').text();
-        params['limit'] = parseInt(tblimit);
-        var bnlimit = $('#bubble_num_limit').text();
-        params['bubble_num_limit'] = parseInt(bnlimit);
-        var barnlimit = $('#bar_num_limit').text();
-        var btlimit = $('#bar_theme_limit').text();
-        params['bar_num_limit'] = parseInt(barnlimit);
-        params['bar_theme_limit'] = parseInt(btlimit);
-
+        console.log(JSON.stringify(params));
     }
 
-    // 按时间范围查询
-    $('#searchBtn').click(function(){
-        $('#searching_icon').show();
-        getParams();
-        showCompanyBubble(params);
-        showCompanyBar(params);
-        showThemeBubble(params);
-        showThemeSankey(params);
-        showWebsitePie(params);
-        showWebsiteThemeCount(params);
-    });
+    // 改变排序方向
+    function changeSort(sort) {
+        if (sort == 'asc') {
+            return 'desc';
+        } else {
+            return 'asc';
+        }
+    }
 
-    // common
-    $(".flatpickr").flatpickr({time_24hr:true});
+    // 设置排序参数
+    function setSortCol(col) {
+        var sort = $('#sortCol');
+        var title;
+        switch (col) {
+            case 'time':
+                title = $("#sort_t1").attr('title');
+                sort.val("e.name " + title);
+                $("#sort_t1").attr({"title": changeSort(title)});
+                $("#sort_t1 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'relevance':
+                title = $("#sort_t2").attr('title');
+                sort.val("d.name " + title);
+                $("#sort_t2").attr({"title": changeSort(title)});
+                $("#sort_t2 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'similar_num':
+                title = $("#sort_t3").attr('title');
+                sort.val("c.name " + title);
+                $("#sort_t3").attr({"title": changeSort(title)});
+                $("#sort_t3 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+        }
+        submit();
+    }
 
-    $(window).resize(function(e){
-        // Redraw All Chart
-        setTimeout(function() {
-            getParams();
-            showCompanyBubble(params);
-            showCompanyBar(params);
-            showThemeBubble(params);
-            showThemeSankey(params);
-            showWebsitePie(params);
-            showWebsiteThemeCount(params);
-        },500);
-    });
-
-    $('#sidebarToggleLG').click(function()	{
-        // Redraw All Chart
-        setTimeout(function() {
-            getParams();
-            showCompanyBubble(params);
-            showCompanyBar(params);
-            showThemeBubble(params);
-            showThemeSankey(params);
-            showWebsitePie(params);
-            showWebsiteThemeCount(params);
-        },500);
-    });
-
-    $('#sidebarToggleSM').click(function()	{
-        // Redraw All Chart
-        setTimeout(function() {
-            getParams(params);
-            showCompanyBubble(params);
-            showCompanyBar(params);
-            showThemeBubble(params);
-            showThemeSankey(params);
-            showWebsitePie(params);
-            showWebsiteThemeCount(params);
-        },500);
-    });
+    // 获取排序参数
+    function getSortCol(sortcol) {
+        var col = sortcol.split(' ');
+        var title = col[1];
+        switch (col[0]) {
+            case 'a.id':
+                $("#sort_id").attr({"title": changeSort(title)});
+                $("#sort_id i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'b.name':
+                $("#sort_c_name").attr({"title": changeSort(title)});
+                $("#sort_c_name i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'e.name':
+                $("#sort_t1").attr({"title": changeSort(title)});
+                $("#sort_t1 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'd.name':
+                $("#sort_t2").attr({"title": changeSort(title)});
+                $("#sort_t2 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'c.name':
+                $("#sort_t3").attr({"title": changeSort(title)});
+                $("#sort_t3 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'a.task_id':
+                $("#sort_task_id").attr({"title": changeSort(title)});
+                $("#sort_task_id i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+            case 'a.createtime':
+                $("#sort_time").attr({"title": changeSort(title)});
+                $("#sort_time i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                break;
+        }
+    }
 </script>

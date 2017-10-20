@@ -68,6 +68,9 @@
 
     <!-- MyJs-->
     <script src="__PUBLIC__/js/myJs/myChart.js"></script>
+
+    <!-- Vue -->
+    <script src="__PUBLIC__/js/vue.min.js"></script>
 </head>
 <body class="overflow-hidden">
 <div class="wrapper preload">
@@ -330,9 +333,9 @@
                             <span class="menu-content-hover block">Data</span>
                         </a>
                         <ul class="submenu bg-palette2">
-                            {if condition="authority('DataMonitorInfo')"}
+                            {if condition="authority('DataMonitorIndex')"}
                             <li id="tax-nav-monitor-sub1">
-                                <a href="__PRO_PATH__/DataMonitor/info">
+                                <a href="__PRO_PATH__/DataMonitor/index">
                                     <span class="submenu-label">全部舆情</span>
                                 </a>
                             </li>
