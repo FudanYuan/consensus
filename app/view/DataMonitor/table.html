@@ -365,3 +365,33 @@
         </div><!-- ./smart-widget -->
     </div><!-- ./col -->
 </div>
+
+
+
+
+{foreach name="list" item="model"}
+<tr>
+    <td><input type="checkbox" name="select" value="{$model.id}"/></td>
+    <td>{$model.id}</td>
+    <td><a href="__PRO_PATH__/Company/info?id={$model.id}" title="查看详情">{$model.c_name}</a></td>
+    <td>{$model.t1_name}</td>
+    <td>{$model.t2_name}</td>
+    <td>{$model.t3_name}</td>
+    <td><a href="{$model.url}">{$model.url}</a></td>
+    <td><img src="" width="100" height="30"></td>
+    <td>{$model.task_id}</td>
+    <td>{$model.createtime|date="Y-m-d H:i",###}</td>
+    <td>
+        {if condition="authority('Company_browse')"}
+        <a href="__PRO_PATH__/Company/info?id={$model.c_id}">详情</a>
+        {/if}
+
+        {if condition="authority('Company_edit')"}
+        <a href="__PRO_PATH__/Company/edit?id={$model.c_id}">编辑</a>
+        {/if}
+    </td>
+</tr>
+{/foreach}
+
+
+{$list->render()}
