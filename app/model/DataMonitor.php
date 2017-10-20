@@ -161,7 +161,7 @@ class DataMonitor extends Model
      */
     public function saveData($id, $data){
         $ret = [];
-        $errors = $this->filterField($data);
+        $errors = [];
         $ret['errors'] = $errors;
         if (empty($errors)) {
             $curTime = time();
