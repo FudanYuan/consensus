@@ -81,7 +81,7 @@
         </div>
 
         <!-- 数据表 -->
-        <table class="table table-hover" style="background:#fff;">
+        <table class="table table-hover" style="background:#fff;" id="data">
             <thead>
             <tr>
                 <th>标题</th>
@@ -107,7 +107,11 @@
             </tr>
             </thead>
             <tbody>
-
+                <tr v-for="model in list">
+                    <td>{{model.name}}</td>
+                    <td>{{model.url}}</td>
+                    <td>{{model.slogan}}</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -130,9 +134,27 @@
     function submit() {
         getParams();
         $.post('__PRO_PATH__/DataMonitor/index', params, function (res) {
-
-        })
+            if (res.errorcode == 0) {
+                params = res.params;
+                var data = res.data;
+                new Vue({
+                    el: '#data',
+                    data: {
+                        list: data
+                    }
+                });
+            } else {
+                new Vue({
+                    el: '#data',
+                    data: {
+                        list: {}
+                    }
+                });
+            }
+        });
     }
+
+    submit();
 
     // 获取点击按钮
     function getRadioClicked(name, index, value) {
