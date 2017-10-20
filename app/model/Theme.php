@@ -143,8 +143,8 @@ class Theme extends Model
         $res = $this->alias('a')->field(
             'a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,
              b.name as t2_name,b.t1_id as t1_id,c.name as t1_name')
-            ->join('tax_theme_2 b', 'a.t2_id=b.id')
-            ->join('tax_theme_1 c', 'b.t1_id=c.id')
+            ->join('vox_theme_2 b', 'a.t2_id=b.id')
+            ->join('vox_theme_1 c', 'b.t1_id=c.id')
             ->whereOr($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -169,8 +169,8 @@ class Theme extends Model
         $res = $this->alias('a')->field(
             'a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,
              b.name as t2_name,b.t1_id as t1_id,c.name as t1_name')
-            ->join('tax_theme_2 b', 'a.t2_id=b.id')
-            ->join('tax_theme_1 c', 'b.t1_id=c.id')
+            ->join('vox_theme_2 b', 'a.t2_id=b.id')
+            ->join('vox_theme_1 c', 'b.t1_id=c.id')
             ->whereOr($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -187,8 +187,8 @@ class Theme extends Model
     {
         $res = $this->alias('a')->field('a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,
             b.name as t2_name,b.t1_id as t1_id,c.name as t1_name')
-            ->join('tax_theme_2 b', 'a.t2_id=b.id')
-            ->join('tax_theme_1 c', 'b.t1_id=c.id')
+            ->join('vox_theme_2 b', 'a.t2_id=b.id')
+            ->join('vox_theme_1 c', 'b.t1_id=c.id')
             ->where(['a.id' => $id])
             ->find();
         return $res;
@@ -203,8 +203,8 @@ class Theme extends Model
     {
         $res = $this->alias('a')->field('a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,
             b.name as t2_name,b.t1_id as t1_id,c.name as t1_name')
-            ->join('tax_theme_2 b', 'a.t2_id=b.id')
-            ->join('tax_theme_1 c', 'b.t1_id=c.id')
+            ->join('vox_theme_2 b', 'a.t2_id=b.id')
+            ->join('vox_theme_1 c', 'b.t1_id=c.id')
             ->where(['a.name' => $name])
             ->find();
         return $res;
@@ -219,7 +219,7 @@ class Theme extends Model
     {
         $res = $this->alias('a')->field('a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,
             b.name as t2_name')
-            ->join('tax_theme_2 b', 'a.t2_id=b.id')
+            ->join('vox_theme_2 b', 'a.t2_id=b.id')
             ->where(['b.id' => $id])
             ->select();
         return $res;
