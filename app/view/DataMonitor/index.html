@@ -12,11 +12,12 @@
         <div class="list-search">
             <form action="" class="form-inline" method="get" id="main-form" >
                 <div class="form-group">
-                    <label>时间范围：</label>
+                    <label for="dateTimeRange">时间范围：</label>
                     <input type="text" class="form-control date-picker" id="dateTimeRange" value="" style="width: 190px"/>
                     <input type="hidden" name="begintime_str" id="begintime_str" value=""/>
                     <input type="hidden" name="endtime_str" id="endtime_str" value=""/>
                 </div>
+
                 <div class="form-group">
                     <label for="relevance">舆情状态：</label>
                     <div class="btn-group" data-toggle="buttons" id="relevance">
@@ -28,6 +29,7 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="nature">舆情属性：</label>
                     <div class="btn-group" data-toggle="buttons" id="nature">
@@ -47,6 +49,7 @@
                 </div>
 
                 <br/><br/>
+
                 <div class="form-group">
                     <label for="area">地域选择：</label>
                     <select name="area" class="form-control" id="area" style="width:100px">
@@ -68,7 +71,7 @@
 
                 <div class="form-group">
                     <input type="hidden" name="sortCol" class="form-control" id="sortCol"
-                           value="{$cond.sortCol ?? ''}">
+                           :value="{{params.sortCol}}">
                 </div>
 
                 {if condition="authority('MonitorData_export')"}
@@ -87,7 +90,7 @@
                 <th>媒体类型</th>
                 <th>舆情属性</th>
                 <th>发表时间
-                    <a href="javascript:;" id="sort_time" onclick="setSortCol('time')" title="asc">
+                    <a href="javascript:;" id="sort_publishtime" onclick="setSortCol('publishtime')" title="asc">
                         <i class="fa fa-sort" aria-hidden="true"></i>
                     </a>
                 </th>
@@ -107,7 +110,7 @@
             <tbody>
                 <tr v-for="model in list">
                     <td hidden><input type="checkbox" name="select" :value="model.id"/></td>
-                    <td>{{model.title}}</td>
+                    <td><a :href="model.url" target="_blank">{{model.title}}<a/></td>
                     <td>{{model.source}}</td>
                     <td>{{model.media_type}}</td>
                     <td>{{model.nature}}</td>
@@ -121,17 +124,21 @@
                     <td>{{model.similar_num}}</td>
                     <td>
                         {if condition="authority('Data_collect')"}
-                        <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)">
-                            <i :class="['fa fa-heart', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 5px"></i>
+                        <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)" title="收藏">
+                            <i :class="['fa fa-heart', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 10px"></i>
                         </a>
                         {/if}
 
                         {if condition="authority('Data_edit')"}
-                        <a href="javascript:;" @click="dataEdit(model.id)"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 5px;"></i></a>
+                        <a href="javascript:;" @click="dataEdit(model.id)" title="编辑">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;"></i>
+                        </a>
                         {/if}
 
                         {if condition="authority('Data_remote')"}
-                        <a href="javascript:;" id="removeItem"><i class="fa fa-trash" aria-hidden="true" style="margin-right: 5px;"></i></a>
+                        <a href="javascript:;" @click="dataRemove(model.id)" title="删除">
+                            <i class="fa fa-trash" aria-hidden="true" style="margin-right: 0;"></i>
+                        </a>
                         {/if}
                     </td>
                 </tr>
@@ -168,15 +175,15 @@
                         '昨日': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
                         '最近7日': [moment().subtract(6, 'days'), moment()],
                         '最近30日': [moment().subtract(29, 'days'), moment()],
-//                        '本月': [moment().startOf("month"), moment().endOf("month")],
-//                        '上个月': [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
-//                        '最近90日': [moment().subtract('days', 89), moment()],
-//                        '本季度': [moment().startOf("quarter"), moment()],
-//                        '上个季度': [moment().subtract(1, "quarter").startOf("quarter"), moment().subtract(1, "quarter").endOf("quarter")],
-//                        '今年': [moment().startOf("year"), moment()],
-//                        '去年': [moment().subtract(1, "year").startOf("year"), moment().subtract(1, "year").endOf("year")]
+                        // '本月': [moment().startOf("month"), moment().endOf("month")],
+                        // '上个月': [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+                        // '最近90日': [moment().subtract('days', 89), moment()],
+                        // '本季度': [moment().startOf("quarter"), moment()],
+                        // '上个季度': [moment().subtract(1, "quarter").startOf("quarter"), moment().subtract(1, "quarter").endOf("quarter")],
+                        // '今年': [moment().startOf("year"), moment()],
+                        // '去年': [moment().subtract(1, "year").startOf("year"), moment().subtract(1, "year").endOf("year")]
                     },
-                    opens: 'center',    // 日期选择框的弹出位置
+                    opens: 'right',    // 日期选择框的弹出位置
                     separator: ' 至 ',
                     showWeekNumbers: true,     // 是否显示第几周
 
@@ -194,9 +201,11 @@
             $(this).prev().focus();
         });
     });
-    $('#sortCol').val('time');
+
+    $('#sortCol').val('publishtime');
     var sort = $('#sortCol').val();
     getSortCol(sort);
+
     var params = {};
 
     submit();
@@ -217,14 +226,16 @@
                 new Vue({
                     el: '#data',
                     data: {
-                        list: data
+                        list: data,
+                        params: params
                     }
                 });
             } else {
                 new Vue({
                     el: '#data',
                     data: {
-                        list: {}
+                        list: {},
+                        params: params
                     }
                 });
             }
@@ -264,26 +275,25 @@
         var sort = $('#sortCol');
         var title;
         switch (col) {
-            case 'time':
-                title = $("#sort_t1").attr('title');
-                sort.val("e.name " + title);
-                $("#sort_t1").attr({"title": changeSort(title)});
-                $("#sort_t1 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+            case 'publishtime':
+                title = $("#sort_publishtime").attr('title');
+                sort.val("publishtime " + title);
+                $("#sort_publishtime").attr({"title": changeSort(title)});
+                $("#sort_publishtime i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
             case 'relevance':
-                title = $("#sort_t2").attr('title');
-                sort.val("d.name " + title);
-                $("#sort_t2").attr({"title": changeSort(title)});
-                $("#sort_t2 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                title = $("#sort_relevance").attr('title');
+                sort.val("relevance " + title);
+                $("#sort_relevance").attr({"title": changeSort(title)});
+                $("#sort_relevance i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
             case 'similar_num':
-                title = $("#sort_t3").attr('title');
-                sort.val("c.name " + title);
-                $("#sort_t3").attr({"title": changeSort(title)});
-                $("#sort_t3 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+                title = $("#sort_similar_num").attr('title');
+                sort.val("similar_num " + title);
+                $("#sort_similar_num").attr({"title": changeSort(title)});
+                $("#sort_similar_num i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
         }
-        submit();
     }
 
     // 获取排序参数
@@ -291,33 +301,17 @@
         var col = sortcol.split(' ');
         var title = col[1];
         switch (col[0]) {
-            case 'a.id':
-                $("#sort_id").attr({"title": changeSort(title)});
-                $("#sort_id i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+            case 'publishtime':
+                $("#sort_publishtime").attr({"title": changeSort(title)});
+                $("#sort_publishtime i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
-            case 'b.name':
-                $("#sort_c_name").attr({"title": changeSort(title)});
-                $("#sort_c_name i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+            case 'relevance':
+                $("#sort_relevance").attr({"title": changeSort(title)});
+                $("#sort_relevance i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
-            case 'e.name':
-                $("#sort_t1").attr({"title": changeSort(title)});
-                $("#sort_t1 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
-                break;
-            case 'd.name':
-                $("#sort_t2").attr({"title": changeSort(title)});
-                $("#sort_t2 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
-                break;
-            case 'c.name':
-                $("#sort_t3").attr({"title": changeSort(title)});
-                $("#sort_t3 i").removeClass().addClass('fa fa-sort-' + changeSort(title));
-                break;
-            case 'a.task_id':
-                $("#sort_task_id").attr({"title": changeSort(title)});
-                $("#sort_task_id i").removeClass().addClass('fa fa-sort-' + changeSort(title));
-                break;
-            case 'a.createtime':
-                $("#sort_time").attr({"title": changeSort(title)});
-                $("#sort_time i").removeClass().addClass('fa fa-sort-' + changeSort(title));
+            case 'similar_num':
+                $("#sort_similar_num").attr({"title": changeSort(title)});
+                $("#sort_similar_num i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
         }
     }
@@ -339,7 +333,13 @@
         remove: '__PRO_PATH__/DataMonitor/remove'
     });
 
-    setInterval(function () {
-        submit();
-    }, 1000);
+    // 删除舆情
+    function dataRemove(id) {
+        console.log(id);
+        $("input[name='select'][value="+id+"]").attr("checked", 'checked');
+        $('#confirm-popup').popup('show');
+    }
+//    setInterval(function () {
+//        submit();
+//    }, 5000);
 </script>
