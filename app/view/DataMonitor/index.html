@@ -108,9 +108,34 @@
             </thead>
             <tbody>
                 <tr v-for="model in list">
-                    <td>{{model.name}}</td>
-                    <td>{{model.url}}</td>
-                    <td>{{model.slogan}}</td>
+                    <td hidden><input type="checkbox" name="select" :value="model.id"/></td>
+                    <td>{{model.title}}</td>
+                    <td>{{model.source}}</td>
+                    <td>{{model.media_type}}</td>
+                    <td>{{model.nature}}</td>
+                    <td>{{model.publishtime | moment}}</td>
+                    <td :title="model.relevance">
+                        <div id="bg"><!--这里是背景，也就是灰色的星星-->
+                            <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是12px，也就是1分12px，如果是4.3分，就是4.3*12px = 51.6px的长度，当然这个一般是取得数据后用js或者其他模板语言去控制的-->
+                            <div id="over" :style="{ width: model.relevance * 6 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
+                        </div>
+                    </td>
+                    <td>{{model.similar_num}}</td>
+                    <td>
+                        {if condition="authority('Data_collect')"}
+                        <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)">
+                            <i :class="['fa fa-heart', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 5px"></i>
+                        </a>
+                        {/if}
+
+                        {if condition="authority('Data_edit')"}
+                        <a href="javascript:;" @click="dataEdit(model.id)"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 5px;"></i></a>
+                        {/if}
+
+                        {if condition="authority('Data_remote')"}
+                        <a href="javascript:;" id="removeItem"><i class="fa fa-trash" aria-hidden="true" style="margin-right: 5px;"></i></a>
+                        {/if}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -121,8 +146,8 @@
 {include file="Common/calendar" /}
 {include file="Common/bottom" /}
 <script>
-    $('#tax-nav-monitor').addClass('active open');
-    $('#tax-nav-monitor-sub1').addClass('active');
+    $('#consensus-nav-monitor').addClass('active open');
+    $('#consensus-nav-monitor-sub1').addClass('active');
     $(".flatpickr").flatpickr({time_24hr: true});
     $('#form-stime').val('');
     $('#form-etime').val('');
@@ -130,17 +155,29 @@
     var sort = $('#sortCol').val();
     getSortCol(sort);
 
+
     var params = {};
+
+    // 转化时间
+    Vue.filter('moment', function (value, formatString) {
+        formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+        return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+    });
+
+    submit();
+
+    // 异步提交数据
     function submit() {
         getParams();
-        $.post('__PRO_PATH__/DataMonitor/index', params, function (res) {
+        $.post('__PRO_PATH__/DataMonitor/getPublicList', params, function (res) {
             if (res.errorcode == 0) {
                 params = res.params;
                 var data = res.data;
                 new Vue({
                     el: '#data',
                     data: {
-                        list: data
+                        list: data,
+
                     }
                 });
             } else {
@@ -153,8 +190,6 @@
             }
         });
     }
-
-    submit();
 
     // 获取点击按钮
     function getRadioClicked(name, index, value) {
@@ -246,4 +281,25 @@
                 break;
         }
     }
+
+    // 收藏
+    function dataCollect(id, isCollected) {
+        console.log(id + ' ' + isCollected);
+        $.post('__PRO_PATH__/DataMonitor/doCollect', {'id': id, 'is_collect' : isCollected}, function (res) {
+            if(res.errorcode == 0){
+                if(res.is_collect){
+                    $('#collect_'+id).removeClass().addClass('fa fa-heart collected');
+                } else{
+                    $('#collect_'+id).removeClass().addClass('fa fa-heart');
+                }
+            } else {
+                popWarn(res.msg);
+            }
+        });
+    }
+
+    // 删除
+    popupList({
+        remove: '__PRO_PATH__/DataMonitor/remove'
+    });
 </script>

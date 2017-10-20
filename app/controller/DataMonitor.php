@@ -1,6 +1,6 @@
 <?php
 /**
- * 数据--控制器
+ * 舆情--控制器
  * Created by PhpStorm.
  * User: acer-pc
  * Date: 2017/10/5
@@ -10,13 +10,11 @@ namespace app\controller;
 
 class DataMonitor extends Common{
     public $exportCols = ['id','theme_3_id','websitetype_id','task_id','title','content',
-        'source','media_type','nature','url','relevance','time'];
-    public $colsText = ['序号','三级主题', '网站类型','任务编号','标题','内容','来源','媒体类型','舆情属性',
-                        '网址','关联度','发表时间','相似文章数',''];
-
+        'source','media_type','nature','url','relevance','time','status','createtime', 'updatetime'];
+    public $colsText = ['序号', '三级主题', '网站类型','任务编号','标题','内容','来源'];
     /**
      * 数据总览
-     * @return mixed
+     * @return \think\response\View
      */
     public function index(){
         $params = input('post.');
@@ -26,12 +24,14 @@ class DataMonitor extends Common{
     }
 
     /**
-     * 公司数据列表
+     * 数据列表
      */
     public function info(){
         $params = input('get.');
+        $c_name = input('get.c_name', '');
         $theme2_id = input('get.theme_id',-1);
         $theme_3_id = input('get.theme_3_id',-1);
+        $tag_id = input('get.tag_id',-1);
         $keywords = input('get.keywords', '');
         $order = input('get.sortCol', 'a.id');
         $stime = input('get.begintime_str', '');
@@ -41,8 +41,12 @@ class DataMonitor extends Common{
         if(!$order) {
             $params['sortCol'] = 'a.id asc';
         }
+        if($c_name){
+            $cond_and['b.name'] = ['like','%'.$c_name.'%'];
+        }
         if($keywords){
             $cond_or['b.name'] = ['like','%'.$keywords.'%'];
+            $cond_or['c.name'] = ['like','%'.$keywords.'%'];
             $cond_or['d.name'] = ['like','%'.$keywords.'%'];
             $cond_or['e.name'] = ['like','%'.$keywords.'%'];
             $cond_or['a.url']  = ['like','%'.$keywords.'%'];
@@ -60,6 +64,12 @@ class DataMonitor extends Common{
             unset($cond_and['c.id']);
             $cond_and['a.id'] = ['=', $theme_3_id];
         }
+
+        if($tag_id != -1){
+            $cond = D('Tag')->getCompanyTag($tag_id);
+            $cond_and = array_merge($cond_and,$cond);
+        }
+
         if($stime && $etime){
             $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
         }
@@ -72,6 +82,9 @@ class DataMonitor extends Common{
 
         $tags = D('Tag')->getList(['section' => 5]);
         $data = D('DataMonitor')->getDataCondition($cond_or,$cond_and,$order);
+//        mydump($cond_or);
+//        mydump($cond_and);
+
         $theme_list = D('Theme')->getT1List([],[],[]);
         $cond = [];
         for($i = 0; $i < count($theme_list); $i++){
@@ -108,6 +121,56 @@ class DataMonitor extends Common{
         return view('', []);
     }
 
+
+    /**
+     * 获取全部舆情
+     */
+    public function getPublicList(){
+        $params = input('post.');
+        $relevance = input('get.relevance', -1);
+        $nature = input('get.nature',-1);
+        $area = input('get.area',-1);
+        $media_type = input('get.media_type',-1);
+        $keywords = input('get.keywords', '');
+        $stime = input('get.begintime_str', '');
+        $etime = input('get.endtime_str', '');
+        $order = input('get.sortCol', 'time');
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ''];
+        $list = [];
+        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 0];
+        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        $ret['data'] = $list;
+        $this->jsonReturn($ret);
+    }
+
+    /**
+     * 取消／收藏舆情
+     */
+    public function doCollect(){
+        $params = input('post.');
+        $id = input('post.id', -1);
+        $isCollected = input('post.is_collect');
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 收藏逻辑
+        if($id != '-1'){
+            if($isCollected){
+                $ret['is_collect'] = 0;
+            } else{
+                $ret['is_collect'] = 1;
+            }
+        }
+        $this->jsonReturn($ret);
+    }
+
+    /**
+     * 删除舆情
+     */
+    public function remove(){
+
+    }
+
+    ///////////// 未修改 ///////////
     /**
      * 获取数据量
      */
