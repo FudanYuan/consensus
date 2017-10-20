@@ -13,9 +13,9 @@ use think\Model;
 
 class TaskTheme extends Model
 {
-    protected $table = 'tax_task_theme';
+    protected $table = 'vox_task_theme';
     protected $fields = array(
-        'theme_3_id', 'task_id','status', 'createtime', 'updatetime'
+        'task_id','theme_3_id', 'status', 'createtime', 'updatetime'
     );
     protected $type = [
         'task_id' => 'integer',

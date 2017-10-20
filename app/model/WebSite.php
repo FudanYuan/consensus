@@ -14,7 +14,7 @@ use think\Model;
 
 class WebSite extends Model
 {
-    protected $table = 'tax_website';
+    protected $table = 'vox_website';
     protected $pk = 'id';
     protected $fields = array(
         'id', 'type_id', 'name', 'url', 'status', 'createtime', 'updatetime'

@@ -10,11 +10,13 @@ namespace app\controller;
 
 class DataMonitor extends Common{
     public $exportCols = ['id','theme_3_id','websitetype_id','task_id','title','content',
-        'source','media_type','nature','url','relevance','time','status','createtime', 'updatetime'];
-    public $colsText = ['序号', '三级主题', '网站类型','任务编号','标题','内容','来源'];
+        'source','media_type','nature','url','relevance','time'];
+    public $colsText = ['序号','三级主题', '网站类型','任务编号','标题','内容','来源','媒体类型','舆情属性',
+                        '网址','关联度','发表时间','相似文章数',''];
+
     /**
      * 数据总览
-     * @return \think\response\View
+     * @return mixed
      */
     public function index(){
         $params = input('post.');
@@ -64,12 +66,10 @@ class DataMonitor extends Common{
             unset($cond_and['c.id']);
             $cond_and['a.id'] = ['=', $theme_3_id];
         }
-
         if($tag_id != -1){
             $cond = D('Tag')->getCompanyTag($tag_id);
             $cond_and = array_merge($cond_and,$cond);
         }
-
         if($stime && $etime){
             $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
         }
@@ -79,12 +79,8 @@ class DataMonitor extends Common{
         else if($stime && !$etime){
             $cond_and['a.createtime'] = ['between', [strtotime($stime), time()]];
         }
-
         $tags = D('Tag')->getList(['section' => 5]);
         $data = D('DataMonitor')->getDataCondition($cond_or,$cond_and,$order);
-//        mydump($cond_or);
-//        mydump($cond_and);
-
         $theme_list = D('Theme')->getT1List([],[],[]);
         $cond = [];
         for($i = 0; $i < count($theme_list); $i++){
@@ -92,7 +88,6 @@ class DataMonitor extends Common{
             $theme_2_list = D('Theme')->getT2List([],$cond,[]);
             $theme_list[$i]['t1_content'] = $theme_2_list;
         }
-
         $ret = ['theme_list' => $theme_list, 'list' => $data, 'tags' => $tags,'cond' => $params];
         return view('', $ret);
     }

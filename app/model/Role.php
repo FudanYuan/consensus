@@ -10,7 +10,7 @@ use think\Model;
 use think\Db;
 
 class Role extends Model{
- 	protected $table = 'tax_role_admin';
+ 	protected $table = 'vox_role_admin';
  	protected $pk = 'id';
  	protected $fields = array(
  		'id', 'name','remark','status','createtime','updatetime'

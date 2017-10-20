@@ -9,7 +9,7 @@ namespace app\model;
 use think\Model;
 
 class Tag extends Model{
-    protected $table = 'tax_tag';
+    protected $table = 'vox_tag';
     protected $pk = 'id';
     protected $fields = array(
         'id', 'title','section','status','createtime','updatetime'

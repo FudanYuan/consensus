@@ -14,10 +14,10 @@ use think\Model;
 
 class Task extends Model
 {
-    protected $table = 'tax_task';
+    protected $table = 'vox_task';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'loop', 'begintime', 'endtime', 'taskstatus', 'task_num',
+        'id', 'name','loop', 'begintime', 'endtime', 'taskstatus', 'task_num',
         'time_predict', 'status', 'createtime', 'updatetime'
     );
     protected $type = [

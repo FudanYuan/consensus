@@ -12,7 +12,7 @@ class DataProcess extends Common{
 
     /**
      * 数据清洗
-     * @return \think\response\View
+     * @return mixed
      */
     public function clean(){
         $ret = ['theme_list' => [], 'list' => [],'params' => []];
@@ -20,8 +20,8 @@ class DataProcess extends Common{
     }
 
     /**
-     * 数据清洗
-     * @return \think\response\View
+     *  数据清洗
+     * @return mixed
      */
     public function update_backup(){
         $ret = ['theme_list' => [], 'list' => [],'params' => []];

@@ -14,7 +14,7 @@ use think\Model;
 
 class DataMonitor extends Model
 {
-    protected $table = 'tax_data';
+    protected $table = 'vox_data';
     protected $pk = 'id';
     protected $fields = array(
         'id','theme_3_id','websitetype_id','task_id','title','content',
@@ -88,14 +88,17 @@ class DataMonitor extends Model
         if($pag == -1){
             $pag = $this->getDataNumber();
         }
-        $res = $this->alias('a')->field('a.id as id,a.c_id as c_id,b.name as c_name,
-                   e.id as t1_id,d.id as t2_id,c.id as t3_id,e.name as t1_name,
-                   d.name as t2_name,c.name as t3_name,a.event as event,a.url as url ,
-                   a.snapshoot as snapshoot,a.task_id as task_id,a.createtime as createtime')
-            ->join('tax_company b','b.id = a.c_id')
-            ->join('tax_theme_3 c','c.id = a.theme_3_id')
-            ->join('tax_theme_2 d','d.id = c.t2_id')
-            ->join('tax_theme_1 e','e.id = d.t1_id')
+        $res = $this->alias('a')->field('a.id as id,e.id as t1_id,d.id as t2_id,c.id as t3_id,
+                    e.name as t1_name,d.name as t2_name,c.name as t3_name,b.name as websitetypename,a.url as url,
+                    a.task_id as task_id,f.name as task_name,a.createtime as createtime,
+                    a.content as content,a.source as source,a.media_type as media_type,
+                    a.nature as nature,a.url as url,a.relevance as relevance,a.time as time
+                    a.similar_num as similar_num')
+            ->join('vox_website_type b','b.id = a.websitetype_id')
+            ->join('vox_theme_3 c','c.id = a.theme_3_id')
+            ->join('vox_theme_2 d','d.id = c.t2_id')
+            ->join('vox_theme_1 e','e.id = d.t1_id')
+            ->join('vox_task f','f.id = a.task_id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -141,14 +144,8 @@ class DataMonitor extends Model
      */
     private function filterField($data){
         $errors = [];
-        if (isset($data['c_id']) && !$data['c_id']) {
-            $errors['c_id'] = '公司id不能为空';
-        }
         if (isset($data['theme_3_id']) && !$data['theme_3_id']) {
             $errors['theme_3_id'] = '3级主题不能为空';
-        }
-        if (isset($data['event']) && !$data['event']) {
-            $errors['event'] = '企业事件不能为空';
         }
         if (isset($data['url']) && !$data['url']) {
             $errors['url'] = '企业网址不能为空';
@@ -158,8 +155,9 @@ class DataMonitor extends Model
 
     /**
      * 更新数据信息
-     * {@inheritDoc}
-     * @see \think\Model::save()
+     * @param $id
+     * @param $data
+     * @return array
      */
     public function saveData($id, $data){
         $ret = [];

@@ -11,7 +11,7 @@ use think\Model;
 
 class Theme extends Model
 {
-    protected $table = 'tax_theme_3';
+    protected $table = 'vox_theme_3';
     protected $pk = 'id';
     protected $fields = array(
         'id', 't2_id', 'name', 'status', 'createtime', 'updatetime'

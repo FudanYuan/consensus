@@ -10,7 +10,7 @@ use think\Model;
 use think\Debug;
 
 class UserAdmin extends Model{
- 	protected $table = 'tax_user_admin';
+ 	protected $table = 'vox_user_admin';
  	protected $pk = 'id';
  	protected $fields = array(
  		'id', 'username','pass','roleid','remark','status','logintime','createtime','updatetime'
