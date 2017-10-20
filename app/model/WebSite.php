@@ -59,7 +59,7 @@ class WebSite extends Model
         }
         $res = $this->alias('a')->field('a.id as id, a.name as name ,
             b.id as type_id,b.name as type_name,a.url as url')
-            ->join('tax_website_type b', 'a.type_id=b.id')
+            ->join('vox_website_type b', 'a.type_id=b.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -182,7 +182,7 @@ class WebSite extends Model
     {
         $res = $this->alias('a')->field('a.id as id, a.name as name ,
             b.id as type_id,b.name as type_name,a.url as url')
-            ->join('tax_website_type b', 'a.type_id=b.id')
+            ->join('vox_website_type b', 'a.type_id=b.id')
             ->where(['a.id' => $id])
             ->find();
         return $res;
@@ -225,7 +225,7 @@ class WebSite extends Model
         }
         $cond = "$begin_time < a.createtime and a.createtime < $end_time";
         $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
-            ->join('tax_website_type b', 'a.type_id=b.id')
+            ->join('vox_website_type b', 'a.type_id=b.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)

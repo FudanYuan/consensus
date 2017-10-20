@@ -14,7 +14,7 @@ use think\Model;
 
 class TaskUrl extends Model
 {
-    protected $table = 'vox_task_url';
+    protected $table = 'vox_task_website';
     protected $fields = array(
         'task_id','website_id','status', 'createtime', 'updatetime'
     );
