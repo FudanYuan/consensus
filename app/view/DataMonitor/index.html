@@ -86,6 +86,7 @@
             <thead>
             <tr>
                 <th>标题</th>
+                <th></th>
                 <th>来源</th>
                 <th>媒体类型</th>
                 <th>舆情属性</th>
@@ -108,9 +109,11 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for="model in list">
+            <template v-for="model in list">
+                <tr>
                     <td hidden><input type="checkbox" name="select" :value="model.id"/></td>
-                    <td><a :href="model.url" target="_blank">{{model.title}}<a/></td>
+                    <td><a :href="model.url" target="_blank" :title="model.title">{{model.title}}</a></td>
+                    <td><a href="javascript:;" @click="digestItem(model.id)"><i class="fa fa-chevron-circle-down" aria-hidden="true" :id="'chevron_'+model.id"></i></a></td>
                     <td>{{model.source}}</td>
                     <td>{{model.media_type}}</td>
                     <td>{{model.nature}}</td>
@@ -142,6 +145,22 @@
                         {/if}
                     </td>
                 </tr>
+                <tr class="digestItem" :id="'digestItem_'+model.id">
+                    <td colspan="10">
+                        <div>
+                            <p>
+                                <i>内容概要:</i>
+                                {{model.digest}}
+                            </p>
+                            <p v-if="model.userID!=''">
+                                <i>用户:</i>
+                                {{model.userID}}
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+
             </tbody>
         </table>
     </div>
@@ -212,7 +231,7 @@
 
     // 转化时间
     Vue.filter('moment', function (value, formatString) {
-        formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+        formatString = formatString || 'YYYY-MM-DD HH:mm';
         return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
     });
 
@@ -240,6 +259,18 @@
                 });
             }
         });
+    }
+
+    // 摘要
+    function digestItem(id){
+        var curClass = $('#chevron_'+id).prop("className");
+        console.log(curClass);
+        if(curClass == 'fa fa-chevron-circle-up'){
+            $('#chevron_'+id).removeClass('fa fa-chevron-circle-up').addClass('fa fa-chevron-circle-down');
+        } else{
+            $('#chevron_'+id).removeClass('fa fa-chevron-circle-down').addClass('fa fa-chevron-circle-up');
+        }
+        $('#digestItem_'+id).toggle();
     }
 
     // 获取点击按钮
@@ -339,6 +370,7 @@
         $("input[name='select'][value="+id+"]").attr("checked", 'checked');
         $('#confirm-popup').popup('show');
     }
+
 //    setInterval(function () {
 //        submit();
 //    }, 5000);
