@@ -17,16 +17,19 @@ class DataMonitor extends Model
     protected $table = 'tax_data';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'c_id', 'theme_3_id','event', 'url','snapshoot',
-        'time','websitetype_id','task_id','status','createtime', 'updatetime'
+        'id','theme_3_id','websitetype_id','task_id','title','content',
+        'source','media_type','nature','url','relevance','time','status','createtime', 'updatetime'
     );
     protected $type = [
         'id' => 'integer',
-        'c_id' => 'integer',
         'theme_3_id'=>'integer',
         'time' =>'integer',
         'websitetype_id' => 'integer',
         'task_id'=>'integer',
+        'time' => 'integer',
+        'similar_num' => 'integer',
+        'is_collect' => 'integer',
+        'is_warn' => 'integer',
         'status' => 'integer',
         'createtime' => 'integer',
         'updatetime' => 'integer'
