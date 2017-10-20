@@ -12,6 +12,7 @@ class DataMonitor extends Common{
     public $exportCols = ['id','theme_3_id','websitetype_id','task_id','title','content',
         'source','media_type','nature','url','relevance','time','status','createtime', 'updatetime'];
     public $colsText = ['序号', '三级主题', '网站类型','任务编号','标题','内容','来源'];
+
     /**
      * 数据总览
      * @return \think\response\View
@@ -137,7 +138,7 @@ class DataMonitor extends Common{
         $order = input('get.sortCol', 'time');
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ''];
         $list = [];
-        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 0];
+        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
         $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
         $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
@@ -155,9 +156,9 @@ class DataMonitor extends Common{
         // 收藏逻辑
         if($id != '-1'){
             if($isCollected){
-                $ret['is_collect'] = 0;
+
             } else{
-                $ret['is_collect'] = 1;
+
             }
         }
         $this->jsonReturn($ret);

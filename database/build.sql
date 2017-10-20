@@ -73,6 +73,27 @@ CREATE TABLE `vox_theme_3` (
   FOREIGN KEY (t2_id) REFERENCES vox_theme_2(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+# ------------------------------------------------------------
+# Dump of table vox_role_admin
+
+DROP TABLE IF EXISTS `vox_role_admin`;
+
+CREATE TABLE `vox_role_admin` (
+  `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` VARCHAR(50) DEFAULT NULL COMMENT '角色名',
+  `remark` VARCHAR(50) DEFAULT NULL COMMENT '备注',
+  `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
+  `createtime` INT DEFAULT NULL COMMENT '创建时间',
+  `updatetime` INT DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `vox_role_admin` (`name`, `remark`, `status`, `createtime`, `updatetime`) VALUES
+('admin', '管理员', 1, 1503037656, NULL),
+('edit', '普通管理员', 1, 1503037656, NULL);
+
+
 
 # Dump of table vox_user_admin
 # ------------------------------------------------------------
@@ -93,21 +114,10 @@ CREATE TABLE `vox_user_admin` (
   FOREIGN KEY (roleid) REFERENCES vox_role_admin(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
-# ------------------------------------------------------------
-# Dump of table vox_role_admin
-
-DROP TABLE IF EXISTS `vox_role_admin`;
-
-CREATE TABLE `vox_role_admin` (
-  `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` VARCHAR(50) DEFAULT NULL COMMENT '角色名',
-  `remark` VARCHAR(50) DEFAULT NULL COMMENT '备注',
-  `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
-  `createtime` INT DEFAULT NULL COMMENT '创建时间',
-  `updatetime` INT DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+INSERT INTO `vox_user_admin` (username`, `pass`, `roleid`, `remark`, `status`, `logintime`, `createtime`, `updatetime`) VALUES
+('admin', '21232f297a57a5a743894a0e4a801fc3', 1, '超级管理员', 1, 1508462059, 1503213456, 1508462059),
+('edit', '21232f297a57a5a743894a0e4a801fc3', 1, '编辑', 1, 1507363353, 1503213456, 1507363353),
+('transbit10', '63cb797f1fc844d1644942de578b1724', 1, '', 1, 1508388553, 1508222974, 1508388553);
 
 
 # Dump of table vox_action_admin
