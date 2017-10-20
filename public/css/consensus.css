@@ -128,3 +128,12 @@ table td {
 .collected{
     color: red;
 }
+
+.digestItem{
+    background-color: rgba(26, 173, 25, 0);
+    display: none;
+}
+
+#data span{
+    color: red;
+}
