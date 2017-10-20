@@ -63,6 +63,9 @@
                     window.location.reload();
                 } else {
                     popWarn('删除失败');
+                    $("input[name='select']:checked").each(function () {
+                        $("input[name='select'][value="+this.value+"]").attr("checked", false);
+                    });
                 }
             });
         });

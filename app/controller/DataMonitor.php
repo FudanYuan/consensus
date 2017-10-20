@@ -138,9 +138,9 @@ class DataMonitor extends Common{
         $order = input('get.sortCol', 'time');
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ''];
         $list = [];
-        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
@@ -168,8 +168,18 @@ class DataMonitor extends Common{
      * 删除舆情
      */
     public function remove(){
-
+        $ret = ['code' => 1, 'msg' => '成功'];
+        $ids = input('get.ids');
+        try{
+            // 重写/model/DataMonitor的remove函数即可
+            $res = D('DataMonitor')->remove(['id' => ['in', $ids]]);
+        }catch(MyException $e){
+            $ret['code'] = 2;
+            $ret['msg'] = '删除失败';
+        }
+        $this->jsonReturn($ret);
     }
+
 
     ///////////// 未修改 ///////////
     /**
