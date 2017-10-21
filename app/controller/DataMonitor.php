@@ -138,9 +138,9 @@ class DataMonitor extends Common{
         $order = input('get.sortCol', 'time');
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ''];
         $list = [];
-        $list[0] =['id' => 1, 'title' => '测试测试测试测<span>试测</span>试测试测试测试1', 'digest'=> "'测试测试测试测试测试测试测试测试测试1测试测试测'<span>'试测试测试'</span>'测试测试1'", 'userID' => '1211212', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'digest'=> '测试测试测试测试测试测试测试测试测试1测试测试测<span>试测试测试</span>测试测试1', 'userID' => '1211212', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'digest'=> '测试测试测试测试测试测试测试测试测试1测试测试测<span>试测试测试</span>测试测试1', 'userID' => '', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        $list[0] =['id' => 1, 'title' => '测试测试测试测<span>试测</span>试测试测试测试1', 'digest'=> "测试测试测试测试测试测试测试测试测试1测试测试测\"<span>\"试测试测试'</span>'测试测试1'", 'userID' => '1211212', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '中立', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'digest'=> '测试测试测试测试测试测试测试测试测试1测试测试测<span>试测试测试</span>测试测试1', 'userID' => '1211212', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '正面', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'digest'=> '测试测试测试测试测试测试测试测试测试1测试测试测<span>试测试测试</span>测试测试1', 'userID' => '', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '负面', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
@@ -160,6 +160,22 @@ class DataMonitor extends Common{
             } else{
 
             }
+        }
+        $this->jsonReturn($ret);
+    }
+
+    /**
+     * 编辑舆情，人工研判
+     */
+    public function edit(){
+        $params = input('post.');
+        $id = input('post.id', -1);
+        $nature = input('post.nature', '');
+        $relevance = input('post.relevance', '');
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 编辑逻辑
+        if($id != '-1'){
+            // 修改成功，msg为 '编辑成功'，否则 '编辑失败'
         }
         $this->jsonReturn($ret);
     }

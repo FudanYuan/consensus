@@ -119,9 +119,9 @@
                     <td>{{model.nature}}</td>
                     <td>{{model.publishtime | moment}}</td>
                     <td :title="model.relevance">
-                        <div id="bg"><!--这里是背景，也就是灰色的星星-->
-                            <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是12px，也就是1分12px，如果是4.3分，就是4.3*12px = 51.6px的长度，当然这个一般是取得数据后用js或者其他模板语言去控制的-->
-                            <div id="over" :style="{ width: model.relevance * 6 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
+                        <div class="bg"><!--这里是背景，也就是灰色的星星-->
+                            <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是16px，也就是1分16px-->
+                            <div class="over" :style="{ width: model.relevance * 8 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
                         </div>
                     </td>
                     <td>{{model.similar_num}}</td>
@@ -133,7 +133,7 @@
                         {/if}
 
                         {if condition="authority('Data_edit')"}
-                        <a href="javascript:;" @click="dataEdit(model.id)" title="编辑">
+                        <a href="javascript:;" @click="popupVerify(model.id, model.nature, model.relevance)" title="编辑" id="from-verify">
                             <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;"></i>
                         </a>
                         {/if}
@@ -149,24 +149,24 @@
                     <td colspan="10">
                         <div>
                             <p>
-                                <i>内容概要:</i>
+                                <b>内容概要:</b>
                                 {{model.digest}}
                             </p>
                             <p v-if="model.userID!=''">
-                                <i>用户:</i>
+                                <b>用户:</b>
                                 {{model.userID}}
                             </p>
                         </div>
                     </td>
                 </tr>
             </template>
-
             </tbody>
         </table>
     </div>
 </div><!-- /main-container -->
 {include file="Common/popup_warn" /}
 {include file="Common/popup_list" /}
+{include file="Common/popup_verify" /}
 {include file="Common/calendar" /}
 {include file="Common/bottom" /}
 <script src="__PUBLIC__/js/datapicker/daterangepicker.js"></script>
@@ -226,6 +226,13 @@
     getSortCol(sort);
 
     var params = {};
+    var vm = new Vue({
+        el: '#data',
+        data: {
+            list: {},
+            params: {}
+        }
+    });
 
     submit();
 
@@ -240,23 +247,8 @@
         getParams();
         $.post('__PRO_PATH__/DataMonitor/getPublicList', params, function (res) {
             if (res.errorcode == 0) {
-                params = res.params;
-                var data = res.data;
-                new Vue({
-                    el: '#data',
-                    data: {
-                        list: data,
-                        params: params
-                    }
-                });
-            } else {
-                new Vue({
-                    el: '#data',
-                    data: {
-                        list: {},
-                        params: params
-                    }
-                });
+                vm.list = res.data;
+                vm.params = res.params;
             }
         });
     }
@@ -373,5 +365,5 @@
 
 //    setInterval(function () {
 //        submit();
-//    }, 5000);
+//    }, 1000);
 </script>
