@@ -23,6 +23,7 @@ class DataMonitor extends Model
     protected $type = [
         'id' => 'integer',
         'theme_3_id'=>'integer',
+        'relevance' =>'integer',
         'time' =>'integer',
         'websitetype_id' => 'integer',
         'task_id'=>'integer',
@@ -77,8 +78,8 @@ class DataMonitor extends Model
 
         $res = $this->field('id,title,source,url,media_type,nature,
             time as publishtime,content,similar_num,relevance,is_collect')
-            ->where($cond_and)
             ->whereor($cond_or)
+            ->where($cond_and)
             ->order($order)
             ->select();
         //->paginate(10);

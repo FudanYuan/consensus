@@ -126,23 +126,29 @@ class DataMonitor extends Common{
      */
     public function getPublicList(){
         $params = input('post.');
-        $relevance = input('get.relevance', -1);
-        $nature = input('get.nature',-1);
-        $area = input('get.area',-1);
-        $media_type = input('get.media_type',-1);
-        $keywords = input('get.keywords', '');
-        $stime = input('get.begintime_str', '');
-        $etime = input('get.endtime_str', '');
-        $order = input('get.sortCol', 'time');
+        $relevance = input('post.relevance', -1);
+        $nature = input('post.nature',-1);
+        $area = input('post.area',-1);
+        $media_type = input('post.media_type',-1);
+        $keywords = input('post.keywords', '');
+        $stime = input('post.begintime_str', '');
+        $etime = input('post.endtime_str', '');
+        $order = input('post.sortCol', 'time');
         $cond_and = [];
         $cond_or = [];
+        if($nature != -1){
+            if($nature == 0){
+                $nature_select = '正面';
+            }else if($nature == 1){
+                $nature_select = '中立';
+            }else{
+                $nature_select = '负面';
+            }
+            $cond_and['nature'] = ['=', $nature_select];
+        }
 
         if($relevance != -1){
             $cond_and['relevance'] = ['=', $relevance];
-        }
-
-        if($nature != -1){
-            $cond_and['nature'] = ['=', $nature];
         }
 
         if($area!=-1){
@@ -160,21 +166,21 @@ class DataMonitor extends Common{
             $cond_or['url'] =['like','%'.$keywords.'%'];
         }
         if($stime && $etime){
-            $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
+            $cond_and['time'] = ['between', [strtotime($stime), strtotime($etime)]];
         }
         else if(!$stime && $etime){
-            $cond_and['a.createtime'] = ['between', [0, strtotime($etime)]];
+            $cond_and['time'] = ['between', [0, strtotime($etime)]];
         }
         else if($stime && !$etime){
-            $cond_and['a.createtime'] = ['between', [strtotime($stime), time()]];
+            $cond_and['time'] = ['between', [strtotime($stime), time()]];
         }
 
-        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
-
-        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
-//        $list[4] =['id' => 4, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-//        $list[5] =['id' => 5, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-//        $list[6] =['id' => 6, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => "",'keywords' =>$keywords];
+        $list = [];
+        //$list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
+        $list[1] =['id' => 4, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+        $list[2] =['id' => 5, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+        $list[3] =['id' => 6, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
