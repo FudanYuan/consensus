@@ -4,13 +4,13 @@
     <div class="padding-md">
         <ul class="breadcrumb">
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/"> 首页</a></li>
-            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/WebSite/index"> 网站库</a></li>
+            <li><pan class="primary-font"><i class="icon-home"></i></pan><a href="__PRO_PATH__/WebSite/index">媒体库</a></li>
             <li>新建标签</li>
         </ul>
         <div class="form-wrapper">
             <form class="form-horizontal" method="post">
                 <div class="form-group {$errors.name ?= 'has-error'}">
-                    <label for="form-name" class="col-sm-2 control-label">网站标签：</label>
+                    <label for="form-name" class="col-sm-2 control-label">媒体标签：</label>
                     <div class="col-sm-4">
                         <input name="name" type="text" class="form-control" id="form-name" value="{$data.name??''}">
                         <span class="help-block">{$errors.name??''}</span>
@@ -28,8 +28,8 @@
     </div>
 </div><!-- /main-container -->
 <script>
-    $('#tax-nav-warehouse').addClass('open active');
-    $('#tax-nav-warehouse-sub3').addClass('active');
+    $('#consensus-nav-warehouse').addClass('open active');
+    $('#consensus-nav-warehouse-sub3').addClass('active');
     $('#form-cancel').on('click', function(){
         window.location.href = '__PRO_PATH__/WebSite/index';
     });

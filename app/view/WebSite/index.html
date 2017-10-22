@@ -4,12 +4,12 @@
     <div class="padding-md">
         <ul class="breadcrumb">
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/"> 首页</a></li>
-            <li>网站库</li>
+            <li>媒体库</li>
         </ul>
         <div class="list-search">
             <form action="" class="form-inline" method="get" id="main-form">
                 <div class="form-group">
-                    <label for="type_id">网站标签：</label>
+                    <label for="type_id">媒体标签：</label>
                     <select name="type_id" class="form-control" style="width:100px" id="type_id">
                         <option value="-1">全部</option>
                         {foreach name="typeList" item="model"}
@@ -114,8 +114,8 @@
 {include file="Common/popup_list" /}
 {include file="Common/bottom" /}
 <script>
-    $('#tax-nav-warehouse').addClass('active open');
-    $('#tax-nav-warehouse-sub3').addClass('active');
+    $('#consensus-nav-warehouse').addClass('active open');
+    $('#consensus-nav-warehouse-sub3').addClass('active');
 
     // 改变排序方向
     function changeSort(sort) {
