@@ -18,82 +18,7 @@ class DataMonitor extends Common{
      * @return \think\response\View
      */
     public function index(){
-        $params = input('post.');
-        $theme_list = D('Theme')->getT3List_data();
-        $ret = ['theme_list' => $theme_list, 'list' => [],'params' => $params];
-        return view('', $ret);
-    }
-
-    /**
-     * 数据列表
-     */
-    public function info(){
-        $params = input('get.');
-        $c_name = input('get.c_name', '');
-        $theme2_id = input('get.theme_id',-1);
-        $theme_3_id = input('get.theme_3_id',-1);
-        $tag_id = input('get.tag_id',-1);
-        $keywords = input('get.keywords', '');
-        $order = input('get.sortCol', 'a.id');
-        $stime = input('get.begintime_str', '');
-        $etime = input('get.endtime_str', '');
-        $cond_and = [];
-        $cond_or = [];
-        if(!$order) {
-            $params['sortCol'] = 'a.id asc';
-        }
-        if($c_name){
-            $cond_and['b.name'] = ['like','%'.$c_name.'%'];
-        }
-        if($keywords){
-            $cond_or['b.name'] = ['like','%'.$keywords.'%'];
-            $cond_or['c.name'] = ['like','%'.$keywords.'%'];
-            $cond_or['d.name'] = ['like','%'.$keywords.'%'];
-            $cond_or['e.name'] = ['like','%'.$keywords.'%'];
-            $cond_or['a.url']  = ['like','%'.$keywords.'%'];
-            $cond_or['a.event'] =['like','%'.$keywords.'%'];
-        }
-        if($theme2_id != -1){
-            $theme3_list = D('Theme')->getT3ByT2id($theme2_id);
-            $theme3_ids = [];
-            for($i = 0; $i < count($theme3_list); $i++){
-                array_push($theme3_ids, $theme3_list[$i]['t3_id']);
-            }
-            $cond_and['c.id'] = ['in', $theme3_ids];
-        }
-        if($theme_3_id != -1){
-            unset($cond_and['c.id']);
-            $cond_and['a.id'] = ['=', $theme_3_id];
-        }
-
-        if($tag_id != -1){
-            $cond = D('Tag')->getCompanyTag($tag_id);
-            $cond_and = array_merge($cond_and,$cond);
-        }
-
-        if($stime && $etime){
-            $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
-        }
-        else if(!$stime && $etime){
-            $cond_and['a.createtime'] = ['between', [0, strtotime($etime)]];
-        }
-        else if($stime && !$etime){
-            $cond_and['a.createtime'] = ['between', [strtotime($stime), time()]];
-        }
-
-        $tags = D('Tag')->getList(['section' => 5]);
-        $data = D('DataMonitor')->getDataCondition($cond_or,$cond_and,$order);
-
-        $theme_list = D('Theme')->getT1List([],[],[]);
-        $cond = [];
-        for($i = 0; $i < count($theme_list); $i++){
-            $cond['b.id'] = ['=',$theme_list[$i]['t1_id']];
-            $theme_2_list = D('Theme')->getT2List([],$cond,[]);
-            $theme_list[$i]['t1_content'] = $theme_2_list;
-        }
-
-        $ret = ['theme_list' => $theme_list, 'list' => $data, 'tags' => $tags,'cond' => $params];
-        return view('', $ret);
+        return view('', []);
     }
 
     /**
@@ -242,6 +167,26 @@ class DataMonitor extends Common{
         $this->jsonReturn($ret);
     }
 
+
+    /**
+     * 获取预警关键词列表
+     */
+    public function getWarnKeywordsList(){
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 查询结果，
+        // 逻辑： 先判断关键词预警是否开启，若开启，获取关键词列表，否则返回数据为空
+        $ret['switch'] = 1;
+        $list = ['测试1', '测试2', '测试3', '测试4', '测试5', '测试6'];
+        $ret['nature'] = ['正面' => 1, '中立' => 1, '负面' => 1];
+        $ret['media'] = ['微信' => 1, '新闻' => 0, '微博' => 1];
+        $ret['keywords'] = $list;
+        $this->jsonReturn($ret);
+    }
+
+
+    public function addWarnKeywords(){
+
+    }
 
     ///////////// 未修改 ///////////
     /**

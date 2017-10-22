@@ -178,6 +178,7 @@
                         firstDay: 1
                     },
                     ranges: {
+                        '全部': [0, moment()],
                         '今日': [moment().startOf('day'), moment()],
                         '昨日': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
                         '最近7日': [moment().subtract(6, 'days'), moment()],

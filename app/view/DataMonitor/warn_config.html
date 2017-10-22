@@ -26,13 +26,13 @@
                 </ul>
                 <div class="smart-widget-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="keywordsTab">
+                        <div class="tab-pane fade in active"  id="keywordsTab">
                             <!-- 搜索条件 -->
                             <div class="list-btns">
                                 <form action="" class="form-inline" method="get" id="switch-form" >
                                     <div class="form-group">
-                                        <div id="warnkeywordsSwitch" class="switch" data-on="success" data-off="warning">
-                                            <input type="checkbox" name="warnkeywordsSwitch" checked/>
+                                        <div id="keywordsSwitch" class="switch" data-on="success" data-off="warning">
+                                            <input type="checkbox" name="keywordsSwitch" checked/>
                                         </div>
                                         <span style="vertical-align: super;">关键词预警: 根据添加的关键词和条件，从抓取的舆情当中提取相关联的文章，呈现在“舆情预警－预警舆情”模块。</span>
                                     </div>
@@ -44,28 +44,78 @@
                                 <div class="form-wrapper">
                                     <form class="form-horizontal" method="post" id="condition-form">
                                         <div class="form-group">
-                                            <label for="WarnKeywords" class="col-sm-2 control-label">关键词</label>
-                                            <div class="col-sm-6">
-                                                <input class="form-control" type="text" name="WarnKeywords" placeholder="请输入关键词..." id="WarnKeywords">
+                                            <label for="addKeywords" class="col-sm-2 control-label">关键词：</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" type="text" v-model.trim="addKeywords" name="addKeywords" placeholder="请输入关键词..." id="addKeywords">
                                                 <span class="help-block"></span>
                                             </div>
-                                            <a class="col-sm-1 btn btn-success" href="javascript:;" onclick="addKeyWords()">添加</a>
+                                            <a href="javascript:;" class="col-sm-1 btn btn-success" @click="addKeyWords(addKeywords)">添加</a>
                                         </div>
 
-                                        <div class="form-group {$errors.theme ?= 'has-error'}">
-                                            <label for="new-task-form-theme" class="col-sm-2 control-label">爬取主题</label>
-                                            <div class="col-sm-4">
-
-                                                <p class="help-block"></p>
+                                        <div class="form-group">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <div class="keywords-content">
+                                                    <template  v-for="keyword in keywords">
+                                                        <div class="keywords-list">
+                                                            <span class="keyword-item">{{keyword}}</span>
+                                                            <a href="javascript:;" class="keyword-del" @click="deleteKeyword(keyword)">x</a>
+                                                        </div>
+                                                    </template>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group {$errors.website ?= 'has-error'}">
-                                            <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站</label>
-                                            <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">舆情属性：</label>
+                                            <div class="col-lg-10">
+                                                <template v-for="(value, key, index) in nature">
+                                                    <div class="checkbox inline-block" style="padding-right: 10px;">
+                                                        <div class="custom-checkbox">
+                                                            <input type="checkbox" :id="'nature'+index" :value="key" v-model="natureChecked">
+                                                            <label :for="'nature'+index"></label>
+                                                        </div>
+                                                        <div class="inline-block vertical-top">{{key}}</div>
+                                                    </div>
+                                                </template>
+                                            </div><!-- /.col -->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">舆情属性：</label>
+                                            <div class="col-lg-10">
+                                                <template v-for="(value, key, index) in nature">
+                                                    <div class="checkbox inline-block" style="padding-right: 10px;">
+                                                        <div class="custom-checkbox">
+                                                            <input type="checkbox" :id="'nature'+index" :value="key" v-model="natureChecked">
+                                                            <label :for="'nature'+index"></label>
+                                                        </div>
+                                                        <div class="inline-block vertical-top">{{key}}</div>
+                                                    </div>
+                                                </template>
+                                            </div><!-- /.col -->
+                                        </div>
 
-                                                <p class="help-block"></p>
-                                            </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">媒体类型：</label>
+                                            <div class="col-lg-10">
+                                                <template v-for="(value, key, index) in media">
+                                                    <div class="checkbox inline-block" style="padding-right: 10px;">
+                                                        <div class="custom-checkbox">
+                                                            <input type="checkbox" :id="'media'+index" :value="key" v-model="mediaChecked">
+                                                            <label :for="'media'+index"></label>
+                                                        </div>
+                                                        <div class="inline-block vertical-top">{{key}}</div>
+                                                    </div>
+                                                </template>
+                                            </div><!-- /.col -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <p>选中：{{natureChecked}}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <p>选中：{{mediaChecked}}</p>
                                         </div>
 
                                         <div class="form-group">
@@ -101,7 +151,8 @@
 
     var params = {};
 
-    function submit() {
+    // 获取参数
+    function getParams() {
         var data = $('#switch-form').serializeArray();
         $.each(data, function () {
             params[this.name] = this.value;
@@ -109,15 +160,91 @@
         console.log(JSON.stringify(params));
     }
 
-    $('#warnkeywordsSwitch').on('switch-change', function (e, data) {
+    // 关键词预警开关
+    $('#keywordsSwitch').on('switch-change', function (e, data) {
         var $el = $(data.el)
                 , value = data.value;
-        params['warnkeywordsSwitch'] = value;
+        params['keywordsSwitch'] = value;
         if(!value){
-            $('.tab-content .padding-md').hide();
+            $('#keywordsTab .padding-md').hide();
         } else{
-            $('.tab-content .padding-md').show();
+            $('#keywordsTab .padding-md').show();
         }
+        console.log(value);
         submit();
     });
+
+    Vue.filter('judgeChecked', function (value) {
+        return value == 1;
+    });
+
+    // 初始化vue
+    // 添加关键词
+    var vm = new Vue({
+        el: '#keywordsTab',
+        data: {
+            keywordSwitch: false,
+            addKeywords: '',
+            keywords: [],
+            nature: {},
+            media: {},
+            natureChecked: [],
+            mediaChecked: []
+        },
+        methods:{
+            addKeyWords: function (value) {
+                if(value != ""){
+                    this.keywords.push(value);
+                    this.addKeywords = '';
+                    console.log(value);
+                }
+            },
+            deleteKeyword:function (item) {
+                console.log(item);
+                Array.prototype.remove = function(val) {
+                    var index = this.indexOf(val);
+                    if (index > -1) {
+                        this.splice(index, 1);
+                    }
+                };
+                this.keywords.remove(item);
+            }
+        }
+    });
+
+    // 获取关键词列表
+    $.post('__PRO_PATH__/DataMonitor/getWarnKeywordsList', {}, function (res) {
+        if (res.errorcode == 0) {
+            if(!res.switch){
+                $('#keywordsSwitch').bootstrapSwitch('setState', res.switch); // true || false
+                $('#keywordsTab .padding-md').hide();
+            } else {
+                vm.keywords = res.keywords;
+                vm.nature = res.nature;
+                vm.media = res.media;
+
+                $.each(res.nature, function (key, value) {
+                    if(value == 1){
+                        vm.natureChecked.push(key);
+                    }
+                });
+
+                $.each(res.media, function (key, value) {
+                    if(value == 1){
+                        vm.mediaChecked.push(key);
+                    }
+                });
+
+                console.log(vm.natureChecked, vm.mediaChecked);
+            }
+        }
+    });
+
+    // 提交请求
+    function submit() {
+        getParams();
+        $.post('__PRO_PATH__/DataMonitor/addWarnKeywordsList', params, function (res) {
+
+        });
+    }
 </script>
