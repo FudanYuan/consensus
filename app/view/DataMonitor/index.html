@@ -20,32 +20,56 @@
 
                 <div class="form-group">
                     <label for="relevance">舆情状态：</label>
-                    <div class="btn-group" data-toggle="buttons" id="relevance">
-                        <label class="btn btn-success" id="relevance-1" onclick="getRadioClicked('relevance', 0, -1)">
-                            <input type="radio" name="relevance" value="-1" checked>全部
-                        </label>
-                        <label class="btn btn-default" id="relevance0" onclick="getRadioClicked('relevance', 1, 0)">
-                            <input type="radio" name="relevance" value="0">相关性强
-                        </label>
-                    </div>
+                    <ul class="radio-group" id="relevance">
+                        <li class="radio-list">
+                            <input type="radio" name="relevance" class="labelauty" id="relevance-1" value="-1" style="display: none;" checked>
+                            <label for="relevance-1">
+                                <span class="labelauty-unchecked">全部</span>
+                                <span class="labelauty-checked">全部</span>
+                            </label>
+                        </li>
+                        <li class="radio-list">
+                            <input type="radio" name="relevance" class="labelauty" id="relevance0" value="0" style="display: none;">
+                            <label for="relevance0">
+                                <span class="labelauty-unchecked">相关性强</span>
+                                <span class="labelauty-checked">相关性强</span>
+                            </label>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="form-group">
                     <label for="nature">舆情属性：</label>
-                    <div class="btn-group" data-toggle="buttons" id="nature">
-                        <label class="btn btn-success" id="nature-1" onclick="getRadioClicked('nature', 0, -1)">
-                            <input type="radio" name="nature" value="-1" checked>全部
-                        </label>
-                        <label class="btn btn-default" id="nature0" onclick="getRadioClicked('nature', 1, 0)">
-                            <input type="radio" name="nature" value="0">正面
-                        </label>
-                        <label class="btn btn-default" id="nature1" onclick="getRadioClicked('nature', 2, 1)">
-                            <input type="radio" name="nature" value="1">中立
-                        </label>
-                        <label class="btn btn-default" id="nature2" onclick="getRadioClicked('nature', 3, 2)">
-                            <input type="radio" name="nature" value="2">负面
-                        </label>
-                    </div>
+                    <ul class="radio-group" id="nature">
+                        <li class="radio-list">
+                            <input type="radio" name="nature" class="labelauty" id="nature-all" value="-1" style="display: none;" checked>
+                            <label for="nature-all">
+                                <span class="labelauty-unchecked">全部</span>
+                                <span class="labelauty-checked">全部</span>
+                            </label>
+                        </li>
+                        <li class="radio-list">
+                            <input type="radio" name="nature" class="labelauty" id="nature-pos" value="0" style="display: none;">
+                            <label for="nature-pos">
+                                <span class="labelauty-unchecked">正面</span>
+                                <span class="labelauty-checked">正面</span>
+                            </label>
+                        </li>
+                        <li class="radio-list">
+                            <input type="radio" name="nature" class="labelauty" id="nature-neu" value="1" style="display: none;">
+                            <label for="nature-neu">
+                                <span class="labelauty-unchecked">中立</span>
+                                <span class="labelauty-checked">中立</span>
+                            </label>
+                        </li>
+                        <li class="radio-list">
+                            <input type="radio" name="nature" class="labelauty" id="nature-neg" value="2" style="display: none;">
+                            <label for="nature-neg">
+                                <span class="labelauty-unchecked">负面</span>
+                                <span class="labelauty-checked">负面</span>
+                            </label>
+                        </li>
+                    </ul>
                 </div>
 
                 <br/><br/>
@@ -119,9 +143,9 @@
                     <td>{{model.nature}}</td>
                     <td>{{model.publishtime | moment}}</td>
                     <td :title="model.relevance">
-                        <div id="bg"><!--这里是背景，也就是灰色的星星-->
-                            <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是12px，也就是1分12px，如果是4.3分，就是4.3*12px = 51.6px的长度，当然这个一般是取得数据后用js或者其他模板语言去控制的-->
-                            <div id="over" :style="{ width: model.relevance * 6 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
+                        <div class="bg"><!--这里是背景，也就是灰色的星星-->
+                            <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是16px，也就是1分16px-->
+                            <div class="over" :style="{ width: model.relevance * 8 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
                         </div>
                     </td>
                     <td>{{model.similar_num}}</td>
@@ -133,7 +157,7 @@
                         {/if}
 
                         {if condition="authority('Data_edit')"}
-                        <a href="javascript:;" @click="dataEdit(model.id)" title="编辑">
+                        <a href="javascript:;" @click="popupVerify(model.id, model.nature, model.relevance)" title="编辑" :id="'from-verify'+model.id">
                             <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;"></i>
                         </a>
                         {/if}
@@ -149,24 +173,24 @@
                     <td colspan="10">
                         <div>
                             <p>
-                                <i>内容概要:</i>
+                                <b>内容概要:</b>
                                 {{model.digest}}
                             </p>
                             <p v-if="model.userID!=''">
-                                <i>用户:</i>
+                                <b>用户:</b>
                                 {{model.userID}}
                             </p>
                         </div>
                     </td>
                 </tr>
             </template>
-
             </tbody>
         </table>
     </div>
 </div><!-- /main-container -->
 {include file="Common/popup_warn" /}
 {include file="Common/popup_list" /}
+{include file="Common/popup_verify" /}
 {include file="Common/calendar" /}
 {include file="Common/bottom" /}
 <script src="__PUBLIC__/js/datapicker/daterangepicker.js"></script>
@@ -226,6 +250,13 @@
     getSortCol(sort);
 
     var params = {};
+    var vm = new Vue({
+        el: '#data',
+        data: {
+            list: {},
+            params: {}
+        }
+    });
 
     submit();
 
@@ -240,23 +271,8 @@
         getParams();
         $.post('__PRO_PATH__/DataMonitor/getPublicList', params, function (res) {
             if (res.errorcode == 0) {
-                params = res.params;
-                var data = res.data;
-                new Vue({
-                    el: '#data',
-                    data: {
-                        list: data,
-                        params: params
-                    }
-                });
-            } else {
-                new Vue({
-                    el: '#data',
-                    data: {
-                        list: {},
-                        params: params
-                    }
-                });
+                vm.list = res.data;
+                vm.params = res.params;
             }
         });
     }
@@ -271,16 +287,6 @@
             $('#chevron_'+id).removeClass('fa fa-chevron-circle-down').addClass('fa fa-chevron-circle-up');
         }
         $('#digestItem_'+id).toggle();
-    }
-
-    // 获取点击按钮
-    function getRadioClicked(name, index, value) {
-        var valueOld = $("input[name="+name+"]:checked").val();
-        var eleOld = name + valueOld;
-        $('#'+eleOld).removeClass('btn-success').addClass('btn-default');
-        $('input[name='+name+']').eq(index).attr('checked', 'true');
-        var eleNew = name + value;
-        $('#'+eleNew).removeClass('btn-default').addClass('btn-success');
     }
 
     // 获取参数设置
@@ -367,11 +373,19 @@
     // 删除舆情
     function dataRemove(id) {
         console.log(id);
-        $("input[name='select'][value="+id+"]").attr("checked", 'checked');
+        $("input[name='select']").each(function() {
+            if(this.value != id){
+                this.checked=false;
+            }
+            else{
+                this.checked=true;
+            }
+        });
+        //console.log($("input[name='select']:checked").val());
         $('#confirm-popup').popup('show');
     }
 
-//    setInterval(function () {
-//        submit();
-//    }, 5000);
+    setInterval(function () {
+        submit();
+    }, 5000);
 </script>

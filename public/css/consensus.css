@@ -115,13 +115,13 @@ table td {
     text-decoration: underline
 }
 
-#bg{
-    width: 60px;
-    height: 16px;
+.bg{
+    width: 80px;
+    height: 22px;
     background: url("/public/images/star/star_gray.png");
 }
-#over{
-    height:16px;
+.over{
+    height:22px;
     background:url("/public/images/star/star_org.png") no-repeat;
 }
 

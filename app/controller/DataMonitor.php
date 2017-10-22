@@ -204,6 +204,22 @@ class DataMonitor extends Common{
     }
 
     /**
+     * 编辑舆情，人工研判
+     */
+    public function edit(){
+        $params = input('post.');
+        $id = input('post.id', -1);
+        $nature = input('post.nature', '');
+        $relevance = input('post.relevance', '');
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 编辑逻辑
+        if($id != '-1'){
+            // 修改成功，msg为 '编辑成功'，否则 '编辑失败'
+        }
+        $this->jsonReturn($ret);
+    }
+
+    /**
      * 删除舆情
      */
     public function remove(){
