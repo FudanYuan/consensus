@@ -74,6 +74,7 @@ class DataMonitor extends Model
         if(empty($order)){
             $order = 'id ASC';
         }
+
         $res = $this->field('id,title,source,url,media_type,nature,
             time as publishtime,content,similar_num,relevance,is_collect')
             ->where($cond_and)
