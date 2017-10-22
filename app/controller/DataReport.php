@@ -6,7 +6,7 @@
  */
 namespace app\controller;
 
-class DataProcess extends Common
+class DataReport extends Common
 {
     public $exportCols = [];
     public $colsText = [];
