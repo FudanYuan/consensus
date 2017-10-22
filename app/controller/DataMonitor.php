@@ -83,8 +83,6 @@ class DataMonitor extends Common{
 
         $tags = D('Tag')->getList(['section' => 5]);
         $data = D('DataMonitor')->getDataCondition($cond_or,$cond_and,$order);
-//        mydump($cond_or);
-//        mydump($cond_and);
 
         $theme_list = D('Theme')->getT1List([],[],[]);
         $cond = [];
@@ -128,19 +126,62 @@ class DataMonitor extends Common{
      */
     public function getPublicList(){
         $params = input('post.');
-        $relevance = input('get.relevance', -1);
-        $nature = input('get.nature',-1);
-        $area = input('get.area',-1);
-        $media_type = input('get.media_type',-1);
-        $keywords = input('get.keywords', '');
-        $stime = input('get.begintime_str', '');
-        $etime = input('get.endtime_str', '');
-        $order = input('get.sortCol', 'time');
-        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ''];
+        $relevance = input('post.relevance', -1);
+        $nature = input('post.nature',-1);
+        $area = input('post.area',-1);
+        $media_type = input('post.media_type',-1);
+        $keywords = input('post.keywords', '');
+        $stime = input('post.begintime_str', '');
+        $etime = input('post.endtime_str', '');
+        $order = input('post.sortCol', 'time');
+        $cond_and = [];
+        $cond_or = [];
+        if($nature != -1){
+            if($nature == 0){
+                $nature_select = '正面';
+            }else if($nature == 1){
+                $nature_select = '中立';
+            }else{
+                $nature_select = '负面';
+            }
+            $cond_and['nature'] = ['=', $nature_select];
+        }
+
+        if($relevance != -1){
+            $cond_and['relevance'] = ['=', $relevance];
+        }
+
+        if($area!=-1){
+            $cond_and['area'] = ['=',$area];
+        }
+        if($media_type != -1){
+            $cond_and['media_type'] = ['=',$media_type];
+        }
+        if($keywords){
+            $cond_or['title'] = ['like','%'.$keywords.'%'];
+            $cond_or['content'] = ['like','%'.$keywords.'%'];
+            $cond_or['source'] = ['like','%'.$keywords.'%'];
+            $cond_or['media_type'] = ['like','%'.$keywords.'%'];
+            $cond_or['nature']  = ['like','%'.$keywords.'%'];
+            $cond_or['url'] =['like','%'.$keywords.'%'];
+        }
+        if($stime && $etime){
+            $cond_and['time'] = ['between', [strtotime($stime), strtotime($etime)]];
+        }
+        else if(!$stime && $etime){
+            $cond_and['time'] = ['between', [0, strtotime($etime)]];
+        }
+        else if($stime && !$etime){
+            $cond_and['time'] = ['between', [strtotime($stime), time()]];
+        }
+
+
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => "",'keywords' =>$keywords];
         $list = [];
-        $list[0] =['id' => 1, 'title' => '测试测试测试测<span>试测</span>试测试测试测试1', 'digest'=> "测试测试测试测试测试测试测试测试测试1测试测试测\"<span>\"试测试测试'</span>'测试测试1'", 'userID' => '1211212', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '中立', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'digest'=> '测试测试测试测试测试测试测试测试测试1测试测试测<span>试测试测试</span>测试测试1', 'userID' => '1211212', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '正面', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'digest'=> '测试测试测试测试测试测试测试测试测试1测试测试测<span>试测试测试</span>测试测试1', 'userID' => '', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '负面', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        //$list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
+        $list[1] =['id' => 4, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+        $list[2] =['id' => 5, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+        $list[3] =['id' => 6, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
@@ -152,13 +193,18 @@ class DataMonitor extends Common{
         $params = input('post.');
         $id = input('post.id', -1);
         $isCollected = input('post.is_collect');
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['errorcode' => 0, 'msg' => '','id' => $id,'isCollected' => $isCollected];
         // 收藏逻辑
         if($id != '-1'){
-            if($isCollected){
-
-            } else{
-
+            $data = D('DataMonitor')->getDataById($id);
+            if(!empty($data)) {
+                if ($isCollected == 1) {
+                    $data['is_collect'] = 0;
+                } else {
+                    $data['is_collect'] = 1;
+                }
+                $ret['data'] = $data;
+                D('DataMonitor')->saveData($data, $id);
             }
         }
         $this->jsonReturn($ret);

@@ -18,15 +18,15 @@ class DataMonitor extends Model
     protected $pk = 'id';
     protected $fields = array(
         'id','theme_3_id','websitetype_id','task_id','title','content',
-        'source','media_type','nature','url','relevance','time','status','createtime', 'updatetime'
-    );
+        'source','media_type','nature','url','relevance','time',
+        'similar_num','is_collect','is_warn','status','createtime', 'updatetime');
     protected $type = [
         'id' => 'integer',
         'theme_3_id'=>'integer',
+        'relevance' =>'integer',
         'time' =>'integer',
         'websitetype_id' => 'integer',
         'task_id'=>'integer',
-        'time' => 'integer',
         'similar_num' => 'integer',
         'is_collect' => 'integer',
         'is_warn' => 'integer',
@@ -36,7 +36,7 @@ class DataMonitor extends Model
     ];
 
     /**
-     * 获取总数据量
+     * 获取总舆情量
      */
     public function getDataNumber(){
         $res = $this->field('count(id) as data')
@@ -45,6 +45,128 @@ class DataMonitor extends Model
         return $res[0]['data'];
     }
 
+    /**
+     * 获取舆情ById
+     * @param $id
+     * @return mixed
+     */
+    public function getDataById($id){
+        $res = $this->field('*')
+            ->where(['id' => $id])
+            ->find();
+        return $res;
+    }
+
+    /**
+     * 获取舆情列表
+     * @param $cond_or
+     * @param $cond_and
+     * @param $order
+     * @param int $pag
+     * @return mixed
+     */
+    public function  publicList($cond_or,$cond_and,$order,$pag = 10){
+        if(!isset($cond_and['status'])){
+            $cond_and['status'] = ['<>', 2];
+        }
+        if($pag == -1){
+            $pag = $this->getDataNumber();
+        }
+        if(empty($order)){
+            $order = 'id ASC';
+        }
+
+        $res = $this->field('id,title,source,url,media_type,nature,
+            time as publishtime,content,similar_num,relevance,is_collect')
+            ->whereor($cond_or)
+            ->where($cond_and)
+            ->order($order)
+            ->select();
+        //->paginate(10);
+        return $res;
+    }
+
+    /**
+     * 过滤舆情信息
+     * @param $data
+     * @return array
+     */
+    private function filterField($data){
+        $errors = [];
+        if (isset($data['theme_3_id']) && !$data['theme_3_id']) {
+            $errors['theme_3_id'] = '3级主题不能为空';
+        }
+        if (isset($data['url']) && !$data['url']) {
+            $errors['url'] = '企业网址不能为空';
+        }
+        if (isset($data['task_id']) && !$data['task_id']) {
+            $errors['task_id'] = '任务不能为空';
+        }
+        if (isset($data['title']) && !$data['title']) {
+            $errors['title'] = '标题不能为空';
+        }
+        if (isset($data['is_collect']) && !$data['is_collect']) {
+            $errors['is_collect'] = '是否收藏不能为空';
+        }
+        return $errors;
+    }
+
+    /**
+     * 更新舆情信息
+     * @param $id
+     * @param $data
+     * @return array
+     */
+    public function saveData($data,$id){
+        $ret = [];
+            $curTime = time();
+            $data['updatetime'] = $curTime;
+            $data_save = [];
+            $data_save['id'] = $data['id'];
+            $data_save['theme_3_id'] = $data['theme_3_id'];
+            $data_save['websitetype_id'] = $data['websitetype_id'];
+            $data_save['task_id'] = $data['task_id'];
+            $data_save['title'] = $data['title'];
+            $data_save['content'] = $data['content'];
+            $data_save['source'] = $data['source'];
+            $data_save['nature'] = $data['nature'];
+            $data_save['url'] = $data['url'];
+            $data_save['relevance'] = $data['relevance'];
+            $data_save['time'] = $data['time'];
+            $data_save['similar_num'] = $data['similar_num'];
+            $data_save['is_collect'] = $data['is_collect'];
+            $data_save['is_warn'] = $data['is_warn'];
+            $data_save['status'] = $data['status'];
+            $data_save['createtime'] = $data['createtime'];
+            $data_save['updatetime'] = $data['updatetime'];
+            $this->save($data_save, ['id' => $id]);
+        return $ret;
+    }
+
+
+    /**
+     * 清除非数据库字段
+     * @param $data
+     */
+    private function unsetOtherField(&$data)
+    {
+        foreach ($this->fields as $v) {
+            $str = $v . '_str';
+            if (isset($data[$str])) unset($data[$str]);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    ////未修改/////
     /**
      * 数据同比上周增加%比
      */
@@ -137,41 +259,8 @@ class DataMonitor extends Model
         return $ret;
     }
 
-    /**
-     * 过滤数据信息
-     * @param $data
-     * @return array
-     */
-    private function filterField($data){
-        $errors = [];
-        if (isset($data['theme_3_id']) && !$data['theme_3_id']) {
-            $errors['theme_3_id'] = '3级主题不能为空';
-        }
-        if (isset($data['url']) && !$data['url']) {
-            $errors['url'] = '企业网址不能为空';
-        }
-        return $errors;
-    }
 
-    /**
-     * 更新数据信息
-     * @param $id
-     * @param $data
-     * @return array
-     */
-    public function saveData($id, $data){
-        $ret = [];
-        $errors = [];
-        $ret['errors'] = $errors;
-        if (empty($errors)) {
-            $curTime = time();
-            if (isset($data['ispublish']) && $data['ispublish'])
-                $data['publishtime'] = $curTime;
-            $data['updatetime'] = $curTime;
-            $this->save($data, ['id' => $id]);
-        }
-        return $ret;
-    }
+
 
     /**
      * 根据id获取数据信息
