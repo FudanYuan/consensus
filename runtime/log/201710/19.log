@@ -125,3 +125,5976 @@ Method [ <user> public method index ] {
 [ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id,b.name as t2_name,b.t1_id,c.name as t1_name,count(d.c_id) as c_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id INNER JOIN tax_data d ON a.id=d.theme_3_id  WHERE  a.status <> 2  AND (  0 < a.createtime and a.createtime < 1508421437 ) GROUP BY d.theme_3_id ORDER BY count(d.c_id) desc LIMIT 140   [ RunTime:0.004657s ]
 
 ---------------------------------------------------------------
+[ 2017-10-19T23:21:32+08:00 ] 192.168.1.105 192.168.1.105 GET /favicon.ico
+[ log ] 192.168.1.105/favicon.ico [运行时间：0.514145s][吞吐率：1.94req/s] [内存消耗：935.38kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '192.168.1.105',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+--------------------------------------------------
+[ 2017-10-19T23:21:32+08:00 ] 192.168.0.1 192.168.0.1 GET /favicon.ico
+[ log ] 192.168.0.1/favicon.ico [运行时间：0.514437s][吞吐率：1.94req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '192.168.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:34+08:00 ] 127.0.0.1 127.0.0.1 GET /DataMonitor/info
+[ log ] 127.0.0.1/DataMonitor/info [运行时间：0.760360s][吞吐率：1.32req/s] [内存消耗：4,520.40kb] [文件加载：51]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'DataMonitor',
+    2 => 'info',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 公司数据列表
+     */
+Method [ <user> public method info ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\DataMonitor.php 29 - 98
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\DataMonitor\info.html [ array (
+  0 => 'theme_list',
+  1 => 'list',
+  2 => 'tags',
+  3 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.050597s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_tag` [ RunTime:0.015343s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_tag` WHERE  `section` = '5'  AND `status` <> 2 ORDER BY id LIMIT 1    [ RunTime:0.000341s ]
+[ sql ] [ SQL ] SELECT `id`,`title`,`section` FROM `tax_tag` WHERE  `section` = '5'  AND `status` <> 2 ORDER BY id LIMIT 0,10    [ RunTime:0.000307s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_data` [ RunTime:0.008238s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_data a INNER JOIN tax_company b ON b.id = a.c_id INNER JOIN tax_theme_3 c ON c.id = a.theme_3_id INNER JOIN tax_theme_2 d ON d.id = c.t2_id INNER JOIN tax_theme_1 e ON e.id = d.t1_id  WHERE  a.status <> 2 ORDER BY a.id LIMIT 1   [ RunTime:0.003997s ]
+[ sql ] [ SQL ] SELECT a.id as id,a.c_id as c_id,b.name as c_name,e.id as t1_id,d.id as t2_id,c.id as t3_id,e.name as t1_name,d.name as t2_name,c.name as t3_name,a.event as event,a.url as url,a.snapshoot as snapshoot,a.task_id as task_id,a.createtime as createtime FROM tax_data a INNER JOIN tax_company b ON b.id = a.c_id INNER JOIN tax_theme_3 c ON c.id = a.theme_3_id INNER JOIN tax_theme_2 d ON d.id = c.t2_id INNER JOIN tax_theme_1 e ON e.id = d.t1_id  WHERE  a.status <> 2 ORDER BY a.id LIMIT 0,10   [ RunTime:0.000689s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001165s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_1` [ RunTime:0.008061s ]
+[ sql ] [ SQL ] SELECT id as t1_id,name as t1_name FROM `tax_theme_1`  [ RunTime:0.000360s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001061s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_2` [ RunTime:0.005569s ]
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 1  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000421s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001118s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 2  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000456s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001155s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 3  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000542s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001079s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 4  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000514s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001040s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 5  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000584s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001131s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 6  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000512s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001040s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 7  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000432s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001037s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 8  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000419s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001107s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 9  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000369s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001066s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 10  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000465s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001269s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 11  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000432s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001172s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 12  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000535s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001126s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 13  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000470s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001094s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 14  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000463s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001027s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 15  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000429s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001113s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 16  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000530s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001134s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 17  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000542s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001072s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 18  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000436s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001078s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 19  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000433s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001037s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 20  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000466s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001020s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 27  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000507s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001294s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 26  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000426s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001103s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 25  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000407s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001104s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 28  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000437s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001023s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 29  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000430s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001057s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 30  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000435s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001083s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 42  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000428s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001150s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 41  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000454s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001150s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 40  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000406s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001144s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 39  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000458s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:35+08:00 ] 127.0.0.1 127.0.0.1 GET /favicon.ico
+[ log ] 127.0.0.1/favicon.ico [运行时间：0.025326s][吞吐率：39.49req/s] [内存消耗：935.43kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:35+08:00 ] ::1 ::1 GET /favicon.ico
+[ log ] localhost/favicon.ico [运行时间：0.031717s][吞吐率：31.53req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:45+08:00 ] 127.0.0.1 127.0.0.1 GET /favicon.ico
+[ log ] 127.0.0.1/favicon.ico [运行时间：0.029123s][吞吐率：34.34req/s] [内存消耗：935.43kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:45+08:00 ] ::1 ::1 GET /favicon.ico
+[ log ] localhost/favicon.ico [运行时间：0.039824s][吞吐率：25.11req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:47+08:00 ] 127.0.0.1 127.0.0.1 GET /DataMonitor/info
+[ log ] 127.0.0.1/DataMonitor/info [运行时间：0.143712s][吞吐率：6.96req/s] [内存消耗：4,298.52kb] [文件加载：49]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'DataMonitor',
+    2 => 'info',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/DataMonitor/info',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 公司数据列表
+     */
+Method [ <user> public method info ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\DataMonitor.php 29 - 98
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\DataMonitor\info.html [ array (
+  0 => 'theme_list',
+  1 => 'list',
+  2 => 'tags',
+  3 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001164s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_tag` [ RunTime:0.009831s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_tag` WHERE  `section` = '5'  AND `status` <> 2 ORDER BY id LIMIT 1    [ RunTime:0.000324s ]
+[ sql ] [ SQL ] SELECT `id`,`title`,`section` FROM `tax_tag` WHERE  `section` = '5'  AND `status` <> 2 ORDER BY id LIMIT 0,10    [ RunTime:0.000293s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_data` [ RunTime:0.010856s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_data a INNER JOIN tax_company b ON b.id = a.c_id INNER JOIN tax_theme_3 c ON c.id = a.theme_3_id INNER JOIN tax_theme_2 d ON d.id = c.t2_id INNER JOIN tax_theme_1 e ON e.id = d.t1_id  WHERE  a.status <> 2 ORDER BY a.id LIMIT 1   [ RunTime:0.005006s ]
+[ sql ] [ SQL ] SELECT a.id as id,a.c_id as c_id,b.name as c_name,e.id as t1_id,d.id as t2_id,c.id as t3_id,e.name as t1_name,d.name as t2_name,c.name as t3_name,a.event as event,a.url as url,a.snapshoot as snapshoot,a.task_id as task_id,a.createtime as createtime FROM tax_data a INNER JOIN tax_company b ON b.id = a.c_id INNER JOIN tax_theme_3 c ON c.id = a.theme_3_id INNER JOIN tax_theme_2 d ON d.id = c.t2_id INNER JOIN tax_theme_1 e ON e.id = d.t1_id  WHERE  a.status <> 2 ORDER BY a.id LIMIT 0,10   [ RunTime:0.000725s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001599s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_1` [ RunTime:0.008153s ]
+[ sql ] [ SQL ] SELECT id as t1_id,name as t1_name FROM `tax_theme_1`  [ RunTime:0.000343s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001105s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_2` [ RunTime:0.005713s ]
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 1  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000427s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001129s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 2  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000456s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001239s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 3  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000552s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001193s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 4  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000563s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001519s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 5  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000701s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001232s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 6  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000488s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001092s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 7  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000448s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001101s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 8  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000482s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001078s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 9  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000510s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001080s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 10  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000515s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001016s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 11  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000482s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001127s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 12  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000470s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001070s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 13  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000415s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001231s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 14  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000502s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001059s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 15  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000437s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001036s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 16  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000431s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001021s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 17  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000506s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001090s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 18  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000442s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001470s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 19  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000524s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001337s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 20  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000473s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001068s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 27  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000415s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001075s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 26  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000405s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001084s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 25  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000446s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001131s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 28  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000505s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001283s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 29  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000383s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001352s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 30  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000505s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001060s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 42  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000448s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001240s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 41  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000530s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001069s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 40  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000470s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001216s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 39  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000467s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:48+08:00 ] 127.0.0.1 127.0.0.1 GET /favicon.ico
+[ log ] 127.0.0.1/favicon.ico [运行时间：0.047052s][吞吐率：21.25req/s] [内存消耗：935.43kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:48+08:00 ] ::1 ::1 GET /favicon.ico
+[ log ] localhost/favicon.ico [运行时间：0.059675s][吞吐率：16.76req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:21:58+08:00 ] 127.0.0.1 127.0.0.1 GET /Task/index
+[ log ] 127.0.0.1/Task/index [运行时间：0.247721s][吞吐率：4.04req/s] [内存消耗：2,359.50kb] [文件加载：50]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Task',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/DataMonitor/info',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 任务列表
+     * @return \think\response\View
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Task.php 16 - 64
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Task\index.html [ array (
+  0 => 'list',
+  1 => 'tags',
+  2 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001141s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_tag` [ RunTime:0.009346s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_tag` WHERE  `section` = '4'  AND `status` <> 2 ORDER BY id LIMIT 1    [ RunTime:0.000344s ]
+[ sql ] [ SQL ] SELECT `id`,`title`,`section` FROM `tax_tag` WHERE  `section` = '4'  AND `status` <> 2 ORDER BY id LIMIT 0,10    [ RunTime:0.000307s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_task` [ RunTime:0.007037s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_task` WHERE  `status` <> 2 LIMIT 1   [ RunTime:0.000310s ]
+[ sql ] [ SQL ] SELECT `id`,time_predict as pretime,task_num as count,`taskstatus`,`begintime`,`endtime` FROM `tax_task` WHERE  `status` <> 2 LIMIT 0,10   [ RunTime:0.000281s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:22:09+08:00 ] 127.0.0.1 127.0.0.1 GET /DataMonitor/info
+[ log ] 127.0.0.1/DataMonitor/info [运行时间：0.166614s][吞吐率：6.00req/s] [内存消耗：4,298.52kb] [文件加载：49]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'DataMonitor',
+    2 => 'info',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Task/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 公司数据列表
+     */
+Method [ <user> public method info ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\DataMonitor.php 29 - 98
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\DataMonitor\info.html [ array (
+  0 => 'theme_list',
+  1 => 'list',
+  2 => 'tags',
+  3 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.013603s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_tag` [ RunTime:0.012156s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_tag` WHERE  `section` = '5'  AND `status` <> 2 ORDER BY id LIMIT 1    [ RunTime:0.000371s ]
+[ sql ] [ SQL ] SELECT `id`,`title`,`section` FROM `tax_tag` WHERE  `section` = '5'  AND `status` <> 2 ORDER BY id LIMIT 0,10    [ RunTime:0.000293s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_data` [ RunTime:0.009809s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_data a INNER JOIN tax_company b ON b.id = a.c_id INNER JOIN tax_theme_3 c ON c.id = a.theme_3_id INNER JOIN tax_theme_2 d ON d.id = c.t2_id INNER JOIN tax_theme_1 e ON e.id = d.t1_id  WHERE  a.status <> 2 ORDER BY a.id LIMIT 1   [ RunTime:0.003603s ]
+[ sql ] [ SQL ] SELECT a.id as id,a.c_id as c_id,b.name as c_name,e.id as t1_id,d.id as t2_id,c.id as t3_id,e.name as t1_name,d.name as t2_name,c.name as t3_name,a.event as event,a.url as url,a.snapshoot as snapshoot,a.task_id as task_id,a.createtime as createtime FROM tax_data a INNER JOIN tax_company b ON b.id = a.c_id INNER JOIN tax_theme_3 c ON c.id = a.theme_3_id INNER JOIN tax_theme_2 d ON d.id = c.t2_id INNER JOIN tax_theme_1 e ON e.id = d.t1_id  WHERE  a.status <> 2 ORDER BY a.id LIMIT 0,10   [ RunTime:0.000773s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001081s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_1` [ RunTime:0.010458s ]
+[ sql ] [ SQL ] SELECT id as t1_id,name as t1_name FROM `tax_theme_1`  [ RunTime:0.000315s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001012s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_2` [ RunTime:0.007554s ]
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 1  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000712s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001739s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 2  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000477s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001124s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 3  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000507s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001052s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 4  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000526s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001067s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 5  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000417s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001063s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 6  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000478s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001396s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 7  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000554s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001236s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 8  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000529s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001849s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 9  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001217s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001231s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 10  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000513s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001119s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 11  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000516s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001104s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 12  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000458s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001164s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 13  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000495s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001119s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 14  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000481s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001798s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 15  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000476s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001766s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 16  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000696s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001798s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 17  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000443s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001220s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 18  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000465s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001069s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 19  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000492s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001134s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 20  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000500s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001330s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 27  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000456s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001832s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 26  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000455s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001443s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 25  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000585s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002256s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 28  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000440s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001219s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 29  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000477s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001081s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 30  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000436s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001078s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 42  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000491s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001115s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 41  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000457s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001159s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 40  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000525s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001381s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 39  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000455s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:22:10+08:00 ] 127.0.0.1 127.0.0.1 GET /favicon.ico
+[ log ] 127.0.0.1/favicon.ico [运行时间：0.033067s][吞吐率：30.24req/s] [内存消耗：935.43kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; think_var=zh-cn; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:22:10+08:00 ] ::1 ::1 GET /favicon.ico
+[ log ] localhost/favicon.ico [运行时间：0.042565s][吞吐率：23.49req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:22:56+08:00 ] 127.0.0.1 127.0.0.1 GET /favicon.ico
+[ log ] 127.0.0.1/favicon.ico [运行时间：0.030808s][吞吐率：32.46req/s] [内存消耗：935.75kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:22:56+08:00 ] 192.168.0.1 192.168.0.1 GET /favicon.ico
+[ log ] 192.168.0.1/favicon.ico [运行时间：0.132415s][吞吐率：7.55req/s] [内存消耗：935.66kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '192.168.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+------
+[ 2017-10-19T23:22:58+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/index
+[ log ] 127.0.0.1/Theme/index [运行时间：0.385897s][吞吐率：2.59req/s] [内存消耗：2,411.22kb] [文件加载：49]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/DataMonitor/info',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 主题列表
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 16 - 32
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\index.html [ array (
+  0 => 'list',
+  1 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001072s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.032673s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 1   [ RunTime:0.012302s ]
+[ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,b.name as t2_name,b.t1_id as t1_id,c.name as t1_name FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 0,10   [ RunTime:0.000482s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:00+08:00 ] 127.0.0.1 127.0.0.1 GET /Task/index
+[ log ] 127.0.0.1/Task/index [运行时间：0.069745s][吞吐率：14.34req/s] [内存消耗：2,166.73kb] [文件加载：48]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Task',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 任务列表
+     * @return \think\response\View
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Task.php 16 - 64
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Task\index.html [ array (
+  0 => 'list',
+  1 => 'tags',
+  2 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003457s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_tag` [ RunTime:0.012916s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_tag` WHERE  `section` = '4'  AND `status` <> 2 ORDER BY id LIMIT 1    [ RunTime:0.000858s ]
+[ sql ] [ SQL ] SELECT `id`,`title`,`section` FROM `tax_tag` WHERE  `section` = '4'  AND `status` <> 2 ORDER BY id LIMIT 0,10    [ RunTime:0.000299s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_task` [ RunTime:0.010713s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_task` WHERE  `status` <> 2 LIMIT 1   [ RunTime:0.000734s ]
+[ sql ] [ SQL ] SELECT `id`,time_predict as pretime,task_num as count,`taskstatus`,`begintime`,`endtime` FROM `tax_task` WHERE  `status` <> 2 LIMIT 0,10   [ RunTime:0.001907s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:02+08:00 ] 127.0.0.1 127.0.0.1 GET /Task/create
+[ log ] 127.0.0.1/Task/create [运行时间：0.493627s][吞吐率：2.03req/s] [内存消耗：4,286.58kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Task',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Task/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 新建
+     */
+Method [ <user> public method create ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Task.php 83 - 133
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Task\create.html [ array (
+  0 => 'theme_list',
+  1 => 'website_list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002717s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_1` [ RunTime:0.012589s ]
+[ sql ] [ SQL ] SELECT id as t1_id,name as t1_name FROM `tax_theme_1`  [ RunTime:0.000317s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002819s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_2` [ RunTime:0.011154s ]
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 1  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000405s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001209s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 2  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000596s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001938s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 3  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000415s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001249s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 4  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000459s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001456s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 5  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000719s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002591s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 6  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000584s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001133s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 7  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000444s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001138s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 8  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000452s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001056s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 9  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000487s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001882s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 10  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000491s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001273s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 11  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000525s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001671s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 12  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000789s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002598s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 13  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000540s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001166s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 14  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000471s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001072s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 15  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000546s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001219s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 16  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001301s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001405s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 17  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000553s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001498s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 18  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000566s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002297s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 19  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001801s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001220s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 20  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000487s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001081s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 27  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000492s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001106s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 26  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000470s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002291s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 25  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000561s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001526s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 28  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000541s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002457s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 29  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001358s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001351s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 30  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000458s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001221s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 42  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000448s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001314s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 41  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000449s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001094s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 40  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000480s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002232s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 39  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000664s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001154s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_website_type` [ RunTime:0.013056s ]
+[ sql ] [ SQL ] SELECT id as type_id,name as type_name FROM `tax_website_type` WHERE  (  status <> '2' )  [ RunTime:0.038914s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:12+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/index
+[ log ] 127.0.0.1/Theme/index [运行时间：0.053104s][吞吐率：18.83req/s] [内存消耗：2,206.98kb] [文件加载：47]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Task/create',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 主题列表
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 16 - 32
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\index.html [ array (
+  0 => 'list',
+  1 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001189s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.011500s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 1   [ RunTime:0.001329s ]
+[ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,b.name as t2_name,b.t1_id as t1_id,c.name as t1_name FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 0,10   [ RunTime:0.000395s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:15+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/create_t1
+[ log ] 127.0.0.1/Theme/create_t1 [运行时间：0.264495s][吞吐率：3.78req/s] [内存消耗：1,943.55kb] [文件加载：42]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'create_t1',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 新建一级主题
+     */
+Method [ <user> public method create_t1 ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 92 - 105
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\create_t1.html [ array (
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:19+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/index
+[ log ] 127.0.0.1/Theme/index [运行时间：0.050261s][吞吐率：19.90req/s] [内存消耗：2,206.98kb] [文件加载：47]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/create_t1',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 主题列表
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 16 - 32
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\index.html [ array (
+  0 => 'list',
+  1 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001157s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.009743s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 1   [ RunTime:0.001345s ]
+[ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,b.name as t2_name,b.t1_id as t1_id,c.name as t1_name FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 0,10   [ RunTime:0.000403s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:31+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/index
+[ log ] 127.0.0.1/Theme/index [运行时间：0.093007s][吞吐率：10.75req/s] [内存消耗：2,206.98kb] [文件加载：47]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 主题列表
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 16 - 32
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\index.html [ array (
+  0 => 'list',
+  1 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001139s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.055203s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 1   [ RunTime:0.001003s ]
+[ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,b.name as t2_name,b.t1_id as t1_id,c.name as t1_name FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 0,10   [ RunTime:0.000404s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:33+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/create_t1
+[ log ] 127.0.0.1/Theme/create_t1 [运行时间：0.034446s][吞吐率：29.03req/s] [内存消耗：1,769.98kb] [文件加载：40]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'create_t1',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 新建一级主题
+     */
+Method [ <user> public method create_t1 ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 92 - 105
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\create_t1.html [ array (
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:35+08:00 ] 127.0.0.1 127.0.0.1 GET /Theme/index
+[ log ] 127.0.0.1/Theme/index [运行时间：0.050918s][吞吐率：19.64req/s] [内存消耗：2,206.98kb] [文件加载：47]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Theme',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/create_t1',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 主题列表
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Theme.php 16 - 32
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Theme\index.html [ array (
+  0 => 'list',
+  1 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001139s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_3` [ RunTime:0.012066s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 1   [ RunTime:0.001025s ]
+[ sql ] [ SQL ] SELECT a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,b.name as t2_name,b.t1_id as t1_id,c.name as t1_name FROM tax_theme_3 a INNER JOIN tax_theme_2 b ON a.t2_id=b.id INNER JOIN tax_theme_1 c ON b.t1_id=c.id  WHERE  a.status <> 2  AND b.status <> 2  AND c.status <> 2 LIMIT 0,10   [ RunTime:0.000429s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:36+08:00 ] ::1 ::1 GET /favicon.ico
+[ log ] localhost/favicon.ico [运行时间：0.020506s][吞吐率：48.77req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+ay (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:37+08:00 ] 127.0.0.1 127.0.0.1 GET /WebSite/index
+[ log ] 127.0.0.1/WebSite/index [运行时间：0.394847s][吞吐率：2.53req/s] [内存消耗：2,364.52kb] [文件加载：50]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'WebSite',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Theme/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 网站列表
+     * @return \think\response\View
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\WebSite.php 17 - 39
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\WebSite\index.html [ array (
+  0 => 'list',
+  1 => 'typeList',
+  2 => 'type_id',
+  3 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001083s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_website_type` [ RunTime:0.069092s ]
+[ sql ] [ SQL ] SELECT id as type_id,name as type_name FROM `tax_website_type` WHERE  (  status <> '2' )  [ RunTime:0.000293s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_website` [ RunTime:0.008064s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM tax_website a INNER JOIN tax_website_type b ON a.type_id=b.id  WHERE  a.status <> 2  AND b.status <> 2 LIMIT 1   [ RunTime:0.000389s ]
+[ sql ] [ SQL ] SELECT a.id as id,a.name as name,b.id as type_id,b.name as type_name,a.url as url FROM tax_website a INNER JOIN tax_website_type b ON a.type_id=b.id  WHERE  a.status <> 2  AND b.status <> 2 LIMIT 0,10   [ RunTime:0.000329s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:42+08:00 ] 127.0.0.1 127.0.0.1 GET /Task/index
+[ log ] 127.0.0.1/Task/index [运行时间：0.059938s][吞吐率：16.68req/s] [内存消耗：2,166.73kb] [文件加载：48]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Task',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/WebSite/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 任务列表
+     * @return \think\response\View
+     */
+Method [ <user> public method index ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Task.php 16 - 64
+}
+
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Task\index.html [ array (
+  0 => 'list',
+  1 => 'tags',
+  2 => 'cond',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001193s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_tag` [ RunTime:0.013194s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_tag` WHERE  `section` = '4'  AND `status` <> 2 ORDER BY id LIMIT 1    [ RunTime:0.000358s ]
+[ sql ] [ SQL ] SELECT `id`,`title`,`section` FROM `tax_tag` WHERE  `section` = '4'  AND `status` <> 2 ORDER BY id LIMIT 0,10    [ RunTime:0.000306s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_task` [ RunTime:0.008126s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `tax_task` WHERE  `status` <> 2 LIMIT 1   [ RunTime:0.000369s ]
+[ sql ] [ SQL ] SELECT `id`,time_predict as pretime,task_num as count,`taskstatus`,`begintime`,`endtime` FROM `tax_task` WHERE  `status` <> 2 LIMIT 0,10   [ RunTime:0.000327s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:23:44+08:00 ] 127.0.0.1 127.0.0.1 GET /Task/create
+[ log ] 127.0.0.1/Task/create [运行时间：0.205083s][吞吐率：4.88req/s] [内存消耗：4,026.27kb] [文件加载：44]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'Task',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/Task/index',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'tax_session',
+  'type' => 'redis',
+  'auto_start' => true,
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ CACHE ] INIT redis:array (
+  'type' => 'redis',
+  'host' => '127.0.0.1',
+  'port' => '6379',
+  'password' => '',
+  'timeout' => 0,
+  'expire' => 0,
+  'persistent' => false,
+  'prefix' => 'tax_server:',
+)
+[ info ] [ RUN ] /**
+     * 新建
+     */
+Method [ <user> public method create ] {
+  @@ D:\WANGZHAN\xampp7.2\htdocs\vox1.0\app\controller\Task.php 83 - 133
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'localhost',
+  'database' => 'tax',
+  'username' => 'root',
+  'password' => '',
+  'hostport' => '',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'tax_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'datetime_format' => 'Y-m-d H:i:s',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0/app/view\Task\create.html [ array (
+  0 => 'theme_list',
+  1 => 'website_list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001152s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_1` [ RunTime:0.021972s ]
+[ sql ] [ SQL ] SELECT id as t1_id,name as t1_name FROM `tax_theme_1`  [ RunTime:0.000284s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001536s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_theme_2` [ RunTime:0.014592s ]
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 1  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000445s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001349s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 2  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000849s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003862s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 3  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001227s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001388s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 4  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000500s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001244s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 5  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000554s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002750s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 6  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000514s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001161s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 7  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000587s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001610s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 8  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000626s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001902s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 9  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000816s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004738s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 10  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000681s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002665s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 11  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000618s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001586s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 12  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000604s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001880s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 13  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000877s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003834s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 14  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001021s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002178s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 15  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001114s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001532s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 16  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000476s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001571s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 17  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000647s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001871s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 18  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000544s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003240s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 19  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000585s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001444s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 20  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000409s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002626s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 27  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000444s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001534s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 26  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000531s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001972s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 25  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000468s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004242s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 28  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000540s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001094s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 29  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000356s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001001s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 30  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000490s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002093s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 42  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000504s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001538s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 41  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000584s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004031s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 40  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.001738s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001197s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SELECT a.id as t2_id,a.name as t2_name,b.name as t1_name FROM tax_theme_2 a INNER JOIN tax_theme_1 b ON b.id=a.t1_id  WHERE  b.id = 39  AND a.status <> 2  AND b.status <> 2  [ RunTime:0.000426s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001005s ] mysql:dbname=tax;host=localhost;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tax_website_type` [ RunTime:0.014016s ]
+[ sql ] [ SQL ] SELECT id as type_id,name as type_name FROM `tax_website_type` WHERE  (  status <> '2' )  [ RunTime:0.000226s ]
+
+---------------------------------------------------------------
+[ 2017-10-19T23:25:18+08:00 ] ::1 ::1 GET /favicon.ico
+[ log ] localhost/favicon.ico [运行时间：0.031599s][吞吐率：31.65req/s] [内存消耗：935.37kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------
+[ 2017-10-19T23:25:18+08:00 ] 127.0.0.1 127.0.0.1 GET /favicon.ico
+[ log ] 127.0.0.1/favicon.ico [运行时间：0.042558s][吞吐率：23.50req/s] [内存消耗：935.43kb] [文件加载：29]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'favicon',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.3376.400 QQBrowser/9.6.11924.400',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=ailk6j757j4okvj0n2vv5j03l7; thinkphp_show_page_trace=0|0; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\WANGZHAN\xampp7.2\htdocs\vox1.0\core\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'D:\\WANGZHAN\\xampp7.2\\htdocs\\vox1.0\\runtime\\log\\',
+  'level' => 
+  array (
+  ),
+)
+
+---------------------------------------------------------------

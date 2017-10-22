@@ -172,9 +172,9 @@ class DataMonitor extends Common{
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
 
         $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
-//        $list[0] =['id' => 1, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-//        $list[1] =['id' => 2, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-//        $list[2] =['id' => 3, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+//        $list[4] =['id' => 4, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+//        $list[5] =['id' => 5, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+//        $list[6] =['id' => 6, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
@@ -186,13 +186,18 @@ class DataMonitor extends Common{
         $params = input('post.');
         $id = input('post.id', -1);
         $isCollected = input('post.is_collect');
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['errorcode' => 0, 'msg' => '','id' => $id,'isCollected' => $isCollected];
         // 收藏逻辑
         if($id != '-1'){
-            if($isCollected){
-
-            } else{
-
+            $data = D('DataMonitor')->getDataById($id);
+            if(!empty($data)) {
+                if ($isCollected == 1) {
+                    $data['is_collect'] = 0;
+                } else {
+                    $data['is_collect'] = 1;
+                }
+                $ret['data'] = $data;
+                D('DataMonitor')->saveData($data, $id);
             }
         }
         $this->jsonReturn($ret);
