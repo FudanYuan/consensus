@@ -1,0 +1,123 @@
+{include file="Common/top" title="首页" metas='' /}
+{include file="Common/search" /}
+<div class="main-container">
+    <div class="padding-md" style="overflow: auto">
+        <ul class="breadcrumb">
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
+            <li>舆情预警</li>
+            <li>预警设置</li>
+        </ul>
+
+        <div class="smart-widget">
+            <div class="smart-widget-inner">
+                <ul class="nav nav-tabs tab-style2">
+                    <li class="active">
+                        <a href="#keywordsTab" data-toggle="tab">
+                            <span class="icon-wrapper"><i class="fa fa-key" aria-hidden="true"></i></span>
+                            <span class="text-wrapper">预警关键词</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#thresholdTab" data-toggle="tab">
+                            <span class="icon-wrapper"><i class="fa fa-signal" aria-hidden="true"></i></span>
+                            <span class="text-wrapper">预警警戒线</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="smart-widget-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="keywordsTab">
+                            <!-- 搜索条件 -->
+                            <div class="list-btns">
+                                <form action="" class="form-inline" method="get" id="switch-form" >
+                                    <div class="form-group">
+                                        <div id="warnkeywordsSwitch" class="switch" data-on="success" data-off="warning">
+                                            <input type="checkbox" name="warnkeywordsSwitch" checked/>
+                                        </div>
+                                        <span style="vertical-align: super;">关键词预警: 根据添加的关键词和条件，从抓取的舆情当中提取相关联的文章，呈现在“舆情预警－预警舆情”模块。</span>
+                                    </div>
+                                </form>
+                                <hr/>
+                            </div>
+                            <div class="padding-md">
+                                <div class="block h4"><strong>条件设置</strong></div>
+                                <div class="form-wrapper">
+                                    <form class="form-horizontal" method="post" id="condition-form">
+                                        <div class="form-group">
+                                            <label for="WarnKeywords" class="col-sm-2 control-label">关键词</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" type="text" name="WarnKeywords" placeholder="请输入关键词..." id="WarnKeywords">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <a class="col-sm-1 btn btn-success" href="javascript:;" onclick="addKeyWords()">添加</a>
+                                        </div>
+
+                                        <div class="form-group {$errors.theme ?= 'has-error'}">
+                                            <label for="new-task-form-theme" class="col-sm-2 control-label">爬取主题</label>
+                                            <div class="col-sm-4">
+
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group {$errors.website ?= 'has-error'}">
+                                            <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站</label>
+                                            <div class="col-sm-4">
+
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10 lab-btns">
+                                                <a class="btn btn-success" id="new-task-form-save">保存</a>
+                                                <a id="form-cancel" class="btn btn-info">取消</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- ./tab-pane -->
+                        <div class="tab-pane fade" id="thresholdTab">
+                            <div class="block h4"><strong>警戒线设置</strong></div>
+
+                        </div><!-- ./tab-pane -->
+                    </div><!-- ./tab-content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /main-container -->
+{include file="Common/popup_warn" /}
+{include file="Common/popup_list" /}
+{include file="Common/popup_verify" /}
+{include file="Common/calendar" /}
+{include file="Common/bottom" /}
+<!--<script src="__PUBLIC__/js/bootstrap-switch/js/bootstrap-switch.js"></script>-->
+<script src="__PUBLIC__/js/bootstrap-switch/js/bootstrapSwitch.js"></script>
+<script>
+    $('#consensus-nav-data-warn').addClass('active open');
+    $('#consensus-nav-data-warn-sub2').addClass('active');
+
+    var params = {};
+
+    function submit() {
+        var data = $('#switch-form').serializeArray();
+        $.each(data, function () {
+            params[this.name] = this.value;
+        });
+        console.log(JSON.stringify(params));
+    }
+
+    $('#warnkeywordsSwitch').on('switch-change', function (e, data) {
+        var $el = $(data.el)
+                , value = data.value;
+        params['warnkeywordsSwitch'] = value;
+        if(!value){
+            $('.tab-content .padding-md').hide();
+        } else{
+            $('.tab-content .padding-md').show();
+        }
+        submit();
+    });
+</script>
