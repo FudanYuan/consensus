@@ -12,9 +12,9 @@ namespace app\model;
 use think\Model;
 
 
-class WebSite extends Model
+class Media extends Model
 {
-    protected $table = 'vox_website';
+    protected $table = 'vox_Media';
     protected $pk = 'id';
     protected $fields = array(
         'id', 'type_id', 'name', 'url', 'status', 'createtime', 'updatetime'
@@ -31,7 +31,7 @@ class WebSite extends Model
      * 获取网址数量
      * @return mixed
      */
-    public function getWebNumber()
+    public function getMedNumber()
     {
         $res = $this->field('count(id) as url')
             ->select();
@@ -46,7 +46,7 @@ class WebSite extends Model
      * @param array $pag
      * @return mixed
      */
-    public function getWebList($cond_or, $cond_and,$order,$pag = [])
+    public function getMedList($cond_or, $cond_and,$order,$pag = [])
     {
         if (!isset($cond_and['a.status'])) {
             $cond_and['a.status'] = ['<>', 2];
@@ -55,11 +55,11 @@ class WebSite extends Model
         if(empty($pag)){
             $pag = 10;
         }else if($pag == -1){
-            $pag = $this->getWebNumber();
+            $pag = $this->getMedNumber();
         }
         $res = $this->alias('a')->field('a.id as id, a.name as name ,
             b.id as type_id,b.name as type_name,a.url as url')
-            ->join('vox_website_type b', 'a.type_id=b.id')
+            ->join('vox_Media_type b', 'a.type_id=b.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -182,7 +182,7 @@ class WebSite extends Model
     {
         $res = $this->alias('a')->field('a.id as id, a.name as name ,
             b.id as type_id,b.name as type_name,a.url as url')
-            ->join('vox_website_type b', 'a.type_id=b.id')
+            ->join('vox_Media_type b', 'a.type_id=b.id')
             ->where(['a.id' => $id])
             ->find();
         return $res;
@@ -225,7 +225,7 @@ class WebSite extends Model
         }
         $cond = "$begin_time < a.createtime and a.createtime < $end_time";
         $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
-            ->join('vox_website_type b', 'a.type_id=b.id')
+            ->join('vox_Media_type b', 'a.type_id=b.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)
@@ -236,7 +236,7 @@ class WebSite extends Model
         return $res;
     }
 
-    public function import_website(){
+    public function import_Media(){
 
     }
 }
