@@ -171,7 +171,7 @@ class DataMonitor extends Common{
     /**
      * 获取预警关键词列表
      */
-    public function getWarnKeywordsList(){
+    public function getKeywordsConfig(){
         $ret = ['errorcode' => 0, 'msg' => ''];
         // 查询结果，
         // 逻辑： 先判断关键词预警是否开启，若开启，获取关键词列表，否则返回数据为空
@@ -183,9 +183,32 @@ class DataMonitor extends Common{
         $this->jsonReturn($ret);
     }
 
+    /**
+     * 保存关键词配置
+     */
+    public function setKeywordsConfig(){
+        $params = input('post.');
+        /**
+         * 参数说明：
+         * keywordsSwitch boolean
+         * keywords array      |
+         * # nature array      | ==> 此三项的元素均为字符串
+         * # media array       |
+         * 加 '#' 的三项要注意，需要将其构造为下面这种格式：
+         * nature： ['正面' => 1, '中立' => 1, '负面' => 1];
+         * media：['微信' => 1, '新闻' => 0, '微博' => 1];
+         * 对于nature来说比较简单，但对于media，就要读取media数据表读取所有的媒体类型，
+         * 然后根据传入的数据构造如上数据。
+         */
+        $keywordsSwitch = $params['keywordsSwitch'];
+        $keywords = $params['keywords'];
+        $nature = $params['nature'];
+        $media = $params['media'];
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 更新预警设置逻辑
+        // code here
 
-    public function addWarnKeywords(){
-
+        $this->jsonReturn($ret);
     }
 
     ///////////// 未修改 ///////////

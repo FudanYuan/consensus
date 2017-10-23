@@ -8,7 +8,7 @@
             <li>预警设置</li>
         </ul>
 
-        <div class="smart-widget">
+        <div class="smart-widget" id="main-container">
             <div class="smart-widget-inner">
                 <ul class="nav nav-tabs tab-style2">
                     <li class="active">
@@ -27,9 +27,8 @@
                 <div class="smart-widget-body">
                     <div class="tab-content">
                         <div class="tab-pane fade in active"  id="keywordsTab">
-                            <!-- 搜索条件 -->
                             <div class="list-btns">
-                                <form action="" class="form-inline" method="get" id="switch-form" >
+                               <form action="" class="form-inline" method="get" id="switch-form" >
                                     <div class="form-group">
                                         <div id="keywordsSwitch" class="switch" data-on="success" data-off="warning">
                                             <input type="checkbox" name="keywordsSwitch" checked/>
@@ -39,10 +38,53 @@
                                 </form>
                                 <hr/>
                             </div>
-                            <div class="padding-md">
-                                <div class="block h4"><strong>条件设置</strong></div>
+
+                            <div class="padding-md" v-if="conditionResult">
+                                <div class="block h4"><strong>预警条件</strong></div>
                                 <div class="form-wrapper">
-                                    <form class="form-horizontal" method="post" id="condition-form">
+                                    <form class="form-horizontal" method="post" id="conditionResult-form">
+                                        <div class="form-group">
+                                            <label for="keywordsList" class="col-sm-2 control-label">关键词：</label>
+                                            <div class="col-sm-10" id="keywordsList">
+                                                <strong class="font-14 block" style="margin-top: 5px">{{keywords | showList}}</strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">舆情属性：</label>
+                                            <div class="col-lg-10">
+                                                <strong class="font-14 block" style="margin-top: 5px">{{natureChecked | showList}}</strong>
+                                            </div><!-- /.col -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">媒体类型：</label>
+                                            <div class="col-lg-10">
+                                                <strong class="font-14 block" style="margin-top: 5px">{{mediaChecked | showList}}</strong>
+                                            </div><!-- /.col -->
+                                        </div>
+
+                                        <div class="form-group" v-if="debug">
+                                            <p>选中：{{natureChecked}}</p>
+                                        </div>
+
+                                        <div class="form-group"v-if="debug">
+                                            <p>选中：{{mediaChecked}}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10 lab-btns">
+                                                <a class="btn btn-success" id="warn-config-form-edit" @click="editWarningConfig">修改</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="padding-md" v-if="conditionSet">
+                                <div class="block h4"><strong>预警条件</strong></div>
+                                <div class="form-wrapper">
+                                    <form class="form-horizontal" method="post" id="condition-set-form">
                                         <div class="form-group">
                                             <label for="addKeywords" class="col-sm-2 control-label">关键词：</label>
                                             <div class="col-sm-4">
@@ -59,7 +101,7 @@
                                                     <template  v-for="keyword in keywords">
                                                         <div class="keywords-list">
                                                             <span class="keyword-item">{{keyword}}</span>
-                                                            <a href="javascript:;" class="keyword-del" @click="deleteKeyword(keyword)">x</a>
+                                                            <a href="javascript:;" class="keyword-del" @click="deleteKeyword(keyword)" :title="'删除 '+keyword">x</a>
                                                         </div>
                                                     </template>
                                                 </div>
@@ -72,24 +114,10 @@
                                                 <template v-for="(value, key, index) in nature">
                                                     <div class="checkbox inline-block" style="padding-right: 10px;">
                                                         <div class="custom-checkbox">
-                                                            <input type="checkbox" :id="'nature'+index" :value="key" v-model="natureChecked">
-                                                            <label :for="'nature'+index"></label>
+                                                            <input type="checkbox" :id="'nature-'+index" :value="key" v-model="natureChecked">
+                                                            <label :for="'nature-'+index"></label>
                                                         </div>
-                                                        <div class="inline-block vertical-top">{{key}}</div>
-                                                    </div>
-                                                </template>
-                                            </div><!-- /.col -->
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">舆情属性：</label>
-                                            <div class="col-lg-10">
-                                                <template v-for="(value, key, index) in nature">
-                                                    <div class="checkbox inline-block" style="padding-right: 10px;">
-                                                        <div class="custom-checkbox">
-                                                            <input type="checkbox" :id="'nature'+index" :value="key" v-model="natureChecked">
-                                                            <label :for="'nature'+index"></label>
-                                                        </div>
-                                                        <div class="inline-block vertical-top">{{key}}</div>
+                                                        <label class="inline-block vertical-top" :for="'nature-'+index" style="padding-left: 0;">{{key}}</label>
                                                     </div>
                                                 </template>
                                             </div><!-- /.col -->
@@ -101,32 +129,33 @@
                                                 <template v-for="(value, key, index) in media">
                                                     <div class="checkbox inline-block" style="padding-right: 10px;">
                                                         <div class="custom-checkbox">
-                                                            <input type="checkbox" :id="'media'+index" :value="key" v-model="mediaChecked">
-                                                            <label :for="'media'+index"></label>
+                                                            <input type="checkbox" :id="'media-'+index" :value="key" v-model="mediaChecked">
+                                                            <label :for="'media-'+index"></label>
                                                         </div>
-                                                        <div class="inline-block vertical-top">{{key}}</div>
+                                                        <label class="inline-block vertical-top" :for="'media-'+index" style="padding-left: 0;">{{key}}</label>
                                                     </div>
                                                 </template>
                                             </div><!-- /.col -->
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="debug">
                                             <p>选中：{{natureChecked}}</p>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group"v-if="debug">
                                             <p>选中：{{mediaChecked}}</p>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10 lab-btns">
-                                                <a class="btn btn-success" id="new-task-form-save">保存</a>
-                                                <a id="form-cancel" class="btn btn-info">取消</a>
+                                                <a class="btn btn-success" id="warn-config-form-save" @click="saveEditKeywordsConfig">保存</a>
+                                                <a id="form-cancel" class="btn btn-info" @click="cancelEditWarningConfig">取消</a>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
+
                         </div><!-- ./tab-pane -->
                         <div class="tab-pane fade" id="thresholdTab">
                             <div class="block h4"><strong>警戒线设置</strong></div>
@@ -143,53 +172,34 @@
 {include file="Common/popup_verify" /}
 {include file="Common/calendar" /}
 {include file="Common/bottom" /}
-<!--<script src="__PUBLIC__/js/bootstrap-switch/js/bootstrap-switch.js"></script>-->
 <script src="__PUBLIC__/js/bootstrap-switch/js/bootstrapSwitch.js"></script>
 <script>
     $('#consensus-nav-data-warn').addClass('active open');
     $('#consensus-nav-data-warn-sub2').addClass('active');
 
-    var params = {};
-
-    // 获取参数
-    function getParams() {
-        var data = $('#switch-form').serializeArray();
-        $.each(data, function () {
-            params[this.name] = this.value;
+    // 过滤器
+    Vue.filter('showList', function (list) {
+        var res = "";
+        $.each(list, function (index, value) {
+            res += value+'   ';
         });
-        console.log(JSON.stringify(params));
-    }
-
-    // 关键词预警开关
-    $('#keywordsSwitch').on('switch-change', function (e, data) {
-        var $el = $(data.el)
-                , value = data.value;
-        params['keywordsSwitch'] = value;
-        if(!value){
-            $('#keywordsTab .padding-md').hide();
-        } else{
-            $('#keywordsTab .padding-md').show();
-        }
-        console.log(value);
-        submit();
-    });
-
-    Vue.filter('judgeChecked', function (value) {
-        return value == 1;
+        return res;
     });
 
     // 初始化vue
-    // 添加关键词
     var vm = new Vue({
-        el: '#keywordsTab',
+        el: '#main-container',
         data: {
-            keywordSwitch: false,
+            conditionResult: true,
+            conditionSet: false,
+            keywordsSwitch: false,
             addKeywords: '',
             keywords: [],
             nature: {},
             media: {},
             natureChecked: [],
-            mediaChecked: []
+            mediaChecked: [],
+            debug: false
         },
         methods:{
             addKeyWords: function (value) {
@@ -208,43 +218,92 @@
                     }
                 };
                 this.keywords.remove(item);
+            },
+            editWarningConfig: function () {
+                this.conditionSet = true;
+                this.conditionResult = false;
+                getKeywordsConfig();
+            },
+            cancelEditWarningConfig: function () {
+                this.conditionSet = false;
+                this.conditionResult = true;
+                getKeywordsConfig();
+            },
+            saveEditKeywordsConfig: function () {
+                setKeywordsConfig();
+                this.cancelEditWarningConfig();
+            },
+            resetAllParams: function () {
+                this.addKeywords = '';
+                this.keywords = [];
+                this.nature = {};
+                this.media = {};
+                this.natureChecked = [];
+                this.mediaChecked = [];
             }
         }
     });
 
-    // 获取关键词列表
-    $.post('__PRO_PATH__/DataMonitor/getWarnKeywordsList', {}, function (res) {
-        if (res.errorcode == 0) {
-            if(!res.switch){
-                $('#keywordsSwitch').bootstrapSwitch('setState', res.switch); // true || false
-                $('#keywordsTab .padding-md').hide();
-            } else {
-                vm.keywords = res.keywords;
-                vm.nature = res.nature;
-                vm.media = res.media;
-
-                $.each(res.nature, function (key, value) {
-                    if(value == 1){
-                        vm.natureChecked.push(key);
-                    }
-                });
-
-                $.each(res.media, function (key, value) {
-                    if(value == 1){
-                        vm.mediaChecked.push(key);
-                    }
-                });
-
-                console.log(vm.natureChecked, vm.mediaChecked);
-            }
+    // 关键词预警开关
+    $('#keywordsSwitch').on('switch-change', function (e, data) {
+        var value = data.value;
+        if(!value){
+            $('#keywordsTab .padding-md').hide();
+        } else{
+            $('#keywordsTab .padding-md').show();
         }
+        console.log(value);
+
     });
 
-    // 提交请求
-    function submit() {
-        getParams();
-        $.post('__PRO_PATH__/DataMonitor/addWarnKeywordsList', params, function (res) {
+    // 获取关键词配置
+    function getKeywordsConfig() {
+        vm.resetAllParams();
+        $.post('__PRO_PATH__/DataMonitor/getKeywordsConfig', {}, function (res) {
+            if (res.errorcode == 0) {
+                if(!res.switch){
+                    $('#keywordsSwitch').bootstrapSwitch('setState', res.switch); // true || false
+                    $('#keywordsTab .padding-md').hide();
+                } else {
+                    vm.keywordsSwitch = true;
+                    vm.keywords = res.keywords;
+                    vm.nature = res.nature;
+                    vm.media = res.media;
 
+                    $.each(res.nature, function (key, value) {
+                        if(value == 1){
+                            vm.natureChecked.push(key);
+                        }
+                    });
+
+                    $.each(res.media, function (key, value) {
+                        if(value == 1){
+                            vm.mediaChecked.push(key);
+                        }
+                    });
+
+                    console.log(res.nature, res.media);
+                }
+            }
         });
     }
+
+    // 设置关键词配置
+    function setKeywordsConfig() {
+        var params = {};
+        params['keywordsSwitch'] = vm.keywordsSwitch;
+        params['keywords'] = vm.keywords;
+        params['nature'] = vm.natureChecked;
+        params['media'] = vm.mediaChecked;
+        $.post('__PRO_PATH__/DataMonitor/setKeywordsConfig', params, function (res) {
+            if (res.errorcode == 0) {
+                console.log(res.data);
+            } else {
+                popWarn(res.msg);
+            }
+        });
+    }
+
+    // 初始化
+    getKeywordsConfig();
 </script>
