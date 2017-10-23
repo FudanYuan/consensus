@@ -597,7 +597,7 @@
         params['keywordsSwitch'] = vm.keywordsSwitch;
         params['keywords'] = vm.keywords;
         params['nature'] = vm.natureChecked;
-        params['media'] = vm.mediaChecked;
+        params['media'] =  vm.mediaChecked;
         $.post('__PRO_PATH__/DataMonitor/setKeywordsConfig', params, function (res) {
             if (res.errorcode == 0) {
                 vm.cancelEditKeywordsConfig();
