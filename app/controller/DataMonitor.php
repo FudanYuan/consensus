@@ -9,9 +9,9 @@
 namespace app\controller;
 
 class DataMonitor extends Common{
-    public $exportCols = ['id','theme_3_id','websitetype_id','task_id','title','content',
-        'source','media_type','nature','url','relevance','time','status','createtime', 'updatetime'];
-    public $colsText = ['序号', '三级主题', '网站类型','任务编号','标题','内容','来源'];
+    public $exportCols = ['id','theme_3_id','media_id','task_id','title','content','digest',
+        'source','userID','media_type','nature','url','relevance','publishtime','similar_num','is_collect','is_warn','status','createtime', 'updatetime'];
+    public $colsText = ['序号', '三级主题', '媒体id','任务编号','标题','内容','概述','来源','用户ID','媒体类型','舆情属性','网址','关联度','发表时间','相似文章数','是否收藏','是否预警'];
 
     /**
      * 数据总览

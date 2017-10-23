@@ -17,15 +17,15 @@ class DataMonitor extends Model
     protected $table = 'vox_data';
     protected $pk = 'id';
     protected $fields = array(
-        'id','theme_3_id','websitetype_id','task_id','title','content',
-        'source','media_type','nature','url','relevance','time',
+        'id','theme_3_id','media_id','task_id','title','content','digest',
+        'source','userID','media_type','nature','url','relevance','publishtime',
         'similar_num','is_collect','is_warn','status','createtime', 'updatetime');
     protected $type = [
         'id' => 'integer',
         'theme_3_id'=>'integer',
         'relevance' =>'integer',
         'time' =>'integer',
-        'websitetype_id' => 'integer',
+        'media_id' => 'integer',
         'task_id'=>'integer',
         'similar_num' => 'integer',
         'is_collect' => 'integer',
@@ -124,7 +124,7 @@ class DataMonitor extends Model
             $data_save = [];
             $data_save['id'] = $data['id'];
             $data_save['theme_3_id'] = $data['theme_3_id'];
-            $data_save['websitetype_id'] = $data['websitetype_id'];
+            $data_save['media_id'] = $data['media_id'];
             $data_save['task_id'] = $data['task_id'];
             $data_save['title'] = $data['title'];
             $data_save['content'] = $data['content'];
