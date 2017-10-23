@@ -152,19 +152,19 @@
                     <td>
                         {if condition="authority('Data_collect')"}
                         <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)" title="收藏">
-                            <i :class="['fa fa-heart', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 10px"></i>
+                            <i :class="['fa fa-heart fa-lg', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 10px"></i>
                         </a>
                         {/if}
 
                         {if condition="authority('Data_edit')"}
                         <a href="javascript:;" @click="popupVerify(model.id, model.nature, model.relevance)" title="编辑" :id="'from-verify'+model.id">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;"></i>
+                            <i class="fa fa-pencil-square-o  fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
                         </a>
                         {/if}
 
                         {if condition="authority('Data_remote')"}
                         <a href="javascript:;" @click="dataRemove(model.id)" title="删除">
-                            <i class="fa fa-trash" aria-hidden="true" style="margin-right: 0;"></i>
+                            <i class="fa fa-trash  fa-lg" aria-hidden="true" style="margin-right: 0;"></i>
                         </a>
                         {/if}
                     </td>
@@ -386,7 +386,7 @@
         $('#confirm-popup').popup('show');
     }
 
-    setInterval(function () {
-        submit();
-    }, 5000);
+//    setInterval(function () {
+//        submit();
+//    }, 5000);
 </script>

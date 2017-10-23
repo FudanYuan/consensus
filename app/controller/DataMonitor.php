@@ -71,9 +71,11 @@ class DataMonitor extends Common{
             }
             $cond_and['nature'] = ['=', $nature_select];
         }
+
         if($relevance != -1){
-            $order = ['relevance desc'];
+            $cond_and['relevance'] = ['=', $relevance];
         }
+
         if($area!=-1){
             $cond_and['area'] = ['=',$area];
         }
@@ -97,11 +99,15 @@ class DataMonitor extends Common{
         else if($stime && !$etime){
             $cond_and['time'] = ['between', [strtotime($stime), time()]];
         }
-        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
-        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order,-1);
+
+
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => "",'keywords' =>$keywords];
+        $list = [];
+        //$list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
+        $list[1] =['id' => 4, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
+        $list[2] =['id' => 5, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
+        $list[3] =['id' => 6, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
         $ret['data'] = $list;
-        $ret['time'] = $list[0]['publishtime'];
-        $ret['test'] = date('Y-m-d H:i:s',$list[0]['publishtime']);
         $this->jsonReturn($ret);
     }
 
@@ -137,18 +143,10 @@ class DataMonitor extends Common{
         $id = input('post.id', -1);
         $nature = input('post.nature', '');
         $relevance = input('post.relevance', '');
-        $ret = ['errorcode' => 0, 'msg' => '修改成功','nature' =>$nature,'relevance'=>$relevance];
+        $ret = ['errorcode' => 0, 'msg' => ''];
         // 编辑逻辑
         if($id != '-1'){
             // 修改成功，msg为 '编辑成功'，否则 '编辑失败'
-            $data = D('DataMonitor')->getDataById($id);
-            if($nature){
-                $data['nature'] = $nature;
-            }
-            if($relevance){
-                $data['relevance'] = $relevance;
-            }
-            D('DataMonitor')->saveData($data,$id);
         }
         $this->jsonReturn($ret);
     }
@@ -177,7 +175,7 @@ class DataMonitor extends Common{
         $ret = ['errorcode' => 0, 'msg' => ''];
         // 查询结果，
         // 逻辑： 先判断关键词预警是否开启，若开启，获取关键词列表，否则返回数据为空
-        $ret['switch'] = 0;
+        $ret['switch'] = 1;
         $list = ['测试1', '测试2', '测试3', '测试4', '测试5', '测试6'];
         $ret['nature'] = ['正面' => 1, '中立' => 1, '负面' => 1];
         $ret['media'] = ['微信' => 1, '新闻' => 0, '微博' => 1];
@@ -201,6 +199,12 @@ class DataMonitor extends Common{
          * media：['微信' => 1, '新闻' => 0, '微博' => 1];
          * 对于nature来说比较简单，但对于media，就要读取media数据表读取所有的媒体类型，
          * 然后根据传入的数据构造如上数据。
+         *
+         * 注：要对参数进行检测，返回error信息，
+         * keywords 不能为空，
+         * nature 至少选择一项
+         * media 至少选择一项
+         * $ret['error'], 例如$ret['error'] = ['keywords' => '关键词不能为空']
          */
         $keywordsSwitch = $params['keywordsSwitch'];
         if(!isset($params['keywords'])){
@@ -225,26 +229,93 @@ class DataMonitor extends Common{
         $this->jsonReturn($ret);
     }
 
+
     /**
-     * 数据导出
+     * 获取警戒线配置
      */
-    public function export(){
-        $cond_or = [];
-        $cond_and = [];
-        $order = [];
-        $list = D('DataMonitor')->getListExport();
-        $data = [];
-        // 匹配键值
-        array_push($data, $this->exportCols);
-        foreach ($list as $value) {
-            $temp = [];
-            foreach ($this->exportCols as $key => $k){
-                array_push($temp, $value[$k]);
-            }
-            array_push($data, $temp);
-        }
-        D('Excel')->export($data, 'dataMonitor.xls');
+    public function getThresholdConfig(){
+        /**
+         * status: 1 预警中； 2 关闭； 3 删除
+         */
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 查询结果
+        $list = [];
+        $list[0] = ['id' => 1, 'task' => '生态环境', 'dayAllCount' => 10, 'dayNegativeCount' => 10, 'status' => 1];
+        $list[1] = ['id' => 2, 'task' => '生态环境', 'dayAllCount' => 10, 'dayNegativeCount' => 10, 'status' => 1];
+        $list[2] = ['id' => 3, 'task' => '生态环境', 'dayAllCount' => 10, 'dayNegativeCount' => 10, 'status' => 2];
+        $ret['list'] = $list;
+        // 任务列表
+        $ret['tasks'] = ['测试1', '生态环境', '测试3', '测试4', '测试5', '测试6'];
+        $this->jsonReturn($ret);
     }
+
+    /**
+     * 删除警戒线预警
+     */
+    public function removeThresholdConfig(){
+        $ret = ['code' => 1, 'msg' => '删除成功'];
+        $ids = input('post.ids');
+        try{
+            // 重写/model/DataMonitor的remove函数即可
+            // $res = D('DataMonitor')->remove(['id' => ['in', $ids]]);
+        }catch(MyException $e){
+            $ret['code'] = 2;
+            $ret['msg'] = '删除失败';
+        }
+        $this->jsonReturn($ret);
+    }
+
+
+    /**
+     * 保存关键词配置
+     */
+    public function createThresholdConfig(){
+        /**
+         * 参数默认：
+         * task ''
+         * dayAllCount -1
+         * dayNegativeCount -1
+         * 参数过滤：
+         * task '' 请选择类目名称
+         * dayAllCount -1 请设置每日舆情总量
+         * dayNegativeCount -1 请设置每日负面舆情
+         */
+        $params = input('post.');
+        $task = input('post.task', '');
+        $dayAllCount = input('post.dayAllCount', -1);
+        $dayNegativeCount = input('post.dayNegativeCount', -1);
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 添加预警设置逻辑
+        // code here
+
+        $this->jsonReturn($ret);
+    }
+
+    /**
+     * 编辑警戒线预警配置
+     */
+    public function saveThresholdConfig(){
+        /**
+         * 参数默认：
+         * dayAllCount -1
+         * dayNegativeCount -1
+         * 参数过滤：
+         * dayAllCount -1 请设置每日舆情总量
+         * dayNegativeCount -1 请设置每日负面舆情
+         */
+        $params = input('post.');
+        $id = input('post.id');
+        $status = input('post.status');
+        $task = input('post.task', '');
+        $dayAllCount = input('post.dayAllCount', -1);
+        $dayNegativeCount = input('post.dayNegativeCount', -1);
+        $ret = ['errorcode' => 0, 'msg' => ''];
+        // 编辑预警设置逻辑
+        // code here
+
+        $this->jsonReturn($ret);
+    }
+
 
     ///////////// 未修改 ///////////
     /**
@@ -360,4 +431,24 @@ class DataMonitor extends Common{
         $this->jsonReturn($ret);
     }
 
+    /**
+     * 数据导出
+     */
+    public function export(){
+        $cond_or = [];
+        $cond_and = [];
+        $order = [];
+        $list = D('DataMonitor')->getDataCondition([],[],[],-1);
+        $data = [];
+        // 匹配键值
+        array_push($data, $this->exportCols);
+        foreach ($list as $value) {
+            $temp = [];
+            foreach ($this->exportCols as $key => $k){
+                array_push($temp, $value[$k]);
+            }
+            array_push($data, $temp);
+        }
+        D('Excel')->export($data, 'dataMonitor.xls');
+    }
 }
