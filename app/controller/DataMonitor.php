@@ -201,9 +201,21 @@ class DataMonitor extends Common{
          * 然后根据传入的数据构造如上数据。
          */
         $keywordsSwitch = $params['keywordsSwitch'];
-        $keywords = $params['keywords'];
-        $nature = $params['nature'];
-        $media = $params['media'];
+        if(!isset($params['keywords'])){
+            $keywords = [];
+        } else {
+            $keywords = $params['keywords'];
+        }
+        if(!isset($params['nature'])){
+            $nature = [];
+        } else {
+            $nature = $params['nature'];
+        }
+        if(!isset($params['media'])){
+            $media = [];
+        } else {
+            $media = $params['media'];
+        }
         $ret = ['errorcode' => 0, 'msg' => ''];
         // 更新预警设置逻辑
         // code here

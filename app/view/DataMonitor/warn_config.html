@@ -26,14 +26,14 @@
                 </ul>
                 <div class="smart-widget-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active"  id="keywordsTab">
+                        <div class="tab-pane fade"  id="keywordsTab">
                             <div class="list-btns">
                                <form action="" class="form-inline" method="get" id="switch-form" >
                                     <div class="form-group">
                                         <div id="keywordsSwitch" class="switch" data-on="success" data-off="warning">
                                             <input type="checkbox" name="keywordsSwitch" checked/>
                                         </div>
-                                        <span style="vertical-align: super;">关键词预警: 根据添加的关键词和条件，从抓取的舆情当中提取相关联的文章，呈现在“舆情预警－预警舆情”模块。</span>
+                                        <label style="position: relative; top: -10px;">关键词预警: 根据添加的关键词和条件，从抓取的舆情当中提取相关联的文章，呈现在“舆情预警－预警舆情”模块。</label>
                                     </div>
                                 </form>
                                 <hr/>
@@ -157,8 +157,18 @@
                             </div>
 
                         </div><!-- ./tab-pane -->
-                        <div class="tab-pane fade" id="thresholdTab">
-                            <div class="block h4"><strong>警戒线设置</strong></div>
+                        <div class="tab-pane fade in active" id="thresholdTab">
+                            <div class="list-btns">
+                                <form action="" class="form-inline" method="post" id="threshold-form" >
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <a class="btn btn-primary" href="javascript:;" @click="addThreadholdWarn">添加预警</a>
+                                            <label>警戒线预警: 根据添加的关键词和条件，从抓取的舆情当中提取相关联的文章，呈现在“实时舆情－预警舆情”模块。</label>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr/>
+                            </div>
 
                         </div><!-- ./tab-pane -->
                     </div><!-- ./tab-content -->
@@ -202,6 +212,14 @@
             debug: false
         },
         methods:{
+            resetAllParams: function () {
+                this.addKeywords = '';
+                this.keywords = [];
+                this.nature = {};
+                this.media = {};
+                this.natureChecked = [];
+                this.mediaChecked = [];
+            },
             addKeyWords: function (value) {
                 if(value != ""){
                     this.keywords.push(value);
@@ -233,14 +251,9 @@
                 setKeywordsConfig();
                 this.cancelEditWarningConfig();
             },
-            resetAllParams: function () {
-                this.addKeywords = '';
-                this.keywords = [];
-                this.nature = {};
-                this.media = {};
-                this.natureChecked = [];
-                this.mediaChecked = [];
-            }
+            addThreadholdWarn: function () {
+
+            },
         }
     });
 
