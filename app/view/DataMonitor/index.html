@@ -315,7 +315,7 @@
         switch (col) {
             case 'publishtime':
                 title = $("#sort_publishtime").attr('title');
-                sort.val("publishtime " + title);
+                sort.val("time " + title);
                 $("#sort_publishtime").attr({"title": changeSort(title)});
                 $("#sort_publishtime i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
@@ -339,7 +339,7 @@
         var col = sortcol.split(' ');
         var title = col[1];
         switch (col[0]) {
-            case 'publishtime':
+            case 'time':
                 $("#sort_publishtime").attr({"title": changeSort(title)});
                 $("#sort_publishtime i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;

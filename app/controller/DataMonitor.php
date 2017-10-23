@@ -71,11 +71,9 @@ class DataMonitor extends Common{
             }
             $cond_and['nature'] = ['=', $nature_select];
         }
-
         if($relevance != -1){
-            $cond_and['relevance'] = ['=', $relevance];
+            $order = ['relevance desc'];
         }
-
         if($area!=-1){
             $cond_and['area'] = ['=',$area];
         }
@@ -99,15 +97,11 @@ class DataMonitor extends Common{
         else if($stime && !$etime){
             $cond_and['time'] = ['between', [strtotime($stime), time()]];
         }
-
-
-        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => "",'keywords' =>$keywords];
-        $list = [];
-        //$list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
-        $list[1] =['id' => 4, 'title' => '测试测试测试测试测试测试测试测试测试1', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 1, 'is_collect' => 1];
-        $list[2] =['id' => 5, 'title' => '测试测试测试测试测试测试测试测试测试2', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1507120988, 'similar_num' => 2, 'relevance' => 2, 'is_collect' => 0];
-        $list[3] =['id' => 6, 'title' => '测试测试测试测试测试测试测试测试测试3', 'source' => '测试', 'url' => 'http://weibo.com/login.php', 'media_type' => '测试', 'nature' => '测试', 'publishtime' => 1466248396, 'similar_num' => 2, 'relevance' => 3, 'is_collect' => 1];
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
+        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order,-1);
         $ret['data'] = $list;
+        $ret['time'] = $list[0]['publishtime'];
+        $ret['test'] = date('Y-m-d H:i:s',$list[0]['publishtime']);
         $this->jsonReturn($ret);
     }
 
@@ -143,10 +137,18 @@ class DataMonitor extends Common{
         $id = input('post.id', -1);
         $nature = input('post.nature', '');
         $relevance = input('post.relevance', '');
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['errorcode' => 0, 'msg' => '修改成功','nature' =>$nature,'relevance'=>$relevance];
         // 编辑逻辑
         if($id != '-1'){
             // 修改成功，msg为 '编辑成功'，否则 '编辑失败'
+            $data = D('DataMonitor')->getDataById($id);
+            if($nature){
+                $data['nature'] = $nature;
+            }
+            if($relevance){
+                $data['relevance'] = $relevance;
+            }
+            D('DataMonitor')->saveData($data,$id);
         }
         $this->jsonReturn($ret);
     }
@@ -221,6 +223,27 @@ class DataMonitor extends Common{
         // code here
 
         $this->jsonReturn($ret);
+    }
+
+    /**
+     * 数据导出
+     */
+    public function export(){
+        $cond_or = [];
+        $cond_and = [];
+        $order = [];
+        $list = D('DataMonitor')->getListExport();
+        $data = [];
+        // 匹配键值
+        array_push($data, $this->exportCols);
+        foreach ($list as $value) {
+            $temp = [];
+            foreach ($this->exportCols as $key => $k){
+                array_push($temp, $value[$k]);
+            }
+            array_push($data, $temp);
+        }
+        D('Excel')->export($data, 'dataMonitor.xls');
     }
 
     ///////////// 未修改 ///////////
@@ -337,24 +360,4 @@ class DataMonitor extends Common{
         $this->jsonReturn($ret);
     }
 
-    /**
-     * 数据导出
-     */
-    public function export(){
-        $cond_or = [];
-        $cond_and = [];
-        $order = [];
-        $list = D('DataMonitor')->getDataCondition([],[],[],-1);
-        $data = [];
-        // 匹配键值
-        array_push($data, $this->exportCols);
-        foreach ($list as $value) {
-            $temp = [];
-            foreach ($this->exportCols as $key => $k){
-                array_push($temp, $value[$k]);
-            }
-            array_push($data, $temp);
-        }
-        D('Excel')->export($data, 'dataMonitor.xls');
-    }
 }

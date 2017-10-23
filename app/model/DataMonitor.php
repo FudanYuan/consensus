@@ -24,15 +24,12 @@ class DataMonitor extends Model
         'id' => 'integer',
         'theme_3_id'=>'integer',
         'relevance' =>'integer',
-        'time' =>'integer',
         'media_id' => 'integer',
         'task_id'=>'integer',
         'similar_num' => 'integer',
         'is_collect' => 'integer',
         'is_warn' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
     ];
 
     /**
@@ -72,10 +69,6 @@ class DataMonitor extends Model
         if($pag == -1){
             $pag = $this->getDataNumber();
         }
-        if(empty($order)){
-            $order = 'id ASC';
-        }
-
         $res = $this->field('id,title,source,url,media_type,nature,
             time as publishtime,content,similar_num,relevance,is_collect')
             ->whereor($cond_or)
@@ -83,6 +76,23 @@ class DataMonitor extends Model
             ->order($order)
             ->select();
         //->paginate(10);
+        return $res;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getListExport(){
+        $res = $this->field('id,theme_3_id,websitetype_id,task_id,title,content,
+        source,media_type,nature,url,relevance,time,
+        similar_num,is_collect,is_warn,status,createtime, updatetime')
+            ->where('status <> 2')
+            ->select();
+        for($i = 0;$i<count($res);$i++){
+            $res[$i]['time'] = date('Y-m-d',$res[$i]['time']);
+            $res[$i]['createtime'] = date('Y-m-d',$res[$i]['createtime']);
+            $res[$i]['updatetime'] = date('Y-m-d',$res[$i]['updatetime']);
+        }
         return $res;
     }
 
@@ -143,20 +153,17 @@ class DataMonitor extends Model
         return $ret;
     }
 
-
     /**
-     * 清除非数据库字段
-     * @param $data
+     * 删数据
+     * @param array $cond
+     * @return false|int
+     * @throws MyException
      */
-    private function unsetOtherField(&$data)
-    {
-        foreach ($this->fields as $v) {
-            $str = $v . '_str';
-            if (isset($data[$str])) unset($data[$str]);
-        }
+    public function remove($cond = []){
+        $res = $this->save(['status' => 2], $cond);
+        if ($res === false) throw new MyException('2', '删除失败');
+        return $res;
     }
-
-
 
 
 
@@ -421,7 +428,7 @@ class DataMonitor extends Model
             ->group('c.id')
             ->order('count(a.id) desc')
             ->limit(15)
-            ->select();
+            ->se分removelect();
         return $res;
     }
 
@@ -437,26 +444,7 @@ class DataMonitor extends Model
 
     }
 
-    /**
-     * ????????未完成？？？？？
-     * 删数据
-     * @param array $cond
-     * @return false|int
-     * @throws MyException
-     */
-    public function remove($cond = []){
-        $res = $this->save(['status' => 2], $cond);
-        $data = $this->field('id,istop')->where($cond)->select();
-        $ids = [];
-        foreach ($data as $v) {
-            if ($v['istop']) array_push($ids, $v['id']);
-        }
-        if (!empty($ids)) {
-            D('Banner')->remove(['conid' => ['section' => 3, 'in', $ids]]);
-        }
-        if ($res === false) throw new MyException('2', '删除失败');
-        return $res;
-    }
+
     /**
      * 将字符串时间转化成时间戳
      * @param unknown $data
