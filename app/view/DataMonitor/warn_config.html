@@ -248,12 +248,13 @@
     $('#keywordsSwitch').on('switch-change', function (e, data) {
         var value = data.value;
         if(!value){
+            vm.keywordsSwitch = false;
             $('#keywordsTab .padding-md').hide();
         } else{
+            vm.keywordsSwitch = true;
             $('#keywordsTab .padding-md').show();
         }
-        console.log(value);
-
+        setKeywordsConfig();
     });
 
     // 获取关键词配置
@@ -262,6 +263,7 @@
         $.post('__PRO_PATH__/DataMonitor/getKeywordsConfig', {}, function (res) {
             if (res.errorcode == 0) {
                 if(!res.switch){
+                    vm.keywordsSwitch = false;
                     $('#keywordsSwitch').bootstrapSwitch('setState', res.switch); // true || false
                     $('#keywordsTab .padding-md').hide();
                 } else {
@@ -281,8 +283,6 @@
                             vm.mediaChecked.push(key);
                         }
                     });
-
-                    console.log(res.nature, res.media);
                 }
             }
         });
@@ -297,7 +297,6 @@
         params['media'] = vm.mediaChecked;
         $.post('__PRO_PATH__/DataMonitor/setKeywordsConfig', params, function (res) {
             if (res.errorcode == 0) {
-                console.log(res.data);
             } else {
                 popWarn(res.msg);
             }
