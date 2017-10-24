@@ -45,7 +45,6 @@ class DataMonitor extends Common{
         return view('', []);
     }
 
-
     /**
      * 获取全部舆情
      */
@@ -63,6 +62,24 @@ class DataMonitor extends Common{
         $is_warn = input('post.is_warn',-1);
         $cond_and = [];
         $cond_or = [];
+        if($keywords){
+            $cond_or['title|content|source|media_type|nature|url|digest|userID'] = ['like','%'.$keywords.'%'];
+        }
+        if($stime && $etime){
+            $cond_and['time'] = ['between', [strtotime($stime), strtotime($etime)]];
+        }
+        else if(!$stime && $etime){
+            $cond_and['time'] = ['between', [0, strtotime($etime)]];
+        }
+        else if($stime && !$etime){
+            $cond_and['time'] = ['between', [strtotime($stime), time()]];
+        }
+        if($is_collect != -1){
+            $cond_and['is_collect'] = ['=',1];
+        }
+        if($is_warn != -1){
+            $cond_and['is_warn'] = ['=',1];
+        }
         if($nature != -1){
             if($nature == 0){
                 $nature_select = '正面';
@@ -81,31 +98,6 @@ class DataMonitor extends Common{
         }
         if($media_type != -1){
             $cond_and['media_type'] = ['=',$media_type];
-        }
-        if($keywords){
-            $cond_or['title'] = ['like','%'.$keywords.'%'];
-            $cond_or['content'] = ['like','%'.$keywords.'%'];
-            $cond_or['source'] = ['like','%'.$keywords.'%'];
-            $cond_or['media_type'] = ['like','%'.$keywords.'%'];
-            $cond_or['nature']  = ['like','%'.$keywords.'%'];
-            $cond_or['url'] =['like','%'.$keywords.'%'];
-            $cond_or['digest'] =['like','%'.$keywords.'%'];
-            $cond_or['userID'] =['like','%'.$keywords.'%'];
-        }
-        if($stime && $etime){
-            $cond_and['time'] = ['between', [strtotime($stime), strtotime($etime)]];
-        }
-        else if(!$stime && $etime){
-            $cond_and['time'] = ['between', [0, strtotime($etime)]];
-        }
-        else if($stime && !$etime){
-            $cond_and['time'] = ['between', [strtotime($stime), time()]];
-        }
-        if($is_collect != -1){
-            $cond_and['is_collect'] = ['=',1];
-        }
-        if($is_warn != -1){
-            $cond_and['is_warn'] = ['=',1];
         }
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
         $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order,-1);

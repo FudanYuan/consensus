@@ -58,11 +58,12 @@ class DataMonitor extends Model
      * 获取舆情列表
      * @param $cond_or
      * @param $cond_and
+     * @param $cond
      * @param $order
      * @param int $pag
      * @return mixed
      */
-    public function  publicList($cond_or,$cond_and,$order,$pag = 10){
+    public function  publicList($cond_or,$cond_and,$cond,$order,$pag = 10){
         if(!isset($cond_and['status'])){
             $cond_and['status'] = ['<>', 2];
         }
@@ -71,7 +72,7 @@ class DataMonitor extends Model
         }
         $res = $this->field('id,title,source,url,media_type,nature,
             publishtime,content,similar_num,relevance,is_collect')
-            ->whereor($cond_or)
+            ->where($cond_or)
             ->where($cond_and)
             ->order($order)
             ->select();
