@@ -34,23 +34,27 @@ class Role extends Model{
  	public function getRoleList(){
  		return $this->field('id,name')->where('status', 1)->select();
  	}
- 	/**
- 	 * 根据ID获取角色信息
- 	 * @param unknown $roleid
- 	 */
+
+    /**
+     * 根据ID获取角色信息
+     * @param $roleid
+     * @return bool
+     */
  	public function getById($roleid){
  		if(!$roleid) return false;
  		$res = $this->field('id,name,remark')->where(['id' => $roleid, 'status' => 1])->find();
  		if(!empty($res)){
- 			$actions = Db::table('tax_role_action_admin')->where(['roleid' => $roleid, 'status' => 1])->column('actionid');
+ 			$actions = Db::table('vox_role_action_admin')->where(['roleid' => $roleid, 'status' => 1])->column('actionid');
  			$res['actions'] = $actions;
  		}
  		return $res;
  	}
- 	/**
- 	 * 创建角色
- 	 * @param unknown $data
- 	 */
+
+    /**
+     * 创建角色
+     * @param $data
+     * @return bool
+     */
  	public function addData($data){
  		$authority = false;
  		if(isset($data['authority']) && !empty($data['authority'])){
@@ -80,11 +84,13 @@ class Role extends Model{
  			return false;
  		}
  	}
- 	/**
- 	 * 编辑角色
- 	 * @param unknown $roleid
- 	 * @param unknown $data
- 	 */
+
+    /**
+     * 编辑角色
+     * @param $roleid
+     * @param $data
+     * @return bool
+     */
  	public function saveData($roleid, $data){
  		$authority = false;
  		if(isset($data['authority']) && !empty($data['authority'])){
@@ -122,10 +128,13 @@ class Role extends Model{
  			return false;
  		}
  	}
- 	/**
- 	 * 删除
- 	 * @param array $cond
- 	 */
+
+    /**
+     * 删除
+     * @param array $cond
+     * @return false|int
+     * @throws MyException
+     */
  	public function remove($cond = []){
  		$res = $this->save(['status' => 2], $cond);
  		if($res === false) throw new MyException('2', '删除失败');
@@ -148,11 +157,13 @@ class Role extends Model{
  	public function getRoleActions($roleid){
  		return Db::table('tax_role_action_admin')->where(['roleid' => $roleid, 'status' => 1])->column('actionid');
  	}
- 	/**
- 	 * 删除角色权限
- 	 * @param unknown $roleid
- 	 * @param unknown $actionids
- 	 */
+
+    /**
+     * 删除角色权限
+     * @param $roleid
+     * @param $actionids
+     * @return int
+     */
  	public function removeRoleActions($roleid, $actionids){
  		return Db::table('tax_role_action_admin')->where(['roleid' => $roleid, 'actionid' => ['in', $actionids]])->delete();
  	}

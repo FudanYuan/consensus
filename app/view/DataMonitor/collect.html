@@ -115,7 +115,7 @@
                     <td>{{model.similar_num}}</td>
                     <td>
                         {if condition="authority('Data_collect')"}
-                        <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)" title="收藏">
+                        <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)" :title="model.is_collect | collectStatus">
                             <i :class="['fa fa-heart fa-lg', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 10px"></i>
                         </a>
                         {/if}
@@ -230,6 +230,15 @@
     Vue.filter('moment', function (value, formatString) {
         formatString = formatString || 'YYYY-MM-DD HH:mm';
         return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+    });
+    Vue.filter('collectStatus', function (value) {
+        var res = '';
+        if(value == 1){
+            res = '取消收藏';
+        } else{
+            res = '收藏';
+        }
+        return res;
     });
 
     // 异步提交数据
