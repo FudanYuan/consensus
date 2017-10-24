@@ -20,12 +20,12 @@ class Index extends Common{
         $count = [];
         $count['theme'] = formatNum(D('Theme')->getT3Number());
         $count['data'] = formatNum(D('DataMonitor')->getDataNumber());
-        $count['url'] = formatNum(D('WebSite')->getWebNumber());
+        $count['url'] = formatNum(D('Media')->getMedNumber());
         $count['task'] = formatNum(D('Task')->getTaskNumber());
 
         $compare = [];
         $compare['data'] = formatNum(D('DataMonitor')->getPercentNumber());
-        $compare['url'] = formatNum(D('WebSite')->getPercentNumber());
+        $compare['url'] = formatNum(D('Media')->getPercentNumber());
         $compare['theme'] = formatNum(D('Theme')->getPercentNumber());
 
         $task = [];
