@@ -79,8 +79,8 @@
         $('#verify-confirm-popup').popup('hide');
         $.post('__PRO_PATH__/DataMonitor/edit', ver_params, function(res){
             if(res['errorcode'] == 0){
-                //window.location.reload();
-                popWarn(res['msg']);
+                window.location.reload();
+                //popWarn(res['msg']);
             }else{
                 popWarn(res['msg']);
             }
