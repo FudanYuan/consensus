@@ -245,6 +245,8 @@ class DataMonitor extends Common{
      * 获取警戒线配置
      */
     public function getThresholdConfig(){
+        $page = input('post.current_page', 0);
+        $per_page = input('post.per_page', 0);
         /**
          * status: 1 预警中； 2 关闭； 3 删除
          */
@@ -254,7 +256,11 @@ class DataMonitor extends Common{
         $list[0] = ['id' => 1, 'task' => '生态环境', 'dayAllCount' => 10, 'dayNegativeCount' => 10, 'status' => 1];
         $list[1] = ['id' => 2, 'task' => '生态环境', 'dayAllCount' => 10, 'dayNegativeCount' => 10, 'status' => 1];
         $list[2] = ['id' => 3, 'task' => '生态环境', 'dayAllCount' => 10, 'dayNegativeCount' => 10, 'status' => 2];
-        $ret['list'] = $list;
+        //分页时需要获取记录总数，键值为 total
+        $ret["total"] = count($list);
+        //根据传递过来的分页偏移量和分页量截取模拟分页 rows 可以根据前端的 dataField 来设置
+        $ret['current_page'] = $page;
+        $ret['list'] = array_slice($list, ($page-1)*$per_page, $per_page);
         // 任务列表
         $ret['tasks'] = ['测试1', '生态环境', '测试3', '测试4', '测试5', '测试6'];
         $this->jsonReturn($ret);

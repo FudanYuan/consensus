@@ -104,8 +104,8 @@
             </form>
         </div>
 
-        <!-- 数据表 -->
         <div id="data">
+            <!-- 数据表 -->
             <table class="table table-hover" style="background:#fff;">
                 <thead>
                 <tr>
@@ -262,7 +262,7 @@
         });
     });
 
-    $('#sortCol').val('publishtime asc');
+    $('#sortCol').val('publishtime desc');
     var sort = $('#sortCol').val();
     getSortCol(sort);
 
@@ -273,11 +273,9 @@
             list: {},
             params: {},
             total: 0,
-            per_page: 1,
+            per_page: 10,
             current_page: 1,
             pages: 1
-        },
-        method:{
         }
     });
 
@@ -308,11 +306,11 @@
                 vm.current_page = res.current_page;
                 vm.list = res.data;
                 vm.params = res.params;
-                console.log(vm.total, vm.pages,vm.list);
             }
         });
     }
 
+    // 转到某页
     function gotoPage(page) {
         vm.current_page = page;
         submit();
