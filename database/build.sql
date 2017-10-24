@@ -170,6 +170,8 @@ CREATE TABLE `vox_media_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT INTO `vox_media_type` (`name`, `status`, `createtime`, `updatetime`) VALUES
+('微博', 1, 1508811593, NULL);
 
 # Dump of table vox_media
 # ------------------------------------------------------------
@@ -188,7 +190,8 @@ CREATE TABLE `vox_media` (
   FOREIGN KEY (type_id) REFERENCES vox_media_type(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+INSERT INTO `vox_media` (`type_id`, `name`, `url`, `status`, `createtime`, `updatetime`) VALUES
+(1, '微博', 'http://weibo.cn', 1, 1508811608, NULL);
 
 # Dump of table vox_operationlog
 # ------------------------------------------------------------
@@ -341,8 +344,8 @@ CREATE TABLE `vox_data` (
   `relevance` FLOAT(2) DEFAULT NULL COMMENT '关联度',
   `publishtime` INT DEFAULT NULL COMMENT '发表时间',
   `similar_num` INT DEFAULT NULL COMMENT '相似文章数',
-  `is_collect` TINYINT DEFAULT NULL COMMENT '是否收藏：1->是，2->否',
-  `is_warn` TINYINT DEFAULT NULL COMMENT '是否预警：1->是，2->否',
+  `is_collect` TINYINT DEFAULT NULL COMMENT '是否收藏：0->否，1->是',
+  `is_warn` TINYINT DEFAULT NULL COMMENT '是否预警：0->否，1->是',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
@@ -353,6 +356,10 @@ CREATE TABLE `vox_data` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+INSERT INTO `vox_data` (`theme_3_id`, `media_id`, `task_id`, `title`, `content`, `digest`, `source`, `userID`, `media_type`, `nature`, `url`, `relevance`, `publishtime`, `similar_num`, `is_collect`, `is_warn`, `status`, `createtime`, `updatetime`) VALUES
+(1, 2, 1, '女朋友', '我找到女朋友了', NULL, '贴吧', NULL, '社交', '正面', 'https://tieba.baidu.com/p/2955449876?red_tag=2163962048', 3, 1507120988, 10, 0, 2, 1, 1507120988, 1508759711),
+(1, 2, 1, '愚人节', '愚人节快乐，开个玩笑', NULL, '微博', NULL, '社交', '负面', 'http://weibo.com/p/1005051735539702/home?from=page_100505&mod=TAB&is_hot=1#place', 2, 1507100000, 50, 0, 2, 1, 1507100000, 1508772896),
+(1, 2, 1, '理智', '理智，语出巴金《家》：“你的理智可以征服感情，我的理智则常被感情征服。”', NULL, '百度百科', NULL, '搜索', '中立', 'https://baike.baidu.com/item/%E7%90%86%E6%99%BA/984214?fr=aladdin', 1, 1466248396, 0, 1, 2, 1, 1507120988, 1508808653);
 
 
 
