@@ -70,7 +70,7 @@ class DataMonitor extends Model
             $pag = $this->getDataNumber();
         }
         $res = $this->field('id,title,source,url,media_type,nature,
-            time as publishtime,content,similar_num,relevance,is_collect')
+            publishtime,content,similar_num,relevance,is_collect')
             ->whereor($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -141,7 +141,7 @@ class DataMonitor extends Model
             $data_save['nature'] = $data['nature'];
             $data_save['url'] = $data['url'];
             $data_save['relevance'] = $data['relevance'];
-            $data_save['time'] = $data['time'];
+            $data_save['publishtime'] = $data['publishtime'];
             $data_save['similar_num'] = $data['similar_num'];
             $data_save['is_collect'] = $data['is_collect'];
             $data_save['is_warn'] = $data['is_warn'];
