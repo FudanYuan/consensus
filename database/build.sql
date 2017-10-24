@@ -363,6 +363,42 @@ INSERT INTO `vox_data` (`theme_3_id`, `media_id`, `task_id`, `title`, `content`,
 
 
 
+# Dump of table vox_keyword_warn
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `vox_keyword_warn`;
+
+CREATE TABLE `vox_keyword_warn` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `keyword` varchar(1000) DEFAULT NULL COMMENT '关键词',
+  `nature` varchar(1000) DEFAULT NULL COMMENT '属性',
+  `media_type` varchar(1000) DEFAULT NULL COMMENT '媒体类型',
+  `status` tinyint(4) DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
+  `createtime` int DEFAULT NULL COMMENT '创建时间',
+  `updatetime` int DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table vox_threshold_warn
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `vox_threshold_warn`;
+
+CREATE TABLE `vox_threshold_warn` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `task_id` int DEFAULT NULL COMMENT '外键，预警任务',
+  `day_all_count` INT DEFAULT NULL COMMENT '每日预警总数',
+  `day_negative_count` INT DEFAULT NULL COMMENT '每日负面预警数',
+  `status` tinyint(4) DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
+  `createtime` int DEFAULT NULL COMMENT '创建时间',
+  `updatetime` int DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (task_id) REFERENCES vox_task(id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
