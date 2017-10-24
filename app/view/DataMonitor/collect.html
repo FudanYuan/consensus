@@ -215,6 +215,7 @@
     getSortCol(sort);
 
     var params = {};
+    params['is_collect'] = 1;
     var vm = new Vue({
         el: '#data',
         data: {
@@ -233,8 +234,9 @@
 
     // 异步提交数据
     function submit() {
+        console.log('submit');
         getParams();
-        $.post('__PRO_PATH__/DataMonitor/getCollectList', params, function (res) {
+        $.post('__PRO_PATH__/DataMonitor/getPublicList', params, function (res) {
             if (res.errorcode == 0) {
                 vm.list = res.data;
                 vm.params = res.params;
