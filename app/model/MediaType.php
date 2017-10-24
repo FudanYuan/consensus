@@ -31,7 +31,7 @@ class MediaType extends Model
      * 获取网战类型数量
      * @return mixed
      */
-    public function getWebTypeNumber(){
+    public function getMedTypeNumber(){
         $res = $this->field('count(id) as type_num')->select();
         return $res[0]['url'];
     }
@@ -41,7 +41,7 @@ class MediaType extends Model
      * 获取网战类型列表
      * @param cond $ 分页量
      */
-    public function getWebTypeList($cond = []){
+    public function getMedTypeList($cond = []){
         $res = $this->field('id as type_id, name as type_name ')
             ->where("status <> '2'")
             ->select();

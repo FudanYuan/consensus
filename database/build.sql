@@ -114,7 +114,7 @@ CREATE TABLE `vox_user_admin` (
   FOREIGN KEY (roleid) REFERENCES vox_role_admin(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `vox_user_admin` (username`, `pass`, `roleid`, `remark`, `status`, `logintime`, `createtime`, `updatetime`) VALUES
+INSERT INTO `vox_user_admin` (`username`, `pass`, `roleid`, `remark`, `status`, `logintime`, `createtime`, `updatetime`) VALUES
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 1, '超级管理员', 1, 1508462059, 1503213456, 1508462059),
 ('edit', '21232f297a57a5a743894a0e4a801fc3', 1, '编辑', 1, 1507363353, 1503213456, 1507363353),
 ('transbit10', '63cb797f1fc844d1644942de578b1724', 1, '', 1, 1508388553, 1508222974, 1508388553);

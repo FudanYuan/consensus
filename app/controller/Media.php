@@ -33,7 +33,7 @@ class Media extends Common
             $cond_or['b.name'] = ['like', '%' . $keywords . '%'];
         }
         $type_list = D('MediaType')->getMedTypeList();
-        $list = D('Media')->getMedList($cond_or, $cond_and,$order);
+        $list = D('Media')->getMedList($cond_or, $cond_and, $order);
 
         return view('', ['list' => $list, 'typeList' => $type_list, 'type_id' => $type_id, 'cond' => $params]);
     }
