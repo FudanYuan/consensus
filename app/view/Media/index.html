@@ -30,35 +30,35 @@
             </form>
         </div>
         <div class="list-btns">
-            {if condition="authority('WebSite_add')"}
+            {if condition="authority('Media_add')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     新建<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu pull-left" role="menu">
-                    {if condition="authority('WebSiteType_add')"}
+                    {if condition="authority('MediaType_add')"}
                     <li><a href="javascript:;" id="addFirstItem">标签</a></li>
                     {/if}
-                    {if condition="authority('WebSiteName_add')"}
+                    {if condition="authority('MediaName_add')"}
                     <li><a href="javascript:;" id="addSecondItem">网址</a></li>
                     {/if}
                 </ul>
             </div>
             {/if}
-            {if condition="authority('WebSite_del')"}
+            {if condition="authority('Media_del')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-default" id="removeItem">删除</button>
             </div>
             {/if}
 
-            {if condition="authority('WebSite_export')"}
+            {if condition="authority('Media_export')"}
             <div class="btn-group fr">
-                <a href="__PRO_PATH__/WebSite/export" target="_blank" type="button" class="btn btn-default">导出</a>
+                <a href="__PRO_PATH__/Media/export" target="_blank" type="button" class="btn btn-default">导出</a>
             </div>
             {/if}
-            {if condition="authority('WebSite_import')"}
+            {if condition="authority('Media_import')"}
             <div class="btn-group fr">
-                <a href="__PRO_PATH__/WebSite/import" target="_blank" type="button" class="btn btn-default">导入</a>
+                <a href="__PRO_PATH__/Media/import" target="_blank" type="button" class="btn btn-default">导入</a>
             </div>
             {/if}
         </div>
@@ -99,8 +99,8 @@
                 <td>{$model.type_name}</td>
                 <td><a href="{$model.url}">{$model.url}</a></td>
                 <td>
-                    {if condition="authority('WebSite_edit')"}
-                    <a href="__PRO_PATH__/WebSite/edit?id={$model.id}">编辑</a>
+                    {if condition="authority('Media_edit')"}
+                    <a href="__PRO_PATH__/Media/edit?id={$model.id}">编辑</a>
                     {/if}
                 </td>
             </tr>
@@ -191,9 +191,9 @@
 
     // common
     popupList({
-        createFirst: '__PRO_PATH__/WebSite/create_type',
-        createSecond: '__PRO_PATH__/WebSite/create_url',
-        remove: '__PRO_PATH__/WebSite/remove'
+        createFirst: '__PRO_PATH__/Media/create_type',
+        createSecond: '__PRO_PATH__/Media/create_url',
+        remove: '__PRO_PATH__/Media/remove'
     });
 
 </script>
