@@ -76,7 +76,6 @@ class DataMonitor extends Model
             ->where($cond_and)
             ->order($order)
             ->select();
-        //->paginate(10);
         return $res;
     }
 
