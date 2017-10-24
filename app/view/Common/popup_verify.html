@@ -5,7 +5,7 @@
  -->
 <div class="custom-popup" id="verify-confirm-popup" style="width:250px;padding-bottom:30px;">
     <div class="popup-body" style="text-align:left">
-        <form action="" id="verify-form" method="post">
+        <form action="" id="verify-form" method="post" id="verify">
             <div class="form-group">
                 <label for="ver_nature">舆情属性：</label>
                 <div id="ver_nature">
@@ -56,27 +56,25 @@
 </div>
 <script>
     var ver_params = {};
-
+    var vm = new Vue({
+        el: '#verify',
+        data: {
+            id : -1,
+            nature : '',
+            relevance: ''
+        }
+    });
     function popupVerify(id, nature, relevance){
         console.log(id, nature, relevance);
         $("input[name='ver_nature'][value='"+nature+"']").attr("checked",true);  //根据Value值设置Radio为选中状态
         $('#ver_relevance').width(relevance*8);
         $("input[name='ver_relevance']").val(relevance);
         $('#verify-confirm-popup').popup('show');
-        // 获取参数
-        var data = $('#verify-form').serializeArray();
         ver_params['id'] = id;
-        $.each(data, function() {
-            if(this.name == 'ver_nature'){
-                ver_params['nature'] = this.value;
-            }
-            else if(this.name == 'ver_relevance'){
-                ver_params['relevance'] = this.value;
-            }
-        });
     }
 
     $('#verify-form-submit').on('click', function(){
+        getVerParams();
         console.log(JSON.stringify(ver_params));
         $('#verify-confirm-popup').popup('hide');
         $.post('__PRO_PATH__/DataMonitor/edit', ver_params, function(res){
@@ -104,6 +102,20 @@
     $('.bg').mousemove(function(e) {
         var positionX=e.pageX-$(this).offset().left; //获取当前鼠标相对该元素的X坐标
         $('#ver_relevance').width(positionX);
+//        vm.relevance = Math.round(positionX / 8.0);
         $("input[name='ver_relevance']").val(Math.round(positionX / 8.0));
-    })
+    });
+
+    function getVerParams() {
+        // 获取参数
+        var data = $('#verify-form').serializeArray();
+        $.each(data, function() {
+            if(this.name == 'ver_nature'){
+                ver_params['nature'] = this.value;
+            }
+            else if(this.name == 'ver_relevance'){
+                ver_params['relevance'] = this.value;
+            }
+        });
+    }
 </script>
