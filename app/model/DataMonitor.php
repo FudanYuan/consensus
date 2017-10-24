@@ -80,18 +80,17 @@ class DataMonitor extends Model
     }
 
     /**
+     * 导出数据表
      * @return mixed
      */
     public function getListExport(){
-        $res = $this->field('id,theme_3_id,websitetype_id,task_id,title,content,
-        source,media_type,nature,url,relevance,time,
-        similar_num,is_collect,is_warn,status,createtime, updatetime')
+        $res = $this
             ->where('status <> 2')
             ->select();
         for($i = 0;$i<count($res);$i++){
-            $res[$i]['time'] = date('Y-m-d',$res[$i]['time']);
-            $res[$i]['createtime'] = date('Y-m-d',$res[$i]['createtime']);
-            $res[$i]['updatetime'] = date('Y-m-d',$res[$i]['updatetime']);
+            $res[$i]['time'] = date('Y-m-d H:i:s',$res[$i]['time']);
+            $res[$i]['createtime'] = date('Y-m-d H:i:s',$res[$i]['createtime']);
+            $res[$i]['updatetime'] = date('Y-m-d H:i:s',$res[$i]['updatetime']);
         }
         return $res;
     }

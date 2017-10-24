@@ -10,7 +10,7 @@ namespace app\controller;
 
 class DataMonitor extends Common{
     public $exportCols = ['id','theme_3_id','media_id','task_id','title','content','digest',
-        'source','userID','media_type','nature','url','relevance','publishtime','similar_num','is_collect','is_warn','status','createtime', 'updatetime'];
+        'source','userID','media_type','nature','url','relevance','time','similar_num','is_collect','is_warn','status','createtime', 'updatetime'];
     public $colsText = ['序号', '三级主题', '媒体id','任务编号','标题','内容','概述','来源','用户ID','媒体类型','舆情属性','网址','关联度','发表时间','相似文章数','是否收藏','是否预警'];
 
     /**
@@ -87,6 +87,8 @@ class DataMonitor extends Common{
             $cond_or['media_type'] = ['like','%'.$keywords.'%'];
             $cond_or['nature']  = ['like','%'.$keywords.'%'];
             $cond_or['url'] =['like','%'.$keywords.'%'];
+            $cond_or['digest'] =['like','%'.$keywords.'%'];
+            $cond_or['userID'] =['like','%'.$keywords.'%'];
         }
         if($stime && $etime){
             $cond_and['time'] = ['between', [strtotime($stime), strtotime($etime)]];
@@ -100,8 +102,57 @@ class DataMonitor extends Common{
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
         $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order,-1);
         $ret['data'] = $list;
-        $ret['time'] = $list[0]['publishtime'];
-        $ret['test'] = date('Y-m-d H:i:s',$list[0]['publishtime']);
+        $this->jsonReturn($ret);
+    }
+    /**
+     * 获取收藏舆情
+     */
+    public function getCollectList(){
+        $params = input('post.');
+        $relevance = input('post.relevance', -1);
+        $nature = input('post.nature',-1);
+        $keywords = input('post.keywords', '');
+        $stime = input('post.begintime_str', '');
+        $etime = input('post.endtime_str', '');
+        $order = input('post.sortCol', 'time');
+        $cond_and = [];
+        $cond_or = [];
+        if($nature != -1){
+            if($nature == 0){
+                $nature_select = '正面';
+            }else if($nature == 1){
+                $nature_select = '中立';
+            }else{
+                $nature_select = '负面';
+            }
+            $cond_and['nature'] = ['=', $nature_select];
+        }
+        if($relevance != -1){
+            $order = ['relevance desc'];
+        }
+        if($keywords){
+            $cond_or['title'] = ['like','%'.$keywords.'%'];
+            $cond_or['content'] = ['like','%'.$keywords.'%'];
+            $cond_or['source'] = ['like','%'.$keywords.'%'];
+            $cond_or['media_type'] = ['like','%'.$keywords.'%'];
+            $cond_or['nature']  = ['like','%'.$keywords.'%'];
+            $cond_or['url'] =['like','%'.$keywords.'%'];
+            $cond_or['digest'] =['like','%'.$keywords.'%'];
+            $cond_or['userID'] =['like','%'.$keywords.'%'];
+        }
+        if($stime && $etime){
+            $cond_and['time'] = ['between', [strtotime($stime), strtotime($etime)]];
+        }
+        else if(!$stime && $etime){
+            $cond_and['time'] = ['between', [0, strtotime($etime)]];
+        }
+        else if($stime && !$etime){
+            $cond_and['time'] = ['between', [strtotime($stime), time()]];
+        }
+        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
+        $cond_and['is_collect'] = ['=',1];
+        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order,-1);
+        $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
 
@@ -130,6 +181,40 @@ class DataMonitor extends Common{
     }
 
     /**
+     * 删除舆情
+     */
+    public function remove(){
+        $ret = ['code' => 1, 'msg' => '成功'];
+        $ids = input('get.ids');
+        try{
+            // 重写/model/DataMonitor的remove函数即可
+            $res = D('DataMonitor')->remove(['id' => ['in', $ids]]);
+        }catch(MyException $e){
+            $ret['code'] = 2;
+            $ret['msg'] = '删除失败';
+        }
+        $this->jsonReturn($ret);
+    }
+
+    /**
+     * 数据导出
+     */
+    public function export(){
+        $list = D('DataMonitor')->getListExport();
+        $data = [];
+        // 匹配键值
+        array_push($data, $this->exportCols);
+        foreach ($list as $value) {
+            $temp = [];
+            foreach ($this->exportCols as $key => $k){
+                array_push($temp, $value[$k]);
+            }
+            array_push($data, $temp);
+        }
+        D('Excel')->export($data, 'dataMonitor.xls');
+    }
+
+    /**
      * 编辑舆情，人工研判
      */
     public function edit(){
@@ -153,21 +238,6 @@ class DataMonitor extends Common{
         $this->jsonReturn($ret);
     }
 
-    /**
-     * 删除舆情
-     */
-    public function remove(){
-        $ret = ['code' => 1, 'msg' => '成功'];
-        $ids = input('get.ids');
-        try{
-            // 重写/model/DataMonitor的remove函数即可
-            $res = D('DataMonitor')->remove(['id' => ['in', $ids]]);
-        }catch(MyException $e){
-            $ret['code'] = 2;
-            $ret['msg'] = '删除失败';
-        }
-        $this->jsonReturn($ret);
-    }
 
 
     /**
@@ -223,27 +293,6 @@ class DataMonitor extends Common{
         // code here
 
         $this->jsonReturn($ret);
-    }
-
-    /**
-     * 数据导出
-     */
-    public function export(){
-        $cond_or = [];
-        $cond_and = [];
-        $order = [];
-        $list = D('DataMonitor')->getListExport();
-        $data = [];
-        // 匹配键值
-        array_push($data, $this->exportCols);
-        foreach ($list as $value) {
-            $temp = [];
-            foreach ($this->exportCols as $key => $k){
-                array_push($temp, $value[$k]);
-            }
-            array_push($data, $temp);
-        }
-        D('Excel')->export($data, 'dataMonitor.xls');
     }
 
     ///////////// 未修改 ///////////
