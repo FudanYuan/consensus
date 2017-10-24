@@ -1,4 +1,6 @@
 /.idea
 /.gitignore
-/runtime
+/runtime/temp
+/runtime/log
 /public/data
+runtime/cache/

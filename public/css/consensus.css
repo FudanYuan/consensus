@@ -146,7 +146,7 @@ table td {
     overflow: auto;
 }
 
-.keywords-list{
+.keyword-item{
     display: inline-block;
     background-color: #f5f5f6;
     border: solid 1px #eee;
@@ -159,4 +159,40 @@ table td {
 .keyword-del{
     padding-left: 5px;
     cursor: pointer;
+}
+
+.tasks-list-content{
+    margin-top: 0;
+    padding: 5px 0;
+    border: 1px solid #eee;
+    max-height: 200px;
+    overflow-x:scroll;
+    overflow-y:scroll;
+    width: 100%;
+    cursor: pointer;
+}
+
+.task-item, .task-item-selected-show{
+    display: inline-block;
+    background-color: #f5f5f6;
+    height: 34px;
+    padding: 9px;
+    margin-bottom: 1px;
+    border: solid 1px #eee;
+    font-weight: 900;
+    color: black;
+    width: 100%;
+    cursor: pointer;
+}
+
+.task-item:hover{
+    background-color: #00AA70;
+}
+
+.task-item-selected{
+    background-color: #00AA88;
+}
+
+.isClosed{
+    color: red;
 }

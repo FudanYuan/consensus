@@ -12,9 +12,9 @@ namespace app\model;
 use think\Model;
 
 
-class WebSiteType extends Model
+class MediaType extends Model
 {
-    protected $table = 'vox_website_type';
+    protected $table = 'vox_media_type';
     protected $pk = 'id';
     protected $fields = array(
         'id','name','status', 'createtime', 'updatetime'

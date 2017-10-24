@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:77:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Index/index.html";i:1508234105;s:76:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/top.html";i:1508418816;s:79:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/search.html";i:1507659259;s:79:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/bottom.html";i:1508223178;s:83:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/popup_warn.html";i:1507624885;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:77:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Index/index.html";i:1508234105;s:76:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/top.html";i:1508677480;s:79:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/search.html";i:1507659259;s:79:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/bottom.html";i:1508650136;s:83:"/Applications/XAMPP/xamppfiles/htdocs/git_consensus/app/view/Common/popup_warn.html";i:1507624885;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,17 +58,30 @@
     <!-- Simplify -->
     <link href="__PUBLIC__/css/simplify.min.css" rel="stylesheet">
 
-    <!--<link href="__PUBLIC__/css/site.css" rel="stylesheet">-->
+    <!-- DataRangePicker -->
+    <link href="__PUBLIC__/js/datapicker/daterangepicker.css" rel="stylesheet">
 
     <!-- MyCss -->
-    <link href="__PUBLIC__/css/tax.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/consensus.css" rel="stylesheet">
     <link href="__PUBLIC__/js/multiple-select/multiple-select.css" rel="stylesheet">
+
+    <!-- labelauty -->
+    <link href="__PUBLIC__/js/labelauty/labelauty.css" rel="stylesheet">
+
+    <!-- switch -->
+    <link rel="stylesheet" href="__PUBLIC__/js/bootstrap-switch/css/bootstrapSwitch.css">
+
+    <!-- warnKeywords -->
+    <link rel="stylesheet" href="__PUBLIC__/css/warnKeywords.css">
 
     <!-- Jquery -->
     <script src="__PUBLIC__/js/jquery.min.js"></script>
 
     <!-- MyJs-->
     <script src="__PUBLIC__/js/myJs/myChart.js"></script>
+
+    <!-- Vue -->
+    <script src="__PUBLIC__/js/vue.min.js"></script>
 </head>
 <body class="overflow-hidden">
 <div class="wrapper preload">
@@ -310,7 +323,7 @@
                     <li class="menu-header">
                         DashBoard
                     </li>
-                    <li class="bg-palette1" id="tax-nav-dashborad">
+                    <li class="bg-palette1" id="consensus-nav-dashborad">
                         <a href="__PRO_PATH__/">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
@@ -321,47 +334,47 @@
                     </li>
 
                     <?php if(authority('DataMonitor')): ?>
-                    <li class="openable bg-palette2" id="tax-nav-monitor">
+                    <li class="openable bg-palette2" id="consensus-nav-monitor">
                         <a href="javascript:;">
                             <span class="menu-content block">
-                                <span class="menu-icon"><i class="block fa fa-line-chart fa-lg"></i></span>
+                                <span class="menu-icon"><i class="fa fa-comments fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">实时舆情</span>
                                 <span class="submenu-icon"></span>
                             </span>
                             <span class="menu-content-hover block">Data</span>
                         </a>
-                        <ul class="submenu bg-palette4">
-                            <?php if(authority('DataMonitorInfo')): ?>
-                            <li id="tax-nav-monitor-sub1">
-                                <a href="__PRO_PATH__/DataMonitor/info">
+                        <ul class="submenu bg-palette2">
+                            <?php if(authority('DataMonitorIndex')): ?>
+                            <li id="consensus-nav-monitor-sub1">
+                                <a href="__PRO_PATH__/DataMonitor/index">
                                     <span class="submenu-label">全部舆情</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataMonitorCollect')): ?>
-                            <li id="tax-nav-monitor-sub2"><a href="__PRO_PATH__/DataMonitor/collect"><span
+                            <li id="consensus-nav-monitor-sub2"><a href="__PRO_PATH__/DataMonitor/collect"><span
                                     class="submenu-label">我的收藏</span></a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
                     <?php endif; if(authority('DataWarn')): ?>
-                    <li class="openable bg-palette1" id="tax-nav-data-warn">
+                    <li class="openable bg-palette3" id="consensus-nav-data-warn">
                         <a href="javascript:;">
                             <span class="menu-content block">
-                                <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
+                                <span class="menu-icon"><i class="fa fa-bell fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情预警</span>
                                 <span class="submenu-icon"></span>
                             </span>
-                            <span class="menu-content-hover block">Analysis</span>
+                            <span class="menu-content-hover block">Warn</span>
                         </a>
-                        <ul class="submenu bg-palette1">
+                        <ul class="submenu bg-palette3">
                             <?php if(authority('DataWarnInfo')): ?>
-                            <li id="tax-nav-data-warn-sub1">
+                            <li id="consensus-nav-data-warn-sub1">
                                 <a href="__PRO_PATH__/DataMonitor/warn">
                                     <span class="submenu-label">预警舆情</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataWarnConfig')): ?>
-                            <li id="tax-nav-data-warn-sub2">
+                            <li id="consensus-nav-data-warn-sub2">
                                 <a href="__PRO_PATH__/DataMonitor/warn_config">
                                     <span class="submenu-label">预警设置</span>
                                 </a>
@@ -370,54 +383,54 @@
                         </ul>
                     </li>
                     <?php endif; if(authority('DataAnalysis')): ?>
-                    <li class="openable bg-palette1" id="tax-nav-data-analysis">
+                    <li class="openable bg-palette4" id="consensus-nav-data-analysis">
                         <a href="javascript:;">
                             <span class="menu-content block">
-                                <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
+                                <span class="menu-icon"><i class="fa fa-line-chart fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情分析</span>
                                 <span class="submenu-icon"></span>
                             </span>
                             <span class="menu-content-hover block">Analysis</span>
                         </a>
-                        <ul class="submenu bg-palette1">
+                        <ul class="submenu bg-palette4">
                             <?php if(authority('DataAnalysisTrend')): ?>
-                            <li id="tax-nav-data-analysis-sub1">
+                            <li id="consensus-nav-data-analysis-sub1">
                                 <a href="__PRO_PATH__/DataAnalysis/trend">
                                     <span class="submenu-label">趋势分析</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataAnalysisSearchWords')): ?>
-                            <li id="tax-nav-data-analysis-sub2">
+                            <li id="consensus-nav-data-analysis-sub2">
                                 <a href="__PRO_PATH__/DataAnalysis/searchwords">
                                     <span class="submenu-label">搜索词分析</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataAnalysisOpinion')): ?>
-                            <li id="tax-nav-data-analysis-sub3">
+                            <li id="consensus-nav-data-analysis-sub3">
                                 <a href="__PRO_PATH__/DataAnalysis/opinion">
                                     <span class="submenu-label">观点分析</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataAnalysisMedia')): ?>
-                            <li id="tax-nav-data-analysis-sub4">
+                            <li id="consensus-nav-data-analysis-sub4">
                                 <a href="__PRO_PATH__/DataAnalysis/media">
                                     <span class="submenu-label">媒体分析</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataAnalysisSpread')): ?>
-                            <li id="tax-nav-data-analysis-sub5">
+                            <li id="consensus-nav-data-analysis-sub5">
                                 <a href="__PRO_PATH__/DataAnalysis/spread">
                                     <span class="submenu-label">传播分析</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataAnalysisAudience')): ?>
-                            <li id="tax-nav-data-analysis-sub6">
+                            <li id="consensus-nav-data-analysis-sub6">
                                 <a href="__PRO_PATH__/DataAnalysis/audience">
                                     <span class="submenu-label">受众分析</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('DataAnalysisEvent')): ?>
-                            <li id="tax-nav-data-analysis-sub7">
+                            <li id="consensus-nav-data-analysis-sub7">
                                 <a href="__PRO_PATH__/DataAnalysis/event">
                                     <span class="submenu-label">事件分析</span>
                                 </a>
@@ -426,8 +439,8 @@
                         </ul>
                     </li>
                     <?php endif; if(authority('DataReport')): ?>
-                    <li class="openable bg-palette3" id="tax-nav-data-report">
-                        <a href="javascript:;">
+                    <li class="bg-palette1" id="consensus-nav-data-report">
+                        <a href="__PRO_PATH__/DataReport/index">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情报告</span>
@@ -436,7 +449,7 @@
                         </a>
                     </li>
                     <?php endif; if(authority('Task')): ?>
-                    <li class="openable bg-palette3" id="tax-nav-task">
+                    <li class="openable bg-palette2" id="consensus-nav-task">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-cloud fa-lg"></i></span>
@@ -445,15 +458,15 @@
                             </span>
                             <span class="menu-content-hover block">Task</span>
                         </a>
-                        <ul class="submenu bg-palette4">
+                        <ul class="submenu bg-palette2">
                             <?php if(authority('TaskInfo')): ?>
-                            <li id="tax-nav-task-sub1">
+                            <li id="consensus-nav-task-sub1">
                                 <a href="__PRO_PATH__/Task/index">
                                     <span class="submenu-label">采集舆情</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('TaskConfig')): ?>
-                            <li id="tax-nav-task-sub2">
+                            <li id="consensus-nav-task-sub2">
                                 <a href="__PRO_PATH__/Task/config">
                                     <span class="submenu-label">采集设置</span>
                                 </a>
@@ -463,7 +476,7 @@
                     </li>
                     <?php endif; ?>
 
-                    <li class="openable bg-palette4" id="tax-nav-warehouse">
+                    <li class="openable bg-palette3" id="consensus-nav-warehouse">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-bank fa-lg"></i></span>
@@ -472,21 +485,22 @@
                             </span>
                             <span class="menu-content-hover block">Warehouse</span>
                         </a>
-                        <ul class="submenu bg-palette4">
+                        <ul class="submenu bg-palette3">
                             <?php if(authority('Theme')): ?>
-                            <li id="tax-nav-warehouse-sub2">
+                            <li id="consensus-nav-warehouse-sub2">
                                 <a href="__PRO_PATH__/Theme/index">
                                     <span class="submenu-label">主题库</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('WebSite')): ?>
-                            <li id="tax-nav-warehouse-sub3"><a href="__PRO_PATH__/WebSite/index"><span
+                            <li id="consensus-nav-warehouse-sub3"><a href="__PRO_PATH__/WebSite/index"><span
                                     class="submenu-label">媒体库</span></a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
+
                     <?php if(authority('DataProcess')): ?>
-                    <li class="openable bg-palette1" id="tax-nav-data-process">
+                    <li class="openable bg-palette4" id="consensus-nav-data-process">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>
@@ -497,10 +511,10 @@
                         </a>
                         <ul class="submenu bg-palette4">
                             <?php if(authority('DataProcessClean')): ?>
-                            <li id="tax-nav-data-process-sub1"><a href="__PRO_PATH__/DataProcess/clean"><span
+                            <li id="consensus-nav-data-process-sub1"><a href="__PRO_PATH__/DataProcess/clean"><span
                                     class="submenu-label">数据清洗</span></a></li>
                             <?php endif; if(authority('Update_Backup')): ?>
-                            <li id="tax-nav-data-process-sub2">
+                            <li id="consensus-nav-data-process-sub2">
                                 <a href="__PRO_PATH__/DataProcess/update_backup">
                                     <span class="submenu-label">更新备份</span>
                                 </a>
@@ -508,9 +522,52 @@
                             <?php endif; ?>
                         </ul>
                     </li>
+                    <?php endif; if(authority('Inform')): ?>
+                    <li class="bg-palette1" id="consensus-nav-inform">
+                        <a href="__PRO_PATH__/Inform/index">
+                            <span class="menu-content block">
+                                <span class="menu-icon"><i class="fa fa-envelope fa-lg"></i></span>
+								<span class="text m-left-sm">通知公告</span>
+                            </span>
+                            <span class="menu-content-hover block">Inform</span>
+                        </a>
+                    </li>
+                    <?php endif; if(authority('OperationLog')): ?>
+                    <li class="bg-palette2" id="consensus-nav-log">
+                        <a href="__PRO_PATH__/OperationLog/index">
+                            <span class="menu-content block">
+                                <span class="menu-icon"><i class="fa fa-bookmark-o fa-lg"></i></span>
+								<span class="text m-left-sm">操作日志</span>
+                            </span>
+                            <span class="menu-content-hover block">Log</span>
+                        </a>
+                    </li>
+                    <?php endif; if(authority('Account')): ?>
+                    <li class="openable bg-palette3" id="consensus-nav-account">
+                        <a href="javascript:;">
+                            <span class="menu-content block">
+                                <span class="menu-icon"><i class="fa fa-user fa-lg"></i></span>
+								<span class="text m-left-sm">账户信息</span>
+                                <span class="submenu-icon"></span>
+                            </span>
+                            <span class="menu-content-hover block">Account</span>
+                        </a>
+                        <ul class="submenu bg-palette3">
+                            <?php if(authority('ChangePwd')): ?>
+                            <li id="consensus-nav-account-sub1"><a href="__PRO_PATH__/UserAdmin/changePwd"><span
+                                    class="submenu-label">修改密码</span></a></li>
+                            <?php endif; if(authority('AccountEdit')): ?>
+                            <li id="consensus-nav-account-sub2">
+                                <a href="__PRO_PATH__/UserAdmin/editInfo">
+                                    <span class="submenu-label">编辑信息</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
                     <?php endif; ?>
 
-                    <li class="openable bg-palette4" id="tax-nav-setting">
+                    <li class="openable bg-palette4" id="consensus-nav-setting">
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-cog fa-lg"></i></span>
@@ -521,16 +578,16 @@
                         </a>
                         <ul class="submenu bg-palette4">
                             <?php if(authority('Tag')): ?>
-                            <li id="tax-nav-setting-sub1"><a href="__PRO_PATH__/Tag/index"><span
+                            <li id="consensus-nav-setting-sub1"><a href="__PRO_PATH__/Tag/index"><span
                                     class="submenu-label">标签设置</span></a></li>
                             <?php endif; if(authority('Authority')): ?>
-                            <li id="tax-nav-setting-sub2">
+                            <li id="consensus-nav-setting-sub2">
                                 <a href="__PRO_PATH__/UserAdmin/index">
                                     <span class="submenu-label">权限设置</span>
                                 </a>
                             </li>
                             <?php endif; if(authority('Role')): ?>
-                            <li id="tax-nav-setting-sub3">
+                            <li id="consensus-nav-setting-sub3">
                                 <a href="__PRO_PATH__/UserAdmin/roles">
                                     <span class="submenu-label">角色设置</span>
                                 </a>
@@ -1075,6 +1132,13 @@
 
 <!-- Simplify -->
 <script src="__PUBLIC__/js/simplify/simplify.js"></script>
+
+<!-- Moment -->
+<script src="__PUBLIC__/js/moment.js"></script>
+
+<!-- labelauty -->
+<script src="__PUBLIC__/js/labelauty/labelauty.js"></script>
+
 <div class="custom-popup" id="warn-popup" style="width:200px;display:none;">
 	<div class="popup-body text-center">
 		<h5></h5>
