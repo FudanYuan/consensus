@@ -14,7 +14,7 @@ use think\Model;
 
 class Media extends Model
 {
-    protected $table = 'vox_Media';
+    protected $table = 'vox_media';
     protected $pk = 'id';
     protected $fields = array(
         'id', 'type_id', 'name', 'url', 'status', 'createtime', 'updatetime'
@@ -59,7 +59,7 @@ class Media extends Model
         }
         $res = $this->alias('a')->field('a.id as id, a.name as name ,
             b.id as type_id,b.name as type_name,a.url as url')
-            ->join('vox_Media_type b', 'a.type_id=b.id')
+            ->join('vox_media_type b', 'a.type_id=b.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -182,7 +182,7 @@ class Media extends Model
     {
         $res = $this->alias('a')->field('a.id as id, a.name as name ,
             b.id as type_id,b.name as type_name,a.url as url')
-            ->join('vox_Media_type b', 'a.type_id=b.id')
+            ->join('vox_media_type b', 'a.type_id=b.id')
             ->where(['a.id' => $id])
             ->find();
         return $res;
@@ -225,7 +225,7 @@ class Media extends Model
         }
         $cond = "$begin_time < a.createtime and a.createtime < $end_time";
         $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
-            ->join('vox_Media_type b', 'a.type_id=b.id')
+            ->join('vox_media_type b', 'a.type_id=b.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)
