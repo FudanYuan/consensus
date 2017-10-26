@@ -118,10 +118,11 @@ class UserAdmin extends Model{
         if(md5($data['pass']) != $user['pass']) throw new MyException('密码错误');
         $this->recordLogin($user);
  	}
- 	/**
- 	 * 登出
- 	 * @param unknown $token
- 	 */
+
+    /**
+     * 登出
+     * @param $token
+     */
  	public function logout($token){
  		$this->recordLogout($token);
  	}

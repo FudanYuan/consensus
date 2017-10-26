@@ -10,6 +10,9 @@ use think\Request;
 use think\Controller;
 
 class Common{
+    const USER_TOKEN = 'admin_user_token';
+    const TOKEN_USER = 'admin_token_user';
+
     public function __construct(){
         $request = Request::instance();
         $filters = config('filters');
@@ -33,7 +36,7 @@ class Common{
             $user = D('UserAdmin')->getUserByToken($token);
             !empty($user) && config('user', $user);
         }else{
-            $this->myRedirect(PRO_URL . 'UserAdmin/login');
+            $this->myRedirect('UserAdmin/login');
         }
     }
     protected function jsonReturn($data){
@@ -61,6 +64,21 @@ class Common{
      */
     private function updateNotice(){
 
+    }
+
+    /**
+     * 获取用户登录IP地址
+     * @return string
+     */
+    public function getUserIp(){
+        $request = Request::instance();
+        return $request->ip();
+    }
+
+    public function getUserId(){
+        $token = session('token');
+        $token_user = json_decode(cache_hash_hget(self::TOKEN_USER, $token), true);
+        return $token_user['id'];
     }
 }
 ?>

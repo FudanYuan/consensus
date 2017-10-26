@@ -18,6 +18,11 @@ class UserAdmin extends Common{
 			$ret = ['errorcode' => 0, 'msg' => '登陆成功'];
 			try{
 				D('UserAdmin')->dologin($data);
+                $log['user_id'] = $this->getUserId();
+                $log['IP'] = $this->getUserIp();
+                $log['section'] = '用户登录／用户退出';
+                $log['action_descr'] = '用户登录';
+                D('OperationLog')->addData($log);
 			}catch(MyException $e){
 				$ret['errorcode'] = 1;
 				$ret['msg'] = $e->getMessage();
@@ -59,7 +64,12 @@ class UserAdmin extends Common{
 			$token = session('token');
 			if(!$token) $token = input('request.token');
 			if(!$token) throw new MyException('token不能空');
-			D('UserAdmin')->logout($token);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '用户登录／用户退出';
+            $log['action_descr'] = '用户退出';
+            D('OperationLog')->addData($log);
+            D('UserAdmin')->logout($token);
 		}catch(MyException $e){
 			$ret['errorcode'] = 1;
 			$ret['msg'] = $e->getMessage();

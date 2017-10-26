@@ -200,14 +200,15 @@ DROP TABLE IF EXISTS `vox_operationlog`;
 
 CREATE TABLE `vox_operationlog` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` VARCHAR(100) DEFAULT NULL COMMENT '外键，用户id',
+  `user_id` VARCHAR(100) DEFAULT NULL COMMENT '外键，用户id',
   `IP` VARCHAR(20) DEFAULT NULL COMMENT 'IP地址',
   `section` VARCHAR(100) DEFAULT NULL COMMENT '操作板块',
   `action_descr` VARCHAR(100) DEFAULT NULL COMMENT '操作详情',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES vox_user_admin(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

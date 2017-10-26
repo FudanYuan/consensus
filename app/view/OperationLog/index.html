@@ -7,24 +7,30 @@
             <li>操作日志</li>
         </ul>
         <div id="log">
-            <table class="table table-hover" style="background:#fff;">
-                <thead>
-                <tr>
-                    <th>用户名称</th>
-                    <th>登陆IP</th>
-                    <th>操作时间</th>
-                    <th>操作模块</th>
-                    <th>操作事项</th>
-                </tr>
-                </thead>
-                <tbody>
-                <template v-for="model in list">
-                    <td>{{model.username}}</td>
-                    <td>{{model.IP}}</td>
-                </template>
-                </tbody>
-            </table>
-            {include file="Common/page" /}
+            <template  v-if="list.length != 0">
+                <table class="table table-hover" style="background:#fff;">
+                    <thead>
+                    <tr>
+                        <th>操作时间</th>
+                        <th>登陆IP</th>
+                        <th>操作模块</th>
+                        <th>操作事项</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="model in list">
+                        <td>{{model.createtime | moment}}</td>
+                        <td>{{model.IP}}</td>
+                        <td>{{model.section}}</td>
+                        <td>{{model.action_descr}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                {include file="Common/page" /}
+            </template>
+            <template v-else>
+                <p class="col-lg-12" align="center">操作日志为空！</p>
+            </template>
         </div>
 
     </div>
@@ -35,9 +41,9 @@
     $('#consensus-nav-log').addClass('active');
 
     var vm = new Vue({
-        el: '#data',
+        el: '#log',
         data: {
-            list: {},
+            list: [],
             params: {},
             total: 0,
             per_page: 10,
@@ -115,7 +121,6 @@
                 vm.pages = Math.ceil(res.total / vm.per_page);
                 vm.current_page = res.current_page;
                 vm.list = res.data;
-                vm.params = res.params;
                 console.log(vm.list);
             }
         });
@@ -123,10 +128,6 @@
 
     // 获取参数设置
     function getParams() {
-//        var data = $('#main-form').serializeArray();
-//        $.each(data, function () {
-//            params[this.name] = this.value;
-//        });
         vm.params['per_page'] = vm.per_page;
         vm.params['current_page'] = vm.current_page;
         console.log(JSON.stringify(vm.params));
