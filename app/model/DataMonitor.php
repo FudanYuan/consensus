@@ -58,17 +58,12 @@ class DataMonitor extends Model
      * 获取舆情列表
      * @param $cond_or
      * @param $cond_and
-     * @param $cond
      * @param $order
-     * @param int $pag
      * @return mixed
      */
-    public function  publicList($cond_or,$cond_and,$cond,$order,$pag = 10){
+    public function  publicList($cond_or,$cond_and,$order){
         if(!isset($cond_and['status'])){
             $cond_and['status'] = ['<>', 2];
-        }
-        if($pag == -1){
-            $pag = $this->getDataNumber();
         }
         $res = $this->field('id,title,source,url,media_type,nature,
             publishtime,content,similar_num,relevance,is_collect')
@@ -88,7 +83,7 @@ class DataMonitor extends Model
             ->where('status <> 2')
             ->select();
         for($i = 0;$i<count($res);$i++){
-            $res[$i]['time'] = date('Y-m-d H:i:s',$res[$i]['time']);
+            $res[$i]['publishtime'] = date('Y-m-d H:i:s',$res[$i]['publishtime']);
             $res[$i]['createtime'] = date('Y-m-d H:i:s',$res[$i]['createtime']);
             $res[$i]['updatetime'] = date('Y-m-d H:i:s',$res[$i]['updatetime']);
         }

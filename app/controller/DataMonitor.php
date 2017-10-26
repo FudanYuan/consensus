@@ -102,7 +102,7 @@ class DataMonitor extends Common{
             $cond_and['media_type'] = ['=',$media_type];
         }
         $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
-        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order,-1);
+        $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
         //分页时需要获取记录总数，键值为 total
         $ret["total"] = count($list);
         //根据传递过来的分页偏移量和分页量截取模拟分页 rows 可以根据前端的 dataField 来设置
@@ -183,16 +183,51 @@ class DataMonitor extends Common{
         $ret = ['errorcode' => 0, 'msg' => ''];
         // 查询结果，
         // 逻辑： 先判断关键词预警是否开启，若开启，获取关键词列表，否则返回数据为空
+        $data = D('KeywordWarn')->getKeywordList();
+        $total = count($data);
+        $keyword = $data[$total-1]['keyword'];
+        $nature = $data[$total-1]['nature'];
+        $media_type = $data[$total-1]['media_type'];
+        $list = explode('-',$keyword);
+        $nature_warn = [];
+        if(strpos($nature,'正面'))
+            $nature_warn['正面'] = 1;
+        else
+            $nature_warn['正面'] = 0;
+        if(strpos($nature,'中立'))
+            $nature_warn['中立'] = 1;
+        else
+            $nature_warn['中立'] = 0;
+        if(strpos($nature,'负面'))
+            $nature_warn['负面'] = 1;
+        else
+            $nature_warn['负面'] = 0;
+        $media_warn = [];
+        if(strpos($media_type,'微信'))
+            $media_warn['微信'] = 1;
+        else
+            $media_warn['微信'] = 0;
+        if(strpos($media_type,'新闻'))
+            $media_warn['新闻'] = 1;
+        else
+            $media_warn['新闻'] = 0;
+        if(strpos($media_type,'微博'))
+            $media_warn['微博'] = 1;
+        else
+            $media_warn['微博'] = 0;
+
         $ret['switch'] = 1;
-        $list = ['测试1', '测试2', '测试3', '测试4', '测试5', '测试6'];
+        $ret['nature'] = $nature_warn;
+        $ret['media'] = $media_warn;
+        $ret['keywords'] = $list;
+        $this->jsonReturn($ret);
+        //$list = ['测试1', '测试2', '测试3', '测试4', '测试5', '测试6'];
         /**
          * nature: "{'正面':0,'中立':0, '负面':0}"
          * media: "{'类型1':0, '类型2':0}"
          */
-        $ret['nature'] = ['正面' => 0, '中立' => 1, '负面' => 1];
-        $ret['media'] = ['微信' => 1, '新闻' => 0, '微博' => 1];
-        $ret['keywords'] = $list;
-        $this->jsonReturn($ret);
+        //$ret['nature'] = ['正面' => 0, '中立' => 1, '负面' => 1];
+        //$ret['media'] = ['微信' => 1, '新闻' => 0, '微博' => 1];
     }
 
     /**
