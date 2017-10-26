@@ -185,10 +185,16 @@ class DataMonitor extends Common{
         // 逻辑： 先判断关键词预警是否开启，若开启，获取关键词列表，否则返回数据为空
         $data = D('KeywordWarn')->getKeywordList();
         $total = count($data);
-        $keyword = $data[$total-1]['keyword'];
-        $nature = $data[$total-1]['nature'];
-        $media_type = $data[$total-1]['media_type'];
-        $list = explode('-',$keyword);
+        if($total) {
+            $keyword = $data[$total - 1]['keyword'];
+            $nature = $data[$total - 1]['nature'];
+            $media_type = $data[$total - 1]['media_type'];
+        } else {
+            $keyword = '';
+            $nature = '';
+            $media_type = '';
+        }
+        $list = explode('-', $keyword);
         //去除空字段
         $i =0;
         foreach ($list as $v){
@@ -254,7 +260,6 @@ class DataMonitor extends Common{
          * media：['微信' => 1, '新闻' => 0, '微博' => 1];
          * 对于nature来说比较简单，但对于media，就要读取media数据表读取所有的媒体类型，
          * 然后根据传入的数据构造如上数据。
-         *
          * 注：要对参数进行检测，返回error信息，
          * keywords 不能为空，
          * nature 至少选择一项
