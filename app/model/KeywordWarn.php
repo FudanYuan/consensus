@@ -45,6 +45,45 @@ class KeywordWarn extends Model
             ->select();
         return $res;
     }
+    /**
+     * 添加预警条件
+     * @param $data
+     * @return array
+     */
+    public function addData($data){
+        $ret = [];
+        $curtime = time();
+        $data['createtime'] = $curtime;
+        $errors = $this->filterField($data);
+        $ret['errors'] = $errors;
+        if (empty($errors)) {
+            if (!isset($data['status']))
+                $data['status'] = 1;
+            $this->save($data);
+        }
+        return $ret;
+    }
+    /**
+     * 过滤预警条件信息
+     * @param $data
+     * @return array
+     */
+    private function filterField($data){
+        $errors = [];
+
+        if (isset($data['keyword']) && !$data['keyword']) {
+            $errors['keyword'] = '预警词不能为空';
+        }
+        if ($data['nature'] == '-') {
+            $errors['nature'] = '预警属性不能为空';
+        }
+        if ($data['media_type'] == '-') {
+            $errors['media_type'] = '预警媒体不能为空';
+        }
+        return $errors;
+    }
+
+
 
     ////未修改/////
     /**
@@ -81,9 +120,6 @@ class KeywordWarn extends Model
         return $percent;
     }
 
-
-
-
     /**
      * 更新网站类型信息
      * {@inheritDoc}
@@ -98,44 +134,6 @@ class KeywordWarn extends Model
         }
         return $ret;
     }
-    /**
-     * 添加网站类型
-     * @param $data
-     * @return array
-     */
-    public function addData($data){
-        $ret = [];
-        $curtime = time();
-        $data['createtime'] = $curtime;
-        $errors = $this->filterField($data);
-        $ret['errors'] = $errors;
-        if (empty($errors)) {
-            if (!isset($data['status']))
-                $data['status'] = 1;
-            $this->save($data);
-        }
-        return $ret;
-    }
-    /**
-     * 过滤网站类型信息
-     * @param $data
-     * @return array
-     */
-    private function filterField($data){
-        $errors = [];
-        if (isset($data['name']) && !$data['name']) {
-            $errors['name'] = '网站类型名字不能为空';
-        }else{
-            $cond_and = [];
-            $cond_and['status'] = ['<>', 2];
-            $cond_and['name'] = ['=',$data['name']];
-            $list = $this->field('*')
-                ->where($cond_and)
-                ->find();
-            if(!empty($list)){
-                $errors['name'] = '网站类型不能重复';
-            }
-        }
-        return $errors;
-    }
+
+
 }

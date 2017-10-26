@@ -189,6 +189,14 @@ class DataMonitor extends Common{
         $nature = $data[$total-1]['nature'];
         $media_type = $data[$total-1]['media_type'];
         $list = explode('-',$keyword);
+        //去除空字段
+        $i =0;
+        foreach ($list as $v){
+            if(empty($v)){
+                unset($list[$i]);
+            }
+            $i++;
+        }
         $nature_warn = [];
         if(strpos($nature,'正面'))
             $nature_warn['正面'] = 1;
@@ -234,7 +242,7 @@ class DataMonitor extends Common{
      * 保存关键词配置
      */
     public function setKeywordsConfig(){
-        $params = input('post.');
+
         /**
          * 参数说明：
          * keywordsSwitch boolean
@@ -253,6 +261,7 @@ class DataMonitor extends Common{
          * media 至少选择一项
          * $ret['error'], 例如$ret['error'] = ['keywords' => '关键词不能为空']
          */
+        $params = input('post.');
         $keywordsSwitch = $params['keywordsSwitch'];
         if(!isset($params['keywords'])){
             $keywords = [];
@@ -272,7 +281,26 @@ class DataMonitor extends Common{
         $ret = ['errorcode' => 0, 'msg' => ''];
         // 更新预警设置逻辑
         // code here
-
+        $data = [];
+        $keyword_warn ='';
+        foreach ($keywords as $keyword){
+            $keyword_warn = $keyword_warn.$keyword.'-';
+        }
+        $data['keyword'] = $keyword_warn;
+        $nature_warn = '-';
+        foreach ($nature as $n){
+            $nature_warn = $nature_warn.$n.'-';
+        }
+        $data['nature'] = $nature_warn;
+        $media_warn = '-';
+        foreach ($media as $m){
+            $media_warn = $media_warn.$m.'-';
+        }
+        $data['media_type'] = $media_warn;
+        $res = D('KeywordWarn')->addData($data);
+        if(!empty($res['errors'])){
+            $ret = ['errorcode' => 1, 'msg' => $res['errors']];
+        }
         $this->jsonReturn($ret);
     }
 
