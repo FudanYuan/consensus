@@ -4,7 +4,7 @@
     <div class="padding-md">
         <ul class="breadcrumb">
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/"> 首页</a></li>
-            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/UserAdmin/changePwd">修改密码</a></li>
+            <li>账户信息</li>
         </ul>
         <div class="form-wrapper">
             <form class="form-horizontal" method="post" id="main-form">
@@ -36,7 +36,8 @@
 {include file="Common/popup_warn" /}
 {include file="Common/bottom" /}
 <script>
-    $('#consensus-nav-account').addClass('active');
+    $('#consensus-nav-account').addClass('active open');
+    $('#consensus-nav-account-sub2').addClass('active');
     $('#form-save').on('click', function(){
         var data = getFormData('#main-form');
         if(!data.username){

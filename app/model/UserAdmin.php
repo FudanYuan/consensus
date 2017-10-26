@@ -35,17 +35,23 @@ class UserAdmin extends Model{
             ->where($cond)
             ->paginate(10);
  	}
- 	/**
- 	 * 根据ID获取账号
- 	 * @param unknown $id
- 	 */
+
+    /**
+     * 根据ID获取账号
+     * @param $id
+     * @return mixed
+     */
  	public function getById($id){
- 		return $this->field('id,username,pass,roleid,remark,status')->where('id', $id)->find();
+ 		return $this->field('id,username,pass,roleid,remark,status')
+            ->where('id', $id)
+            ->find();
  	}
- 	/**
- 	 * 创建管理员用户
- 	 * @param unknown $data
- 	 */
+
+    /**
+     * 创建管理员用户
+     * @param $data
+     * @return false|int
+     */
  	public function addData($data){
         if(!isset($data['status']))
             $data['status'] = 1;
@@ -53,44 +59,57 @@ class UserAdmin extends Model{
  		if(isset($data['pass']) && $data['pass']) $data['pass'] = md5($data['pass']);
  		return $this->save($data);
  	}
- 	/**
- 	 * 编辑管理员用户
- 	 * @param unknown $data
- 	 */
+
+    /**
+     * 编辑管理员用户
+     * @param $id
+     * @param $data
+     * @return false|int
+     */
  	public function saveData($id, $data){
  		$data['updatetime'] = $_SERVER['REQUEST_TIME'];
  		if(isset($data['pass']) && $data['pass']) $data['pass'] = md5($data['pass']);
  		return $this->save($data, ['id' => $id]);
  	}
- 	/**
- 	 * 删除
- 	 * @param array $cond
- 	 */
+
+    /**
+     * 删除
+     * @param array $cond
+     * @return false|int
+     * @throws MyException
+     */
  	public function remove($cond = []){
  		$res = $this->save(['status' => 2], $cond);
  		if($res === false) throw new MyException('2', '删除失败');
  		return $res;
  	}
- 	/**
- 	 * 根据token获取用户
- 	 * @param unknown $token
- 	 */
+
+    /**
+     * 根据token获取用户
+     * @param $token
+     * @return array|mixed
+     */
  	public function getUserByToken($token){
  		if(!$token) return [];
  		return json_decode(cache_hash_hget(self::TOKEN_USER, $token), true);
  	}
- 	/**
- 	 * 根据用户名获取用户
- 	 * @param unknown $username
- 	 */
+
+    /**
+     * 根据用户名获取用户
+     * @param $username
+     * @return mixed
+     */
  	public function getUserByUsername($username){
- 		return $this->field('id,username,pass,status,roleid')->where(['username' => $username, 'status' => ['<>', 2]])->find();
+ 		return $this->field('id,username,pass,status,roleid')
+            ->where(['username' => $username, 'status' => ['<>', 2]])
+            ->find();
  	}
- 	/**
- 	 * 用户登录
- 	 * @param unknown $data
- 	 * @throws MyException
- 	 */
+
+    /**
+     * 用户登录
+     * @param $data
+     * @throws MyException
+     */
  	public function dologin($data){
  		if(empty($data['username'])) throw new MyException('用户名不能为空');
         $user = $this->getUserByUsername($data['username']);
@@ -122,11 +141,12 @@ class UserAdmin extends Model{
  		}
  		session('token', null);
  	}
- 	/**
- 	 * 登录记录
- 	 * @param unknown $user
- 	 * @param unknown $userinfo
- 	 */
+
+    /**
+     * 登录记录
+     * @param $user
+     * @throws MyException
+     */
  	private function recordLogin($user){
  		$token = $this->generateToken($user['id']);
  		//存储用户-token
@@ -148,6 +168,13 @@ class UserAdmin extends Model{
  		if(!$res) throw new MyException('登录失败');
  		session('token', $token);
  	}
+
+    /**
+     * 生成Token
+     * @param $id
+     * @return string
+     * @throws \Exception
+     */
  	private function generateToken($id){
  		if(!$id) throw new \Exception('创建token失败');
  		$rand = $_SERVER['REQUEST_TIME'].rand(0, 1000);

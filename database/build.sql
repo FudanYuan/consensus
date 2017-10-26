@@ -200,18 +200,15 @@ DROP TABLE IF EXISTS `vox_operationlog`;
 
 CREATE TABLE `vox_operationlog` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` VARCHAR(100) DEFAULT NULL COMMENT '名称',
+  `username` VARCHAR(100) DEFAULT NULL COMMENT '外键，用户id',
   `IP` VARCHAR(20) DEFAULT NULL COMMENT 'IP地址',
-  `action_id` INT DEFAULT NULL COMMENT '外键，操作对象',
-  `actiontime` INT DEFAULT NULL COMMENT '操作时间',
+  `section` VARCHAR(100) DEFAULT NULL COMMENT '操作板块',
+  `action_descr` VARCHAR(100) DEFAULT NULL COMMENT '操作详情',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (action_id) REFERENCES vox_action_admin(id)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 
 # Dump of table vox_inform
@@ -221,33 +218,17 @@ DROP TABLE IF EXISTS `vox_inform`;
 
 CREATE TABLE `vox_inform` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `detail` VARCHAR(100) DEFAULT NULL COMMENT '通知详情',
+  `source_user_id` INT unsigned NOT NULL  COMMENT '外键，发送用户',
+  `target_user_id` INT unsigned NOT NULL  COMMENT '外键，接收用户',
+  `content` text DEFAULT NULL COMMENT '通知内容',
   `operation` VARCHAR(50) DEFAULT NULL COMMENT '操作',
   `priority` TINYINT DEFAULT NULL COMMENT '优先级',
-  `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
-  `createtime` INT DEFAULT NULL COMMENT '创建时间',
-  `updatetime` INT DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table vox_inform_user
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `vox_inform_user`;
-
-CREATE TABLE `vox_inform_user` (
-  `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `inform_id` INT unsigned NOT NULL COMMENT '外键，通知',
-  `user_id` INT unsigned NOT NULL  COMMENT '外键，用户',
-  `solution` TINYINT DEFAULT NULL COMMENT '是否处理：1->是；2->否',
-  `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
+  `status` TINYINT DEFAULT NULL COMMENT '是否处理：0->未处理；2->已处理',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (inform_id) REFERENCES vox_inform(id),
-  FOREIGN KEY (user_id) REFERENCES vox_user_admin(id)
+  FOREIGN KEY (source_user_id) REFERENCES vox_user_admin(id),
+  FOREIGN KEY (target_user_id) REFERENCES vox_user_admin(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # Dump of table vox_task
@@ -257,7 +238,7 @@ DROP TABLE IF EXISTS `vox_task`;
 
 CREATE TABLE `vox_task` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` VARCHAR(20) DEFAULT NULL COMMENT '名称',
+  `name` VARCHAR(100) DEFAULT NULL COMMENT '名称',
   `loop` INT DEFAULT NULL COMMENT '循环周期',
   `begintime` INT DEFAULT NULL COMMENT '开始时间',
   `endtime` INT DEFAULT NULL COMMENT '结束时间',

@@ -41,10 +41,10 @@ class UserAdmin extends Common{
     }
 
     /**
-     * 编辑信息
+     * 用户信息
      * @return \think\response\View
      */
-    public function editInfo()
+    public function account()
     {
         return view('', []);
     }
