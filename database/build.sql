@@ -242,6 +242,7 @@ CREATE TABLE `vox_task` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` VARCHAR(100) DEFAULT NULL COMMENT '名称',
   `loop` INT DEFAULT NULL COMMENT '循环周期',
+  `accuracy` int DEFAULT 3 COMMENT '1->匹配一级主题, 2->匹配二级主题, 3->匹配三级主题',
   `begintime` INT DEFAULT NULL COMMENT '开始时间',
   `endtime` INT DEFAULT NULL COMMENT '结束时间',
   `task_num` INT DEFAULT NULL COMMENT '任务量',
@@ -285,7 +286,6 @@ CREATE TABLE `vox_task_media_type` (
   FOREIGN KEY (media_type_id) REFERENCES vox_media_type(id),
   FOREIGN KEY (task_id) REFERENCES vox_task(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table vox_role_task_theme

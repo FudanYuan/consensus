@@ -1,6 +1,6 @@
 <?php
 /**
- * 网址模型
+ * 媒体模型
  * Created by PhpStorm.
  * User: acer-pc
  * Date: 2017/10/4
