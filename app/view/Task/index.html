@@ -10,17 +10,17 @@
         <div class="list-search">
             <form action="" class="form-inline" method="get" id="main-form">
                 <div class="form-group">
-                    <label for="id">任务编号：</label>
-                    <input name="id" class="form-control" id="id" style="width:150px"
-                           value="{$cond.id ?? ''}"/>
+                    <label for="name">任务名称：</label>
+                    <input name="name" class="form-control" id="name" style="width:150px"
+                           value="{$cond.name ?? ''}"/>
                 </div>
                 <div class="form-group">
                     <label for="taskstatus">采集状态：</label>
                     <select name="taskstatus" class="form-control" style="width:150px" id="taskstatus">
                         <option value="-1">全部</option>
-                        {foreach name="tags" item="tag" key="k"}
-                        <option value="{$k}">{$tag.title}</option>
-                        {/foreach}
+                        <option value="1">进行中</option>
+                        <option value="2">中断</option>
+                        <option value="3">结束</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-info">查询</button>
@@ -42,7 +42,7 @@
             <thead>
             <tr>
                 <th><input type="checkbox" id="checkbox-all"/></th>
-                <th>任务编号</th>
+                <th>任务名称</th>
                 <th>采集进度</th>
                 <th></th>
                 <th>采集数据</th>
@@ -57,8 +57,8 @@
             <tbody>
             {foreach name="list" item="model" key="k"}
             <tr>
-                <td><input type="checkbox" name="select" value="{$model.id}" /></td>
-                <td>{$model.id}</td>
+                <td><input type="checkbox" name="select" value="{$model.name}" /></td>
+                <td>{$model.name}</td>
                 <td>
                     <div class="progress progress-striped active" style="height:8px; margin:5px 0 0 0;">
                         <div class="progress-bar" style="width: {$model.progress}%">

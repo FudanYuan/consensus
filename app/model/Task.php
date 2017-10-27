@@ -45,7 +45,7 @@ class Task extends Model
         if(!isset($cond_and['status'])){
             $cond_and['status'] = ['<>', 2];
         }
-        $res = $this->field('id,time_predict as pretime,
+        $res = $this->field('id,name,time_predict as pretime,
             task_num as count,taskstatus,begintime,endtime')
             ->where($cond_or)
             ->where($cond_and)
