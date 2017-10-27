@@ -7,106 +7,7 @@
             <li>采集管理</li>
             <li>抓取设置</li>
         </ul>
-
-        <div class="padding-md" v-if="matchAccuracyResult">
-            <div class="block h4"><strong>匹配强度</strong></div>
-            <div class="form-wrapper">
-                <form class="form-horizontal" method="post" id="matchAccuracyResult-form">
-                    <div class="form-group">
-                        <label for="keywordsList" class="col-sm-2 control-label">强度设置：</label>
-                        <div class="col-sm-10" id="keywordsList">
-                            <strong class="font-14 block" style="margin-top: 5px">{{keywords | showList}}</strong>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10 lab-btns">
-                            {if condition="authority('MatchAccuracy_edit')"}
-                            <a class="btn btn-success" id="match-accuracy-form-edit" @click="editMatchAccuracy">修改</a>
-                            {/if}
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="padding-md" v-if="matchAccuracySet">
-            <div class="block h4"><strong>预警条件</strong></div>
-            <div class="form-wrapper">
-                <form class="form-horizontal" method="post" id="condition-set-form">
-                    <div :class="['form-group', error.keywords != '' ? 'has-error' : '']" >
-                        <label for="addKeywords" class="col-sm-2 control-label">关键词：</label>
-                        <div class="col-sm-4">
-                            <input class="form-control" type="text" v-model.trim="addKeywords"
-                                   name="addKeywords" placeholder="请输入关键词..." id="addKeywords">
-                        </div>
-                        <a href="javascript:;" class="col-sm-1 btn btn-success" @click="pushKeywords(addKeywords)">添加</a>
-                    </div>
-
-                    <div :class="['form-group', error.keywords != '' ? 'has-error' : '']" >
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
-                            <div class="keywords-content">
-                                <template  v-for="keyword in keywords">
-                                    <div class="keyword-item">
-                                        <span>{{keyword}}</span>
-                                        <a href="javascript:;" class="keyword-del" @click="deleteKeyword(keyword)" :title="'删除 '+keyword">x</a>
-                                    </div>
-                                </template>
-                            </div>
-                            <span class="help-block">{{error.keywords}}</span>
-                        </div>
-                    </div>
-
-                    <div :class="['form-group', error.nature != '' ? 'has-error' : '']" >
-                        <label class="col-sm-2 control-label">舆情属性：</label>
-                        <div class="col-lg-10">
-                            <template v-for="(value, key, index) in nature">
-                                <div class="checkbox inline-block" style="padding-right: 10px;">
-                                    <div class="custom-checkbox">
-                                        <input type="checkbox" :id="'nature-'+index" :value="key" v-model="natureChecked">
-                                        <label :for="'nature-'+index"></label>
-                                    </div>
-                                    <label class="inline-block vertical-top" :for="'nature-'+index" style="padding-left: 0;">{{key}}</label>
-                                </div>
-                            </template>
-                            <span class="help-block">{{error.nature}}</span>
-                        </div><!-- /.col -->
-                    </div>
-
-                    <div :class="['form-group', error.media != '' ? 'has-error' : '']" >
-                        <label class="col-sm-2 control-label">媒体类型：</label>
-                        <div class="col-lg-10">
-                            <template v-for="(value, key, index) in media">
-                                <div class="checkbox inline-block" style="padding-right: 10px;">
-                                    <div class="custom-checkbox">
-                                        <input type="checkbox" :id="'media-'+index" :value="key" v-model="mediaChecked">
-                                        <label :for="'media-'+index"></label>
-                                    </div>
-                                    <label class="inline-block vertical-top" :for="'media-'+index" style="padding-left: 0;">{{key}}</label>
-                                </div>
-                            </template>
-                            <span class="help-block">{{error.media}}</span>
-                        </div><!-- /.col -->
-                    </div>
-
-                    <div class="form-group" v-if="debug">
-                        <p>选中：{{natureChecked}}</p>
-                    </div>
-
-                    <div class="form-group" v-if="debug">
-                        <p>选中：{{mediaChecked}}</p>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10 lab-btns">
-                            <a class="btn btn-success" id="keywords-config-form-save" @click="saveEditKeywordsConfig">保存</a>
-                            <a id="keywords-config-form-cancel" class="btn btn-info" @click="cancelEditKeywordsConfig">取消</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        此模块正在设计中
     </div>
 </div><!-- /main-container -->
 {include file="Common/calendar" /}
@@ -115,14 +16,4 @@
 <script>
     $('#consensus-nav-task').addClass('active open');
     $('#consensus-nav-task-sub2').addClass('active');
-
-    var vm = new Vue({
-        el: '#match',
-        data: {
-            matchAccuracyResult: true,
-            matchAccuracySet: false,
-        },
-        method: {},
-    })
-
 </script>
