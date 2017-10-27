@@ -32,7 +32,7 @@ class KeywordWarn extends Model
      */
     public function getKeywordNumber(){
         $res = $this->field('count(id) as keyword_num')->select();
-        return count($res);
+        return $res[0]['keyword_num'];
     }
 
     /**
@@ -41,10 +41,11 @@ class KeywordWarn extends Model
      */
     public function getKeywordList(){
         $res = $this->field('*')
-            ->where("status <> '2'")
+            ->order('id ')
             ->select();
         return $res;
     }
+
     /**
      * 添加预警条件
      * @param $data
@@ -83,7 +84,36 @@ class KeywordWarn extends Model
         return $errors;
     }
 
+    /**
+     * 更新预警条件信息
+     * {@inheritDoc}
+     * @see \think\Model::save()
+     */
+    public function saveData($id, $cond){
+        $ret = [];
+        $errors = $this->filterField($cond);
+        $data = $this->unsetOtherField($cond);
+        $ret['errors'] = $errors;
+        if (empty($errors)) {
+            $curTime = time();
+            $data['updatetime'] = $curTime;
+            $this->save($data, ['id' => $id]);
+        }
+        return $ret;
+    }
 
+    /**
+     * 去除非表字段
+     * @param $data
+     * @return array
+     */
+    public function unsetOtherField($data){
+        $list = [];
+        foreach ($this->fields as $v){
+            $list[$v] = $data[$v];
+        }
+        return $list;
+    }
 
     ////未修改/////
     /**
@@ -119,21 +149,5 @@ class KeywordWarn extends Model
         $percent = $thisMonthUpdateNum[0]['tm_num'];
         return $percent;
     }
-
-    /**
-     * 更新网站类型信息
-     * {@inheritDoc}
-     * @see \think\Model::save()
-     */
-    public function saveData($id, $data){
-        $ret = [];
-        $errors = $this->filterField($data);
-        $ret['errors'] = $errors;
-        if (empty($errors)) {
-            $this->save($data, ['id' => $id]);
-        }
-        return $ret;
-    }
-
 
 }
