@@ -100,6 +100,11 @@
     }
     setInterval(startTime, 1000);//每一秒中重新加载startTime()方法
 
+    function myMoment(value, formatString) {
+        formatString = formatString || 'YYYY-MM-DD HH:mm';
+        return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+    }
+
     $('.logout').on('click', function () {
         $.get('__PRO_PATH__/UserAdmin/dologout', {}, function (res) {
             if (res.errorcode == 0) {
@@ -134,5 +139,12 @@
 
     $('.contact').on('click', function () {
         popWarn('请联系管理员：Admin <br/><br/> 联系方式：1234567890');
-    })
+    });
+
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    };
 </script>

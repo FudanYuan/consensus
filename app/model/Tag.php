@@ -53,9 +53,11 @@ class Tag extends Model{
         $res = $this->field('id,title,section')->order('id')->where($cond)->paginate(10);
         return $res;
     }
+
     /**
      * 根据ID获取标签信息
-     * @param unknown $id
+     * @param $id
+     * @return mixed
      */
     public function getById($id){
         $res = $this->field('id,title,section')->where(['id' => $id])->find();

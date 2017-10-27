@@ -221,10 +221,11 @@ CREATE TABLE `vox_inform` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `source_user_id` INT unsigned NOT NULL  COMMENT '外键，发送用户',
   `target_user_id` INT unsigned NOT NULL  COMMENT '外键，接收用户',
+  `title` VARCHAR(200) DEFAULT NULL COMMENT '通知标题',
   `content` text DEFAULT NULL COMMENT '通知内容',
   `operation` VARCHAR(50) DEFAULT NULL COMMENT '操作',
   `priority` TINYINT DEFAULT NULL COMMENT '优先级',
-  `status` TINYINT DEFAULT NULL COMMENT '是否处理：0->未处理；2->已处理',
+  `status` TINYINT DEFAULT NULL COMMENT '是否处理：0->未处理；1->已处理, 2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -269,19 +270,19 @@ CREATE TABLE `vox_tag` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-# Dump of table vox_task_media
+# Dump of table vox_task_media_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `vox_task_media`;
+DROP TABLE IF EXISTS `vox_task_media_type`;
 
-CREATE TABLE `vox_task_media` (
+CREATE TABLE `vox_task_media_type` (
   `task_id` INT DEFAULT NULL COMMENT '外键,任务id',
-  `media_id` INT DEFAULT NULL COMMENT '外键,媒体id',
+  `media_type_id` INT DEFAULT NULL COMMENT '外键,媒体id',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`media_id`, `task_id`),
-  FOREIGN KEY (media_id) REFERENCES vox_media(id),
+  PRIMARY KEY (`media_type_id`, `task_id`),
+  FOREIGN KEY (media_type_id) REFERENCES vox_media_type(id),
   FOREIGN KEY (task_id) REFERENCES vox_task(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

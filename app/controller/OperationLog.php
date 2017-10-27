@@ -26,9 +26,7 @@ class OperationLog extends Common
     public function getLogList(){
         $params = input('post.');
         // 获取当前登陆的用户id，根据此id查询表，返回结果
-        $token = session('token');
-        $token_user = json_decode(cache_hash_hget(self::TOKEN_USER, $token), true);
-        $user_id = $token_user['id'];
+        $user_id = $this->getUserId();
         $page = input('post.current_page',0);
         $per_page = input('post.per_page',0);
         $ret = ['errorcode' => 0, 'data' => [], 'msg' => ""];

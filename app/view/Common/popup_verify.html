@@ -56,16 +56,7 @@
 </div>
 <script>
     var ver_params = {};
-    var vm = new Vue({
-        el: '#verify',
-        data: {
-            id : -1,
-            nature : '',
-            relevance: ''
-        }
-    });
     function popupVerify(id, nature, relevance){
-        console.log(id, nature, relevance);
         $("input[name='ver_nature'][value='"+nature+"']").attr("checked",true);  //根据Value值设置Radio为选中状态
         $('#ver_relevance').width(relevance*8);
         $("input[name='ver_relevance']").val(relevance);
@@ -102,7 +93,6 @@
     $('.bg').mousemove(function(e) {
         var positionX=e.pageX-$(this).offset().left; //获取当前鼠标相对该元素的X坐标
         $('#ver_relevance').width(positionX);
-//        vm.relevance = Math.round(positionX / 8.0);
         $("input[name='ver_relevance']").val(Math.round(positionX / 8.0));
     });
 
