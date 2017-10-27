@@ -464,31 +464,14 @@
                     {/if}
 
                     {if condition="authority('Task')"}
-                    <li class="openable bg-palette2" id="consensus-nav-task">
-                        <a href="javascript:;">
+                    <li class="bg-palette2" id="consensus-nav-task">
+                        <a href="__PRO_PATH__/Task/index">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-cloud fa-lg"></i></span>
 								<span class="text m-left-sm">舆情采集</span>
-                                <span class="submenu-icon"></span>
                             </span>
                             <span class="menu-content-hover block">Task</span>
                         </a>
-                        <ul class="submenu bg-palette2">
-                            {if condition="authority('TaskInfo')"}
-                            <li id="consensus-nav-task-sub1">
-                                <a href="__PRO_PATH__/Task/index">
-                                    <span class="submenu-label">采集舆情</span>
-                                </a>
-                            </li>
-                            {/if}
-                            {if condition="authority('TaskConfig')"}
-                            <li id="consensus-nav-task-sub2">
-                                <a href="__PRO_PATH__/Task/config">
-                                    <span class="submenu-label">采集设置</span>
-                                </a>
-                            </li>
-                            {/if}
-                        </ul>
                     </li>
                     {/if}
 
