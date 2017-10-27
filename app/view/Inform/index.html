@@ -36,7 +36,7 @@
                                 <i class="fa fa-envelope-open fa-lg" aria-hidden="true"></i>
                             </span>
                         </td>
-                        <td>{{model.title}}</td>
+                        <td>{{model.title | formatText(40, model.title)}}</td>
                         <td>{{model.createtime | moment}}</td>
                         <td>
                             <a href="javascript:;" @click="info(index)" title="详情">
@@ -230,7 +230,9 @@
         }
         return ret;
     });
-
+    Vue.filter('formatText', function (text, len) {
+        return cutString(text, len);
+    });
     // 异步提交数据
     function submit() {
         getParams();
