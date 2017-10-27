@@ -39,7 +39,8 @@ class MediaType extends Model
 
     /**
      * 获取网战类型列表
-     * @param cond $ 分页量
+     * @param array $cond
+     * @return mixed
      */
     public function getMedTypeList($cond = []){
         $res = $this->field('id as type_id, name as type_name ')

@@ -88,7 +88,7 @@ class Task extends Common{
             $theme_2_list = D('Theme')->getT2List([],$cond,[]);
             $theme_list[$i]['t1_content'] = $theme_2_list;
         }
-        $website_list = D('WebSiteType')->getWebTypeList();
+        $website_list = D('MediaType')->getMedTypeList();
         if(!empty($data)){
             $ret = ['code' => 1, 'msg' => '成功'];
             if(!isset($data['theme'])){
@@ -101,7 +101,7 @@ class Task extends Common{
             $res_task = D('Task')->addData($data);
             $theme = $data['theme'];
             $website = $data['website'];
-            if (!empty($res['errors'])) {
+            if (!empty($res_task['errors'])) {
                 $ret['code'] = 2;
                 $ret['msg'] = '新建失败';
                 $ret['errors'] = $res_task['errors'];
@@ -118,17 +118,16 @@ class Task extends Common{
                         D('TaskTheme')->addData($task_theme_data);
                     }
                 }
-                // 添加task_website
-                $task_website_data = [];
+                // 添加task_media_type
+                $task_media_data = [];
                 for($i = 0;$i <count($website); $i++){
-                    $task_website_data['task_id'] = $task_id;
-                    $task_website_data['website_id'] = $website[$i];
-                    D('TaskUrl')->addData($task_website_data);
+                    $task_media_data['task_id'] = $task_id;
+                    $task_media_data['media_type_id'] = $website[$i];
+                    D('TaskMediaType')->addData($task_media_data);
                 }
                 $this->jsonReturn($ret);
             }
         }
-
         return view('', ['theme_list' => $theme_list, 'website_list' => $website_list]);
     }
 

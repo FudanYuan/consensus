@@ -189,10 +189,12 @@ class DataMonitor extends Common{
             $keyword = $data[$total - 1]['keyword'];
             $nature = $data[$total - 1]['nature'];
             $media_type = $data[$total - 1]['media_type'];
+            $status = $data[$total - 1]['status'];
         } else {
             $keyword = '';
             $nature = '';
             $media_type = '';
+            $status = $data[$total - 1]['status'];
         }
         $list = explode('-', $keyword);
         //去除空字段
@@ -229,8 +231,13 @@ class DataMonitor extends Common{
             $media_warn['微博'] = 1;
         else
             $media_warn['微博'] = 0;
+        if($status == 1){
+            $switch_warn = 1;
+        }else{
+            $switch_warn = 0;
+        }
 
-        $ret['switch'] = 1;
+        $ret['switch'] = $switch_warn;
         $ret['nature'] = $nature_warn;
         $ret['media'] = $media_warn;
         $ret['keywords'] = $list;
@@ -283,31 +290,66 @@ class DataMonitor extends Common{
         } else {
             $media = $params['media'];
         }
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['errorcode' => 0, 'msg' => '','params' => $params];
         // 更新预警设置逻辑
         // code here
-        $data = [];
-        $keyword_warn ='';
-        foreach ($keywords as $keyword){
-            $keyword_warn = $keyword_warn.$keyword.'-';
+        if($keywordsSwitch == 'true') {
+            if(!empty($nature)&&!empty($keywords&&!empty($media))) {
+                $data = [];
+                $keyword_warn = '';
+                foreach ($keywords as $keyword) {
+                    $keyword_warn = $keyword_warn . $keyword . '-';
+                }
+                $data['keyword'] = $keyword_warn;
+                $nature_warn = '-';
+                foreach ($nature as $n) {
+                    $nature_warn = $nature_warn . $n . '-';
+                }
+                $data['nature'] = $nature_warn;
+                $media_warn = '-';
+                foreach ($media as $m) {
+                    $media_warn = $media_warn . $m . '-';
+                }
+                $data['media_type'] = $media_warn;
+                $res = D('KeywordWarn')->addData($data);
+                if (!empty($res['errors'])) {
+                    $ret = ['errorcode' => 1, 'msg' => $res['errors']];
+                }
+            }else{
+                $list = D('KeywordWarn')->getKeywordList();
+                $total = count($list);
+                if($total){
+                    $data = $list[$total - 1];
+                    $data['status'] = 1;
+                    $ret['data'] = $data;
+                    $res = D('KeywordWarn')->saveData($data['id'],$data);
+                    if (!empty($res['errors'])) {
+                        $ret = ['errorcode' => 1, 'msg' => '关闭失败'];
+                    } else{
+                        $ret = ['errorcode' => 0, 'msg' => '关闭成功'];
+                    }
+                }
+            }
         }
-        $data['keyword'] = $keyword_warn;
-        $nature_warn = '-';
-        foreach ($nature as $n){
-            $nature_warn = $nature_warn.$n.'-';
-        }
-        $data['nature'] = $nature_warn;
-        $media_warn = '-';
-        foreach ($media as $m){
-            $media_warn = $media_warn.$m.'-';
-        }
-        $data['media_type'] = $media_warn;
-        $res = D('KeywordWarn')->addData($data);
-        if(!empty($res['errors'])){
-            $ret = ['errorcode' => 1, 'msg' => $res['errors']];
+        if($keywordsSwitch == 'false'){
+            $list = D('KeywordWarn')->getKeywordList();
+            $total = count($list);
+            if($total){
+                $data = $list[$total - 1];
+                $data['status'] = 2;
+                $ret['data'] = $data;
+                $res = D('KeywordWarn')->saveData($data['id'],$data);
+                if (!empty($res['errors'])) {
+                    $ret = ['errorcode' => 1, 'msg' => '关闭失败'];
+                } else{
+                    $ret = ['errorcode' => 0, 'msg' => '关闭成功'];
+                }
+            }
+
         }
         $this->jsonReturn($ret);
     }
+
 
     /**
      * 获取警戒线配置
@@ -372,6 +414,7 @@ class DataMonitor extends Common{
         $ret = ['errorcode' => 0, 'msg' => ''];
         // 添加预警设置逻辑
         // code here
+
 
         $this->jsonReturn($ret);
     }
