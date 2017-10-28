@@ -164,10 +164,16 @@ class Task extends Model
             $data['createtime'] = time();
             if (!isset($data['status']))
                 $data['status'] = 1;
-            $data['loop'] = 172800;
+            if($data['loop'] == 0){
+                $data['loop'] = 86400;
+            }elseif ($data['loop'] == 1){
+                $data['loop'] = 604800;
+            }elseif ($data['loop'] == 2){
+                $data['loop'] = 2592000;
+            }
             $data['taskstatus'] = 0;
-            //$task_id = $this->save_1($data);
-            //$ret['task_id'] = $task_id;
+            $task_id = $this->save_1($data);
+            $ret['task_id'] = $task_id;
         }
         return $ret;
     }
