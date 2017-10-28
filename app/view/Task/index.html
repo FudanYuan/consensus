@@ -68,10 +68,10 @@
                 <tr>
                     <th><input type="checkbox" v-model="check_all" @click="checkAll"/></th>
                     <th>任务名称</th>
-                    <th>采集进度</th>
-                    <th></th>
+                    <th v-if="0">采集进度</th>
+                    <th v-if="0"></th>
                     <th>采集数据</th>
-                    <th>预计耗时</th>
+                    <th v-if="0">预计耗时</th>
                     <th>已耗时</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
@@ -84,16 +84,16 @@
                     <tr v-for="model in list">
                         <td><input type="checkbox" v-model="select" :value="model.id" @click="selectClick(model.id)"/></td>
                         <td>{{model.name}}</td>
-                        <td>
+                        <td v-if="0">
                             <div class="progress progress-striped active" style="height:8px; margin:5px 0 0 0;">
                                 <div class="progress-bar" :style="'width: '+model.progress+'%'">
                                     <span class="sr-only">{{model.progress}}% Complete</span>
                                 </div>
                             </div>
                         </td>
-                        <td>{{model.progress}}%</td>
+                        <td v-if="0">{{model.progress}}%</td>
                         <td>{{model.count}}</td>
-                        <td><span class="badge badge-warning">{{model.pretime}}hr</span></td>
+                        <td v-if="0"><span class="badge badge-warning">{{model.pretime}}hr</span></td>
                         <td><span class="badge badge-info">{{model.time}}hr</span></td>
                         <td>{{model.begintime | moment}}</td>
                         <td v-if="model.taskstatus == 2">{{model.endtime | moment}}</td>
@@ -105,7 +105,7 @@
                         </td>
                         <td>
                             <a href="javascript:;" @click="stopTasks([model.id])" v-if="model.taskstatus == 0">终止</a>
-                            <a href="javascript:;" class="contact" v-if="model.taskstatus == 1">联系管理员</a>
+                            <a href="javascript:;" @click="contact" v-if="model.taskstatus == 1">联系管理员</a>
                         </td>
                     </tr>
                 </template>
@@ -245,6 +245,9 @@
                     submit();
                 });
                 $('#stop-confirm-popup').popup('show');
+            },
+            contact: function () {
+                popWarn('请联系管理员：Admin <br/><br/> 联系方式：1234567890');
             }
         },
         filters:{

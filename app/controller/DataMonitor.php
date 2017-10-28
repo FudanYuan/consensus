@@ -18,7 +18,9 @@ class DataMonitor extends Common{
      * @return \think\response\View
      */
     public function index(){
-        return view('', []);
+        $task = D('Task')->getTaskList([],[],'createtime desc');
+        $media_type = D('MediaType')->getMedTypeList();
+        return view('', ['task'=>$task, 'area' => [], 'media_type' => $media_type]);
     }
 
     /**
