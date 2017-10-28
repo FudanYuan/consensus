@@ -106,7 +106,7 @@
                     <template v-for="model in list">
                         <tr>
                             <td hidden><input type="checkbox" name="select" :value="model.id"/></td>
-                            <td><a :href="model.url" target="_blank" :title="model.title">{{model.title}}</a></td>
+                            <td><a :href="model.url" target="_blank" :title="model.title">{{model.title | formatText(40, model.title)}}</a></td>
                             <td><a href="javascript:;" @click="digestItem(model.id)"><i class="fa fa-chevron-circle-down" aria-hidden="true" :id="'chevron_'+model.id"></i></a></td>
                             <td>{{model.source}}</td>
                             <td>{{model.media_type}}</td>
@@ -224,7 +224,7 @@
         });
     });
 
-    $('#sortCol').val('publishtime desc');
+    $('#sortCol').val('a.publishtime desc');
     var sort = $('#sortCol').val();
     getSortCol(sort);
 
@@ -304,6 +304,9 @@
                     res = '收藏';
                 }
                 return res;
+            },
+            formatText: function (text, len) {
+                return cutString(text, len);
             }
         }
     });
@@ -364,19 +367,19 @@
         switch (col) {
             case 'publishtime':
                 title = $("#sort_publishtime").attr('title');
-                sort.val("publishtime " + title);
+                sort.val("a.publishtime " + title);
                 $("#sort_publishtime").attr({"title": changeSort(title)});
                 $("#sort_publishtime i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
             case 'relevance':
                 title = $("#sort_relevance").attr('title');
-                sort.val("relevance " + title);
+                sort.val("a.relevance " + title);
                 $("#sort_relevance").attr({"title": changeSort(title)});
                 $("#sort_relevance i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
             case 'similar_num':
                 title = $("#sort_similar_num").attr('title');
-                sort.val("similar_num " + title);
+                sort.val("a.similar_num " + title);
                 $("#sort_similar_num").attr({"title": changeSort(title)});
                 $("#sort_similar_num i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
@@ -388,15 +391,15 @@
         var col = sortcol.split(' ');
         var title = col[1];
         switch (col[0]) {
-            case 'publishtime':
+            case 'a.publishtime':
                 $("#sort_publishtime").attr({"title": changeSort(title)});
                 $("#sort_publishtime i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
-            case 'relevance':
+            case 'a.relevance':
                 $("#sort_relevance").attr({"title": changeSort(title)});
                 $("#sort_relevance i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
-            case 'similar_num':
+            case 'a.similar_num':
                 $("#sort_similar_num").attr({"title": changeSort(title)});
                 $("#sort_similar_num i").removeClass().addClass('fa fa-sort-' + changeSort(title));
                 break;
