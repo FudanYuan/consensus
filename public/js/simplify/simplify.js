@@ -56,7 +56,7 @@ $(function	()	{
 			$('aside').toggleClass('sidebar-mini');
 			$('footer').toggleClass('sidebar-mini');
 			$('.main-container').toggleClass('sidebar-mini');
-			
+
 			$('.main-menu').find('.openable').removeClass('open');
 			$('.main-menu').find('.submenu').removeAttr('style');
 		}		

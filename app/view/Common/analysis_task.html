@@ -1,0 +1,55 @@
+<style>
+    .tasks-list-sidebar-menu{
+        display: none;
+        position: fixed;
+        float: left;
+        top: 0;
+        bottom: 0;
+        left: 240px;
+        z-index: 0;
+        padding-top: 54px;
+        padding-bottom: 35px;
+        height: 100%;
+        width: 240px;
+        background-color: #1c2b36;
+        color: white;
+        transition: left .5s ease;
+        -webkit-transition: left .5s ease;
+        -moz-transition: left .5s ease;
+        -ms-transition: left .5s ease;
+        -o-transition: left .5s ease
+    }
+
+    @media (max-width: 991px) {
+        .tasks-list-sidebar-menu {
+            top: 0;
+            left: -240px;
+        }
+    }
+    .tasks-list-sidebar-menu .main-menu ul li{
+        padding: 10px;
+        border-bottom: 1px solid #17232c;
+        list-style: none;
+        height: 100%;
+        width: 100%;
+    }
+
+    .tasks-list-sidebar-menu .main-menu ul li a{
+        position: relative;
+        display: block;
+        padding: 4px 15px 0 2px;
+        font-size: 11px;
+        font-weight: 600;
+        background: 0 0;
+        color: white;
+        text-transform: uppercase;
+        outline: 0;
+        cursor: pointer;
+    }
+
+</style>
+<div class="tasks-list-sidebar-menu" id="tasks-list-sidebar-menu">
+    <div class="main-menu">
+        <ul id="tasks-list"></ul>
+    </div>
+</div>

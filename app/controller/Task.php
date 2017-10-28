@@ -24,6 +24,12 @@ class Task extends Common{
      */
     public function getTaskList(){
         $params = input('post.');
+        $ret = ['errorcode' => 0, 'msg' => '成功'];
+        if(empty($params)){
+            $list = D('Task')->getTaskList([],[],'createtime desc');
+            $ret["data"] = $list;
+            $this->jsonReturn($ret);
+        }
         $task_name = input('post.name','');
         $taskStatus = input('post.taskstatus',-1);
         $order = input('post.sortCol', 'createtime desc');
@@ -44,7 +50,6 @@ class Task extends Common{
                     break;
             }
         }
-        $ret = ['errorcode' => 0, 'msg' => '成功'];
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
 
         for($i=0;$i<count($list);$i++){
