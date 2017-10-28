@@ -1,6 +1,6 @@
 {include file="Common/top" title="首页" metas='' /}
 {include file="Common/search" /}
-<div class="main-container">
+<div class="main-container" id="task">
     <div class="padding-md">
         <ul class="breadcrumb">
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
@@ -53,69 +53,71 @@
         <div class="list-btns">
             {if condition="authority('Task_add')"}
             <div class="btn-group">
-                <a href="javascript:;" class="btn btn-success" id="addItem">新建</a>
+                <button type="button" class="btn btn-success" @click="createNewTask">新建</button>
             </div>
             {/if}
             {if condition="authority('Task_stop')"}
             <div class="btn-group">
-                <a href="javascript:;" type="button" class="btn btn-default" id="stopItems">终止</a>
+                <button type="button" class="btn btn-default" @click="stopTasks([])">终止</button>
             </div>
             {/if}
         </div>
-        <table class="table table-hover" style="background:#fff;"  id="task">
-            <thead>
-            <tr>
-                <th><input type="checkbox" v-model="check_all" @click="checkAll"/></th>
-                <th>任务名称</th>
-                <th>采集进度</th>
-                <th></th>
-                <th>采集数据</th>
-                <th>预计耗时</th>
-                <th>已耗时</th>
-                <th>开始时间</th>
-                <th>结束时间</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <template  v-if="list.length != 0">
-                <tr v-for="model in list">
-                    <td><input type="checkbox" v-model="select" :value="model.id" @click="selectClick(model.id)"/></td>
-                    <td>{{model.name}}</td>
-                    <td>
-                        <div class="progress progress-striped active" style="height:8px; margin:5px 0 0 0;">
-                            <div class="progress-bar" :style="'width: '+model.progress+'%'">
-                                <span class="sr-only">{{model.progress}}% Complete</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>{{model.progress}}%</td>
-                    <td>{{model.count}}</td>
-                    <td><span class="badge badge-warning">{{model.pretime}}hr</span></td>
-                    <td><span class="badge badge-info">{{model.time}}hr</span></td>
-                    <td>{{model.begintime | moment}}</td>
-                    <td v-if="model.taskstatus != 2">{{model.endtime | moment}}</td>
-                    <td v-else>未结束</td>
-                    <td>
-                        <span class="label label-success" v-if="model.taskstatus == 0">采集中</span>
-                        <span class="label label label-danger" v-if-else="model.taskstatus == 1">中断</span>
-                        <span class="label label label-info" v-else="model.taskstatus == 2">结束</span>
-                    </td>
-                    <td>
-                        <a href="javascript:;" @click="stopItem(model.id)" v-if="model.taskstatus == 0">终止</a>
-                        <a href="javascript:;" class="contact" v-if="model.taskstatus == 1">联系管理员</a>
-                    </td>
-                </tr>
-            </template>
-            <template v-else>
+        <div>
+            <table class="table table-hover" style="background:#fff;">
+                <thead>
                 <tr>
-                    <td colspan="11" align="center">无符合条件的任务</td>
+                    <th><input type="checkbox" v-model="check_all" @click="checkAll"/></th>
+                    <th>任务名称</th>
+                    <th>采集进度</th>
+                    <th></th>
+                    <th>采集数据</th>
+                    <th>预计耗时</th>
+                    <th>已耗时</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
                 </tr>
-            </template>
-            </tbody>
-        </table>
-        {include file="Common/page" /}
+                </thead>
+                <tbody>
+                <template  v-if="list.length != 0">
+                    <tr v-for="model in list">
+                        <td><input type="checkbox" v-model="select" :value="model.id" @click="selectClick(model.id)"/></td>
+                        <td>{{model.name}}</td>
+                        <td>
+                            <div class="progress progress-striped active" style="height:8px; margin:5px 0 0 0;">
+                                <div class="progress-bar" :style="'width: '+model.progress+'%'">
+                                    <span class="sr-only">{{model.progress}}% Complete</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{model.progress}}%</td>
+                        <td>{{model.count}}</td>
+                        <td><span class="badge badge-warning">{{model.pretime}}hr</span></td>
+                        <td><span class="badge badge-info">{{model.time}}hr</span></td>
+                        <td>{{model.begintime | moment}}</td>
+                        <td v-if="model.taskstatus != 2">{{model.endtime | moment}}</td>
+                        <td v-else>未结束</td>
+                        <td>
+                            <span class="label label-success" v-if="model.taskstatus == 0">采集中</span>
+                            <span class="label label label-danger" v-if-else="model.taskstatus == 1">中断</span>
+                            <span class="label label label-info" v-else="model.taskstatus == 2">结束</span>
+                        </td>
+                        <td>
+                            <a href="javascript:;" @click="stopTasks([model.id])" v-if="model.taskstatus == 0">终止</a>
+                            <a href="javascript:;" class="contact" v-if="model.taskstatus == 1">联系管理员</a>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="11" align="center">无符合条件的任务</td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+            {include file="Common/page" /}
+        </div>
     </div>
 </div><!-- /main-container -->
 {include file="Common/calendar" /}
@@ -124,12 +126,6 @@
 {include file="Common/bottom" /}
 <script>
     $('#consensus-nav-task').addClass('active');
-
-    // common
-    popupList({
-        create: '__PRO_PATH__/Task/create',
-        stop: '__PRO_PATH__/Task/stop'
-    });
 
     var vm = new Vue({
         el: "#task",
@@ -225,9 +221,29 @@
                 }
                 this.check_all = !this.check_all;
             },
+            createNewTask: function () {
+                window.location.href = '__PRO_PATH__/Task/create';
+            },
             // 终止一个任务
-            stopItem: function (id) {
-                this.select.push(id);
+            stopTasks: function (id) {
+                var ids = [];
+                if(id.length==0){
+                    ids = this.select;
+                }
+                else{
+                    if(this.select.indexOf(id[0]) == -1){
+                        this.select.push(id[0]);
+                    }
+                    ids = id;
+                }
+                this.select = ids;
+                // 终止
+                popupList({
+                    stop: '__PRO_PATH__/Task/stop',
+                    ids: vm.select
+                }, function () {
+                    submit();
+                });
                 $('#stop-confirm-popup').popup('show');
             }
         },

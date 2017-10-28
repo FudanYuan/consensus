@@ -194,7 +194,7 @@ class DataMonitor extends Common{
             $keyword = '';
             $nature = '';
             $media_type = '';
-            $status = $data[$total - 1]['status'];
+            $status = 1;
         }
         $list = explode('-', $keyword);
         //去除空字段

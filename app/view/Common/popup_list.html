@@ -79,10 +79,7 @@
         });
         $('.confirm-stop').unbind('click').on('click', function () {
             $('#stop-confirm-popup').popup('hide');
-            var ids = [];
-            $("input[name='select']:checked").each(function () {
-                ids.push(this.value);
-            });
+            var ids = config.ids;
             if (ids.length <= 0) {
                 $('#warn-popup h5').html('请选择至少一条');
                 $('#warn-popup').popup('show');
@@ -90,7 +87,7 @@
             }
             $.post(config.stop, {ids: ids.join(',')}, function (res) {
                 if (res['code'] == 1) {
-                    window.location.reload();
+                    callback();
                 } else {
                     popWarn('终止失败');
                 }

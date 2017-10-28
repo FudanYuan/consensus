@@ -309,7 +309,7 @@
                                         <label for="edit_dayAllCount" class="col-sm-2 control-label">每日舆情总量</label>
                                         <div class="col-sm-4">
                                             <input class="form-control" type="text" v-model.trim="edit_dayAllCount"
-                                                   name="dayAllCount" placeholder="请输入每日舆情总量..." id="edit_dayAllCount">
+                                                   name="edit_dayAllCount" placeholder="请输入每日舆情总量..." id="edit_dayAllCount">
                                             <span class="help-block">{{error.dayAllCount}}</span>
                                         </div>
                                     </div>
@@ -462,6 +462,9 @@
                 this.dayNegativeCount = -1;
                 this.error['dayAllCount'] = '';
                 this.error['dayNegativeCount'] = '';
+                this.thresholdConditionResult = true;
+                this.thresholdConditionCreate = false;
+                this.thresholdConditionEdit = false;
             },
             resetThresholdConfigEditParams: function () {
                 this.edit_thresholdItemId = -1;
@@ -547,13 +550,10 @@
             createThresholdConfig:function () {
                 var params = {};
                 params['task'] = this.taskSelected;
-                params['dayAllCount'] = this.edit_dayAllCount;
-                params['dayNegativeCount'] = this.edit_dayNegativeCount;
+                params['dayAllCount'] = this.dayAllCount;
+                params['dayNegativeCount'] = this.dayNegativeCount;
                 $.post('__PRO_PATH__/DataMonitor/createThresholdConfig', params, function (res) {
                     if (res.errorcode == 0) {
-                        this.thresholdConditionResult = true;
-                        this.thresholdConditionCreate = false;
-                        this.thresholdConditionEdit = false;
                         getThresholdConfig();
                     } else {
                         $.each(res.error, function (key, value) {
@@ -708,6 +708,7 @@
             }
         });
     }
+
     // 初始化
     getKeywordsConfig();
     getThresholdConfig();
