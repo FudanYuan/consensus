@@ -96,11 +96,11 @@
                         <td><span class="badge badge-warning">{{model.pretime}}hr</span></td>
                         <td><span class="badge badge-info">{{model.time}}hr</span></td>
                         <td>{{model.begintime | moment}}</td>
-                        <td v-if="model.taskstatus != 2">{{model.endtime | moment}}</td>
+                        <td v-if="model.taskstatus == 2">{{model.endtime | moment}}</td>
                         <td v-else>未结束</td>
                         <td>
                             <span class="label label-success" v-if="model.taskstatus == 0">采集中</span>
-                            <span class="label label label-danger" v-if-else="model.taskstatus == 1">中断</span>
+                            <span class="label label label-danger" v-else-if="model.taskstatus == 1">中断</span>
                             <span class="label label label-info" v-else="model.taskstatus == 2">结束</span>
                         </td>
                         <td>
