@@ -104,7 +104,7 @@ class Task extends Common{
         }
         $website_list = D('MediaType')->getMedTypeList();
         if(!empty($data)) {
-            $ret = ['code' => 2, 'msg' => '成功'];
+            $ret = ['code' => 1, 'msg' => '成功'];
             $ret['data'] = $data;
             if (!isset($data['theme'])) {
                 $data['theme'] = [];
