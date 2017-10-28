@@ -15,7 +15,7 @@ class TaskTheme extends Model
 {
     protected $table = 'vox_task_theme';
     protected $fields = array(
-        'task_id','theme_3_id', 'status', 'createtime', 'updatetime'
+        'task_id','theme_id', 'status', 'createtime', 'updatetime'
     );
     protected $type = [
         'task_id' => 'integer',

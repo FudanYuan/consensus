@@ -166,8 +166,8 @@ class Task extends Model
                 $data['status'] = 1;
             $data['loop'] = 172800;
             $data['taskstatus'] = 0;
-            $task_id = $this->save_1($data);
-            $ret['task_id'] = $task_id;
+            //$task_id = $this->save_1($data);
+            //$ret['task_id'] = $task_id;
         }
         return $ret;
     }
@@ -198,8 +198,8 @@ class Task extends Model
         if (isset($data['loop']) && $data['loop'] == '-1') {
             $errors['loop'] = '采集周期不能为空';
         }
-        if (isset($data['begintime']) && !$data['begintime']) {
-            $errors['begintime'] = '开始时间不能为空';
+        if (isset($data['begintime_str']) && !$data['begintime_str']) {
+            $errors['begintime_str'] = '开始时间不能为空';
         }
         if (isset($data['theme']) && !$data['theme']) {
             $errors['theme'] = '采集主题不能为空';

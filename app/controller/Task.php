@@ -112,7 +112,6 @@ class Task extends Common{
             if (!isset($data['website'])) {
                 $data['website'] = [];
             }
-            $accuracy = $data['match_accuracy'];
             // 添加task
             $res_task = D('Task')->addData($data);
             $theme = $data['theme'];
@@ -122,7 +121,8 @@ class Task extends Common{
                 $ret['msg'] = '新建失败';
                 $ret['errors'] = $res_task['errors'];
                 $this->jsonReturn($ret);
-            } else {
+            }
+            else {
                 $task_id = $res_task['task_id'];
                 // 添加task_theme,
                 /**
