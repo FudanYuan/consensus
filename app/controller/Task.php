@@ -36,7 +36,6 @@ class Task extends Common{
                     break;
             }
         }
-        $tags = D('Tag')->getList(['section' => 4]);
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
         for($i=0;$i<count($list);$i++){
             $curtime = time();
@@ -60,7 +59,7 @@ class Task extends Common{
             $list[$i]['time'] = round($time/3600,1);
             $list[$i]['count'] = number_format($list[$i]['count']);
         }
-        return view('', ['list' => $list, 'tags' => $tags, 'cond' => $params]);
+        return view('', ['list' => $list, 'cond' => $params]);
     }
     /**
      * 终止
@@ -108,7 +107,10 @@ class Task extends Common{
                 $this->jsonReturn($ret);
             }else {
                 $task_id = $res_task['task_id'];
-                // 添加task_theme
+                // 添加task_theme,
+                /**
+                 * 这里要修改一下逻辑，根据 匹配逻辑 选择添加的主题级别
+                 */
                 for ($i = 0; $i < count($theme); $i++) {
                     $theme_3_data = D('Theme')->getT3ByT2id($theme[$i]);
                     $task_theme_data = [];

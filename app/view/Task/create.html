@@ -4,15 +4,22 @@
 <div class="main-container">
     <div class="padding-md">
         <ul class="breadcrumb">
-            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/"> 首页</a></li>
-            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/Task/index"> 采集管理</a></li>
-            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/Task/index"> 采集项目</a></li>
-            <li>新建</li>
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/Task/index">舆情采集</a></li>
+            <li>新建任务</li>
         </ul>
         <div class="form-wrapper">
             <form class="form-horizontal" method="post" id="new-task-form">
+                <div class="form-group {$errors.name ?= 'has-error'}">
+                    <label for="new-task-form-loop" class="col-sm-2 control-label">任务名称：</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" name="name" value="" placeholder="请输入任务名称">
+                        <p class="help-block">{$errors.name??''}</p>
+                    </div>
+                </div>
+
                 <div class="form-group {$errors.loop ?= 'has-error'}">
-                    <label for="new-task-form-loop" class="col-sm-2 control-label">爬取周期</label>
+                    <label for="new-task-form-loop" class="col-sm-2 control-label">爬取周期：</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="new-task-form-loop" name="loop">
                             <option value="-1">--请选择--</option>
@@ -25,7 +32,7 @@
                 </div>
 
                 <div class="form-group {$errors.theme ?= 'has-error'}">
-                    <label for="new-task-form-theme" class="col-sm-2 control-label">爬取主题</label>
+                    <label for="new-task-form-theme" class="col-sm-2 control-label">爬取主题：</label>
                     <div class="col-sm-4">
                         <select multiple="multiple" class="multiple" id="new-task-form-theme" name="theme">
                             {foreach name="theme_list" item="t1"}
@@ -41,7 +48,7 @@
                 </div>
 
                 <div class="form-group {$errors.website ?= 'has-error'}">
-                    <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站</label>
+                    <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站：</label>
                     <div class="col-sm-4">
                         <select multiple="multiple" class="multiple" id="new-task-form-web" name="website">
                             {foreach name="website_list" item="website"}
@@ -52,8 +59,37 @@
                     </div>
                 </div>
 
+                <div class="form-group {$errors.match_accuracy ?= 'has-error'}">
+                    <label for="new-task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
+                    <div class="col-sm-4" id="new-task-form-accuracy">
+                        <div class="radio inline-block">
+                            <div class="custom-radio m-right-xs">
+                                <input type="radio" id="accuracy1" name="match_accuracy" value="1">
+                                <label for="accuracy1"></label>
+                            </div>
+                            <div class="inline-block vertical-top">弱</div>
+                        </div>
+                        <div class="radio inline-block">
+                            <div class="custom-radio m-right-xs">
+                                <input type="radio" id="accuracy2" name="match_accuracy" value="2">
+                                <label for="accuracy2"></label>
+                            </div>
+                            <div class="inline-block vertical-top">中</div>
+                        </div>
+                        <div class="radio inline-block">
+                            <div class="custom-radio m-right-xs">
+                                <input type="radio" id="accuracy3" name="match_accuracy" value="3" checked>
+                                <label for="accuracy3"></label>
+                            </div>
+                            <div class="inline-block vertical-top">强</div>
+                        </div>
+                    </div>
+                    <p class="help-block">{$errors.match_accuracy??''}</p>
+                </div>
+
+
                 <div class="form-group {$errors.begintime ?= 'has-error'}">
-                    <label for="new-task-form-stime" class="col-sm-2 control-label">开始时间</label>
+                    <label for="new-task-form-stime" class="col-sm-2 control-label">开始时间：</label>
                     <div class="col-sm-4">
                         <input id="new-task-form-stime" name="begintime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">
                         <p class="help-block">{$errors.begintime??''}</p>

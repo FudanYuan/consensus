@@ -242,6 +242,7 @@ CREATE TABLE `vox_task` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` VARCHAR(100) DEFAULT NULL COMMENT '名称',
   `loop` INT DEFAULT NULL COMMENT '循环周期',
+  `accuracy` int DEFAULT 3 COMMENT '1->匹配一级主题, 2->匹配二级主题, 3->匹配三级主题',
   `begintime` INT DEFAULT NULL COMMENT '开始时间',
   `endtime` INT DEFAULT NULL COMMENT '结束时间',
   `task_num` INT DEFAULT NULL COMMENT '任务量',
@@ -287,7 +288,6 @@ CREATE TABLE `vox_task_media_type` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-
 # Dump of table vox_role_task_theme
 # ------------------------------------------------------------
 
@@ -295,13 +295,15 @@ DROP TABLE IF EXISTS `vox_task_theme`;
 
 CREATE TABLE `vox_task_theme` (
   `task_id` INT DEFAULT NULL COMMENT '外键,任务id',
-  `theme_3_id` INT DEFAULT NULL COMMENT '外键,三级主题id',
+  `theme_id` INT DEFAULT NULL COMMENT '外键,主题id，级别根据任务匹配强弱决定',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`task_id`, `theme_3_id`),
+  PRIMARY KEY (`task_id`, `theme_id`),
   FOREIGN KEY (task_id) REFERENCES vox_task(id),
-  FOREIGN KEY (theme_3_id) REFERENCES vox_theme_3(id)
+  FOREIGN KEY (theme_id) REFERENCES vox_theme_1(id),
+  FOREIGN KEY (theme_id) REFERENCES vox_theme_2(id),
+  FOREIGN KEY (theme_id) REFERENCES vox_theme_3(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -313,7 +315,7 @@ DROP TABLE IF EXISTS `vox_data`;
 
 CREATE TABLE `vox_data` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `theme_3_id` INT unsigned NOT NULL  COMMENT '外键，三级主题',
+  `theme` varchar(1000) NOT NULL  COMMENT '主题组合',
   `media_id` TINYINT DEFAULT NULL COMMENT '外键，媒体id',
   `task_id` INT DEFAULT NULL COMMENT '任务编号',
   `title` varchar(100) DEFAULT NULL COMMENT '标题',
@@ -333,7 +335,6 @@ CREATE TABLE `vox_data` (
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (theme_3_id) REFERENCES vox_theme_3(id),
   FOREIGN KEY (media_id) REFERENCES vox_media(id),
   FOREIGN KEY (task_id) REFERENCES vox_task(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
