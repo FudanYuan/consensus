@@ -180,7 +180,7 @@ class Task extends Model
      * @return int|string
      */
     private function  save_1($data){
-        $insert_data = ['loop'=>$data['loop'],'begintime' => strtotime($data['begintime_str']),'status' => $data['status']
+        $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'accuracy'=>$data['match_accuracy'],'begintime' => strtotime($data['begintime_str']),'status' => $data['status']
             ,'createtime' => $data['createtime'],'taskstatus' => 0];
         $res = $this->insertGetId($insert_data);
         return $res;
@@ -194,7 +194,6 @@ class Task extends Model
      */
     private function filterField($data)
     {
-        $ret = [];
         $errors = [];
         if (isset($data['loop']) && $data['loop'] == '-1') {
             $errors['loop'] = '采集周期不能为空';
@@ -206,7 +205,10 @@ class Task extends Model
             $errors['theme'] = '采集主题不能为空';
         }
         if (isset($data['website']) && !$data['website']) {
-            $errors['website'] = '采集网站类型不能为空';
+            $errors['website'] = '采集媒体类型不能为空';
+        }
+        if(isset($data['name']) && !$data['name']){
+            $errors['name'] = '采集名字不能为空';
         }
         return $errors;
     }

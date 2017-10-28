@@ -36,16 +36,15 @@ class ThresholdWarn extends Model
      * @param $order
      * @return mixed
      */
-    public function getTaskList($cond_or,$cond_and,$order){
-        if(!isset($cond_and['status'])){
-            $cond_and['status'] = ['<>', 2];
-        }
-        $res = $this->field('id,time_predict as pretime,
-            task_num as count,taskstatus,begintime,endtime')
+    public function getWarnList($cond_or,$cond_and,$order){
+        $res = $this->alias('a')->field('a.id as id,b.name as task,
+            a.day_all_count as dayAllCount,a.day_negative_count as dayNegativeCount,
+            a.status as status')
+            ->join('vox_task b','a.task_id = b.id')
             ->where($cond_or)
             ->where($cond_and)
             ->order($order)
-            ->paginate(10);
+            ->select();
         return $res;
     }
 
