@@ -46,12 +46,17 @@ class Task extends Common{
         }
         $ret = ['errorcode' => 0, 'msg' => '成功'];
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
+
         for($i=0;$i<count($list);$i++){
             $curtime = time();
             $begintime = $list[$i]['begintime'];
             $pretime = $list[$i]['pretime'];
-            $time = $curtime - $begintime;
-            $progress = 0;
+            $time = $curtime - $begintime;//计算已耗时间
+            if($time < 0){
+                $time = 0;
+            }
+            ///未修改////
+            /// 采集进度条逻辑////
             if($curtime>($begintime+$pretime)){
                 $progress = 100;
             }else if($curtime<$begintime){
@@ -65,9 +70,10 @@ class Task extends Common{
             }
             $list[$i]['pretime'] = round($pretime/3600,1);
             $list[$i]['progress'] =round($progress,2);
-            $list[$i]['time'] = round($time/3600,1);
+            $list[$i]['time'] = round($time/3600);
             $list[$i]['count'] = number_format($list[$i]['count']);
         }
+
         //分页时需要获取记录总数，键值为 total
         $ret["total"] = count($list);
         //根据传递过来的分页偏移量和分页量截取模拟分页 rows 可以根据前端的 dataField 来设置
@@ -112,6 +118,7 @@ class Task extends Common{
             if (!isset($data['website'])) {
                 $data['website'] = [];
             }
+            $data['task_num'] = count($data['theme']);
             // 添加task
             $res_task = D('Task')->addData($data);
             $theme = $data['theme'];
@@ -121,8 +128,7 @@ class Task extends Common{
                 $ret['msg'] = '新建失败';
                 $ret['errors'] = $res_task['errors'];
                 $this->jsonReturn($ret);
-            }
-            else {
+            } else {
                 $task_id = $res_task['task_id'];
                 // 添加task_theme,
                 /**

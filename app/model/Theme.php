@@ -284,11 +284,9 @@ class Theme extends Model
              c.name as t1_name')
             ->join('vox_theme_2 b', 'a.t2_id=b.id')
             ->join('vox_theme_1 c', 'b.t1_id=c.id')
-            ->join('vox_data d', 'a.id=d.theme_3_id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)
-            ->group('d.theme_3_id')
             ->limit($limit)
             ->select();
         return $res;

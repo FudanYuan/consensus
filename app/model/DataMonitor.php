@@ -17,12 +17,12 @@ class DataMonitor extends Model
     protected $table = 'vox_data';
     protected $pk = 'id';
     protected $fields = array(
-        'id','theme_3_id','media_id','task_id','title','content','digest',
-        'source','userID','media_type','nature','url','relevance','publishtime',
+        'id','theme','task_id','title','content','digest',
+        'source','userID','media_type_id','nature','url','relevance','publishtime',
         'similar_num','is_collect','is_warn','status','createtime', 'updatetime');
     protected $type = [
         'id' => 'integer',
-        'theme_3_id'=>'integer',
+        'theme_id'=>'integer',
         'relevance' =>'integer',
         'media_id' => 'integer',
         'task_id'=>'integer',
@@ -62,16 +62,22 @@ class DataMonitor extends Model
      * @return mixed
      */
     public function  publicList($cond_or,$cond_and,$order){
-        if(!isset($cond_and['status'])){
-            $cond_and['status'] = ['<>', 2];
+        if(!isset($cond_and['a.status'])){
+            $cond_and['a.status'] = ['<>', 2];
         }
-        $res = $this->field('id,title,source,url,media_type,nature,
-            publishtime,content,similar_num,relevance,is_collect')
+        $res = $this->alias('a')->field('a.id as id,a.title as title, a.source as source,a.url as url,b.name as media_type,a.nature as nature,
+            a.publishtime as publishtime,a.content as content,a.similar_num as similar_num,a.relevance as relevance,a.is_collect as is_collect')
+            ->join('vox_media_type b','a.media_type_id = b.id')
             ->where($cond_or)
             ->where($cond_and)
             ->order($order)
             ->select();
         return $res;
+//        $res = $this->field('*')->select();
+//        for($i=0;$i<count($res);$i++){
+//            $this->where('id',$res[$i]['id'])->update(['task_id' =>(($i%12)+1)]);
+//        }
+
     }
 
     /**
@@ -97,8 +103,8 @@ class DataMonitor extends Model
      */
     private function filterField($data){
         $errors = [];
-        if (isset($data['theme_3_id']) && !$data['theme_3_id']) {
-            $errors['theme_3_id'] = '3级主题不能为空';
+        if (isset($data['theme']) && !$data['theme']) {
+            $errors['theme'] = '主题不能为空';
         }
         if (isset($data['url']) && !$data['url']) {
             $errors['url'] = '企业网址不能为空';
@@ -127,8 +133,8 @@ class DataMonitor extends Model
             $data['updatetime'] = $curTime;
             $data_save = [];
             $data_save['id'] = $data['id'];
-            $data_save['theme_3_id'] = $data['theme_3_id'];
-            $data_save['media_id'] = $data['media_id'];
+            $data_save['theme'] = $data['theme'];
+            $data_save['media_type_id'] = $data['media_type_id'];
             $data_save['task_id'] = $data['task_id'];
             $data_save['title'] = $data['title'];
             $data_save['content'] = $data['content'];
@@ -158,12 +164,6 @@ class DataMonitor extends Model
         if ($res === false) throw new MyException('2', '删除失败');
         return $res;
     }
-
-
-
-
-
-
 
 
 

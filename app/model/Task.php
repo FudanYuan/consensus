@@ -17,12 +17,13 @@ class Task extends Model
     protected $table = 'vox_task';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'name','loop', 'begintime', 'endtime', 'taskstatus', 'task_num',
+        'id', 'name','loop', 'accuracy','begintime', 'endtime', 'taskstatus', 'task_num',
         'time_predict', 'status', 'createtime', 'updatetime'
     );
     protected $type = [
         'id' => 'integer',
         'begintime' => 'integer',
+        'accuracy' => 'integer',
         'endtime ' => 'integer',
         'taskstatus' => 'integer',
         'task_num' => 'integer',
@@ -184,12 +185,13 @@ class Task extends Model
      * @return int|string
      */
     private function  save_1($data){
-        $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'accuracy'=>$data['match_accuracy'],'begintime' => strtotime($data['begintime_str']),'status' => $data['status']
-            ,'createtime' => $data['createtime'],'taskstatus' => 0];
+        $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'accuracy'=>$data['match_accuracy'],
+            'begintime' => strtotime($data['begintime_str']),'status' => $data['status'],
+            'task_num' => $data['task_num'],'time_predict' =>($data['task_num']*10000),
+            'createtime' => $data['createtime'],'taskstatus' => 0];
         $res = $this->insertGetId($insert_data);
         return $res;
     }
-
 
     /**
      * 过滤必要字段

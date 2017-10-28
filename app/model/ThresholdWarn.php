@@ -49,6 +49,64 @@ class ThresholdWarn extends Model
     }
 
     /**
+     * 删除警戒线
+     * @param $id
+     * @return mixed
+     * @throws MyException
+     */
+    public function remove($id){
+        $res = $this->where('id',$id)->delete();
+        if ($res === false) throw new MyException('2', '删除失败');
+        return $res;
+    }
+
+    /**
+     * 添加新警戒线
+     * @param $data
+     * @return array
+     */
+    public function addData($data){
+        $ret = [];
+        $errors = $this->filterField($data);
+        $ret['errors'] = $errors;
+        if (empty($errors)) {
+            $data['createtime'] = time();
+            if (!isset($data['status']))
+                $data['status'] = 1;
+            $data['loop'] = 172800;
+            $data['taskstatus'] = 0;
+            $task_id = $this->save_1($data);
+            $ret['task_id'] = $task_id;
+        }
+        return $ret;
+    }
+    /**
+     * 过滤必要字段
+     * @param $data
+     * @return array
+     */
+    private function filterField($data)
+    {
+        $ret = [];
+        $errors = [];
+        if (isset($data['loop']) && $data['loop'] == '-1') {
+            $errors['loop'] = '采集周期不能为空';
+        }
+        if (isset($data['begintime']) && !$data['begintime']) {
+            $errors['begintime'] = '开始时间不能为空';
+        }
+        if (isset($data['theme']) && !$data['theme']) {
+            $errors['theme'] = '采集主题不能为空';
+        }
+        if (isset($data['website']) && !$data['website']) {
+            $errors['website'] = '采集网站类型不能为空';
+        }
+        return $errors;
+    }
+
+
+    ///未修改////
+    /**
      * 获取总任务量
      */
     public function getTaskNumber()
@@ -96,17 +154,6 @@ class ThresholdWarn extends Model
             ->select();
     }
 
-    /**
-     * 删除任务
-     * @param array $cond
-     * @return false|int
-     * @throws MyException
-     */
-    public function remove($cond = []){
-        $res = $this->save(['status' => 2], $cond);
-        if ($res === false) throw new MyException('2', '删除失败');
-        return $res;
-    }
 
     /**
      * 继续任务
@@ -145,26 +192,7 @@ class ThresholdWarn extends Model
     }
 
     ////////// 添加 //////////
-    /**
-     * 添加新任务
-     * @param $data
-     * @return array
-     */
-    public function addData($data){
-        $ret = [];
-        $errors = $this->filterField($data);
-        $ret['errors'] = $errors;
-        if (empty($errors)) {
-            $data['createtime'] = time();
-            if (!isset($data['status']))
-                $data['status'] = 1;
-            $data['loop'] = 172800;
-            $data['taskstatus'] = 0;
-            $task_id = $this->save_1($data);
-            $ret['task_id'] = $task_id;
-        }
-        return $ret;
-    }
+
 
 
 
@@ -181,29 +209,6 @@ class ThresholdWarn extends Model
     }
 
 
-    /**
-     * 过滤必要字段
-     * @param $data
-     * @return array
-     */
-    private function filterField($data)
-    {
-        $ret = [];
-        $errors = [];
-        if (isset($data['loop']) && $data['loop'] == '-1') {
-            $errors['loop'] = '采集周期不能为空';
-        }
-        if (isset($data['begintime']) && !$data['begintime']) {
-            $errors['begintime'] = '开始时间不能为空';
-        }
-        if (isset($data['theme']) && !$data['theme']) {
-            $errors['theme'] = '采集主题不能为空';
-        }
-        if (isset($data['website']) && !$data['website']) {
-            $errors['website'] = '采集网站类型不能为空';
-        }
-        return $errors;
-    }
 
     /**
      * 清除非数据库字段
