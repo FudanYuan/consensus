@@ -121,6 +121,9 @@
         </div>
 
         <div id="data">
+            <div class="result-count">
+                经过筛选，共<span> {{total}} </span>条数据符合条件
+            </div>
             <!-- 数据表 -->
             <table class="table table-hover" style="background:#fff;">
                 <thead>
@@ -149,55 +152,62 @@
                 </tr>
                 </thead>
                 <tbody>
-                <template v-for="model in list">
+                <template v-if="list.length != 0">
+                    <template v-for="model in list">
+                        <tr>
+                            <td hidden><input type="checkbox" name="select" :value="model.id"/></td>
+                            <td><a :href="model.url" target="_blank" :title="model.title">{{model.title}}</a></td>
+                            <td><a href="javascript:;" @click="digestItem(model.id)"><i class="fa fa-chevron-circle-down" aria-hidden="true" :id="'chevron_'+model.id"></i></a></td>
+                            <td>{{model.source}}</td>
+                            <td>{{model.media_type}}</td>
+                            <td>{{model.nature}}</td>
+                            <td>{{model.publishtime | moment}}</td>
+                            <td :title="model.relevance">
+                                <div class="bg"><!--这里是背景，也就是灰色的星星-->
+                                    <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是16px，也就是1分16px-->
+                                    <div class="over" :style="{ width: model.relevance * 8 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
+                                </div>
+                            </td>
+                            <td>{{model.similar_num}}</td>
+                            <td>
+                                {if condition="authority('Data_collect')"}
+                                <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)" :title="model.is_collect | collectStatus">
+                                    <i :class="['fa fa-heart fa-lg', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 10px"></i>
+                                </a>
+                                {/if}
+
+                                {if condition="authority('Data_edit')"}
+                                <a href="javascript:;" @click="popupVerify(model.id, model.nature, model.relevance)" title="编辑" :id="'from-verify'+model.id">
+                                    <i class="fa fa-pencil-square-o  fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
+                                </a>
+                                {/if}
+
+                                {if condition="authority('Data_remote')"}
+                                <a href="javascript:;" @click="dataRemove(model.id)" title="删除">
+                                    <i class="fa fa-trash  fa-lg" aria-hidden="true" style="margin-right: 0;"></i>
+                                </a>
+                                {/if}
+                            </td>
+                        </tr>
+                        <tr class="digestItem" :id="'digestItem_'+model.id">
+                            <td colspan="10">
+                                <div>
+                                    <p>
+                                        <b>内容概要:</b>
+                                        {{model.digest}}
+                                    </p>
+                                    <p v-if="model.userID!=''">
+                                        <b>用户:</b>
+                                        {{model.userID}}
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </template>
+                <template v-else>
                     <tr>
-                        <td hidden><input type="checkbox" name="select" :value="model.id"/></td>
-                        <td><a :href="model.url" target="_blank" :title="model.title">{{model.title}}</a></td>
-                        <td><a href="javascript:;" @click="digestItem(model.id)"><i class="fa fa-chevron-circle-down" aria-hidden="true" :id="'chevron_'+model.id"></i></a></td>
-                        <td>{{model.source}}</td>
-                        <td>{{model.media_type}}</td>
-                        <td>{{model.nature}}</td>
-                        <td>{{model.publishtime | moment}}</td>
-                        <td :title="model.relevance">
-                            <div class="bg"><!--这里是背景，也就是灰色的星星-->
-                                <!--说明，这里的width就是设置分数啦，以我写的为例，一个星星的长度是16px，也就是1分16px-->
-                                <div class="over" :style="{ width: model.relevance * 8 + 'px' }"></div><!--这里是遮罩，设置宽度以达到评分的效果-->
-                            </div>
-                        </td>
-                        <td>{{model.similar_num}}</td>
-                        <td>
-                            {if condition="authority('Data_collect')"}
-                            <a href="javascript:;" @click="dataCollect(model.id, model.is_collect)" :title="model.is_collect | collectStatus">
-                                <i :class="['fa fa-heart fa-lg', model.is_collect ? 'collected' : '']" aria-hidden="true" :id="'collect_' + model.id" style= "margin-right: 10px"></i>
-                            </a>
-                            {/if}
-
-                            {if condition="authority('Data_edit')"}
-                            <a href="javascript:;" @click="popupVerify(model.id, model.nature, model.relevance)" title="编辑" :id="'from-verify'+model.id">
-                                <i class="fa fa-pencil-square-o  fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
-                            </a>
-                            {/if}
-
-                            {if condition="authority('Data_remote')"}
-                            <a href="javascript:;" @click="dataRemove(model.id)" title="删除">
-                                <i class="fa fa-trash  fa-lg" aria-hidden="true" style="margin-right: 0;"></i>
-                            </a>
-                            {/if}
-                        </td>
-                    </tr>
-                    <tr class="digestItem" :id="'digestItem_'+model.id">
-                        <td colspan="10">
-                            <div>
-                                <p>
-                                    <b>内容概要:</b>
-                                    {{model.digest}}
-                                </p>
-                                <p v-if="model.userID!=''">
-                                    <b>用户:</b>
-                                    {{model.userID}}
-                                </p>
-                            </div>
-                        </td>
+                        <td colspan="9" class="nodata">暂无数据</td>
                     </tr>
                 </template>
                 </tbody>

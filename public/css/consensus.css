@@ -4,6 +4,18 @@
     padding: 10px 0;
 }
 
+.result-count{
+    /*background:#fff;*/
+    padding: 10px 0;
+    text-align: center;
+    background-color: #fff;
+    font-size: 13px;
+}
+
+.nodata{
+    text-align: center;
+}
+
 .list-btns {
     margin: 10px 0 5px;
 }
