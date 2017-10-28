@@ -295,17 +295,14 @@ DROP TABLE IF EXISTS `vox_task_theme`;
 
 CREATE TABLE `vox_task_theme` (
   `task_id` INT DEFAULT NULL COMMENT '外键,任务id',
-  `theme_id` INT DEFAULT NULL COMMENT '外键,主题id，级别根据任务匹配强弱决定',
+  `theme_id` INT DEFAULT NULL COMMENT '外键, 三级主题id',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`task_id`, `theme_id`),
   FOREIGN KEY (task_id) REFERENCES vox_task(id),
-  FOREIGN KEY (theme_id) REFERENCES vox_theme_1(id),
-  FOREIGN KEY (theme_id) REFERENCES vox_theme_2(id),
   FOREIGN KEY (theme_id) REFERENCES vox_theme_3(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table vox_data
@@ -316,14 +313,13 @@ DROP TABLE IF EXISTS `vox_data`;
 CREATE TABLE `vox_data` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `theme` varchar(1000) NOT NULL  COMMENT '主题组合',
-  `media_id` TINYINT DEFAULT NULL COMMENT '外键，媒体id',
   `task_id` INT DEFAULT NULL COMMENT '任务编号',
   `title` varchar(100) DEFAULT NULL COMMENT '标题',
   `content` text DEFAULT NULL COMMENT '内容',
   `digest` varchar(1000) DEFAULT NULL COMMENT '概述',
   `source` VARCHAR(100) DEFAULT NULL COMMENT '来源',
   `userID` VARCHAR(50) DEFAULT NULL COMMENT '用户ID',
-  `media_type` VARCHAR(100) DEFAULT NULL COMMENT '媒体类型',
+  `media_type_id` INT DEFAULT NULL COMMENT '媒体类型id',
   `nature` VARCHAR(100) DEFAULT NULL COMMENT '舆情属性',
   `url` VARCHAR(100) DEFAULT NULL COMMENT '网址',
   `relevance` FLOAT(2) DEFAULT NULL COMMENT '关联度',
@@ -331,20 +327,14 @@ CREATE TABLE `vox_data` (
   `similar_num` INT DEFAULT NULL COMMENT '相似文章数',
   `is_collect` TINYINT DEFAULT NULL COMMENT '是否收藏：0->否，1->是',
   `is_warn` TINYINT DEFAULT NULL COMMENT '是否预警：0->否，1->是',
+  `is_analysis` TINYINT DEFAULT NULL COMMENT '是否分析：0->否，1->是',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `createtime` INT DEFAULT NULL COMMENT '创建时间',
   `updatetime` INT DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (media_id) REFERENCES vox_media(id),
+  FOREIGN KEY (media_type_id) REFERENCES vox_media_type(id),
   FOREIGN KEY (task_id) REFERENCES vox_task(id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-INSERT INTO `vox_data` (`theme_3_id`, `media_id`, `task_id`, `title`, `content`, `digest`, `source`, `userID`, `media_type`, `nature`, `url`, `relevance`, `publishtime`, `similar_num`, `is_collect`, `is_warn`, `status`, `createtime`, `updatetime`) VALUES
-(1, 2, 1, '女朋友', '我找到女朋友了', NULL, '贴吧', NULL, '社交', '正面', 'https://tieba.baidu.com/p/2955449876?red_tag=2163962048', 3, 1507120988, 10, 0, 2, 1, 1507120988, 1508759711),
-(1, 2, 1, '愚人节', '愚人节快乐，开个玩笑', NULL, '微博', NULL, '社交', '负面', 'http://weibo.com/p/1005051735539702/home?from=page_100505&mod=TAB&is_hot=1#place', 2, 1507100000, 50, 0, 2, 1, 1507100000, 1508772896),
-(1, 2, 1, '理智', '理智，语出巴金《家》：“你的理智可以征服感情，我的理智则常被感情征服。”', NULL, '百度百科', NULL, '搜索', '中立', 'https://baike.baidu.com/item/%E7%90%86%E6%99%BA/984214?fr=aladdin', 1, 1466248396, 0, 1, 2, 1, 1507120988, 1508808653);
-
 
 
 # Dump of table vox_keyword_warn
