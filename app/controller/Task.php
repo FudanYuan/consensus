@@ -103,14 +103,16 @@ class Task extends Common{
             $theme_list[$i]['t1_content'] = $theme_2_list;
         }
         $website_list = D('MediaType')->getMedTypeList();
-        if(!empty($data)){
-            $ret = ['code' => 1, 'msg' => '成功'];
-            if(!isset($data['theme'])){
+        if(!empty($data)) {
+            $ret = ['code' => 2, 'msg' => '成功'];
+            $ret['data'] = $data;
+            if (!isset($data['theme'])) {
                 $data['theme'] = [];
             }
-            if(!isset($data['website'])){
+            if (!isset($data['website'])) {
                 $data['website'] = [];
             }
+            $accuracy = $data['match_accuracy'];
             // 添加task
             $res_task = D('Task')->addData($data);
             $theme = $data['theme'];
@@ -120,7 +122,7 @@ class Task extends Common{
                 $ret['msg'] = '新建失败';
                 $ret['errors'] = $res_task['errors'];
                 $this->jsonReturn($ret);
-            }else {
+            } else {
                 $task_id = $res_task['task_id'];
                 // 添加task_theme,
                 /**
@@ -131,13 +133,13 @@ class Task extends Common{
                     $task_theme_data = [];
                     for ($j = 0; $j < count($theme_3_data); $j++) {
                         $task_theme_data['task_id'] = $task_id;
-                        $task_theme_data['theme_3_id'] = $theme_3_data[$j]['t3_id'];
+                        $task_theme_data['theme_id'] = $theme_3_data[$j]['t3_id'];
                         D('TaskTheme')->addData($task_theme_data);
                     }
                 }
                 // 添加task_media_type
                 $task_media_data = [];
-                for($i = 0;$i <count($website); $i++){
+                for ($i = 0; $i < count($website); $i++) {
                     $task_media_data['task_id'] = $task_id;
                     $task_media_data['media_type_id'] = $website[$i];
                     D('TaskMediaType')->addData($task_media_data);
