@@ -104,15 +104,16 @@
                 this.current_page = page;
                 submit();
             }
+        },
+        filters:{
+            moment: function (value, formatString) {
+                formatString = formatString || 'YYYY-MM-DD HH:mm';
+                return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+            }
         }
     });
 
     submit();
-    // 转化时间
-    Vue.filter('moment', function (value, formatString) {
-        formatString = formatString || 'YYYY-MM-DD HH:mm';
-        return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
-    });
 
     // 异步提交数据
     function submit() {

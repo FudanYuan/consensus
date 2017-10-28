@@ -210,29 +210,30 @@
                 });
                 $('#confirm-popup').popup('show');
             }
+        },
+        filters:{
+            moment: function (value, formatString) {
+                formatString = formatString || 'YYYY-MM-DD HH:mm';
+                return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+            },
+            getInformStatus: function (value) {
+                var ret = "";
+                if(value==0){
+                    ret = "未读";
+                }
+                if(value==1){
+                    ret = "已读";
+                }
+                return ret;
+            },
+            formatText: function (text, len) {
+                return cutString(text, len);
+            }
         }
     });
 
     submit();
-    // 转化时间
-    Vue.filter('moment', function (value, formatString) {
-        formatString = formatString || 'YYYY-MM-DD HH:mm';
-        return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
-    });
-    // 通知状态
-    Vue.filter('getInformStatus', function (value) {
-        var ret = "";
-        if(value==0){
-            ret = "未读";
-        }
-        if(value==1){
-            ret = "已读";
-        }
-        return ret;
-    });
-    Vue.filter('formatText', function (text, len) {
-        return cutString(text, len);
-    });
+
     // 异步提交数据
     function submit() {
         getParams();

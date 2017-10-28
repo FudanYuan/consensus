@@ -252,11 +252,10 @@
     var sort = $('#sortCol').val();
     getSortCol(sort);
 
-    var params = {};
     var vm = new Vue({
         el: '#data',
         data: {
-            list: {},
+            list: [],
             params: {},
             total: 0,
             per_page: 10,
@@ -315,29 +314,30 @@
                 this.current_page = page;
                 submit();
             }
+        },
+        filters:{
+            moment: function (value, formatString) {
+                formatString = formatString || 'YYYY-MM-DD HH:mm';
+                return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+            },
+            collectStatus: function (value) {
+                var res = '';
+                if(value == 1){
+                    res = '取消收藏';
+                } else{
+                    res = '收藏';
+                }
+                return res;
+            }
         }
     });
 
     submit();
-    // 转化时间
-    Vue.filter('moment', function (value, formatString) {
-        formatString = formatString || 'YYYY-MM-DD HH:mm';
-        return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
-    });
-    Vue.filter('collectStatus', function (value) {
-        var res = '';
-        if(value == 1){
-            res = '取消收藏';
-        } else{
-            res = '收藏';
-        }
-        return res;
-    });
 
     // 异步提交数据
     function submit() {
         getParams();
-        $.post('__PRO_PATH__/DataMonitor/getPublicList', params, function (res) {
+        $.post('__PRO_PATH__/DataMonitor/getPublicList', vm.params, function (res) {
             if (res.errorcode == 0) {
                 vm.total = res.total;
                 vm.pages = Math.ceil(res.total / vm.per_page);
@@ -364,11 +364,11 @@
     function getParams() {
         var data = $('#main-form').serializeArray();
         $.each(data, function () {
-            params[this.name] = this.value;
+            vm.params[this.name] = this.value;
         });
-        params['per_page'] = vm.per_page;
-        params['current_page'] = vm.current_page;
-        console.log(JSON.stringify(params));
+        vm.params['per_page'] = vm.per_page;
+        vm.params['current_page'] = vm.current_page;
+        console.log(JSON.stringify(vm.params));
     }
 
     // 改变排序方向

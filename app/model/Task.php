@@ -50,7 +50,7 @@ class Task extends Model
             ->where($cond_or)
             ->where($cond_and)
             ->order($order)
-            ->paginate(10);
+            ->select();
         return $res;
     }
 

@@ -9,20 +9,28 @@ namespace app\controller;
 use app\model\MyException;
 
 class Task extends Common{
+
     /**
-     * 任务列表
+     * 任务首页
      * @return \think\response\View
      */
     public function index(){
-        $params = input('get.');
-        $task_id = input('get.id');
-        $taskStatus = input('get.taskstatus',-1);
-        $order = input('get.sortCol');
+        return view('', []);
+    }
+
+
+    /**
+     * 获取任务列表
+     */
+    public function getTaskList(){
+        $params = input('post.');
+        $task_name = input('post.name','');
+        $taskStatus = input('post.taskstatus',-1);
+        $order = input('post.sortCol', 'createtime desc');
+        $page = input('post.current_page',0);
+        $per_page = input('post.per_page',0);
         $cond_and = [];
         $cond_or = [];
-        if($task_id){
-            $cond_and['id'] = $task_id;
-        }
         if($taskStatus!=-1){
             switch ($taskStatus){
                 case '0':
@@ -36,6 +44,7 @@ class Task extends Common{
                     break;
             }
         }
+        $ret = ['errorcode' => 0, 'msg' => '成功'];
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
         for($i=0;$i<count($list);$i++){
             $curtime = time();
@@ -59,14 +68,20 @@ class Task extends Common{
             $list[$i]['time'] = round($time/3600,1);
             $list[$i]['count'] = number_format($list[$i]['count']);
         }
-        return view('', ['list' => $list, 'cond' => $params]);
+        //分页时需要获取记录总数，键值为 total
+        $ret["total"] = count($list);
+        //根据传递过来的分页偏移量和分页量截取模拟分页 rows 可以根据前端的 dataField 来设置
+        $ret["data"] = array_slice($list, ($page-1)*$per_page, $per_page);
+        $ret['current_page'] = $page;
+        $this->jsonReturn($ret);
     }
+
     /**
      * 终止
      */
     public function stop(){
         $ret = ['code' => 1, 'msg' => '成功'];
-        $ids = input('get.ids');
+        $ids = input('post.ids');
         try{
             $res = D('Task')->end_task(['id' => ['in', $ids]]);
         }catch(MyException $e){
@@ -152,13 +167,6 @@ class Task extends Common{
             $data = D('Tag')->getById($id);
             return view('', ['errors' => [], 'data' => $data, 'sections' => $sections]);
         }
-    }
-
-    /**
-     * 设置抓取周期
-     */
-    public function config(){
-        return view('', []);
     }
 }
 ?>

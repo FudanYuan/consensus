@@ -349,24 +349,6 @@
     $('#consensus-nav-data-warn').addClass('active open');
     $('#consensus-nav-data-warn-sub2').addClass('active');
 
-    // 过滤器
-    Vue.filter('showList', function (list) {
-        var res = "";
-        $.each(list, function (index, value) {
-            res += value+'   ';
-        });
-        return res;
-    });
-    Vue.filter('getWarningStatus', function (status) {
-        var res = '';
-        if(status == 2){
-            res = '预警中';
-        } else{
-            res = '关闭';
-        }
-        return res;
-    });
-
     // 初始化vue
     var vm = new Vue({
         el: '#main-container',
@@ -604,6 +586,24 @@
                 this.current_page = page;
                 getThresholdConfig();
                 console.log(this.current_page);
+            }
+        },
+        filters:{
+            showList: function (list) {
+                var res = "";
+                $.each(list, function (index, value) {
+                    res += value+'   ';
+                });
+                return res;
+            },
+            getWarningStatus: function (status) {
+                var res = '';
+                if(status == 2){
+                    res = '预警中';
+                } else{
+                    res = '关闭';
+                }
+                return res;
             }
         }
     });
