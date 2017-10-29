@@ -75,7 +75,7 @@ class Task extends Common{
             }
             $list[$i]['pretime'] = round($pretime/3600,1);
             $list[$i]['progress'] =round($progress,2);
-            $list[$i]['time'] = round($time/3600);
+            $list[$i]['time'] = round($time/3600, 1);
             $list[$i]['count'] = number_format($list[$i]['count']);
         }
 

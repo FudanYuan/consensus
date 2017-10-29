@@ -389,7 +389,7 @@
 
                     {if condition="authority('DataAnalysis')"}
                     <li class="openable bg-palette4" id="consensus-nav-data-analysis">
-                        <a href="javascript:;">
+                        <a href="javascript:;" id="dataAnalysis">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="fa fa-line-chart fa-lg" aria-hidden="true"></i></span>
 								<span class="text m-left-sm">舆情分析</span>
@@ -402,9 +402,19 @@
                             <li id="consensus-nav-data-analysis-tasks">
                                 <a href="javascript:;" style="background-color: #0b1014; color: white; font-size: 13px;">
                                     <span class="submenu-label" id="analysis_task"></span>
-                                    <span class="submenu-icon"></span>
+                                    <span class="submenu-label" id="analysis_task_id" style="display: none"></span>
+                                    <span class="analysis-tasks-icon">
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                    </span>
                                 </a>
                             </li>
+                            {if condition="authority('DataAnalysisIndex')"}
+                            <li id="consensus-nav-data-analysis-sub0">
+                                <a href="__PRO_PATH__/DataAnalysis/index">
+                                    <span class="submenu-label">舆情概览</span>
+                                </a>
+                            </li>
+                            {/if}
                             {if condition="authority('DataAnalysisTrend')"}
                             <li id="consensus-nav-data-analysis-sub1">
                                 <a href="__PRO_PATH__/DataAnalysis/trend">

@@ -12,6 +12,15 @@ class DataAnalysis extends Common
     public $colsText = [];
 
     /**
+     * 舆情概况
+     * @return \think\response\View
+     */
+    public function index(){
+        $params = input('get.');
+        return view('', []);
+    }
+
+    /**
      * 趋势分析
      * @return \think\response\View
      */

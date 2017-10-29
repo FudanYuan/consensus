@@ -912,6 +912,12 @@ a.list-group-item.active, a.list-group-item.active:focus, a.list-group-item.acti
     right: 10px
 }
 
+.sidebar-menu .main-menu ul li .submenu li a .analysis-tasks-icon {
+    position: absolute;
+    top: 12px;
+    right: 10px
+}
+
 .sidebar-menu .main-menu ul li a .submenu-icon:before {
     content: "\f105";
     display: inline-block;
