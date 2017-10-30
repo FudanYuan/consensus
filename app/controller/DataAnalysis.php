@@ -80,7 +80,14 @@ class DataAnalysis extends Common
      * 获取舆情概况
      */
     public function getAnalysisIndex(){
+        $params = input('post.');
+        $task_id = input('post.task_id', -1);
         $ret = ['errorcode' => 0,'data' => [], 'msg' => ''];
+        $cond = [];
+        if($task_id == -1){
+            $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
+        }
+        $ret['task_id'] = $task_id;
         $index = [];
         $index[0] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $index[1] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
@@ -128,8 +135,8 @@ class DataAnalysis extends Common
 
         // 测试数据
         $public = [];
-        $public[0] = ['id'=>1, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[1] = ['id'=>2, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+        $public[0] = ['id'=>1, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+        $public[1] = ['id'=>2, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
         $public[2] = ['id'=>3, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
         $public[3] = ['id'=>4, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
         $public[4] = ['id'=>5, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];

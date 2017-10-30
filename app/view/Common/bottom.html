@@ -186,6 +186,7 @@
         if(res.errorcode==0){
             $('#analysis_task').html(res.data[0]['name']);
             $('#analysis_task_id').html(res.data[0]['id']);
+            console.log('first');
             var content = '<li style="font-size: large;">任务列表</li>';
             for(var i=0;i<res.data.length;i++){
                 content += "<li>" +

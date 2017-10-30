@@ -30,6 +30,12 @@
         border-bottom: 5px #17232c solid;
     }
 
+    .event-list{
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
     .event-list>tbody>tr>td, .event-list>tbody>tr>th, .event-list>tfoot>tr>td, .event-list>tfoot>tr>th, .event-list>thead>tr>td, .event-list>thead>tr>th{
         padding: 7px;
         line-height: 1.42857143;
@@ -103,7 +109,7 @@
                             </ul>
                         </div>
                         <div class="smart-widget-body no-padding">
-                            <div class="padding-sm">
+                            <div class="padding-sm" style="height: 175px;">
                                 <table class="table" style="background:#fff; margin-bottom: 0;">
                                     <thead>
                                         <tr>
@@ -331,7 +337,7 @@
                             </ul>
                         </div>
                         <div class="smart-widget-body no-padding">
-                            <div class="padding-sm" style="height: 360px">
+                            <div class="padding-sm" style="height: 400px">
                                 <table class="table table-hover" style="background:#fff; margin-bottom: 0;">
                                     <thead>
                                         <tr>
@@ -347,7 +353,7 @@
                                                 <td>{{model.title | formatText(40, model.title)}}</td>
                                                 <td>{{model.media_type}}</td>
                                                 <td>{{model.nature}}</td>
-                                                <td>{{model.publishtime}}</td>
+                                                <td>{{model.publishtime | moment}}</td>
                                             </tr>
                                         </template>
                                         <template v-else>
@@ -400,7 +406,7 @@
                         </div>
                         <div class="smart-widget-body no-padding">
                             <div class="padding-sm">
-                                <div id="keyword_cloud_chart" style="height: 340px"></div>
+                                <div id="keyword_cloud_chart" style="height: 380px"></div>
                             </div>
                         </div>
                     </div><!-- ./smart-widget-inner -->
@@ -518,8 +524,7 @@
                 this.active['public'] = value;
                 $.post('__PRO_PATH__/DataAnalysis/getPublicList', {task_id: this.task_id, nature: value}, function (res) {
                     if(res.errorcode==0){
-                        this.publicList = res.data;
-                        console.log(this.publicList);
+                        vm.publicList = res.data;
                     }
                 });
             },
@@ -596,19 +601,22 @@
         }
     });
 
-    submit();
-
     // 异步提交数据
     function submit() {
-        vm.getPublicList(0);
+        console.log('second');
         vm.showTrendLine(0);
-        $.post('__PRO_PATH__/DataAnalysis/getAnalysisIndex', {}, function (res) {
+        vm.getPublicList(0);
+        $.post('__PRO_PATH__/DataAnalysis/getAnalysisIndex', {task_id: vm.task_id}, function (res) {
             if (res.errorcode == 0) {
+                vm.task_id = res.task_id;
                 vm.index = res.index;
                 vm.nature = res.nature;
                 vm.event = res.event;
                 vm.showNatuePie();
+                console.log(vm.task_id);
             }
         });
     }
+
+    submit();
 </script>
