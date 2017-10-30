@@ -214,6 +214,7 @@
     function changeTask(task, task_id, callback) {
         $('#analysis_task').html(task);
         $('#analysis_task_id').html(task_id);
+        vm.task_id = task_id;
         $('#tasks-list-sidebar-menu').animate({"left":0}, 500).hide();
         var taskIcon = $('.analysis-tasks-icon i');
         var className = String(taskIcon.attr("class"));
@@ -236,6 +237,6 @@
 
     $('#dataAnalysis').click(function () {
         var task_id = $('#analysis_task_id').html();
-        window.location.href = '__PRO_PATH__/DataAnalysis/index?task_id='+task_id;
+        //window.location.href = '__PRO_PATH__/DataAnalysis/index?task_id='+task_id;
     });
 </script>
