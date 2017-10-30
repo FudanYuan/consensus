@@ -51,7 +51,6 @@ class Task extends Common{
             }
         }
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
-
         for($i=0;$i<count($list);$i++){
             $curtime = time();
             $begintime = $list[$i]['begintime'];
@@ -84,6 +83,11 @@ class Task extends Common{
         //根据传递过来的分页偏移量和分页量截取模拟分页 rows 可以根据前端的 dataField 来设置
         $ret["data"] = array_slice($list, ($page-1)*$per_page, $per_page);
         $ret['current_page'] = $page;
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '舆情采集';
+        $log['action_descr'] = '用户查看采集列表';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
 
@@ -95,6 +99,11 @@ class Task extends Common{
         $ids = input('post.ids');
         try{
             $res = D('Task')->end_task(['id' => ['in', $ids]]);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '舆情采集';
+            $log['action_descr'] = '用户终止采集';
+            D('OperationLog')->addData($log);
         }catch(MyException $e){
             $ret['code'] = 2;
             $ret['msg'] = '终止失败';
@@ -134,6 +143,11 @@ class Task extends Common{
                 $ret['errors'] = $res_task['errors'];
                 $this->jsonReturn($ret);
             } else {
+                $log['user_id'] = $this->getUserId();
+                $log['IP'] = $this->getUserIp();
+                $log['section'] = '舆情采集';
+                $log['action_descr'] = '用户新建采集任务';
+                D('OperationLog')->addData($log);
                 $task_id = $res_task['task_id'];
                 // 添加task_theme,
                 /**
@@ -170,6 +184,11 @@ class Task extends Common{
         $sections = D('Tag')->getSections();
         if(!empty($data)){
             $res = D('Tag')->saveData($id, $data);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '舆情采集';
+            $log['action_descr'] = '用户编辑采集';
+            D('OperationLog')->addData($log);
             if(!empty($res['errors']))
                 return view('', ['errors' => $res['errors'], 'data' => $data, 'sections' => $sections]);
             else{

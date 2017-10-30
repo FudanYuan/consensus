@@ -28,6 +28,11 @@ class Theme extends Common{
             $cond_or['c.name'] = ['like', '%'.$keywords.'%'];
         }
         $list = D('Theme')->getT3List($cond_or,$cond_and,$order);
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '库管理/主题库';
+        $log['action_descr'] = '用户查看主题列表';
+        D('OperationLog')->addData($log);
         return view('', ['list' => $list, 'cond' => $params]);
     }
 
@@ -93,6 +98,11 @@ class Theme extends Common{
         $data = input('post.');
         if(!empty($data)){
             $res = D('Theme')->addTheme_1($data);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/主题库';
+            $log['action_descr'] = '用户新建一级主题';
+            D('OperationLog')->addData($log);
             if(!empty($res['errors']))
                 return view('', ['errors' => $res['errors'], 'data' => $data]);
             else{
@@ -112,6 +122,11 @@ class Theme extends Common{
         $list = $this->T1List();
         if (!empty($data)) {
             $res = D('Theme')->addTheme_2($data);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/主题库';
+            $log['action_descr'] = '用户新建二级主题';
+            D('OperationLog')->addData($log);
             if (!empty($res['errors'])) {
                 return view('', ['errors' => $res['errors'], 'data' => $data, 'list' => $list]);
             } else {
@@ -141,6 +156,11 @@ class Theme extends Common{
             $params['t2_id'] = $data['t2_id'];
             $params['name'] = $data['name'];
             $res = D('Theme')->addTheme_3($params);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/主题库';
+            $log['action_descr'] = '用户新建三级主题';
+            D('OperationLog')->addData($log);
             if (!empty($res['errors'])) {
                 return view('', ['errors' => $res['errors'], 'data' => $data, 'list1' => $list1, 'list2' => $list2]);
             } else {
@@ -182,6 +202,11 @@ class Theme extends Common{
             $params['t2_id'] = $data['t2_id'];
             $params['name'] = $data['t3_name'];
             $res = D('Theme')->saveTheme_3($id, $params);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/主题库';
+            $log['action_descr'] = '用户编辑主题';
+            D('OperationLog')->addData($log);
             if(!empty($res['errors']))
                 return view('', ['errors' => $res['errors'], 'cond' => $getData, 'data' => $data, 'list1' => $list1, 'list2' => $list2]);
             else{
@@ -200,6 +225,11 @@ class Theme extends Common{
         $ret = ['code' => 1, 'msg' => '成功'];
         $ids = input('get.ids');
         try{
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/主题库';
+            $log['action_descr'] = '用户删除主题';
+            D('OperationLog')->addData($log);
             $res = D('Theme')->remove(['id' => ['in', $ids]]);
         }catch(MyException $e){
             $ret['code'] = 2;
@@ -226,6 +256,11 @@ class Theme extends Common{
             }
             array_push($data, $temp);
         }
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '库管理/主题库';
+        $log['action_descr'] = '用户导出主题';
+        D('OperationLog')->addData($log);
         D('Excel')->export($data, 'theme.xls');
     }
 
@@ -263,6 +298,11 @@ class Theme extends Common{
             $ret['count'] = $count;
 
         }
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '库管理/主题库';
+        $log['action_descr'] = '用户导入主题';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
 }

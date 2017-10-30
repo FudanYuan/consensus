@@ -34,7 +34,11 @@ class Media extends Common
         }
         $type_list = D('MediaType')->getMedTypeList();
         $list = D('Media')->getMedList($cond_or, $cond_and, $order);
-
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '库管理/媒体库';
+        $log['action_descr'] = '用户查看媒体库';
+        D('OperationLog')->addData($log);
         return view('', ['list' => $list, 'typeList' => $type_list, 'type_id' => $type_id, 'cond' => $params]);
     }
 
@@ -46,7 +50,12 @@ class Media extends Common
         $ret = ['code' => 1, 'msg' => '成功'];
         $ids = input('get.ids');
         try {
-            $res = D('Media')->remove(['id' => ['in', $ids]]);
+            D('Media')->remove(['id' => ['in', $ids]]);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/媒体库';
+            $log['action_descr'] = '用户删除媒体';
+            D('OperationLog')->addData($log);
         } catch (MyException $e) {
             $ret['code'] = 2;
             $ret['msg'] = '删除失败';
@@ -55,13 +64,19 @@ class Media extends Common
     }
 
     /**
-     * 增加网站
+     * 增加媒体
+     * @return string|\think\response\View
      */
     public function create_url(){
         $data = input('post.');
         $typeList = D('MediaType')->getMedTypeList();
         if (!empty($data)) {
             $res = D('Media')->addData($data);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/媒体库';
+            $log['action_descr'] = '用户新增媒体';
+            D('OperationLog')->addData($log);
             if (!empty($res['errors']))
                 return view('', ['errors' => $res['errors'], 'data' => $data,'typeList'=>$typeList]);
             else {
@@ -72,13 +87,20 @@ class Media extends Common
             return view('',['typeList'=>$typeList]);
         }
     }
+
     /**
-     * 增加网站类型
+     * 增加媒体类型
+     * @return string|\think\response\View
      */
     public function create_type(){
         $data = input('post.');
         if (!empty($data)) {
             $res = D('MediaType')->addData($data);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/媒体库';
+            $log['action_descr'] = '用户新增媒体类型';
+            D('OperationLog')->addData($log);
             if (!empty($res['errors']))
                 return view('', ['errors' => $res['errors'], 'data' => $data]);
             else {
@@ -99,6 +121,11 @@ class Media extends Common
         $typeList = D('MediaType')->getMedTypeList();
         if (!empty($data)) {
             $res = D('Media')->saveData($id, $data);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/媒体库';
+            $log['action_descr'] = '用户编辑媒体';
+            D('OperationLog')->addData($log);
             if (!empty($res['errors']))
                 return view('', ['errors' => $res['errors'], 'data' => $data,'typeList'=>$typeList]);
             else {
@@ -132,7 +159,7 @@ class Media extends Common
         $cond_or = [];
         $cond_and = [];
         $order = [];
-        $list = D('Media')->getMedList([],[],[],-1);
+        $list = D('Media')->getMedList($cond_or,$cond_and,$order,-1);
         $data = [];
         // 匹配键值
         array_push($data, $this->exportCols);
@@ -143,6 +170,11 @@ class Media extends Common
             }
             array_push($data, $temp);
         }
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '库管理/媒体库';
+        $log['action_descr'] = '用户导出媒体数据';
+        D('OperationLog')->addData($log);
         D('Excel')->export($data, 'Media.xls');
     }
     /**
@@ -158,9 +190,8 @@ class Media extends Common
             $ret[0]['code'] = 2;
             $ret[0]['msg'] = '导入失败';
         }else{
-            $keys = $res['keys'];
             $data = $res['data'];
-            $colsDic = array_combine($this->colsText, $this->exportCols);
+            array_combine($this->colsText, $this->exportCols);
             $count = 0;
             $i=0;
             foreach ($data as $item){
@@ -175,6 +206,11 @@ class Media extends Common
                 }
             }
             $ret['count'] = $count;
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '库管理/媒体库';
+            $log['action_descr'] = '用户导入媒体数据';
+            D('OperationLog')->addData($log);
         }
         $this->jsonReturn($ret);
     }

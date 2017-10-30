@@ -106,6 +106,11 @@ class DataMonitor extends Common{
         //根据传递过来的分页偏移量和分页量截取模拟分页 rows 可以根据前端的 dataField 来设置
         $ret["data"] = array_slice($list, ($page-1)*$per_page, $per_page);
         $ret['current_page'] = $page;
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '实施舆情/全部舆情';
+        $log['action_descr'] = '用户查看舆情';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
 
@@ -256,11 +261,11 @@ class DataMonitor extends Common{
         }else{
             $switch_warn = 0;
         }
-
         $ret['switch'] = $switch_warn;
         $ret['nature'] = $nature_warn;
         $ret['media'] = $media_warn;
         $ret['keywords'] = $list;
+
         $this->jsonReturn($ret);
         //$list = ['测试1', '测试2', '测试3', '测试4', '测试5', '测试6'];
         /**
@@ -338,7 +343,7 @@ class DataMonitor extends Common{
                 $log['user_id'] = $this->getUserId();
                 $log['IP'] = $this->getUserIp();
                 $log['section'] = '舆情预警/预警设置';
-                $log['action_descr'] = '用户添加预警';
+                $log['action_descr'] = '用户添加预警词';
                 D('OperationLog')->addData($log);
             }else{
                 $list = D('KeywordWarn')->getKeywordList();
@@ -410,7 +415,11 @@ class DataMonitor extends Common{
             array_push($tasks,$task['name']);
         }
         $ret['tasks'] = $tasks;
-
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '舆情预警/预警设置';
+        $log['action_descr'] = '用户查看警戒线列表';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
 //        $ret['tasks'] = ['测试1', '生态环境', '测试3', '测试4', '测试5', '测试6'];
 //        $list = [];
@@ -543,12 +552,12 @@ class DataMonitor extends Common{
             }
             array_push($data, $temp);
         }
-        D('Excel')->export($data, 'dataMonitor.xls');
         $log['user_id'] = $this->getUserId();
         $log['IP'] = $this->getUserIp();
         $log['section'] = '实时预警/全部舆情';
         $log['action_descr'] = '用户导出数据';
         D('OperationLog')->addData($log);
+        D('Excel')->export($data, 'dataMonitor.xls');
     }
 
     ///////////// 未修改 ///////////
