@@ -24,14 +24,6 @@ class DataMonitor extends Common{
     }
 
     /**
-     *  我的收藏
-     * @return \think\response\View
-     */
-    public function collect(){
-        return view('', []);
-    }
-
-    /**
      * 舆情预警
      * @return \think\response\View
      */
@@ -131,8 +123,18 @@ class DataMonitor extends Common{
             if(!empty($data)) {
                 if ($isCollected == 1) {
                     $data['is_collect'] = 0;
+                    $log['user_id'] = $this->getUserId();
+                    $log['IP'] = $this->getUserIp();
+                    $log['section'] = '实施舆情/全部舆情';
+                    $log['action_descr'] = '用户取消收藏';
+                    D('OperationLog')->addData($log);
                 } else {
                     $data['is_collect'] = 1;
+                    $log['user_id'] = $this->getUserId();
+                    $log['IP'] = $this->getUserIp();
+                    $log['section'] = '实施舆情/全部舆情';
+                    $log['action_descr'] = '用户收藏舆情';
+                    D('OperationLog')->addData($log);
                 }
                 $ret['data'] = $data;
                 D('DataMonitor')->saveData($data, $id);
@@ -161,6 +163,11 @@ class DataMonitor extends Common{
                 $data['relevance'] = $relevance;
             }
             D('DataMonitor')->saveData($data,$id);
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '实施舆情/全部舆情';
+            $log['action_descr'] = '用户编辑舆情';
+            D('OperationLog')->addData($log);
         }
         $this->jsonReturn($ret);
     }
@@ -177,6 +184,13 @@ class DataMonitor extends Common{
         }catch(MyException $e){
             $ret['code'] = 2;
             $ret['msg'] = '删除失败';
+        }
+        if($ret['code'] == 1){
+            $log['user_id'] = $this->getUserId();
+            $log['IP'] = $this->getUserIp();
+            $log['section'] = '实施舆情/全部舆情';
+            $log['action_descr'] = '用户删除舆情';
+            D('OperationLog')->addData($log);
         }
         $this->jsonReturn($ret);
     }
@@ -321,6 +335,11 @@ class DataMonitor extends Common{
                 if (!empty($res['errors'])) {
                     $ret = ['errorcode' => 1, 'msg' => $res['errors']];
                 }
+                $log['user_id'] = $this->getUserId();
+                $log['IP'] = $this->getUserIp();
+                $log['section'] = '舆情预警/预警设置';
+                $log['action_descr'] = '用户添加预警';
+                D('OperationLog')->addData($log);
             }else{
                 $list = D('KeywordWarn')->getKeywordList();
                 $total = count($list);
@@ -334,6 +353,11 @@ class DataMonitor extends Common{
                     } else{
                         $ret = ['errorcode' => 0, 'msg' => '关闭成功'];
                     }
+                    $log['user_id'] = $this->getUserId();
+                    $log['IP'] = $this->getUserIp();
+                    $log['section'] = '舆情预警/预警设置';
+                    $log['action_descr'] = '用户打开预警';
+                    D('OperationLog')->addData($log);
                 }
             }
         }
@@ -350,6 +374,11 @@ class DataMonitor extends Common{
                 } else{
                     $ret = ['errorcode' => 0, 'msg' => '关闭成功'];
                 }
+                $log['user_id'] = $this->getUserId();
+                $log['IP'] = $this->getUserIp();
+                $log['section'] = '舆情预警/预警设置';
+                $log['action_descr'] = '用户关闭预警';
+                D('OperationLog')->addData($log);
             }
 
         }
@@ -402,7 +431,11 @@ class DataMonitor extends Common{
             $ret['code'] = 2;
             $ret['msg'] = '删除失败';
         }
-        $ret['ids'] = $ids;
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '舆情预警/预警设置';
+        $log['action_descr'] = '用户删除警戒线';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
 
@@ -425,14 +458,26 @@ class DataMonitor extends Common{
         $task = input('post.task', '');
         $dayAllCount = input('post.dayAllCount',-1);
         $dayNegativeCount = input('post.dayNegativeCount',-1);
-        $ret = ['errorcode' => 0, 'msg' => '',];
+        $ret = ['errorcode' => 2, 'msg' => '','params'=>$params];
         // 添加预警设置逻辑
         // code here
-        $data['task'] = $task;
         $data['day_all_count'] = $dayAllCount;
         $data['day_negative_count'] = $dayNegativeCount;
+        $task_id = D('Task')->getTaskIdByName($task);
+        if($task_id){
+            $data['task_id'] = $task_I=id['id'];
+        }else{
+            $data['task_id'] = '';
+        }
         $res = D('ThresholdWarn')->addData($data);
-
+        if(!empty($res['errors'])){
+            $ret = ['errorcode' => 2, 'msg' => $res['errors']];
+        }
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '舆情预警/预警设置';
+        $log['action_descr'] = '用户添加警戒线';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
 
@@ -450,19 +495,38 @@ class DataMonitor extends Common{
          */
         $params = input('post.');
         $id = input('post.id');
-        $status = input('post.status');
+        $status = input('post.status','');
         $task = input('post.task', '');
         $dayAllCount = input('post.dayAllCount', -1);
         $dayNegativeCount = input('post.dayNegativeCount', -1);
-        $ret = ['errorcode' => 1, 'msg' => ''];
+        $ret = ['errorcode' => 0, 'msg' => ''];
         // 编辑预警设置逻辑
         // code here
-
-
-
+        if($status){
+            $data['status'] = $status;
+        }
+        $task_id = '';
+        if($task){
+            $task_id  = D('Task')->getTaskIdByName($task);
+            $data['task_id'] = $task_id['id'];
+        }
+        if($dayAllCount != -1){
+            $data['day_all_count'] = $dayAllCount;
+        }
+        if($dayNegativeCount != -1){
+            $data['day_negative_count'] = $dayNegativeCount;
+        }
+        $res = D('ThresholdWarn')->saveData($id,$data);
+        if(!empty($res['errors'])){
+            $ret = ['errorcode' => 2, 'msg' => $res['errors']];
+        }
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '舆情预警/预警设置';
+        $log['action_descr'] = '用户编辑警戒线';
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
-
 
     /**
      * 数据导出
@@ -480,6 +544,11 @@ class DataMonitor extends Common{
             array_push($data, $temp);
         }
         D('Excel')->export($data, 'dataMonitor.xls');
+        $log['user_id'] = $this->getUserId();
+        $log['IP'] = $this->getUserIp();
+        $log['section'] = '实时预警/全部舆情';
+        $log['action_descr'] = '用户导出数据';
+        D('OperationLog')->addData($log);
     }
 
     ///////////// 未修改 ///////////

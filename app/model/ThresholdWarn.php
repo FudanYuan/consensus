@@ -71,12 +71,23 @@ class ThresholdWarn extends Model
         $ret['errors'] = $errors;
         if (empty($errors)) {
             $data['createtime'] = time();
-            if (!isset($data['status']))
-                $data['status'] = 1;
-            $data['loop'] = 172800;
-            $data['taskstatus'] = 0;
-            $task_id = $this->save_1($data);
-            $ret['task_id'] = $task_id;
+            $data['status'] = 1;
+            $this->save($data);
+        }
+        return $ret;
+    }
+
+    /**
+     * 更新警戒线信息
+     * {@inheritDoc}
+     * @see \think\Model::save()
+     */
+    public function saveData($id, $data){
+        $ret = [];
+        $errors = $this->filterField($data);
+        $ret['errors'] = $errors;
+        if (empty($errors)) {
+            $this->save($data, ['id' => $id]);
         }
         return $ret;
     }
@@ -89,17 +100,14 @@ class ThresholdWarn extends Model
     {
         $ret = [];
         $errors = [];
-        if (isset($data['loop']) && $data['loop'] == '-1') {
-            $errors['loop'] = '采集周期不能为空';
+        if (isset($data['task_id']) && empty($data['task_id'])) {
+            $errors['task'] = '预警任务不能为空';
         }
-        if (isset($data['begintime']) && !$data['begintime']) {
-            $errors['begintime'] = '开始时间不能为空';
+        if(isset($data['day_all_count'])&&$data['day_all_count']<0){
+            $errors['dayAllCount'] = '预警总数不能负数';
         }
-        if (isset($data['theme']) && !$data['theme']) {
-            $errors['theme'] = '采集主题不能为空';
-        }
-        if (isset($data['website']) && !$data['website']) {
-            $errors['website'] = '采集网站类型不能为空';
+        if(isset($data['day_negative_count'])&&$data['day_negative_count']<0){
+            $errors['day_negative_count'] = '负面预警数不能为负数';
         }
         return $errors;
     }

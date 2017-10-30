@@ -35,6 +35,12 @@ class Task extends Model
 
     private $strField = ['begintime', 'endtime'];
 
+    public function getTaskIdByName($name){
+        $res = $this->field('id')
+            ->where(['name' => $name])
+            ->find();
+        return $res;
+    }
     /**
      * 获取任务列表
      * @param $cond_or
