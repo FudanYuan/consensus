@@ -89,7 +89,7 @@
                                 <div class="block h4"><strong>预警条件</strong></div>
                                 <div class="form-wrapper">
                                     <form class="form-horizontal" method="post" id="condition-set-form">
-                                        <div :class="['form-group', error.keywords != '' ? 'has-error' : '']" >
+                                        <div :class="['form-group', errors.keywords != '' ? 'has-error' : '']" >
                                             <label for="addKeywords" class="col-sm-2 control-label">关键词：</label>
                                             <div class="col-sm-4">
                                                 <input class="form-control" type="text" v-model.trim="addKeywords"
@@ -98,7 +98,7 @@
                                             <a href="javascript:;" class="col-sm-1 btn btn-success" @click="pushKeywords(addKeywords)">添加</a>
                                         </div>
 
-                                        <div :class="['form-group', error.keywords != '' ? 'has-error' : '']" >
+                                        <div :class="['form-group', errors.keywords != '' ? 'has-error' : '']" >
                                             <div class="col-sm-2"></div>
                                             <div class="col-sm-10">
                                                 <div class="keywords-content">
@@ -109,11 +109,11 @@
                                                         </div>
                                                     </template>
                                                 </div>
-                                                <span class="help-block">{{error.keywords}}</span>
+                                                <span class="help-block">{{errors.keywords}}</span>
                                             </div>
                                         </div>
 
-                                        <div :class="['form-group', error.nature != '' ? 'has-error' : '']" >
+                                        <div :class="['form-group', errors.nature != '' ? 'has-error' : '']" >
                                             <label class="col-sm-2 control-label">舆情属性：</label>
                                             <div class="col-lg-10">
                                                 <template v-for="(value, key, index) in nature">
@@ -125,11 +125,11 @@
                                                         <label class="inline-block vertical-top" :for="'nature-'+index" style="padding-left: 0;">{{key}}</label>
                                                     </div>
                                                 </template>
-                                                <span class="help-block">{{error.nature}}</span>
+                                                <span class="help-block">{{errors.nature}}</span>
                                             </div><!-- /.col -->
                                         </div>
 
-                                        <div :class="['form-group', error.media != '' ? 'has-error' : '']" >
+                                        <div :class="['form-group', errors.media != '' ? 'has-error' : '']" >
                                             <label class="col-sm-2 control-label">媒体类型：</label>
                                             <div class="col-lg-10">
                                                 <template v-for="(value, key, index) in media">
@@ -141,7 +141,7 @@
                                                         <label class="inline-block vertical-top" :for="'media-'+index" style="padding-left: 0;">{{key}}</label>
                                                     </div>
                                                 </template>
-                                                <span class="help-block">{{error.media}}</span>
+                                                <span class="help-block">{{errors.media}}</span>
                                             </div><!-- /.col -->
                                         </div>
 
@@ -236,7 +236,7 @@
                                 </ul>
                                 <form action="" class="form-horizontal" method="post" id="threshold-create-form" >
                                     <div class="block h4"><strong>预警条件</strong></div>
-                                    <div :class="['form-group', error.task != '' ? 'has-error' : '']" >
+                                    <div :class="['form-group', errors.task != '' ? 'has-error' : '']" >
                                         <label for="TaskItem" class="col-sm-2 control-label">类目名称：</label>
                                         <div class="col-sm-4">
                                             <input class="form-control" type="text" v-model.trim="taskSelected"
@@ -250,25 +250,25 @@
                                                     </div>
                                                 </template>
                                             </div>
-                                            <span class="help-block">{{error.task}}</span>
+                                            <span class="help-block">{{errors.task}}</span>
                                         </div>
                                     </div>
 
-                                    <div :class="['form-group', error.dayAllCount != '' ? 'has-error' : '']" >
+                                    <div :class="['form-group', errors.dayAllCount != '' ? 'has-error' : '']" >
                                         <label for="dayAllCount" class="col-sm-2 control-label">每日舆情总量</label>
                                         <div class="col-sm-4">
                                             <input class="form-control" type="text" v-model.trim="dayAllCount"
                                                    name="dayAllCount" placeholder="请输入每日舆情总量..." id="dayAllCount">
-                                            <span class="help-block">{{error.dayAllCount}}</span>
+                                            <span class="help-block">{{errors.dayAllCount}}</span>
                                         </div>
                                     </div>
 
-                                    <div :class="['form-group', error.dayNegativeCount != '' ? 'has-error' : '']" >
+                                    <div :class="['form-group', errors.dayNegativeCount != '' ? 'has-error' : '']" >
                                         <label for="dayNegativeCount" class="col-sm-2 control-label">每日负面舆情</label>
                                         <div class="col-sm-4">
                                             <input class="form-control" type="text" v-model.trim="dayNegativeCount"
                                                    name="dayNegativeCount" placeholder="请输入每日负面舆情..." id="dayNegativeCount">
-                                            <span class="help-block">{{error.dayNegativeCount}}</span>
+                                            <span class="help-block">{{errors.dayNegativeCount}}</span>
                                         </div>
                                     </div>
 
@@ -305,22 +305,21 @@
                                         </div>
                                     </div>
 
-                                    <div :class="['form-group', error.dayAllCount != '' ? 'has-error' : '']" >
+                                    <div :class="['form-group', errors.dayAllCount != '' ? 'has-error' : '']" >
                                         <label for="edit_dayAllCount" class="col-sm-2 control-label">每日舆情总量</label>
                                         <div class="col-sm-4">
                                             <input class="form-control" type="text" v-model.trim="edit_dayAllCount"
                                                    name="edit_dayAllCount" placeholder="请输入每日舆情总量..." id="edit_dayAllCount">
-                                            <span class="help-block">{{error.dayAllCount}}</span>
+                                            <span class="help-block">{{errors.dayAllCount}}</span>
                                         </div>
                                     </div>
 
-                                    <div :class="['form-group', error.dayNegativeCount != '' ? 'has-error' : '']" >
-                                        <!--{$errors.loop ?= 'has-error'}"-->
+                                    <div :class="['form-group', errors.dayNegativeCount != '' ? 'has-error' : '']" >
                                         <label for="edit_dayNegativeCount" class="col-sm-2 control-label">每日负面舆情</label>
                                         <div class="col-sm-4">
                                             <input class="form-control" type="text" v-model.trim="edit_dayNegativeCount"
                                                    name="dayNegativeCount" placeholder="请输入每日负面舆情..." id="edit_dayNegativeCount">
-                                            <span class="help-block">{{error.dayNegativeCount}}</span>
+                                            <span class="help-block">{{errors.dayNegativeCount}}</span>
                                         </div>
                                     </div>
 
@@ -390,7 +389,7 @@
             side: 3,
             window: 6,
 
-            error: {
+            errors: {
                 'keywords':'',
                 'nature':'',
                 'media':'',
@@ -451,9 +450,9 @@
                 this.media = {};
                 this.natureChecked = [];
                 this.mediaChecked = [];
-                this.error['keywords'] = '';
-                this.error['nature'] = '';
-                this.error['media'] = '';
+                this.errors['keywords'] = '';
+                this.errors['nature'] = '';
+                this.errors['media'] = '';
             },
             resetThresholdConfigParams: function () {
                 this.thresholdConfigList = [];
@@ -461,8 +460,8 @@
                 this.taskSelected = '';
                 this.dayAllCount = -1;
                 this.dayNegativeCount = -1;
-                this.error['dayAllCount'] = '';
-                this.error['dayNegativeCount'] = '';
+                this.errors['dayAllCount'] = '';
+                this.errors['dayNegativeCount'] = '';
                 this.thresholdConditionResult = true;
                 this.thresholdConditionCreate = false;
                 this.thresholdConditionEdit = false;
@@ -557,8 +556,8 @@
                     if (res.errorcode == 0) {
                         getThresholdConfig();
                     } else {
-                        $.each(res.error, function (key, value) {
-                            vm.error[key] = value;
+                        $.each(res.errors, function (key, value) {
+                            vm.errors[key] = value;
                         });
                     }
                 });
@@ -666,10 +665,10 @@
             if (res.errorcode == 0) {
                 vm.cancelEditKeywordsConfig();
             } else {
-                $.each(res.error, function (key, value) {
-                    vm.error[key] = value;
+                $.each(res.errors, function (key, value) {
+                    vm.errors[key] = value;
                 });
-                console.log(JSON.stringify(vm.error));
+                console.log(JSON.stringify(vm.errors));
             }
         });
     }
@@ -702,10 +701,10 @@
                 vm.thresholdConditionEdit = false;
                 getThresholdConfig();
             } else {
-                $.each(res.error, function (key, value) {
-                    vm.error[key] = value;
+                $.each(res.errors, function (key, value) {
+                    vm.errors[key] = value;
                 });
-                console.log(JSON.stringify(vm.error));
+                console.log(JSON.stringify(vm.errors));
             }
         });
     }
