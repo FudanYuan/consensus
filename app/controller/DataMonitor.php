@@ -27,6 +27,14 @@ class DataMonitor extends Common{
      * 舆情预警
      * @return \think\response\View
      */
+    public function collect(){
+        return view('', []);
+    }
+
+    /**
+     * 舆情预警
+     * @return \think\response\View
+     */
     public function warn(){
         return view('', []);
     }
