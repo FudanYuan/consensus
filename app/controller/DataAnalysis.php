@@ -156,7 +156,7 @@ class DataAnalysis extends Common
     public function getTrendLine(){
         $params = input('post.');
         $task_id = input('post.task_id', -1);
-        $timeRange = input('post.timeRange', 0);
+        $timeRange = input('post.timeRange', -1);
         /**
          * timeRange: 0->最近24小时
          *            1->最近7天

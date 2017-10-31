@@ -1,0 +1,151 @@
+{include file="Common/top" title="首页" metas='' /}
+{include file="Common/search" /}
+<style>
+    .params{
+        display: inline;
+        color: black;
+        margin-left: 10px;
+        padding: 0 10px 15px 10px;
+    }
+
+    .params-active{
+        display: inline;
+        color: black;
+        margin-left: 10px;
+        padding: 0 10px 15px 10px;
+        border-bottom: 5px green solid;
+    }
+</style>
+<div class="main-container" id="analysisTrend">
+    <div class="padding-md" style="overflow: auto">
+        <ul class="breadcrumb">
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
+            <li><a href="__PRO_PATH__/DataAnalysis/index">舆情分析</a></li>
+            <li>趋势分析</li>
+        </ul>
+
+        <div class="list-search">
+            <div>
+                <a href="javascript:;" @click="changeSection(0)" :class="active.trend == 0 ? 'params-active' : 'params'">舆情趋势</a>
+                <a href="javascript:;" @click="changeSection(1)" :class="active.trend == 1 ? 'params-active' : 'params'">媒体趋势</a>
+            </div>
+            <hr/>
+            <form class="form-inline" method="post" id="main-form">
+                <div class="form-group">
+                    <label for="dateTimeRange">时间范围：</label>
+                    <input type="text" class="form-control date-picker" id="dateTimeRange" value="" style="width: 190px"/>
+                    <input type="hidden" name="begintime_str" value=""/>
+                    <input type="hidden" name="endtime_str" value=""/>
+                </div>
+            </form>
+        </div>
+        <div v-if="active.trend == 0">
+            <div id="publicTrend-line-chart" style="height: 300px;">舆情分析</div>
+            <table class="table"></table>
+        </div>
+        <div v-if="active.trend == 1">
+            <div id="mediaTrend-line-chart" style="height: 300px;">媒体分析</div>
+        </div>
+    </div>
+</div><!-- /main-container -->
+{include file="Common/popup_warn" /}
+{include file="Common/popup_list" /}
+{include file="Common/popup_verify" /}
+{include file="Common/calendar" /}
+{include file="Common/bottom" /}
+<script src="__PUBLIC__/js/datapicker/daterangepicker.js"></script>
+<script>
+    $('#consensus-nav-data-analysis').addClass('active open');
+    $('#consensus-nav-data-analysis-sub1').addClass('active');
+    // 时间选择器
+    $(function () {
+        $('#dateTimeRange')
+                .daterangepicker({
+                    applyClass: 'btn-sm btn-success',
+                    cancelClass: 'btn-sm btn-default',
+                    locale: {
+                        applyLabel: '确认',
+                        cancelLabel: '取消',
+                        fromLabel: '起始时间',
+                        toLabel: '结束时间',
+                        customRangeLabel: '自定义',
+                        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                        firstDay: 1
+                    },
+                    ranges: {
+                        '全部': [0, moment()],
+                        '今日': [moment().startOf('day'), moment()],
+                        '昨日': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
+                        '最近7日': [moment().subtract(6, 'days'), moment()],
+                        '最近30日': [moment().subtract(29, 'days'), moment()],
+                        // '本月': [moment().startOf("month"), moment().endOf("month")],
+                        // '上个月': [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+                        // '最近90日': [moment().subtract('days', 89), moment()],
+                        // '本季度': [moment().startOf("quarter"), moment()],
+                        // '上个季度': [moment().subtract(1, "quarter").startOf("quarter"), moment().subtract(1, "quarter").endOf("quarter")],
+                        // '今年': [moment().startOf("year"), moment()],
+                        // '去年': [moment().subtract(1, "year").startOf("year"), moment().subtract(1, "year").endOf("year")]
+                    },
+                    opens: 'right',             // 日期选择框的弹出位置
+                    separator: ' 至 ',
+                    showWeekNumbers: true,      // 是否显示第几周
+
+                    //timePicker: true,
+                    //timePickerIncrement : 10, // 时间的增量，单位为分钟
+                    //timePicker12Hour : false, // 是否使用12小时制来显示时间
+
+                    maxDate: moment(),           // 最大时间
+                    format: 'YYYY-MM-DD',
+
+                    startDate: moment().subtract(6, 'days'),
+                    endDate: moment(),
+
+                }, function (start, end, label) { // 格式化日期显示框
+                    $('#begintime_str').val(start.format('YYYY-MM-DD'));
+                    $('#endtime_str').val(end.format('YYYY-MM-DD'));
+                }).next().on('click', function () {
+            $(this).prev().focus();
+        });
+    });
+
+    // 初始化vue
+    var vm = new Vue({
+        el: '#analysisTrend',
+        data: {
+            task_id: -1,
+            params: {},
+            active:{
+                trend: 0
+            }
+        },
+        methods:{
+            changeSection: function (value) {
+                this.active['trend'] = value;
+            }
+        },
+        filters:{
+
+        }
+    });
+
+    //submit();
+
+    // 异步提交数据
+    function submit() {
+        getParams();
+        vm.params['task_id'] = vm.task_id;
+        $.post('__RPO_PATH__/DataAnalysis/getTrend', vm.params, function (res) {
+            
+        });
+    }
+
+    // 获取参数
+    function getParams() {
+        var data = $('#main-form').serializeArray();
+        $.each(data, function () {
+            vm.params[this.name] = this.value;
+        });
+        console.log(JSON.stringify(vm.params));
+    }
+</script>

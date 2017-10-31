@@ -116,7 +116,7 @@ class DataMonitor extends Common{
         $ret['current_page'] = $page;
         $log['user_id'] = $this->getUserId();
         $log['IP'] = $this->getUserIp();
-        $log['section'] = '实施舆情/全部舆情';
+        $log['section'] = '实时舆情/全部舆情';
         $log['action_descr'] = '用户查看舆情';
         D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
@@ -138,14 +138,14 @@ class DataMonitor extends Common{
                     $data['is_collect'] = 0;
                     $log['user_id'] = $this->getUserId();
                     $log['IP'] = $this->getUserIp();
-                    $log['section'] = '实施舆情/全部舆情';
+                    $log['section'] = '实时舆情/全部舆情';
                     $log['action_descr'] = '用户取消收藏';
                     D('OperationLog')->addData($log);
                 } else {
                     $data['is_collect'] = 1;
                     $log['user_id'] = $this->getUserId();
                     $log['IP'] = $this->getUserIp();
-                    $log['section'] = '实施舆情/全部舆情';
+                    $log['section'] = '实时舆情/全部舆情';
                     $log['action_descr'] = '用户收藏舆情';
                     D('OperationLog')->addData($log);
                 }
@@ -178,7 +178,7 @@ class DataMonitor extends Common{
             D('DataMonitor')->saveData($data,$id);
             $log['user_id'] = $this->getUserId();
             $log['IP'] = $this->getUserIp();
-            $log['section'] = '实施舆情/全部舆情';
+            $log['section'] = '实时舆情/全部舆情';
             $log['action_descr'] = '用户编辑舆情';
             D('OperationLog')->addData($log);
         }
@@ -201,7 +201,7 @@ class DataMonitor extends Common{
         if($ret['code'] == 1){
             $log['user_id'] = $this->getUserId();
             $log['IP'] = $this->getUserIp();
-            $log['section'] = '实施舆情/全部舆情';
+            $log['section'] = '实时舆情/全部舆情';
             $log['action_descr'] = '用户删除舆情';
             D('OperationLog')->addData($log);
         }
