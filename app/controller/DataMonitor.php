@@ -467,14 +467,14 @@ class DataMonitor extends Common{
         $task = input('post.task', '');
         $dayAllCount = input('post.dayAllCount',-1);
         $dayNegativeCount = input('post.dayNegativeCount',-1);
-        $ret = ['errorcode' => 2, 'msg' => '','params'=>$params];
+        $ret = ['errorcode' => 0, 'msg' => '','params'=>$params];
         // 添加预警设置逻辑
         // code here
         $data['day_all_count'] = $dayAllCount;
         $data['day_negative_count'] = $dayNegativeCount;
         $task_id = D('Task')->getTaskIdByName($task);
         if($task_id){
-            $data['task_id'] = $task_I=id['id'];
+            $data['task_id'] = $task_id['id'];
         }else{
             $data['task_id'] = '';
         }
