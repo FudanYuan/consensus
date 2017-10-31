@@ -107,11 +107,10 @@ class ThresholdWarn extends Model
             $errors['dayAllCount'] = '预警总数不能负数';
         }
         if(isset($data['day_negative_count'])&&$data['day_negative_count']<0){
-            $errors['day_negative_count'] = '负面预警数不能为负数';
+            $errors['dayNegativeCount'] = '负面预警数不能为负数';
         }
         return $errors;
     }
-
 
     ///未修改////
     /**
