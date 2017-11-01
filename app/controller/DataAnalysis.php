@@ -159,17 +159,17 @@ class DataAnalysis extends Common
         $task_id = input('post.task_id', -1);
         $stime = input('post.begintime_str', '');
         $etime = input('post.endtime_str', '');
-        /**
-         * timeRange: 0->最近24小时
-         *            1->最近7天
-         *            2->最近30天
-         */
+
         $ret = ['errorcode' => 0, 'msg' => ''];
         $cond = [];
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
         }
-
+        /**
+         * 1. $stime == $etime: 最近24小时(比如现在是12点)
+         *    xAixs = [12:00, 13:00, 14:00, 15:00, ···, 00:00, 01:00, 02:00, ···,  09:00, 10:00, 11:00, 12:00];
+         * 2.
+         */
         /**
          * 参考代码
          *     // 如果开始时间和结束时间相同，则为一天（今天、昨天或自定义某一天）
@@ -244,15 +244,15 @@ class DataAnalysis extends Common
                 $trend[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
                 $trend[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
                 $trend[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-                $ret['data'] = $trend;
                 break;
             }
             case 'public':{     // public trend
-
-                $ret['data'] = $trend;
+                $trend[0] = ['type'=>'热点舆情', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+                $trend[1] = ['type'=>'健康度', 'data' => [50, 30, 12, 13, 12, 30, 90]];
                 break;
             }
         }
+        $ret['data'] = $trend;
         $ret['params'] = $params;
         $this->jsonReturn($ret);
     }

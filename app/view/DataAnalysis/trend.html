@@ -116,8 +116,7 @@
         data: {
             task_id: -1,
             params: {},
-            public: [],
-            media: [],
+            trend: [],
             active:{
                 trend: 0
             }
@@ -131,32 +130,99 @@
                     this.showTrendLine('media');
                 }
             },
-            showTrendLine: function (type) {
-                vm.params['obj'] = type;
-                var dom = (type == 'public' ? 'publicTrend_line_chart' : 'mediaTrend_line_chart');
+            showTrendLine: function (trend_type) {
+                vm.params['obj'] = trend_type;
+                var dom = (trend_type == 'public' ? 'publicTrend_line_chart' : 'mediaTrend_line_chart');
                 console.log(dom);
                 var chartDom = document.getElementById(dom);
                 var myChart = echarts.init(chartDom);
                 myChart.showLoading();
                 $.post('__PRO_PATH__/DataAnalysis/getTrendLine', vm.params, function (res) {
                     if(res.errorcode==0){
-                        myChart.hideLoading();
                         vm.trend = res.data;
                         var xAixs = res.xAixs;
-                        switch(type){
+                        var option = {};
+                        var legend = [];
+                        var data = [];
+                        switch(trend_type){
                             case 'public':{
+                                for(var i=0;i<vm.trend.length;i++){
+                                    var type = vm.trend[i]['type'];
+                                    var d = vm.trend[i]['data'];
+                                    legend.push(type);
+                                    if(i == vm.trend-1){
+                                        data.push({
+                                            name: type,
+                                            type:'line',
+                                            yAxisIndex: 1,
+                                            data: d,
+                                            smooth: true,
+                                        });
+                                    } else {
+                                        data.push({
+                                            name: type,
+                                            type:'line',
+                                            data: d,
+                                            smooth: true,
+                                        });
+                                    }
+                                }
+                                option = {
+                                    backgroundColor: '#fff',
+                                    tooltip : {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'cross',
+                                            label: {
+                                                backgroundColor: '#6a7985'
+                                            }
+                                        },
+                                        formatter: '{a0}: {c0}<br />{a1}: {c1}%'
+                                    },
+                                    legend: {
+                                        data: legend
+                                    },
+                                    xAxis: [
+                                        {
+                                            type : 'category',
+                                            boundaryGap : false,
+                                            data: xAixs,
+                                            axisPointer: {
+                                                type: 'shadow'
+                                            }
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value',
+                                            name: '舆情数量',
+                                            axisLabel: {
+                                                formatter: '{value}'
+                                            }
+                                        },
+                                        {
+                                            type: 'value',
+                                            name: '健康度',
+                                            min: 0,
+                                            max: 100,
+                                            interval: 50,
+                                            axisLabel: {
+                                                formatter: '{value} %'
+                                            }
+                                        }
+                                    ],
+                                    series: data
+                                };
                                 break;
                             }
                             case 'media':{
-                                var media_types = [];
-                                var data = [];
                                 for(var i=0;i<vm.trend.length;i++){
-                                    var media_type = vm.trend[i]['media_type'];
+                                    var type = vm.trend[i]['media_type'];
                                     var d = vm.trend[i]['data'];
-                                    media_types.push(media_type);
+                                    legend.push(type);
                                     if(i == vm.trend-1){
                                         data.push({
-                                            name: media_type,
+                                            name: type,
                                             type:'line',
                                             stack: '总量',
                                             label: {
@@ -166,19 +232,21 @@
                                                 }
                                             },
                                             areaStyle: {normal: {}},
-                                            data: d
+                                            data: d,
+                                            smooth: true,
                                         });
                                     } else {
                                         data.push({
-                                            name: media_type,
+                                            name: type,
                                             type:'line',
                                             stack: '总量',
                                             areaStyle: {normal: {}},
-                                            data: d
+                                            data: d,
+                                            smooth: true,
                                         });
                                     }
                                 }
-                                var option = {
+                                option = {
                                     backgroundColor: '#fff',
                                     tooltip : {
                                         trigger: 'axis',
@@ -190,20 +258,16 @@
                                         }
                                     },
                                     legend: {
-                                        data: media_types
-                                    },
-
-                                    grid: {
-                                        left: '1%',
-                                        right: '3%',
-                                        bottom: '1%',
-                                        containLabel: true
+                                        data: legend
                                     },
                                     xAxis : [
                                         {
                                             type : 'category',
                                             boundaryGap : false,
-                                            data: xAixs
+                                            data: xAixs,
+                                            axisPointer: {
+                                                type: 'shadow'
+                                            }
                                         }
                                     ],
                                     yAxis : [
@@ -213,12 +277,13 @@
                                     ],
                                     series : data
                                 };
-                                // 使用刚指定的配置项和数据显示图表。
-                                myChart.setOption(option);
                                 break;
                             }
                         }
 
+                        myChart.hideLoading();
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
                         //用于使chart自适应高度和宽度
                         window.onresize = myChart.resize();
                     }

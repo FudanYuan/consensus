@@ -463,15 +463,16 @@
                     if(res.errorcode==0){
                         vm.trend = res.data;
                         var xAixs = res.xAixs;
-                        var media_types = [];
+                        var option = {};
+                        var legend = [];
                         var data = [];
                         for(var i=0;i<vm.trend.length;i++){
-                            var media_type = vm.trend[i]['media_type'];
+                            var type = vm.trend[i]['media_type'];
                             var d = vm.trend[i]['data'];
-                            media_types.push(media_type);
+                            legend.push(type);
                             if(i == vm.trend-1){
                                 data.push({
-                                    name: media_type,
+                                    name: type,
                                     type:'line',
                                     stack: '总量',
                                     label: {
@@ -481,21 +482,22 @@
                                         }
                                     },
                                     areaStyle: {normal: {}},
-                                    data: d
+                                    data: d,
+                                    smooth: true,
                                 });
                             } else {
                                 data.push({
-                                    name: media_type,
+                                    name: type,
                                     type:'line',
                                     stack: '总量',
                                     areaStyle: {normal: {}},
-                                    data: d
+                                    data: d,
+                                    smooth: true,
                                 });
                             }
                         }
-                        myChart.hideLoading();
-                        console.log(xAixs, media_types, data);
-                        var option = {
+                        option = {
+                            backgroundColor: '#fff',
                             tooltip : {
                                 trigger: 'axis',
                                 axisPointer: {
@@ -506,20 +508,16 @@
                                 }
                             },
                             legend: {
-                                data: media_types
-                            },
-
-                            grid: {
-                                left: '1%',
-                                right: '3%',
-                                bottom: '1%',
-                                containLabel: true
+                                data: legend
                             },
                             xAxis : [
                                 {
                                     type : 'category',
                                     boundaryGap : false,
-                                    data: xAixs
+                                    data: xAixs,
+                                    axisPointer: {
+                                        type: 'shadow'
+                                    }
                                 }
                             ],
                             yAxis : [
@@ -527,8 +525,16 @@
                                     type : 'value'
                                 }
                             ],
-                            series : data
+                            series : data,
+                            grid: {
+                                left: '1%',
+                                right: '3%',
+                                bottom: '1%',
+                                containLabel: true
+                            }
                         };
+
+                        myChart.hideLoading();
                         // 使用刚指定的配置项和数据显示图表。
                         myChart.setOption(option);
                         //用于使chart自适应高度和宽度
