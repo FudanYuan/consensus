@@ -26,8 +26,8 @@
 
         <div class="list-search">
             <div>
-                <a href="javascript:;" @click="changeSection(0)" :class="active.trend == 0 ? 'params-active' : 'params'">舆情趋势</a>
-                <a href="javascript:;" @click="changeSection(1)" :class="active.trend == 1 ? 'params-active' : 'params'">媒体趋势</a>
+                <a href="javascript:;" @click="changeSection(0)" :class="active.type == 0 ? 'params-active' : 'params'">舆情趋势</a>
+                <a href="javascript:;" @click="changeSection(1)" :class="active.type == 1 ? 'params-active' : 'params'">媒体趋势</a>
             </div>
             <hr/>
 
@@ -41,11 +41,11 @@
             </form>
         </div>
 
-        <div :style="{display: active.trend == 0 ? 'inline' : 'none'}">
+        <div :style="{display: active.type == 0 ? 'inline' : 'none'}">
             <div id="publicTrend_line_chart" style="height: 400px; width: 100%;"></div>
             <table class="table"></table>
         </div>
-        <div :style="{display: active.trend == 1 ? 'inline' : 'none'}">
+        <div :style="{display: active.type == 1 ? 'inline' : 'none'}">
             <div id="mediaTrend_line_chart" style="height: 400px; width: 100%;"></div>
         </div>
     </div>
@@ -121,25 +121,17 @@
             task_id: -1,
             params: {},
             trend: [],
-            dateTimeRange: '',
             active:{
-                trend: 0
-            }
-        },
-        watch:{
-            dateTimeRange: function (val) {
-                var type = this.active['trend']==0 ? 'public' : 'media';
-                getParams();
-                this.showTrendLine(type);
+                type: 0
             }
         },
         methods:{
             changeSection: function (value) {
-                this.active['trend'] = value;
+                this.active['type'] = value;
                 this.showTrendLine();
             },
             showTrendLine: function () {
-                vm.params['obj'] = vm.active['trend'] == 0 ? 'public' : 'media';
+                vm.params['obj'] = vm.active['type'] == 0 ? 'public' : 'media';
                 var dom = (vm.params['obj'] == 'public' ? 'publicTrend_line_chart' : 'mediaTrend_line_chart');
                 var chartDom = document.getElementById(dom);
                 var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);

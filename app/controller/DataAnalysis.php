@@ -255,7 +255,31 @@ class DataAnalysis extends Common
             }
         }
         $ret['data'] = $trend;
-        $ret['params'] = $params;
+        $this->jsonReturn($ret);
+    }
+
+    /**
+     * 获取媒体分布饼形图
+     */
+    public function getMediaDistrubution(){
+        $params = input('post.');
+        $task_id = input('post.task_id', -1);
+
+        $ret = ['errorcode' => 0, 'msg' => ''];
+
+        if($task_id == -1){
+            $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
+        }
+        $ret['task_id'] = $task_id;
+
+        // 查找逻辑， 未实现
+
+        $trend = [];
+        $trend[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+        $trend[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+        $trend[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+        $trend[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+        $ret['data'] = $trend;
         $this->jsonReturn($ret);
     }
 }
