@@ -456,7 +456,7 @@
                     params['endtime_str'] = moment().format('YYYY-MM-DD');
                 }
                 var chartDom = document.getElementById('trend_line_chart');
-                var myChart = echarts.init(chartDom);
+                var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 myChart.showLoading();
                 console.log(params);
                 $.post('__PRO_PATH__/DataAnalysis/getTrendLine', params, function (res) {
@@ -553,7 +553,7 @@
             },
             showNatuePie: function () {
                 var chartDom = document.getElementById('nature_pie_chart');
-                var myChart = echarts.init(chartDom);
+                var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 var option = {
                     tooltip: {
                         trigger: 'item',

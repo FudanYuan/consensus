@@ -127,6 +127,7 @@ class DataAnalysis extends Common
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
         }
+        $ret['task_id'] = $task_id;
         if($nature == 1){
             $cond['nature'] = ['=', '负面'];
         }
@@ -165,6 +166,7 @@ class DataAnalysis extends Common
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
         }
+        $ret['task_id'] = $task_id;
         /**
          * 1. $stime == $etime: 最近24小时(比如现在是12点)
          *    xAixs = [12:00, 13:00, 14:00, 15:00, ···, 00:00, 01:00, 02:00, ···,  09:00, 10:00, 11:00, 12:00];

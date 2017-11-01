@@ -40,6 +40,7 @@
                 </div>
             </form>
         </div>
+
         <div :style="{display: active.trend == 0 ? 'inline' : 'none'}">
             <div id="publicTrend_line_chart" style="height: 400px; width: 100%;"></div>
             <table class="table"></table>
@@ -55,6 +56,8 @@
 {include file="Common/calendar" /}
 {include file="Common/bottom" /}
 <script src="__PUBLIC__/js/datapicker/daterangepicker.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script>
     $('#consensus-nav-data-analysis').addClass('active open');
     $('#consensus-nav-data-analysis-sub1').addClass('active');
@@ -105,6 +108,7 @@
                 }, function (start, end, label) { // 格式化日期显示框
                     $('#begintime_str').val(start.format('YYYY-MM-DD'));
                     $('#endtime_str').val(end.format('YYYY-MM-DD'));
+                    submit();
                 }).next().on('click', function () {
             $(this).prev().focus();
         });
@@ -117,34 +121,38 @@
             task_id: -1,
             params: {},
             trend: [],
+            dateTimeRange: '',
             active:{
                 trend: 0
+            }
+        },
+        watch:{
+            dateTimeRange: function (val) {
+                var type = this.active['trend']==0 ? 'public' : 'media';
+                getParams();
+                this.showTrendLine(type);
             }
         },
         methods:{
             changeSection: function (value) {
                 this.active['trend'] = value;
-                if(value == 0){
-                    this.showTrendLine('public');
-                } else{
-                    this.showTrendLine('media');
-                }
+                this.showTrendLine();
             },
-            showTrendLine: function (trend_type) {
-                vm.params['obj'] = trend_type;
-                var dom = (trend_type == 'public' ? 'publicTrend_line_chart' : 'mediaTrend_line_chart');
-                console.log(dom);
+            showTrendLine: function () {
+                vm.params['obj'] = vm.active['trend'] == 0 ? 'public' : 'media';
+                var dom = (vm.params['obj'] == 'public' ? 'publicTrend_line_chart' : 'mediaTrend_line_chart');
                 var chartDom = document.getElementById(dom);
-                var myChart = echarts.init(chartDom);
+                var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 myChart.showLoading();
                 $.post('__PRO_PATH__/DataAnalysis/getTrendLine', vm.params, function (res) {
                     if(res.errorcode==0){
                         vm.trend = res.data;
+                        vm.task_id = res.task_id;
                         var xAixs = res.xAixs;
                         var option = {};
                         var legend = [];
                         var data = [];
-                        switch(trend_type){
+                        switch(vm.params['obj']){
                             case 'public':{
                                 for(var i=0;i<vm.trend.length;i++){
                                     var type = vm.trend[i]['type'];
@@ -288,7 +296,7 @@
                         window.onresize = myChart.resize();
                     }
                 });
-            }
+            },
         },
         filters:{
 
@@ -300,7 +308,7 @@
     // 异步提交数据
     function submit() {
         getParams();
-        vm.showTrendLine('public');
+        vm.showTrendLine();
     }
 
     // 获取参数
