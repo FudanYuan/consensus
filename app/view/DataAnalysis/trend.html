@@ -30,21 +30,22 @@
                 <a href="javascript:;" @click="changeSection(1)" :class="active.trend == 1 ? 'params-active' : 'params'">媒体趋势</a>
             </div>
             <hr/>
-            <form class="form-inline" method="post" id="main-form">
+
+            <form class="form-inline" id="main-form">
                 <div class="form-group">
                     <label for="dateTimeRange">时间范围：</label>
                     <input type="text" class="form-control date-picker" id="dateTimeRange" value="" style="width: 190px"/>
-                    <input type="hidden" name="begintime_str" value=""/>
-                    <input type="hidden" name="endtime_str" value=""/>
+                    <input type="hidden" name="begintime_str" id="begintime_str" value=""/>
+                    <input type="hidden" name="endtime_str" id="endtime_str" value=""/>
                 </div>
             </form>
         </div>
-        <div v-if="active.trend == 0">
-            <div id="publicTrend-line-chart" style="height: 300px;">舆情分析</div>
+        <div :style="{display: active.trend == 0 ? 'inline' : 'none'}">
+            <div id="publicTrend_line_chart" style="height: 400px; width: 100%;"></div>
             <table class="table"></table>
         </div>
-        <div v-if="active.trend == 1">
-            <div id="mediaTrend-line-chart" style="height: 300px;">媒体分析</div>
+        <div :style="{display: active.trend == 1 ? 'inline' : 'none'}">
+            <div id="mediaTrend_line_chart" style="height: 400px; width: 100%;"></div>
         </div>
     </div>
 </div><!-- /main-container -->
@@ -78,7 +79,7 @@
                         '今日': [moment().startOf('day'), moment()],
                         '昨日': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
                         '最近7日': [moment().subtract(6, 'days'), moment()],
-                        '最近30日': [moment().subtract(29, 'days'), moment()],
+                        '最近30日': [moment().subtract(29, 'days'), moment()]
                         // '本月': [moment().startOf("month"), moment().endOf("month")],
                         // '上个月': [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
                         // '最近90日': [moment().subtract('days', 89), moment()],
@@ -115,6 +116,8 @@
         data: {
             task_id: -1,
             params: {},
+            public: [],
+            media: [],
             active:{
                 trend: 0
             }
@@ -122,6 +125,104 @@
         methods:{
             changeSection: function (value) {
                 this.active['trend'] = value;
+                if(value == 0){
+                    this.showTrendLine('public');
+                } else{
+                    this.showTrendLine('media');
+                }
+            },
+            showTrendLine: function (type) {
+                vm.params['obj'] = type;
+                var dom = (type == 'public' ? 'publicTrend_line_chart' : 'mediaTrend_line_chart');
+                console.log(dom);
+                var chartDom = document.getElementById(dom);
+                var myChart = echarts.init(chartDom);
+                myChart.showLoading();
+                $.post('__PRO_PATH__/DataAnalysis/getTrendLine', vm.params, function (res) {
+                    if(res.errorcode==0){
+                        myChart.hideLoading();
+                        vm.trend = res.data;
+                        var xAixs = res.xAixs;
+                        switch(type){
+                            case 'public':{
+                                break;
+                            }
+                            case 'media':{
+                                var media_types = [];
+                                var data = [];
+                                for(var i=0;i<vm.trend.length;i++){
+                                    var media_type = vm.trend[i]['media_type'];
+                                    var d = vm.trend[i]['data'];
+                                    media_types.push(media_type);
+                                    if(i == vm.trend-1){
+                                        data.push({
+                                            name: media_type,
+                                            type:'line',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'top'
+                                                }
+                                            },
+                                            areaStyle: {normal: {}},
+                                            data: d
+                                        });
+                                    } else {
+                                        data.push({
+                                            name: media_type,
+                                            type:'line',
+                                            stack: '总量',
+                                            areaStyle: {normal: {}},
+                                            data: d
+                                        });
+                                    }
+                                }
+                                var option = {
+                                    backgroundColor: '#fff',
+                                    tooltip : {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'cross',
+                                            label: {
+                                                backgroundColor: '#6a7985'
+                                            }
+                                        }
+                                    },
+                                    legend: {
+                                        data: media_types
+                                    },
+
+                                    grid: {
+                                        left: '1%',
+                                        right: '3%',
+                                        bottom: '1%',
+                                        containLabel: true
+                                    },
+                                    xAxis : [
+                                        {
+                                            type : 'category',
+                                            boundaryGap : false,
+                                            data: xAixs
+                                        }
+                                    ],
+                                    yAxis : [
+                                        {
+                                            type : 'value'
+                                        }
+                                    ],
+                                    series : data
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChart.setOption(option);
+                                break;
+                            }
+                        }
+
+                        //用于使chart自适应高度和宽度
+                        window.onresize = myChart.resize();
+                    }
+                });
             }
         },
         filters:{
@@ -129,15 +230,12 @@
         }
     });
 
-    //submit();
+    submit();
 
     // 异步提交数据
     function submit() {
         getParams();
-        vm.params['task_id'] = vm.task_id;
-        $.post('__RPO_PATH__/DataAnalysis/getTrend', vm.params, function (res) {
-            
-        });
+        vm.showTrendLine('public');
     }
 
     // 获取参数
@@ -146,6 +244,7 @@
         $.each(data, function () {
             vm.params[this.name] = this.value;
         });
+        vm.params['task_id'] = vm.task_id;
         console.log(JSON.stringify(vm.params));
     }
 </script>

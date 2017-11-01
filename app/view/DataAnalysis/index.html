@@ -417,6 +417,8 @@
 </div><!-- /main-container -->
 {include file="Common/bottom" /}
 <script src="__PUBLIC__/js/datapicker/daterangepicker.js"></script>
+<script src="__PUBLIC__/js/moment.js"></script>
+<script src="__PUBLIC__/js/word-cloud/js/require.js"></script>
 <script>
     $('#consensus-nav-data-analysis').addClass('active open');
     $('#consensus-nav-data-analysis-sub0').addClass('active');
@@ -439,13 +441,28 @@
         methods:{
             showTrendLine: function (value) {
                 this.active['timeRange'] = value;
+                var params = {};
+                params['obj'] = 'media';
+                params['task_id'] = this.task_id;
+
+                if(value == 0) { // 最近24时
+                    params['begintime_str'] = moment().startOf('day').format('YYYY-MM-DD');
+                    params['endtime_str'] = moment().format('YYYY-MM-DD');
+                } else if (value == 1){
+                    params['begintime_str'] = moment().subtract(6, 'days').format('YYYY-MM-DD');
+                    params['endtime_str'] = moment().format('YYYY-MM-DD');
+                } else {
+                    params['begintime_str'] = moment().subtract(29, 'days').format('YYYY-MM-DD');
+                    params['endtime_str'] = moment().format('YYYY-MM-DD');
+                }
                 var chartDom = document.getElementById('trend_line_chart');
                 var myChart = echarts.init(chartDom);
                 myChart.showLoading();
-                $.post('__PRO_PATH__/DataAnalysis/getTrendLine', {task_id: this.task_id, timeRange: value}, function (res) {
+                console.log(params);
+                $.post('__PRO_PATH__/DataAnalysis/getTrendLine', params, function (res) {
                     if(res.errorcode==0){
                         vm.trend = res.data;
-                        var xAixs = res.timeRange;
+                        var xAixs = res.xAixs;
                         var media_types = [];
                         var data = [];
                         for(var i=0;i<vm.trend.length;i++){
@@ -604,8 +621,7 @@
     // 异步提交数据
     function submit() {
         console.log('second');
-        vm.showTrendLine(0);
-        vm.getPublicList(0);
+        //getWordCloud();
         $.post('__PRO_PATH__/DataAnalysis/getAnalysisIndex', {task_id: vm.task_id}, function (res) {
             if (res.errorcode == 0) {
                 vm.task_id = res.task_id;
@@ -616,52 +632,53 @@
                 console.log(vm.task_id);
             }
         });
+
+        vm.showTrendLine(0);
+        vm.getPublicList(0);
     }
 
     submit();
-</script>
 
-<script src="__PUBLIC__/js/word-cloud/js/require.js"></script>
-<script>
-    require.config({
-        baseUrl:"__PUBLIC__/js/word-cloud/js/wordcloud",
-        paths: {
-            jquery:'../jquery-1.11.1.min',
-            wCloud:"wordcloud"
-        }
-    });
+    function getWordCloud() {
+        require.config({
+            baseUrl:"__PUBLIC__/js/word-cloud/js/wordcloud",
+            paths: {
+                jquery:'../jquery-1.11.1.min',
+                wCloud:"wordcloud"
+            }
+        });
 
-    require(["jquery","wCloud"], function($,w) {
-        //ource-out
-        var wcld = w;
-        var option = {
-            styleType:"vertical",//normal ；vertical tilt（45°）
-            data:[
-                {"word":"这里","frq":22,"otherMsg":"tip Messege"},
-                {"word":"没有","frq":23,"otherMsg":"tip Messege"},
-                {"word":"旅行社","frq":14,"otherMsg":"tip Messege"},
-                {"word":"厦门","frq":43,"otherMsg":"tip Messege"},
-                {"word":"会展中心","frq":25,"otherMsg":"tip Messege"},
-                {"word":"鼓浪屿","frq":14,"otherMsg":"tip Messege"},
-                {"word":"旅行社","frq":14,"otherMsg":"tip Messege"},
-                {"word":"这里","frq":12,"otherMsg":"tip Messege"},
-                {"word":"没有","frq":13,"otherMsg":"tip Messege"},
-                {"word":"这里","frq":12,"otherMsg":"tip Messege"},
-                {"word":"没有","frq":13,"otherMsg":"tip Messege"},
-                {"word":"这里","frq":12,"otherMsg":"tip Messege"},
-                {"word":"没有","frq":13,"otherMsg":"tip Messege"},
-                {"word":"这里","frq":22,"otherMsg":"tip Messege"},
-                {"word":"没有","frq":13,"otherMsg":"tip Messege"},
-                {"word":"这里","frq":12,"otherMsg":"tip Messege"},
-                {"word":"没有","frq":13,"otherMsg":"tip Messege"},
-                {"word":"公交车","frq":17,"otherMsg":"tip Messege"},
-                {"word":"喜欢","frq":24,"otherMsg":"tip Messege"},
-                {"word":"大海","frq":18,"otherMsg":"tip Messege"},
-                {"word":"大海","frq":28,"otherMsg":"tip Messege"}
-            ]
-        };
-        var wd = wcld.init($("#wordcloud")[0]);
-        console.log(wd);
-        wd = wd.setOption(option);
-    });
+        require(["jquery","wCloud"], function($,w) {
+            //ource-out
+            var wcld = w;
+            var option = {
+                styleType:"vertical",//normal ；vertical tilt（45°）
+                data:[
+                    {"word":"这里","frq":22,"otherMsg":"tip Messege"},
+                    {"word":"没有","frq":23,"otherMsg":"tip Messege"},
+                    {"word":"旅行社","frq":14,"otherMsg":"tip Messege"},
+                    {"word":"厦门","frq":43,"otherMsg":"tip Messege"},
+                    {"word":"会展中心","frq":25,"otherMsg":"tip Messege"},
+                    {"word":"鼓浪屿","frq":14,"otherMsg":"tip Messege"},
+                    {"word":"旅行社","frq":14,"otherMsg":"tip Messege"},
+                    {"word":"这里","frq":12,"otherMsg":"tip Messege"},
+                    {"word":"没有","frq":13,"otherMsg":"tip Messege"},
+                    {"word":"这里","frq":12,"otherMsg":"tip Messege"},
+                    {"word":"没有","frq":13,"otherMsg":"tip Messege"},
+                    {"word":"这里","frq":12,"otherMsg":"tip Messege"},
+                    {"word":"没有","frq":13,"otherMsg":"tip Messege"},
+                    {"word":"这里","frq":22,"otherMsg":"tip Messege"},
+                    {"word":"没有","frq":13,"otherMsg":"tip Messege"},
+                    {"word":"这里","frq":12,"otherMsg":"tip Messege"},
+                    {"word":"没有","frq":13,"otherMsg":"tip Messege"},
+                    {"word":"公交车","frq":17,"otherMsg":"tip Messege"},
+                    {"word":"喜欢","frq":24,"otherMsg":"tip Messege"},
+                    {"word":"大海","frq":18,"otherMsg":"tip Messege"},
+                    {"word":"大海","frq":28,"otherMsg":"tip Messege"}
+                ]
+            };
+            var wd = wcld.init($("#wordcloud")[0]);
+            wd = wd.setOption(option);
+        });
+    }
 </script>
