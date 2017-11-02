@@ -11,9 +11,9 @@
         <div class="form-wrapper">
             <form class="form-horizontal" method="post" id="new-task-form">
                 <div class="form-group {$errors.name ?= 'has-error'}">
-                    <label for="new-task-form-loop" class="col-sm-2 control-label">任务名称：</label>
+                    <label for="new-task-form-name" class="col-sm-2 control-label">任务名称：</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="text" name="name" value="" placeholder="请输入任务名称">
+                        <input class="form-control" id="new-task-form-name" type="text" name="name" value="" placeholder="请输入任务名称">
                         <p class="help-block">{$errors.name??''}</p>
                     </div>
                 </div>

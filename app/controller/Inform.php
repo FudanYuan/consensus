@@ -69,4 +69,74 @@ class Inform extends Common
         }
         $this->jsonReturn($ret);
     }
+
+    /**
+     * 新建
+     */
+    public function create(){
+        $params = input('post.');
+        $cond = [];
+        $cond['id'] = ['<>', $this->getUserId()];
+        $target_users = D('UserAdmin')->getList($cond);
+        if(!empty($params)) {
+            $data = [];
+            $ret = ['code' => 2, 'msg' => '成功'];
+            $title = input('post.title', '');
+            $priority = input('post.priority', '');
+            if (!isset($params['target_user_ids'])) {
+                $params['target_user_ids'] = [];
+            }
+            if (!isset($params['content'])){
+                $params['content'] = '';
+            }
+
+            $data['source_user_id'] = $this->getUserId();
+            $data['title'] = $title;
+            $data['content'] = $params['content'];
+            $data['operation'] = '查看';
+            $data['priority'] = $priority;
+            $data['status'] = 1;
+
+            if(!empty($params['target_user_ids'])){
+                for($i=0;$i<count($params['target_user_ids']);$i++){
+                    $data['target_user_id'] = $params['target_user_ids'][$i];
+                    // 添加Inform
+                    $res_inform = D('Inform')->addData($data);
+                    if (!empty($res_inform['errors'])) {
+                        $ret['code'] = 2;
+                        $ret['msg'] = '新建失败';
+                        $ret['errors'] = $res_inform['errors'];
+                        $this->jsonReturn($ret);
+                    }
+                }
+                $ret['data'] = count($params['target_user_ids']);
+                $log['user_id'] = $this->getUserId();
+                $log['IP'] = $this->getUserIp();
+                $log['section'] = '通知公告';
+                $log['action_descr'] = '新建通知';
+                D('OperationLog')->addData($log);
+                $this->jsonReturn($ret);
+            }
+            else{
+                $data['target_user_id'] = '';
+                // 添加Inform
+                $res_inform = D('Inform')->addData($data);
+                if (!empty($res_inform['errors'])) {
+                    $ret['code'] = 2;
+                    $ret['msg'] = '新建失败';
+                    $ret['errors'] = $res_inform['errors'];
+                    $ret['data'] = $data;
+                    $this->jsonReturn($ret);
+                }
+                $ret['code'] = 2;
+                $ret['msg'] = '新建失败';
+                $ret['errors'] = $res_inform['errors'];
+                $ret['data'] = $data;
+            }
+
+        }
+        return view('', ['target_users' => $target_users]);
+    }
+
+
 }
