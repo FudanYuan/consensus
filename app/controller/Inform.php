@@ -80,7 +80,7 @@ class Inform extends Common
         $target_users = D('UserAdmin')->getList($cond);
         if(!empty($params)) {
             $data = [];
-            $ret = ['code' => 1, 'msg' => '成功'];
+            $ret = ['code' => 0, 'msg' => '成功'];
             $title = input('post.title', '');
             $priority = input('post.priority', '');
             if (!isset($params['target_user_ids'])) {
@@ -94,14 +94,13 @@ class Inform extends Common
             $data['title'] = $title;
             $data['content'] = $params['content'];
             $data['operation'] = '查看';
-            $data['priority'] = $priority;
+            $data['priority'] = (int)$priority;
             $data['status'] = 0;
-
             $ret['data'] = [];
             if(!empty($params['target_user_ids'])){
                 for($i=0;$i<count($params['target_user_ids']);$i++){
-                    $data['target_user_id'] = $params['target_user_ids'][$i];
-                    array_push($ret['data'],$params['target_user_ids'][$i]);
+                    $data['target_user_id'] = (int)$params['target_user_ids'][$i];
+                    array_push($ret['data'], $data);
                     // 添加Inform
                     $res_inform = D('Inform')->addData($data);
                     if (!empty($res_inform['errors'])) {
