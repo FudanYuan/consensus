@@ -55,6 +55,21 @@ class DataMonitor extends Model
     }
 
     /**
+     * 获取舆情属性数量
+     * @param $cond
+     * @return mixed
+     */
+    public function getNatureNum($cond){
+        if(!isset($cond['status'])){
+            $cond['status'] = ['<>', 2];
+        }
+        $res = $this->field('count(id) as natureNum')
+            ->where($cond)
+            ->select();
+        return $res[0]['natureNum'];
+    }
+
+    /**
      * 获取舆情列表
      * @param $cond_or
      * @param $cond_and

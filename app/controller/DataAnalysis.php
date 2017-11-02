@@ -109,10 +109,16 @@ class DataAnalysis extends Common
         $index[2] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $ret['index'] = $index;
 
+
         $nature = [];
-        $nature[0] = ['name' => '正面', 'value' => 12000];
-        $nature[1] = ['name' => '中立', 'value' => 1200];
-        $nature[2] = ['name' => '负面', 'value' => 2000];
+        $nature_name = ['正面','负面','中立'];
+        $i = 0;
+        foreach ($nature_name as $nv){
+            $cond['nature'] = ['=',$nv];
+            $nature_value = D('DataMonitor')->getNatureNum($cond);
+            $nature[$i] = ['name' => $nv, 'value' => $nature_value];
+            $i++;
+        }
         $ret['nature'] = $nature;
 
         $events = [];
@@ -128,6 +134,11 @@ class DataAnalysis extends Common
         $events[9] = ['id' => 10, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
         $ret['event'] = $events;
         $this->jsonReturn($ret);
+
+        //        $nature = [];
+//        $nature[0] = ['name' => '正面', 'value' => 1200];
+//        $nature[1] = ['name' => '中立', 'value' => 120];
+//        $nature[2] = ['name' => '负面', 'value' => 120];
     }
 
     /**
