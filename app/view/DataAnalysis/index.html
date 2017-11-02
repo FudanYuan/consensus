@@ -426,7 +426,7 @@
     var vm = new Vue({
         el: '#analysisIndex',
         data: {
-            task_id: -1,
+            task_id: {$params.task_id},
             index: [],
             nature: {},
             trend: [],
@@ -643,7 +643,9 @@
         vm.getPublicList(0);
     }
 
-    submit();
+    if(getTaskList()){
+        submit();
+    }
 
     function getWordCloud() {
         require.config({

@@ -35,8 +35,8 @@
                 <div class="form-group">
                     <label for="dateTimeRange">时间范围：</label>
                     <input type="text" class="form-control date-picker" id="dateTimeRange" value="" style="width: 190px"/>
-                    <input type="hidden" name="begintime_str" id="begintime_str" value=""/>
-                    <input type="hidden" name="endtime_str" id="endtime_str" value=""/>
+                    <input type="hidden" name="begintime_str" id="begintime_str" :value="begintime_str"/>
+                    <input type="hidden" name="endtime_str" id="endtime_str" :value="endtime_str"/>
                 </div>
             </form>
         </div>
@@ -118,9 +118,11 @@
     var vm = new Vue({
         el: '#analysisTrend',
         data: {
-            task_id: -1,
+            task_id: {$params['task_id']},
             params: {},
             trend: [],
+            begintime_str: moment().subtract(6, 'days').format('YYYY-MM-DD'),
+            endtime_str: moment().format('YYYY-MM-DD'),
             active:{
                 type: 0
             }
@@ -128,6 +130,7 @@
         methods:{
             changeSection: function (value) {
                 this.active['type'] = value;
+                getParams();
                 this.showTrendLine();
             },
             showTrendLine: function () {
@@ -295,7 +298,9 @@
         }
     });
 
-    submit();
+    if(getTaskList()){
+        submit();
+    }
 
     // 异步提交数据
     function submit() {

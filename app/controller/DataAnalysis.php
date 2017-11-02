@@ -17,7 +17,8 @@ class DataAnalysis extends Common
      */
     public function index(){
         $params = input('get.');
-        return view('', []);
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -25,7 +26,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function trend(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -33,7 +36,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function searchwords(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -41,7 +46,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function opinion(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -49,7 +56,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function media(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -57,7 +66,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function spread(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -65,7 +76,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function audience(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**
@@ -73,7 +86,9 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function event(){
-        return view('', []);
+        $params = input('get.');
+        $task_id = input('get.task_id');
+        return view('', ['params' => $params]);
     }
 
     /**

@@ -182,24 +182,6 @@
         return s;
     }
 
-    $.post('__PRO_PATH__/Task/getTaskList', {}, function (res) {
-        if(res.errorcode==0){
-            $('#analysis_task').html(res.data[0]['name']);
-            $('#analysis_task_id').html(res.data[0]['id']);
-            console.log('first');
-            var content = '<li style="font-size: large;">任务列表</li>';
-            for(var i=0;i<res.data.length;i++){
-                content += "<li>" +
-                        "<a onclick=\"changeTask('" + res.data[i]['name']  + "', "+
-                        res.data[i]['id'] +", function() { submit(); })\">"+
-                        res.data[i]['name'] +
-                        "</a>" +
-                        "</li>";
-            }
-            $('#tasks-list').html(content);
-        }
-    });
-
     $('#analysis_task').click(function () {
         $('#tasks-list-sidebar-menu').toggle().animate({"left":240}, 500);
         var taskIcon = $('.analysis-tasks-icon i');
@@ -223,19 +205,47 @@
         } else{
             taskIcon.removeClass().addClass('fa fa-angle-left');
         }
+        changeAnalysisUrl(task_id);
+        if(arguments.length == 3){callback();}
+    }
+
+    // 修改链接
+    function changeAnalysisUrl(task_id) {
         $('#consensus-nav-data-analysis-sub0 a').attr("href","__PRO_PATH__/DataAnalysis/index?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub1 a').attr("href","__PRO_PATH__/DataAnalysis/trend?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub2 a').attr("href","__PRO_PATH__/DataAnalysis/searchwords?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub3 a').attr("href","__PRO_PATH__/DataAnalysis/opinion?task_id="+task_id);
-        $('#consensus-nav-data-analysis-sub4 a').attr("href","__PRO_PATH__/DataAnalysis/event?media="+task_id);
+        $('#consensus-nav-data-analysis-sub4 a').attr("href","__PRO_PATH__/DataAnalysis/media?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub5 a').attr("href","__PRO_PATH__/DataAnalysis/spread?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub6 a').attr("href","__PRO_PATH__/DataAnalysis/audience?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub7 a').attr("href","__PRO_PATH__/DataAnalysis/event?task_id="+task_id);
-        if(arguments.length == 3){callback();}
     }
 
+    // 获取task任务列表
+    function getTaskList() {
+        $.post('__PRO_PATH__/Task/getTaskList', {}, function (res) {
+            if(res.errorcode==0){
+                $('#analysis_task').html(res.data[0]['name']);
+                $('#analysis_task_id').html(res.data[0]['id']);
+                changeAnalysisUrl(res.data[0]['id']);
+                console.log('first');
+                var content = '<li style="font-size: large;">任务列表</li>';
+                for(var i=0;i<res.data.length;i++){
+                    content += "<li>" +
+                            "<a onclick=\"changeTask('" + res.data[i]['name']  + "', "+
+                            res.data[i]['id'] +", function() { submit(); })\">"+
+                            res.data[i]['name'] +
+                            "</a>" +
+                            "</li>";
+                }
+                $('#tasks-list').html(content);
+            }
+        });
+        return true;
+    }
 
     $('#dataAnalysis').click(function () {
         var task_id = $('#analysis_task_id').html();
+        getTaskList();
     });
 </script>

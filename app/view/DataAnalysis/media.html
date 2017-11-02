@@ -24,16 +24,15 @@
             <li>媒体分布</li>
         </ul>
         <!--:style="{display: active.trend == 0 ? 'inline' : 'none'}"-->
-        <div class="row">
-            <div class="col-lg-8">
-                <div id="media_pie_chart" style="height: 400px;"></div>
-            </div>
-            <div class="col-lg-4">
-                <div id="media_list" style="height: 400px;">
-                    <div class="list-search">
-                        <a href="javascript:;" @click="changeSection(0)" :class="active.type == 0 ? 'params-active' : 'params'">媒体类型</a>
-                        <a href="javascript:;" @click="changeSection(1)" :class="active.type == 1 ? 'params-active' : 'params'">媒体来源</a>
-                    </div>
+        <div class="col-lg-8" style="background-color: #fff">
+            <div id="media_pie_chart" style="height: 400px;"></div>
+        </div>
+
+        <div class="col-lg-4" style="background-color: #fff">
+            <div id="media_list" style="height: 400px;">
+                <div class="list-search">
+                    <a href="javascript:;" @click="changeSection(0)" :class="active.type == 0 ? 'params-active' : 'params'">媒体类型</a>
+                    <a href="javascript:;" @click="changeSection(1)" :class="active.type == 1 ? 'params-active' : 'params'">媒体来源</a>
                 </div>
             </div>
         </div>
@@ -53,7 +52,7 @@
     var vm = new Vue({
         el: '#analysisMedia',
         data: {
-            task_id: -1,
+            task_id: {$params['task_id']},
             media: [],
             params: {},
             active:{
@@ -179,7 +178,9 @@
         }
     });
 
-    submit();
+    if(getTaskList()){
+        submit();
+    }
 
     // 异步提交数据
     function submit() {
