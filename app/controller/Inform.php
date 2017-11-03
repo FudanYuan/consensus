@@ -80,7 +80,7 @@ class Inform extends Common
         $target_users = D('UserAdmin')->getList($cond);
         if(!empty($params)) {
             $data = [];
-            $ret = ['code' => 0, 'msg' => '成功'];
+            $ret = ['code' => 1, 'msg' => '新建成功'];
             $title = input('post.title', '');
             $priority = input('post.priority', '');
             if (!isset($params['target_user_ids'])) {
@@ -96,19 +96,20 @@ class Inform extends Common
             $data['operation'] = '查看';
             $data['priority'] = (int)$priority;
             $data['status'] = 0;
-            $ret['data'] = [];
+
+            $dataSet = [];
             if(!empty($params['target_user_ids'])){
                 for($i=0;$i<count($params['target_user_ids']);$i++){
                     $data['target_user_id'] = (int)$params['target_user_ids'][$i];
-                    array_push($ret['data'], $data);
-                    // 添加Inform
-                    $res_inform = D('Inform')->addData($data);
-                    if (!empty($res_inform['errors'])) {
-                        $ret['code'] = 2;
-                        $ret['msg'] = '新建失败';
-                        $ret['errors'] = $res_inform['errors'];
-                        $this->jsonReturn($ret);
-                    }
+                    array_push($dataSet, $data);
+                }
+                // 添加Inform
+                $res_inform = D('Inform')->addAllData($dataSet);
+                if (!empty($res_inform['errors'])) {
+                    $ret['code'] = 2;
+                    $ret['msg'] = '新建失败';
+                    $ret['errors'] = $res_inform['errors'];
+                    $this->jsonReturn($ret);
                 }
                 $log['user_id'] = $this->getUserId();
                 $log['IP'] = $this->getUserIp();
@@ -125,13 +126,8 @@ class Inform extends Common
                     $ret['code'] = 2;
                     $ret['msg'] = '新建失败';
                     $ret['errors'] = $res_inform['errors'];
-                    $ret['data'] = $data;
-                    $this->jsonReturn($ret);
                 }
-                $ret['code'] = 2;
-                $ret['msg'] = '新建失败';
-                $ret['errors'] = $res_inform['errors'];
-                $ret['data'] = $data;
+                $this->jsonReturn($ret);
             }
 
         }

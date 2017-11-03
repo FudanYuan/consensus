@@ -727,10 +727,10 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
     /**
      * 保存多个数据到当前数据对象
-     * @access public
-     * @param array     $dataSet 数据
-     * @param boolean   $replace 是否自动识别更新和写入
-     * @return array|false
+     * @param $dataSet
+     * @param bool $replace
+     * @return array|bool
+     * @throws \Exception
      */
     public function saveAll($dataSet, $replace = true)
     {

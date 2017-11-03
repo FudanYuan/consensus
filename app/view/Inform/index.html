@@ -180,6 +180,14 @@
             info: function (index) {
                 console.log(index);
                 popupPreview(this.list[index]);
+                console.log(this.list[index]);
+                if(this.list[index]['status'] == 0){
+                    $.post('__PRO_PATH__/Inform/markRead', {ids: this.list[index]['id']}, function (res) {
+                        if (res['code'] == 1) {
+                            submit();
+                        }
+                    });
+                }
             },
             createInform: function () {
                 window.location.href = '__PRO_PATH__/Inform/create';

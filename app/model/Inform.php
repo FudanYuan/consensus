@@ -35,7 +35,7 @@ class Inform extends Model{
         }
         $res = $this->field('id,source_user_id,target_user_id,title,content,
         operation,priority,status,createtime')
-            ->order('status asc, priority asc, createtime desc')
+            ->order('priority asc, createtime desc')
             ->where($cond)
             ->select();
         return $res;
@@ -80,11 +80,26 @@ class Inform extends Model{
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)){
-            $data['createtime'] = time();
-            if(!isset($data['status']))
-                $data['status'] = 1;
             $this->save($data);
         }
+        return $ret;
+    }
+
+    /**
+     * 批量增加通知公告
+     * @param $dataSet
+     * @return array
+     */
+    public function addAllData($dataSet){
+        $ret = [];
+        foreach ($dataSet as $data) {
+            $errors = $this->filterField($data);
+            $ret['errors'] = $errors;
+            if(!empty($errors)){
+                return $ret;
+            }
+        }
+        $ret['result'] = $this->saveAll($dataSet);
         return $ret;
     }
 
