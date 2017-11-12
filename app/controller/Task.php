@@ -150,9 +150,6 @@ class Task extends Common{
                 D('OperationLog')->addData($log);
                 $task_id = $res_task['task_id'];
                 // 添加task_theme,
-                /**
-                 * 这里要修改一下逻辑，根据 匹配逻辑 选择添加的主题级别
-                 */
                 for ($i = 0; $i < count($theme); $i++) {
                     $theme_3_data = D('Theme')->getT3ByT2id($theme[$i]);
                     $task_theme_data = [];
