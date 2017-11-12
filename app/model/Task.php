@@ -17,13 +17,16 @@ class Task extends Model
     protected $table = 'vox_task';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'name','loop', 'accuracy','begintime', 'endtime', 'taskstatus', 'task_num',
-        'time_predict', 'status', 'createtime', 'updatetime'
+        'id', 'name', 'loop', 'match_accuracy', 'match_type', 'necessary_keywords',
+        'unnecessary_keywords', 'begintime', 'endtime', 'task_num', 
+        'quantity_complete', 'time_predict', 'taskstatus', 'status', 
+        'createtime', 'updatetime'
     );
     protected $type = [
         'id' => 'integer',
         'begintime' => 'integer',
         'accuracy' => 'integer',
+        'match_type' => 'integer',
         'endtime ' => 'integer',
         'taskstatus' => 'integer',
         'task_num' => 'integer',
@@ -191,7 +194,7 @@ class Task extends Model
      * @return int|string
      */
     private function  save_1($data){
-        $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'accuracy'=>$data['match_accuracy'],
+        $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'match_accuracy'=>$data['match_accuracy'],
             'begintime' => strtotime($data['begintime_str']),'status' => $data['status'],
             'task_num' => $data['task_num'],'time_predict' =>($data['task_num']*10000),
             'createtime' => $data['createtime'],'taskstatus' => 0];
@@ -220,7 +223,13 @@ class Task extends Model
             $errors['website'] = '采集媒体类型不能为空';
         }
         if(isset($data['name']) && !$data['name']){
-            $errors['name'] = '采集名字不能为空';
+            $errors['name'] = '任务名字不能为空';
+        }
+        if (isset($data['necessary_keywords']) && !$data['necessary_keywords']) {
+            $errors['necessary_keywords'] = '必要关键词不能为空';
+        }
+        if(isset($data['unnecessary_keywords']) && !$data['unnecessary_keywords']){
+            $errors['unnecessary_keywords'] = '非必要关键词不能为空';
         }
         return $errors;
     }

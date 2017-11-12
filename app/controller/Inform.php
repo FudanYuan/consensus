@@ -116,7 +116,6 @@ class Inform extends Common
                 $log['section'] = '通知公告';
                 $log['action_descr'] = '新建通知';
                 D('OperationLog')->addData($log);
-                $this->jsonReturn($ret);
             }
             else{
                 $data['target_user_id'] = '';
@@ -127,9 +126,9 @@ class Inform extends Common
                     $ret['msg'] = '新建失败';
                     $ret['errors'] = $res_inform['errors'];
                 }
-                $this->jsonReturn($ret);
             }
-
+            $ret['dataSet'] = $dataSet;
+            $this->jsonReturn($ret);
         }
         return view('', ['target_users' => $target_users]);
     }

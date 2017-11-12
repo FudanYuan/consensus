@@ -8,17 +8,17 @@
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/Task/index">舆情采集</a></li>
             <li>新建任务</li>
         </ul>
-        <div class="form-wrapper">
+        <div class="form-wrapper" id="task-create">
             <form class="form-horizontal" method="post" id="new-task-form">
-                <div class="form-group {$errors.name ?= 'has-error'}">
+                <div :class="['form-group', errors.name != '' ? 'has-error' : '']">
                     <label for="new-task-form-name" class="col-sm-2 control-label">任务名称：</label>
                     <div class="col-sm-4">
                         <input class="form-control" id="new-task-form-name" type="text" name="name" value="" placeholder="请输入任务名称">
-                        <p class="help-block">{$errors.name??''}</p>
+                        <p class="help-block">{{errors.name}}</p>
                     </div>
                 </div>
 
-                <div class="form-group {$errors.loop ?= 'has-error'}">
+                <div :class="['form-group', errors.loop != '' ? 'has-error' : '']">
                     <label for="new-task-form-loop" class="col-sm-2 control-label">爬取周期：</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="new-task-form-loop" name="loop">
@@ -27,11 +27,11 @@
                             <option value="1">每周</option>
                             <option value="2">每月</option>
                         </select>
-                        <p class="help-block">{$errors.loop??''}</p>
+                        <p class="help-block">{{errors.loop}}</p>
                     </div>
                 </div>
 
-                <div class="form-group {$errors.theme ?= 'has-error'}">
+                <div :class="['form-group', errors.theme != '' ? 'has-error' : '']">
                     <label for="new-task-form-theme" class="col-sm-2 control-label">爬取主题：</label>
                     <div class="col-sm-4">
                         <select multiple="multiple" class="multiple" id="new-task-form-theme" name="theme">
@@ -43,11 +43,11 @@
                             </optgroup>
                             {/foreach}
                         </select>
-                        <p class="help-block">{$errors.theme??''}</p>
+                        <p class="help-block">{{errors.theme}}</p>
                     </div>
                 </div>
 
-                <div class="form-group {$errors.website ?= 'has-error'}">
+                <div :class="['form-group', errors.website != '' ? 'has-error' : '']">
                     <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站：</label>
                     <div class="col-sm-4">
                         <select multiple="multiple" class="multiple" id="new-task-form-web" name="website">
@@ -55,16 +55,16 @@
                             <option value="{$website.type_id}">{$website.type_name}</option>
                             {/foreach}
                         </select>
-                        <p class="help-block">{$errors.website??''}</p>
+                        <p class="help-block">{{errors.website}}</p>
                     </div>
                 </div>
 
-                <div class="form-group {$errors.match_accuracy ?= 'has-error'}">
+                <div :class="['form-group', errors.match_accuracy != '' ? 'has-error' : '']">
                     <label for="new-task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
                     <div class="col-sm-4" id="new-task-form-accuracy">
                         <div class="radio inline-block">
                             <div class="custom-radio m-right-xs">
-                                <input type="radio" id="accuracy1" name="match_accuracy" value="1">
+                                <input type="radio" id="accuracy1" name="match_accuracy" value="1" checked>
                                 <label for="accuracy1"></label>
                             </div>
                             <div class="inline-block vertical-top">弱</div>
@@ -78,28 +78,96 @@
                         </div>
                         <div class="radio inline-block">
                             <div class="custom-radio m-right-xs">
-                                <input type="radio" id="accuracy3" name="match_accuracy" value="3" checked>
+                                <input type="radio" id="accuracy3" name="match_accuracy" value="3">
                                 <label for="accuracy3"></label>
                             </div>
                             <div class="inline-block vertical-top">强</div>
                         </div>
                     </div>
-                    <p class="help-block">{$errors.match_accuracy??''}</p>
+                    <p class="help-block">{{errors.match_accuracy}}</p>
                 </div>
 
+                <div :class="['form-group', errors.match_type != '' ? 'has-error' : '']">
+                    <label for="new-task-form-match_type" class="col-sm-2 control-label">匹配类型：</label>
+                    <div class="col-sm-4" id="new-task-form-match_type">
+                        <div class="radio inline-block">
+                            <div class="custom-radio m-right-xs">
+                                <input type="radio" id="match_type1" name="match_type" value="1" checked>
+                                <label for="match_type1"></label>
+                            </div>
+                            <div class="inline-block vertical-top">按主题</div>
+                        </div>
+                        <div class="radio inline-block">
+                            <div class="custom-radio m-right-xs">
+                                <input type="radio" id="match_type2" name="match_type" value="2">
+                                <label for="match_type2"></label>
+                            </div>
+                            <div class="inline-block vertical-top">按内容</div>
+                        </div>
+                    </div>
+                    <p class="help-block">{{errors.match_type}}</p>
+                </div>
 
-                <div class="form-group {$errors.begintime ?= 'has-error'}">
+                <div :class="['form-group', errors.necessary_keywords != '' ? 'has-error' : '']">
+                    <label for="addKeywords" class="col-sm-2 control-label">必要关键词：</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" v-model.trim="addKeywords"
+                               placeholder="在匹配过程中，只有存在必要关键词时才会保存" id="addKeywords">
+                    </div>
+                    <a href="javascript:;" class="col-sm-1 btn btn-success" @click="pushKeywords(1, addKeywords)">添加</a>
+                </div>
+
+                <div :class="['form-group', errors.necessary_keywords != '' ? 'has-error' : '']">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="keywords-content">
+                            <template  v-for="necessary_keyword in necessary_keywords">
+                                <div class="keyword-item">
+                                    <span>{{necessary_keyword}}</span>
+                                    <a href="javascript:;" class="keyword-del" @click="deleteKeyword(1, necessary_keyword)" :title="'删除 '+necessary_keyword">x</a>
+                                </div>
+                            </template>
+                        </div>
+                        <span class="help-block">{{errors.necessary_keywords}}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.unnecessary_keywords != '' ? 'has-error' : '']">
+                    <label for="addKeywords" class="col-sm-2 control-label">非必要关键词：</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" v-model.trim="addUnKeywords"
+                               placeholder="在匹配过程中，非必要关键词会增加匹配精度" id="addUnKeywords">
+                    </div>
+                    <a href="javascript:;" class="col-sm-1 btn btn-success" @click="pushKeywords(2, addUnKeywords)">添加</a>
+                </div>
+
+                <div :class="['form-group', errors.unnecessary_keywords != '' ? 'has-error' : '']">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="keywords-content">
+                            <template  v-for="unnecessary_keyword in unnecessary_keywords">
+                                <div class="keyword-item">
+                                    <span>{{unnecessary_keyword}}</span>
+                                    <a href="javascript:;" class="keyword-del" @click="deleteKeyword(2, unnecessary_keyword)" :title="'删除 '+unnecessary_keyword">x</a>
+                                </div>
+                            </template>
+                        </div>
+                        <span class="help-block">{{errors.unnecessary_keywords}}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.begintime_str != '' ? 'has-error' : '']">
                     <label for="new-task-form-stime" class="col-sm-2 control-label">开始时间：</label>
                     <div class="col-sm-4">
                         <input id="new-task-form-stime" name="begintime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">
-                        <p class="help-block">{$errors.begintime??''}</p>
+                        <p class="help-block">{{errors.begintime_str}}</p>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 lab-btns">
-                        <a class="btn btn-success" id="new-task-form-save">保存</a>
-                        <a id="form-cancel" class="btn btn-info">取消</a>
+                        <a class="btn btn-success" id="new-task-form-save" onclick="submit()">保存</a>
+                        <button id="form-cancel" class="btn btn-info" @click="cancel">取消</button>
                     </div>
                 </div>
             </form>
@@ -113,52 +181,115 @@
 <script>
     $('#consensus-nav-task').addClass('active open');
     $('#consensus-nav-task-sub1').addClass('active');
-    $(".multiple").multipleSelect({
-        filter: true,
-        multiple: true,
-        selectAll: true
-    });
 
-    $(function () {
-        $("#new-task-form-theme").multipleSelect("checkAll");
-        $("#new-task-form-web").multipleSelect("checkAll");
-    });
+    var vm = new Vue({
+        el: '#task-create',
+        data:{
+            addKeywords: '',
+            addUnKeywords: '',
+            necessary_keywords: [],
+            unnecessary_keywords: [],
+            params:{
 
-    $('#form-cancel').on('click', function(){
-        window.location.href = '__PRO_PATH__/Task/index';
-    });
-
-    $('#new-task-form-save').on('click', function(){
-        $('#new-task-form .form-group').removeClass('has-error');
-        $('#new-task-form .help-block').html('');
-        var params = {};
-        params['theme'] = [];
-        params['website'] = [];
-        var data = $('#new-task-form').serializeArray();
-        console.log(JSON.stringify(data));
-        $.each(data, function() {
-            if(this.name == 'theme' || this.name == 'website'){
-                params[this.name].push(this.value);
+            },
+            errors:{
+                theme: '',
+                website: '',
+                name: '',
+                loop: '',
+                match_accuracy: '',
+                match_type: '',
+                necessary_keywords: '',
+                unnecessary_keywords: '',
+                begintime_str: ''
             }
-            else{
-                params[this.name] = this.value;
-            }
-        });
-        console.log(JSON.stringify(params));
-        $.post('__PRO_PATH__/Task/create', params, function(res){
-            if(res.code == 1){
-                popWarn('新建成功');
+        },
+        mounted: function () {
+            $(".multiple").multipleSelect({
+                filter: true,
+                multiple: true,
+                selectAll: true
+            });
+            $(function () {
+                $("#new-task-form-theme").multipleSelect("checkAll");
+                $("#new-task-form-web").multipleSelect("checkAll");
+            });
+            $(".flatpickr").flatpickr({time_24hr:true});
+        },
+        methods:{
+            pushKeywords: function (type, value) {
+                switch (type){
+                    case 1:{
+                        if(value != ""){
+                            vm.necessary_keywords.push(value);
+                            vm.addKeywords = '';
+                            console.log(value);
+                        }
+                        break;
+                    }
+                    case 2:{
+                        if(value != ""){
+                            vm.unnecessary_keywords.push(value);
+                            vm.addUnKeywords = '';
+                            console.log(value);
+                        }
+                        break;
+                    }
+                }
+            },
+            deleteKeyword:function (type, item) {
+                console.log(item);
+                Array.prototype.remove = function(val) {
+                    var index = this.indexOf(val);
+                    if (index > -1) {
+                        this.splice(index, 1);
+                    }
+                };
+                switch (type){
+                    case 1:{
+                        vm.necessary_keywords.remove(item);
+                        break;
+                    }
+                    case 2:{
+                        vm.unnecessary_keywords.remove(item);
+                        break;
+                    }
+                }
+            },
+            cancel: function () {
                 window.location.href = '__PRO_PATH__/Task/index';
+            }
+        }
+    });
+    
+    function submit() {
+        getParams();
+        $.post('__PRO_PATH__/Task/create', vm.params, function(res){
+            if(res.code == 1){
+                popWarn('新建成功', '__PRO_PATH__/Task/index');
             }else if(res.code == 2){
                 $.each(res.errors, function(k, v){
-                    if(k == 'begintime' || k == 'endtime') k += '_str';
-                    var obj = k == 'all' ? $('#new-task-form-all') : $('#new-task-form [name="'+k+'"]');
-                    obj.siblings('.help-block').html(v);
-                    obj.parent().addClass('has-error');
+                    vm.errors[k] = v;
                 });
             }
         });
-    });
+    }
+    
+    function getParams() {
+        vm.params['theme'] = [];
+        vm.params['website'] = [];
+        var data = $('#new-task-form').serializeArray();
+        $.each(data, function() {
+            if(this.name == 'theme' || this.name == 'website'){
+                vm.params[this.name].push(this.value);
+            }
+            else{
+                vm.params[this.name] = this.value;
+            }
+        });
+        vm.params['necessary_keywords'] = vm.necessary_keywords.join('-');
+        vm.params['unnecessary_keywords'] = vm.unnecessary_keywords.join('-');
+        console.log(JSON.stringify(vm.params));
+    }
 
-    $(".flatpickr").flatpickr({time_24hr:true});
 </script>

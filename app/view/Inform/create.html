@@ -107,8 +107,7 @@
                 getParams();
                 $.post('__PRO_PATH__/Inform/create', vm.params, function(res){
                     if(res.code == 1){
-                        popWarn('新建成功');
-                        window.location.href = '__PRO_PATH__/Inform/index';
+                        popWarn('新建成功', '__PRO_PATH__/Inform/index');
                     }else if(res.code == 2){
                         $.each(res.errors, function(k, v){
                             vm.errors[k] = v;
