@@ -195,6 +195,8 @@ class Task extends Model
      */
     private function  save_1($data){
         $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'match_accuracy'=>$data['match_accuracy'],
+            'match_type'=>$data['match_type'],'necessary_keywords'=>$data['necessary_keywords'],
+            'unnecessary_keywords'=>$data['unnecessary_keywords'],
             'begintime' => strtotime($data['begintime_str']),'status' => $data['status'],
             'task_num' => $data['task_num'],'time_predict' =>($data['task_num']*10000),
             'createtime' => $data['createtime'],'taskstatus' => 0];
