@@ -25,7 +25,7 @@ class Task extends Model
     protected $type = [
         'id' => 'integer',
         'begintime' => 'integer',
-        'accuracy' => 'integer',
+        'match_accuracy' => 'integer',
         'match_type' => 'integer',
         'endtime ' => 'integer',
         'taskstatus' => 'integer',
