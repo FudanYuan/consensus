@@ -21,36 +21,36 @@
             </form>
         </div>
         <div class="list-btns">
-            {if condition="authority('Theme_add')"}
+            {if condition="authority('ThemeAdd')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     新建<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu pull-left" role="menu">
-                    {if condition="authority('Theme1_add')"}
+                    {if condition="authority('Theme1Add')"}
                     <li><a href="javascript:;" id="addFirstItem">一级主题</a></li>
                     {/if}
-                    {if condition="authority('Theme2_add')"}
+                    {if condition="authority('Theme2Add')"}
                     <li><a href="javascript:;" id="addSecondItem">二级主题</a></li>
                     {/if}
-                    {if condition="authority('Theme3_add')"}
+                    {if condition="authority('Theme3Add')"}
                     <li><a href="javascript:;" id="addThirdItem">三级主题</a></li>
                     {/if}
                 </ul>
             </div>
             {/if}
-            {if condition="authority('Theme_del')"}
+            {if condition="authority('ThemeRemove')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-default" id="removeItem">删除</button>
             </div>
             {/if}
 
-            {if condition="authority('Theme_export')"}
+            {if condition="authority('ThemeExport')"}
             <div class="btn-group fr">
                 <a href="__PRO_PATH__/Theme/export" target="_blank" type="button" class="btn btn-default">导出</a>
             </div>
             {/if}
-            {if condition="authority('Theme_import')"}
+            {if condition="authority('ThemeImport')"}
             <div class="btn-group fr">
                 <button type="button" class="btn btn-default" id="importItem">导入</button>
             </div>
@@ -93,7 +93,7 @@
                 <td>{$model.t2_name}</td>
                 <td>{$model.t3_name}</td>
                 <td>
-                    {if condition="authority('Theme_edit')"}
+                    {if condition="authority('ThemeEdit')"}
                     <a href="__PRO_PATH__/Theme/edit?id={$model.t3_id}&page={$cond.page ?? ''}">编辑</a>
                     {/if}
                 </td>

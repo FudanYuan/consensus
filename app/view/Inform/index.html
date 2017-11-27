@@ -50,7 +50,7 @@
                             </span>
                         </td>
                         <td>{{model.title | formatText(40, model.title)}}</td>
-                        <td>{{model.createtime | moment}}</td>
+                        <td>{{model.create_time | moment}}</td>
                         <td>
                             <a href="javascript:;" @click="info(index)" title="详情">
                                 <i class="fa fa-info-circle fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
@@ -140,6 +140,11 @@
                 this.back_pages = [this.pages - 1, this.pages];
             }
         },
+        mounted: function () {
+            $(function () {
+                submit();
+            });
+        },
         methods:{
             resetParams: function () {
                 this.select = [];
@@ -183,7 +188,7 @@
                 console.log(this.list[index]);
                 if(this.list[index]['status'] == 0){
                     $.post('__PRO_PATH__/Inform/markRead', {ids: this.list[index]['id']}, function (res) {
-                        if (res['code'] == 1) {
+                        if (res['error_code'] == 0) {
                             submit();
                         }
                     });
@@ -237,8 +242,9 @@
         },
         filters:{
             moment: function (value, formatString) {
-                formatString = formatString || 'YYYY-MM-DD HH:mm';
-                return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+                formatString = formatString || 'yyyy年M月d日 hh:mm';
+                var time=new Date(parseInt(value) * 1000).format(formatString);
+                return time;
             },
             getInformStatus: function (value) {
                 var ret = "";
@@ -256,14 +262,12 @@
         }
     });
 
-    submit();
-
     // 异步提交数据
     function submit() {
         getParams();
         vm.resetParams();
         $.post('__PRO_PATH__/Inform/getInformList', vm.params, function (res) {
-            if (res.errorcode == 0) {
+            if (res.error_code == 0) {
                 vm.total = res.total;
                 vm.pages = Math.ceil(res.total / vm.per_page);
                 vm.current_page = res.current_page;

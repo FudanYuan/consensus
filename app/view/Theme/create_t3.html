@@ -67,7 +67,7 @@
     function getT2ByT1(){
         var id = parseInt($('#t1_id').val());
         $.get('__PRO_PATH__/Theme/getT2ByT1AJAX', {'t1_id': id}, function (res) {
-            if (res.errorcode == 0) {
+            if (res.error_code == 0) {
                 addT2('t2_id', res.data);
             } else {
                 popWarn(res.msg);

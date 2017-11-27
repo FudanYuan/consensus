@@ -156,11 +156,11 @@
                     </div>
                 </div>
 
-                <div :class="['form-group', errors.begintime_str != '' ? 'has-error' : '']">
+                <div :class="['form-group', errors.begin_time_str != '' ? 'has-error' : '']">
                     <label for="new-task-form-stime" class="col-sm-2 control-label">开始时间：</label>
                     <div class="col-sm-4">
-                        <input id="new-task-form-stime" name="begintime_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">
-                        <p class="help-block">{{errors.begintime_str}}</p>
+                        <input id="new-task-form-stime" name="begin_time_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">
+                        <p class="help-block">{{errors.begin_time_str}}</p>
                     </div>
                 </div>
 
@@ -201,7 +201,7 @@
                 match_type: '',
                 necessary_keywords: '',
                 unnecessary_keywords: '',
-                begintime_str: ''
+                begin_time_str: ''
             }
         },
         mounted: function () {
@@ -265,9 +265,9 @@
     function submit() {
         getParams();
         $.post('__PRO_PATH__/Task/create', vm.params, function(res){
-            if(res.code == 1){
+            if(res.error_code == 0){
                 popWarn('新建成功', '__PRO_PATH__/Task/index');
-            }else if(res.code == 2){
+            }else if(res.error_code == 1){
                 $.each(res.errors, function(k, v){
                     vm.errors[k] = v;
                 });
@@ -289,7 +289,6 @@
         });
         vm.params['necessary_keywords'] = vm.necessary_keywords.join('-');
         vm.params['unnecessary_keywords'] = vm.unnecessary_keywords.join('-');
-        console.log(JSON.stringify(vm.params));
     }
 
 </script>

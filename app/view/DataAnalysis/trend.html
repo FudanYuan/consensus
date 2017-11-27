@@ -35,8 +35,8 @@
                 <div class="form-group">
                     <label for="dateTimeRange">时间范围：</label>
                     <input type="text" class="form-control date-picker" id="dateTimeRange" value="" style="width: 190px"/>
-                    <input type="hidden" name="begintime_str" id="begintime_str" :value="begintime_str"/>
-                    <input type="hidden" name="endtime_str" id="endtime_str" :value="endtime_str"/>
+                    <input type="hidden" name="begin_time_str" id="begin_time_str" :value="begin_time_str"/>
+                    <input type="hidden" name="end_time_str" id="end_time_str" :value="end_time_str"/>
                 </div>
             </form>
         </div>
@@ -106,8 +106,8 @@
                     endDate: moment(),
 
                 }, function (start, end, label) { // 格式化日期显示框
-                    $('#begintime_str').val(start.format('YYYY-MM-DD'));
-                    $('#endtime_str').val(end.format('YYYY-MM-DD'));
+                    $('#begin_time_str').val(start.format('YYYY-MM-DD'));
+                    $('#end_time_str').val(end.format('YYYY-MM-DD'));
                     submit();
                 }).next().on('click', function () {
             $(this).prev().focus();
@@ -118,11 +118,11 @@
     var vm = new Vue({
         el: '#analysisTrend',
         data: {
-            task_id: {$params['task_id']},
+            task_id: '{$params.task_id}',
             params: {},
             trend: [],
-            begintime_str: moment().subtract(6, 'days').format('YYYY-MM-DD'),
-            endtime_str: moment().format('YYYY-MM-DD'),
+            begin_time_str: moment().subtract(6, 'days').format('YYYY-MM-DD'),
+            end_time_str: moment().format('YYYY-MM-DD'),
             active:{
                 type: 0
             }
@@ -140,7 +140,7 @@
                 var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 myChart.showLoading();
                 $.post('__PRO_PATH__/DataAnalysis/getTrendLine', vm.params, function (res) {
-                    if(res.errorcode==0){
+                    if(res.error_code==0){
                         vm.trend = res.data;
                         vm.task_id = res.task_id;
                         var xAixs = res.xAixs;

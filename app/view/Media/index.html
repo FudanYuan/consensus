@@ -30,33 +30,33 @@
             </form>
         </div>
         <div class="list-btns">
-            {if condition="authority('Media_add')"}
+            {if condition="authority('MediaAdd')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     新建<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu pull-left" role="menu">
-                    {if condition="authority('MediaType_add')"}
+                    {if condition="authority('MediaTypeAdd')"}
                     <li><a href="javascript:;" id="addFirstItem">标签</a></li>
                     {/if}
-                    {if condition="authority('MediaName_add')"}
+                    {if condition="authority('MediaNameAdd')"}
                     <li><a href="javascript:;" id="addSecondItem">网址</a></li>
                     {/if}
                 </ul>
             </div>
             {/if}
-            {if condition="authority('Media_del')"}
+            {if condition="authority('MediaRemove')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-default" id="removeItem">删除</button>
             </div>
             {/if}
 
-            {if condition="authority('Media_export')"}
+            {if condition="authority('MediaExport')"}
             <div class="btn-group fr">
                 <a href="__PRO_PATH__/Media/export" target="_blank" type="button" class="btn btn-default">导出</a>
             </div>
             {/if}
-            {if condition="authority('Media_import')"}
+            {if condition="authority('MediaImport')"}
             <div class="btn-group fr">
                 <a href="__PRO_PATH__/Media/import" target="_blank" type="button" class="btn btn-default">导入</a>
             </div>
@@ -99,7 +99,7 @@
                 <td>{$model.type_name}</td>
                 <td><a href="{$model.url}">{$model.url}</a></td>
                 <td>
-                    {if condition="authority('Media_edit')"}
+                    {if condition="authority('MediaEdit')"}
                     <a href="__PRO_PATH__/Media/edit?id={$model.id}">编辑</a>
                     {/if}
                 </td>

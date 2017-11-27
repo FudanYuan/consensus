@@ -69,7 +69,7 @@
         console.log(JSON.stringify(ver_params));
         $('#verify-confirm-popup').popup('hide');
         $.post('__PRO_PATH__/DataMonitor/edit', ver_params, function(res){
-            if(res['errorcode'] == 0){
+            if(res['error_code'] == 0){
                 popWarn(res['msg']);
                 submit();
             }else{

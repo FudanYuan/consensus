@@ -52,7 +52,7 @@
     var vm = new Vue({
         el: '#analysisMedia',
         data: {
-            task_id: {$params['task_id']},
+            task_id: '{$params.task_id}',
             media: [],
             params: {},
             active:{
@@ -67,8 +67,8 @@
                 var chartDom = document.getElementById('media_pie_chart');
                 var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 myChart.showLoading();
-                $.post('__PRO_PATH__/DataAnalysis/getMediaDistrubution', vm.params, function (res) {
-                    if(res.errorcode==0){
+                $.post('__PRO_PATH__/DataAnalysis/getMediaDistribution', vm.params, function (res) {
+                    if(res.error_code==0){
                         vm.media = res.data;
                         var option = {
                             tooltip: {

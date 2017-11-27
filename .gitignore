@@ -2,5 +2,5 @@
 /.gitignore
 /runtime/temp
 /runtime/log
+/runtime/cache/
 /public/data
-runtime/cache/

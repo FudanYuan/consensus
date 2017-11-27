@@ -14,31 +14,31 @@
                     <input name="name" class="form-control" id="name" style="width:150px" value=""/>
                 </div>
                 <div class="form-group">
-                    <label for="taskstatus">采集状态：</label>
-                    <ul class="radio-group" id="taskstatus">
+                    <label for="task_status">采集状态：</label>
+                    <ul class="radio-group" id="task_status">
                         <li class="radio-list">
-                            <input type="radio" name="taskstatus" class="labelauty" id="nature-all" value="-1" style="display: none;" checked>
+                            <input type="radio" name="task_status" class="labelauty" id="nature-all" value="-1" style="display: none;" checked>
                             <label for="nature-all">
                                 <span class="labelauty-unchecked">全部</span>
                                 <span class="labelauty-checked">全部</span>
                             </label>
                         </li>
                         <li class="radio-list">
-                            <input type="radio" name="taskstatus" class="labelauty" id="nature-pos" value="0" style="display: none;">
+                            <input type="radio" name="task_status" class="labelauty" id="nature-pos" value="0" style="display: none;">
                             <label for="nature-pos">
                                 <span class="labelauty-unchecked">进行中</span>
                                 <span class="labelauty-checked">进行中</span>
                             </label>
                         </li>
                         <li class="radio-list">
-                            <input type="radio" name="taskstatus" class="labelauty" id="nature-neu" value="1" style="display: none;">
+                            <input type="radio" name="task_status" class="labelauty" id="nature-neu" value="1" style="display: none;">
                             <label for="nature-neu">
                                 <span class="labelauty-unchecked">中断</span>
                                 <span class="labelauty-checked">中断</span>
                             </label>
                         </li>
                         <li class="radio-list">
-                            <input type="radio" name="taskstatus" class="labelauty" id="nature-neg" value="2" style="display: none;">
+                            <input type="radio" name="task_status" class="labelauty" id="nature-neg" value="2" style="display: none;">
                             <label for="nature-neg">
                                 <span class="labelauty-unchecked">结束</span>
                                 <span class="labelauty-checked">结束</span>
@@ -51,12 +51,12 @@
             </form>
         </div>
         <div class="list-btns">
-            {if condition="authority('Task_add')"}
+            {if condition="authority('TaskAdd')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-success" @click="createNewTask">新建</button>
             </div>
             {/if}
-            {if condition="authority('Task_stop')"}
+            {if condition="authority('TaskStop')"}
             <div class="btn-group">
                 <button type="button" class="btn btn-default" @click="stopTasks([])">终止</button>
             </div>
@@ -93,19 +93,19 @@
                         </td>
                         <td v-if="0">{{model.progress}}%</td>
                         <td>{{model.count}}</td>
-                        <td v-if="0"><span class="badge badge-warning">{{model.pretime}}hr</span></td>
+                        <td v-if="0"><span class="badge badge-warning">{{model.time_predict}}hr</span></td>
                         <td><span class="badge badge-info">{{model.time}}hr</span></td>
-                        <td>{{model.begintime | moment}}</td>
-                        <td v-if="model.taskstatus == 2">{{model.endtime | moment}}</td>
+                        <td>{{model.begin_time | moment}}</td>
+                        <td v-if="model.task_status == 2">{{model.end_time | moment}}</td>
                         <td v-else>未结束</td>
                         <td>
-                            <span class="label label-success" v-if="model.taskstatus == 0">采集中</span>
-                            <span class="label label label-danger" v-else-if="model.taskstatus == 1">中断</span>
-                            <span class="label label label-info" v-else="model.taskstatus == 2">结束</span>
+                            <span class="label label-success" v-if="model.task_status == 0">采集中</span>
+                            <span class="label label label-danger" v-else-if="model.task_status == 1">中断</span>
+                            <span class="label label label-info" v-else="model.task_status == 2">结束</span>
                         </td>
                         <td>
-                            <a href="javascript:;" @click="stopTasks([model.id])" v-if="model.taskstatus == 0">终止</a>
-                            <a href="javascript:;" @click="contact" v-if="model.taskstatus == 1">联系管理员</a>
+                            <a href="javascript:;" @click="stopTasks([model.id])" v-if="model.task_status == 0">终止</a>
+                            <a href="javascript:;" @click="contact" v-if="model.task_status == 1">联系管理员</a>
                         </td>
                     </tr>
                 </template>
@@ -184,6 +184,11 @@
                 this.back_pages = [this.pages - 1, this.pages];
             }
         },
+        mounted: function () {
+            $(function () {
+                submit();
+            });
+        },
         methods:{
             resetParams: function () {
                 this.select = [];
@@ -252,20 +257,19 @@
         },
         filters:{
             moment: function (value, formatString) {
-                formatString = formatString || 'YYYY-MM-DD HH:mm';
-                return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+                formatString = formatString || 'yyyy年M月d日 hh:mm';
+                var time=new Date(parseInt(value) * 1000).format(formatString);
+                return time;
             },
         }
     });
-
-    submit();
 
     // 提交请求
     function submit() {
         getParams();
         vm.resetParams();
         $.post('__PRO_PATH__/Task/getTaskList', vm.params, function (res) {
-            if(res.errorcode == 0){
+            if(res.error_cdoe == 0){
                 vm.total = res.total;
                 vm.pages = Math.ceil(res.total / vm.per_page);
                 vm.current_page = res.current_page;
@@ -283,6 +287,5 @@
         });
         vm.params['per_page'] = vm.per_page;
         vm.params['current_page'] = vm.current_page;
-        console.log(JSON.stringify(vm.params));
     }
 </script>

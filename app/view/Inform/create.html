@@ -89,8 +89,6 @@
 <script>
     $('#consensus-nav-inform').addClass('active');
 
-    var ue = UE.getEditor('editor');
-
     var vm = new Vue({
         el: '#new-inform-form',
         data: {
@@ -102,13 +100,32 @@
                 target_user_id: ''
             }
         },
+        mounted: function () {
+            $(function () {
+                var ue = UE.getEditor('editor');
+
+                $(".multiple").multipleSelect({
+                    filter: true,
+                    multiple: true,
+                    selectAll: true
+                });
+
+                $(function () {
+                    $("#new-inform-form-target").multipleSelect("checkAll");
+                });
+
+                $('#form-cancel').on('click', function(){
+                    window.location.href = '__PRO_PATH__/Inform/index';
+                });
+            });
+        },
         methods: {
             createNewInform: function () {
                 getParams();
                 $.post('__PRO_PATH__/Inform/create', vm.params, function(res){
-                    if(res.code == 1){
+                    if(res.error_code == 0){
                         popWarn('新建成功', '__PRO_PATH__/Inform/index');
-                    }else if(res.code == 2){
+                    }else if(res.error_code == 1){
                         $.each(res.errors, function(k, v){
                             vm.errors[k] = v;
                         });
@@ -117,20 +134,6 @@
                 });
             }   
         }
-    });
-
-    $(".multiple").multipleSelect({
-        filter: true,
-        multiple: true,
-        selectAll: true
-    });
-
-    $(function () {
-        $("#new-inform-form-target").multipleSelect("checkAll");
-    });
-
-    $('#form-cancel').on('click', function(){
-        window.location.href = '__PRO_PATH__/Inform/index';
     });
 
     function getParams(){

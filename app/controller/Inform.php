@@ -29,8 +29,12 @@ class Inform extends Common
         $user_id = $this->getUserId();
         $page = input('post.current_page',0);
         $per_page = input('post.per_page',0);
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ""];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ""];
         $cond['target_user_id'] = ['=', $user_id];
+        $status = input('post.status', -1);
+        if($status != -1){
+            $cond['status'] = $status;
+        }
         $list = D('Inform')->getList($cond);
         //分页时需要获取记录总数，键值为 total
         $ret["total"] = count($list);
@@ -44,12 +48,12 @@ class Inform extends Common
      * 删除公告
      */
     public function remove(){
-        $ret = ['code' => 1, 'msg' => '删除成功'];
+        $ret = ['error_code' => 0, 'msg' => '删除成功'];
         $ids = input('post.ids');
         try{
             $res = D('Inform')->remove(['id' => ['in', $ids]]);
         }catch(MyException $e){
-            $ret['code'] = 2;
+            $ret['error_code'] = 1;
             $ret['msg'] = '删除失败';
         }
         $this->jsonReturn($ret);
@@ -59,12 +63,12 @@ class Inform extends Common
      * 标为已读
      */
     public function markRead(){
-        $ret = ['code' => 1, 'msg' => '标记成功'];
+        $ret = ['error_code' => 0, 'msg' => '标记成功'];
         $ids = input('post.ids');
         try{
             $res = D('Inform')->markRead(['id' => ['in', $ids]]);
         }catch(MyException $e){
-            $ret['code'] = 2;
+            $ret['error_code'] = 1;
             $ret['msg'] = '标记失败';
         }
         $this->jsonReturn($ret);
@@ -80,7 +84,7 @@ class Inform extends Common
         $target_users = D('UserAdmin')->getList($cond);
         if(!empty($params)) {
             $data = [];
-            $ret = ['code' => 1, 'msg' => '新建成功'];
+            $ret = ['error_code' => 0, 'msg' => '新建成功'];
             $title = input('post.title', '');
             $priority = input('post.priority', '');
             if (!isset($params['target_user_ids'])) {
@@ -106,7 +110,7 @@ class Inform extends Common
                 // 添加Inform
                 $res_inform = D('Inform')->addAllData($dataSet);
                 if (!empty($res_inform['errors'])) {
-                    $ret['code'] = 2;
+                    $ret['error_code'] = 1;
                     $ret['msg'] = '新建失败';
                     $ret['errors'] = $res_inform['errors'];
                     $this->jsonReturn($ret);
@@ -122,7 +126,7 @@ class Inform extends Common
                 // 添加Inform
                 $res_inform = D('Inform')->addData($data);
                 if (!empty($res_inform['errors'])) {
-                    $ret['code'] = 2;
+                    $ret['error_code'] = 1;
                     $ret['msg'] = '新建失败';
                     $ret['errors'] = $res_inform['errors'];
                 }
@@ -132,6 +136,4 @@ class Inform extends Common
         }
         return view('', ['target_users' => $target_users]);
     }
-
-
 }

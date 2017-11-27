@@ -31,7 +31,7 @@
                                <form action="" class="form-inline" method="get" id="switch-form" >
                                     <div class="form-group">
                                         <div id="keywordsSwitch" class="switch" data-on="success" data-off="warning">
-                                            {if condition="authority('KeywordsWarn_switch')"}
+                                            {if condition="authority('KeywordsWarnSwitch')"}
                                             <input type="checkbox" name="keywordsSwitch" checked/>
                                             {/if}
                                         </div>
@@ -76,7 +76,7 @@
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10 lab-btns">
-                                                {if condition="authority('KeywordsWarn_edit')"}
+                                                {if condition="authority('KeywordsWarnEdit')"}
                                                 <a class="btn btn-success" id="warn-config-form-edit" @click="editKeywordsConfig">修改</a>
                                                 {/if}
                                             </div>
@@ -204,19 +204,19 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                {if condition="authority('ThresholdWarn_close')"}
+                                                {if condition="authority('ThresholdWarnClose')"}
                                                 <a href="javascript:;" @click="thresholdWarningClose(index)" :title="model.status | getWarningStatus">
                                                     <i :class="['fa fa-power-off fa-lg', model.status==1 ? 'isClosed' : '']" style="margin-right: 10px"></i>
                                                 </a>
                                                 {/if}
 
-                                                {if condition="authority('ThresholdWarn_edit')"}
+                                                {if condition="authority('ThresholdWarnEdit')"}
                                                 <a href="javascript:;" @click="thresholdWarningEdit(index)" title="编辑" :id="'from-edit'+model.id">
                                                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
                                                 </a>
                                                 {/if}
 
-                                                {if condition="authority('ThresholdWarn_remote')"}
+                                                {if condition="authority('ThresholdWarnRemote')"}
                                                 <a href="javascript:;" @click="thresholdWarningRemove(model.id)" title="删除">
                                                     <i class="fa fa-trash fa-lg" aria-hidden="true" style="margin-right: 0;"></i>
                                                 </a>
@@ -436,13 +436,14 @@
                 this.back_pages = [this.pages - 1, this.pages];
             }
         },
+        mounted: function () {
+            $(function () {
+                // 初始化
+                getKeywordsConfig();
+                getThresholdConfig();
+            });
+        },
         methods:{
-            // 转到某页
-            gotoPage: function (page) {
-                if(page == this.current_page) return;
-                this.current_page = page;
-                submit();
-            },
             resetKeywordsConfigParams: function () {
                 this.addKeywords = '';
                 this.keywords = [];
@@ -553,7 +554,7 @@
                 params['dayAllCount'] = this.dayAllCount;
                 params['dayNegativeCount'] = this.dayNegativeCount;
                 $.post('__PRO_PATH__/DataMonitor/createThresholdConfig', params, function (res) {
-                    if (res.errorcode == 0) {
+                    if (res.error_code == 0) {
                         getThresholdConfig();
                     } else {
                         $.each(res.errors, function (key, value) {
@@ -625,7 +626,7 @@
     function getKeywordsConfig() {
         vm.resetKeywordsConfigParams();
         $.post('__PRO_PATH__/DataMonitor/getKeywordsConfig', {}, function (res) {
-            if (res.errorcode == 0) {
+            if (res.error_code == 0) {
                 if(!res.switch){
                     vm.keywordsSwitch = false;
                     $('#keywordsSwitch').bootstrapSwitch('setState', res.switch); // true || false
@@ -662,7 +663,7 @@
         params['nature'] = vm.natureChecked;
         params['media'] = vm.mediaChecked;
         $.post('__PRO_PATH__/DataMonitor/setKeywordsConfig', params, function (res) {
-            if (res.errorcode == 0) {
+            if (res.error_code == 0) {
                 vm.cancelEditKeywordsConfig();
             } else {
                 $.each(res.errors, function (key, value) {
@@ -680,7 +681,7 @@
         params['per_page'] = vm.per_page;
         params['current_page'] = vm.current_page;
         $.post('__PRO_PATH__/DataMonitor/getThresholdConfig', params, function (res) {
-            if (res.errorcode == 0) {
+            if (res.error_code == 0) {
                 vm.total = res.total;
                 vm.pages = Math.ceil(res.total / vm.per_page);
                 vm.current_page = res.current_page;
@@ -695,7 +696,7 @@
     // 编辑警戒线配置
     function editThresholdConfig(params) {
         $.post('__PRO_PATH__/DataMonitor/saveThresholdConfig', params, function (res) {
-            if (res.errorcode == 0) {
+            if (res.error_code == 0) {
                 vm.thresholdConditionResult = true;
                 vm.thresholdConditionCreate = false;
                 vm.thresholdConditionEdit = false;
@@ -708,8 +709,4 @@
             }
         });
     }
-
-    // 初始化
-    getKeywordsConfig();
-    getThresholdConfig();
 </script>
