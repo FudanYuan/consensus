@@ -16,14 +16,14 @@ class TaskMediaType extends Model
 {
     protected $table = 'vox_task_media_type';
     protected $fields = array(
-        'task_id','website_id','status', 'createtime', 'updatetime'
+        'task_id','website_id','status', 'create_time', 'update_time'
     );
     protected $type = [
         'task_id' => 'integer',
         'media_type_id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
 
@@ -34,8 +34,7 @@ class TaskMediaType extends Model
      */
     public function addData($data){
         $ret = [];
-        $curtime = time();
-        $data['createtime'] = $curtime;
+        $data['create_time'] = time();
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)) {

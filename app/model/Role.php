@@ -13,7 +13,7 @@ class Role extends Model{
  	protected $table = 'vox_role_admin';
  	protected $pk = 'id';
  	protected $fields = array(
- 		'id', 'name','remark','status','createtime','updatetime'
+ 		'id', 'name','remark','status','create_time','update_time'
  	);
  	protected $type = [
  			'id' => 'integer',
@@ -26,7 +26,7 @@ class Role extends Model{
  	 */
  	public function getList($cond = []){
  		$cond['status'] = 1;
- 		return $this->field('id,name,remark,createtime')->where($cond)->paginate(10);
+ 		return $this->field('id,name,remark,create_time')->where($cond)->paginate(10);
  	}
  	/**
  	 * 获取角色列表
@@ -63,7 +63,7 @@ class Role extends Model{
  		}
         if(!isset($data['status']))
             $data['status'] = 1;
- 		$data['createtime'] = $data['updatetime'] = $_SERVER['REQUEST_TIME'];
+ 		$data['create_time'] = $data['update_time'] = $_SERVER['REQUEST_TIME'];
  		Db::startTrans();
  		$flag = true;
  		$res = $this->save($data);
@@ -97,7 +97,7 @@ class Role extends Model{
  			$authority = json_decode($data['authority'], true);
  			unset($data['authority']);
  		}
- 		$data['updatetime'] = $_SERVER['REQUEST_TIME'];
+ 		$data['update_time'] = $_SERVER['REQUEST_TIME'];
  		Db::startTrans();
  		$flag = true;
  		$res = $this->save($data, ['id' => $roleid]);
@@ -147,7 +147,7 @@ class Role extends Model{
  		$data = [];
  		$time = $_SERVER['REQUEST_TIME'];
  		foreach($actionids as $v){
- 			array_push($data, ['actionid' => $v, 'roleid' => $roleid, 'status' => 1, 'createtime' => $time, 'updatetime' => $time]);
+ 			array_push($data, ['actionid' => $v, 'roleid' => $roleid, 'status' => 1, 'create_time' => $time, 'update_time' => $time]);
  		}
  		return Db::table('vox__role_action_admin')->insertAll($data);
  	}

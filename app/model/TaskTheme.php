@@ -15,14 +15,14 @@ class TaskTheme extends Model
 {
     protected $table = 'vox_task_theme';
     protected $fields = array(
-        'task_id','theme_id', 'status', 'createtime', 'updatetime'
+        'task_id','theme_id', 'status', 'create_time', 'update_time'
     );
     protected $type = [
         'task_id' => 'integer',
         'theme_3_id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -71,7 +71,7 @@ class TaskTheme extends Model
     public function addData($data){
         $ret = [];
         $curtime = time();
-        $data['createtime'] = $curtime;
+        $data['create_time'] = $curtime;
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)) {

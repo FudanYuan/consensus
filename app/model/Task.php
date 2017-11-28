@@ -17,26 +17,26 @@ class Task extends Model
     protected $table = 'vox_task';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'name', 'loop', 'match_accuracy', 'match_type', 'necessary_keywords',
-        'unnecessary_keywords', 'begintime', 'endtime', 'task_num', 
-        'quantity_complete', 'time_predict', 'taskstatus', 'status', 
-        'createtime', 'updatetime'
+        'id', 'name', 'loop', 'match_accuracy', 'match_type',
+        'necessary_keywords','unnecessary_keywords', 'begin_time',
+        'end_time', 'task_num','quantity_complete', 'time_predict',
+        'task_status', 'status','create_time', 'update_time'
     );
     protected $type = [
         'id' => 'integer',
-        'begintime' => 'integer',
+        'begin_time' => 'integer',
         'match_accuracy' => 'integer',
         'match_type' => 'integer',
-        'endtime ' => 'integer',
-        'taskstatus' => 'integer',
+        'end_time ' => 'integer',
+        'task_status' => 'integer',
         'task_num' => 'integer',
         'time_predict' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
-    private $strField = ['begintime', 'endtime'];
+    private $strField = ['begin_time', 'end_time'];
 
     public function getTaskIdByName($name){
         $res = $this->field('id')
@@ -56,7 +56,7 @@ class Task extends Model
             $cond_and['status'] = ['<>', 2];
         }
         $res = $this->field('id,name,time_predict as pretime,
-            task_num as count,taskstatus,begintime,endtime')
+            task_num as count,task_status,begin_time,end_time')
             ->where($cond_or)
             ->where($cond_and)
             ->order($order)
@@ -69,7 +69,8 @@ class Task extends Model
      */
     public function getTaskNumber()
     {
-        $res = $this->field('count(id) as task')->select();
+        $res = $this->field('count(id) as task')
+            ->select();
         return $res[0]['task'];
     }
 
@@ -79,7 +80,7 @@ class Task extends Model
     public function getCompletedNum()
     {
         $res = $this->field('count(id) as com_num')
-            ->where('taskstatus = 2')
+            ->where('task_status = 2')
             ->select();
         return $res[0]['com_num'];
     }
@@ -92,7 +93,7 @@ class Task extends Model
         $TotalNum = $this->field('count(id) as t_num')
             ->select();
         $CompletedNum = $this->field('count(id) as com_num')
-            ->where('taskstatus = 2')
+            ->where('task_status = 2')
             ->select();
         if ($TotalNum[0]['t_num']) {
             $percent = ($CompletedNum[0]['com_num'] / $TotalNum[0]['t_num']) * 100;
@@ -108,7 +109,7 @@ class Task extends Model
     public function getTodealNum()
     {
         $res = $this->field('count(id) as to_num')
-            ->where('taskstatus = 0 or taskstatus = 1')
+            ->where('task_status = 0 or task_status = 1')
             ->select();
     }
 
@@ -131,7 +132,7 @@ class Task extends Model
      * @throws MyException
      */
     public  function go_on($cond = []){
-        $res = $this->save(['taskstatus' => 0], $cond);
+        $res = $this->save(['task_status' => 0], $cond);
         if ($res === false) throw new MyException('2', '继续失败');
         return $res;
     }
@@ -143,7 +144,7 @@ class Task extends Model
      * @throws MyException
      */
     public function end_task($cond = []){
-        $res = $this->save(['taskstatus' => 2], $cond);
+        $res = $this->save(['task_status' => 2], $cond);
         if ($res === false) throw new MyException('2', '结束失败');
         return $res;
     }
@@ -155,7 +156,7 @@ class Task extends Model
      * @throws MyException
      */
     public function break_off($cond = []){
-        $res = $this->save(['taskstatus' => 1], $cond);
+        $res = $this->save(['task_status' => 1], $cond);
         if ($res === false) throw new MyException('2', '中断失败');
         return $res;
     }
@@ -171,7 +172,7 @@ class Task extends Model
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if (empty($errors)) {
-            $data['createtime'] = time();
+            $data['create_time'] = time();
             if (!isset($data['status']))
                 $data['status'] = 1;
             if($data['loop'] == 0){
@@ -181,7 +182,7 @@ class Task extends Model
             }elseif ($data['loop'] == 2){
                 $data['loop'] = 2592000;
             }
-            $data['taskstatus'] = 0;
+            $data['task_status'] = 0;
             $task_id = $this->save_1($data);
             $ret['task_id'] = $task_id;
         }
@@ -197,9 +198,9 @@ class Task extends Model
         $insert_data = ['name'=>$data['name'],'loop'=>$data['loop'],'match_accuracy'=>$data['match_accuracy'],
             'match_type'=>$data['match_type'],'necessary_keywords'=>$data['necessary_keywords'],
             'unnecessary_keywords'=>$data['unnecessary_keywords'],
-            'begintime' => strtotime($data['begintime_str']),'status' => $data['status'],
+            'begin_time' => strtotime($data['begin_time_str']),'status' => $data['status'],
             'task_num' => $data['task_num'],'time_predict' =>($data['task_num']*10000),
-            'createtime' => $data['createtime'],'taskstatus' => 0];
+            'create_time' => $data['create_time'],'task_status' => 0];
         $res = $this->insertGetId($insert_data);
         return $res;
     }
@@ -254,7 +255,7 @@ class Task extends Model
      */
     private function timeTostamp(&$data)
     {
-        isset($data['begintime_str']) && $data['begintime'] = $data['begintime_str'] ? strtotime($data['begintime_str']) : 0;
-        isset($data['endtime_str']) && $data['endtime'] = $data['endtime_str'] ? strtotime($data['endtime_str']) : 0;
+        isset($data['begintime_str']) && $data['begin_time'] = $data['begintime_str'] ? strtotime($data['begintime_str']) : 0;
+        isset($data['endtime_str']) && $data['end_time'] = $data['endtime_str'] ? strtotime($data['endtime_str']) : 0;
     }
 }

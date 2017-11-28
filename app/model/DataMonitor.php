@@ -17,19 +17,15 @@ class DataMonitor extends Model
     protected $table = 'vox_data';
     protected $pk = 'id';
     protected $fields = array(
-        'id','theme','task_id','title','content','digest',
-        'source','userID','media_type_id','nature','url','relevance','publishtime',
-        'similar_num','is_collect','is_warn','status','createtime', 'updatetime');
+        'id','theme','task_id','media_type_id','title','content','digest',
+        'source','userID','url','publish_time','nature','relevance',
+        'similar_num','is_collect','is_warn','is_analysis','status','create_time', 'update_time');
     protected $type = [
         'id' => 'integer',
-        'theme_id'=>'integer',
-        'relevance' =>'integer',
-        'media_id' => 'integer',
         'task_id'=>'integer',
+        'media_type_id'=>'integer',
+        'publish_time' => 'integer',
         'similar_num' => 'integer',
-        'is_collect' => 'integer',
-        'is_warn' => 'integer',
-        'status' => 'integer',
     ];
 
     /**
@@ -81,7 +77,7 @@ class DataMonitor extends Model
             $cond_and['a.status'] = ['<>', 2];
         }
         $res = $this->alias('a')->field('a.id as id,a.title as title, a.source as source,a.url as url,b.name as media_type,a.nature as nature,
-            a.publishtime as publishtime,a.content as content,a.similar_num as similar_num,a.relevance as relevance,a.is_collect as is_collect')
+            a.publish_time as publish_time,a.content as content,a.similar_num as similar_num,a.relevance as relevance,a.is_collect as is_collect')
             ->join('vox_media_type b','a.media_type_id = b.id')
             ->where($cond_or)
             ->where($cond_and)
@@ -104,9 +100,9 @@ class DataMonitor extends Model
             ->where('status <> 2')
             ->select();
         for($i = 0;$i<count($res);$i++){
-            $res[$i]['publishtime'] = date('Y-m-d H:i:s',$res[$i]['publishtime']);
-            $res[$i]['createtime'] = date('Y-m-d H:i:s',$res[$i]['createtime']);
-            $res[$i]['updatetime'] = date('Y-m-d H:i:s',$res[$i]['updatetime']);
+            $res[$i]['publish_time'] = date('Y-m-d H:i:s',$res[$i]['publish_time']);
+            $res[$i]['create_time'] = date('Y-m-d H:i:s',$res[$i]['create_time']);
+            $res[$i]['update_time'] = date('Y-m-d H:i:s',$res[$i]['update_time']);
         }
         return $res;
     }
@@ -145,7 +141,7 @@ class DataMonitor extends Model
     public function saveData($data,$id){
         $ret = [];
             $curTime = time();
-            $data['updatetime'] = $curTime;
+            $data['update_time'] = $curTime;
             $data_save = [];
             $data_save['id'] = $data['id'];
             $data_save['theme'] = $data['theme'];
@@ -157,13 +153,13 @@ class DataMonitor extends Model
             $data_save['nature'] = $data['nature'];
             $data_save['url'] = $data['url'];
             $data_save['relevance'] = $data['relevance'];
-            $data_save['publishtime'] = $data['publishtime'];
+            $data_save['publish_time'] = $data['publish_time'];
             $data_save['similar_num'] = $data['similar_num'];
             $data_save['is_collect'] = $data['is_collect'];
             $data_save['is_warn'] = $data['is_warn'];
             $data_save['status'] = $data['status'];
-            $data_save['createtime'] = $data['createtime'];
-            $data_save['updatetime'] = $data['updatetime'];
+            $data_save['create_time'] = $data['create_time'];
+            $data_save['update_time'] = $data['update_time'];
             $this->save($data_save, ['id' => $id]);
         return $ret;
     }
@@ -192,15 +188,15 @@ class DataMonitor extends Model
             ->select();
         $lastWeekUpdateNum = $this->field('count(id) as lw_num')
             ->where('status <> 2')
-            ->wheretime('createtime','last week')
+            ->wheretime('create_time','last week')
             ->select();
         $thisWeekUpdateNum = $this->field('count(id) as tw_num')
             ->where('status <> 2')
-            ->wheretime('createtime','week')
+            ->wheretime('create_time','week')
             ->select();
         $thisYearUpdateNum = $this->field('count(id) as ty_num')
             ->where('status <> 2')
-            ->wheretime('createtime','year')
+            ->wheretime('create_time','year')
             ->select();
 
         if($totalNum[0]['t_num']!=0){
@@ -228,7 +224,7 @@ class DataMonitor extends Model
         }
         $res = $this->alias('a')->field('a.id as id,e.id as t1_id,d.id as t2_id,c.id as t3_id,
                     e.name as t1_name,d.name as t2_name,c.name as t3_name,b.name as websitetypename,a.url as url,
-                    a.task_id as task_id,f.name as task_name,a.createtime as createtime,
+                    a.task_id as task_id,f.name as task_name,a.create_time as create_time,
                     a.content as content,a.source as source,a.media_type as media_type,
                     a.nature as nature,a.url as url,a.relevance as relevance,a.time as time
                     a.similar_num as similar_num')
@@ -267,7 +263,7 @@ class DataMonitor extends Model
         if (empty($errors)) {
             $curTime = time();
             if (isset($data['ispublish']) && $data['ispublish'])
-                $data['publishtime'] = $curTime;
+                $data['publish_time'] = $curTime;
             if (!isset($data['status']))
                 $data['status'] = 1;
             $this->save($data);
@@ -349,7 +345,7 @@ class DataMonitor extends Model
         }else{
             $cond_and['b.id'] = ['=', $data['bar_theme_limit']];
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $res = $this->alias('a')->field('a.id as id , c.name as name , count(distinct(b.id)) as num')
             ->join('tax_theme_3 b', 'a.theme_3_id = b.id')
             ->join('tax_company c', 'a.c_id = c.id')
@@ -388,7 +384,7 @@ class DataMonitor extends Model
         }else{
             $end_time = strtotime($data['endtime_str']);
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
 
         $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
             ->join('tax_theme_3 b', 'a.theme_3_id=b.id')
@@ -427,7 +423,7 @@ class DataMonitor extends Model
         }else{
             $end_time = strtotime($data['endtime_str']);
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $res = $this->alias('a')->field('c.name as name,count(a.id) as value')
             ->join('tax_theme_3 b', 'a.theme_3_id=b.id')
             ->join('tax_website_type c','a.websitetype_id = c.id')

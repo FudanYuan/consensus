@@ -17,14 +17,14 @@ class MediaType extends Model
     protected $table = 'vox_media_type';
     protected $pk = 'id';
     protected $fields = array(
-        'id','name','status', 'createtime', 'updatetime'
+        'id','name','status', 'create_time', 'update_time'
     );
     protected $type = [
         'id' => 'integer',
         'type_id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -68,16 +68,16 @@ class MediaType extends Model
         $totalNum = $this->field('count(id) as t_num')
             ->select();
         $lastWeekUpdateNum = $this->field('count(id) as lw_num')
-            ->wheretime('createtime','last week')
+            ->wheretime('create_time','last week')
             ->select();
         $thisWeekUpdateNum = $this->field('count(id) as tw_num')
-            ->wheretime('createtime','week')
+            ->wheretime('create_time','week')
             ->select();
         $thisYearUpdateNum = $this->field('count(id) as ty_num')
-            ->wheretime('createtime','year')
+            ->wheretime('create_time','year')
             ->select();
         $thisMonthUpdateNum = $this->field('count(id) as tm_num')
-            ->wheretime('createtime','month')
+            ->wheretime('create_time','month')
             ->select();
         $percent = $thisMonthUpdateNum[0]['tm_num'];
         return $percent;
@@ -108,7 +108,7 @@ class MediaType extends Model
     public function addData($data){
         $ret = [];
         $curtime = time();
-        $data['createtime'] = $curtime;
+        $data['create_time'] = $curtime;
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if (empty($errors)) {

@@ -70,13 +70,13 @@ class DataProcess extends Common{
         }
 
         if($stime && $etime){
-            $cond_and['a.createtime'] = ['between', [strtotime($stime), strtotime($etime)]];
+            $cond_and['a.create_time'] = ['between', [strtotime($stime), strtotime($etime)]];
         }
         else if(!$stime && $etime){
-            $cond_and['a.createtime'] = ['between', [0, strtotime($etime)]];
+            $cond_and['a.create_time'] = ['between', [0, strtotime($etime)]];
         }
         else if($stime && !$etime){
-            $cond_and['a.createtime'] = ['between', [strtotime($stime), time()]];
+            $cond_and['a.create_time'] = ['between', [strtotime($stime), time()]];
         }
 
         $tags = D('Tag')->getList(['section' => 5]);
@@ -143,7 +143,7 @@ class DataProcess extends Common{
      */
     public function  getBubbleData(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
             $begin_time = 0;
         }else{
@@ -163,7 +163,7 @@ class DataProcess extends Common{
                 $limit = $data['bubble_num_limit'];
             }
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $list = D('DataMonitor')->getBubbleData([],$cond,$limit);
         $ret['data'] = $list;
         $this->jsonReturn($ret);
@@ -174,7 +174,7 @@ class DataProcess extends Common{
      */
     public function getBarData(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $list = D('DataMonitor')->getBarData($data);
         $ret['data'] = $list;
         $this->jsonReturn($ret);
@@ -201,7 +201,7 @@ class DataProcess extends Common{
      */
     public function websiteThemePie(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $list = D('DataMonitor')->getTypePie($data);
         $ret['data'] = $list;
         $this->jsonReturn($ret);

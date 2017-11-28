@@ -17,14 +17,14 @@ class Media extends Model
     protected $table = 'vox_media';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'type_id', 'name', 'url', 'status', 'createtime', 'updatetime'
+        'id', 'type_id', 'name', 'url', 'status', 'create_time', 'update_time'
     );
     protected $type = [
         'id' => 'integer',
         'type_id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -75,16 +75,16 @@ class Media extends Model
         $totalNum = $this->field('count(id) as t_num')
             ->select();
         $lastWeekUpdateNum = $this->field('count(id) as lw_num')
-            ->wheretime('createtime', 'last week')
+            ->wheretime('create_time', 'last week')
             ->select();
         $thisWeekUpdateNum = $this->field('count(id) as tw_num')
-            ->wheretime('createtime', 'week')
+            ->wheretime('create_time', 'week')
             ->select();
         $thisYearUpdateNum = $this->field('count(id) as ty_num')
-            ->wheretime('createtime', 'year')
+            ->wheretime('create_time', 'year')
             ->select();
         $thisMonthUpdateNum = $this->field('count(id) as tm_num')
-            ->wheretime('createtime', 'month')
+            ->wheretime('create_time', 'month')
             ->select();
         $percent = $thisMonthUpdateNum[0]['tm_num'];
         return $percent;
@@ -99,7 +99,7 @@ class Media extends Model
     {
         $ret = [];
         $curtime = time();
-        $data['updatetime'] = $curtime;
+        $data['update_time'] = $curtime;
         $errors = $this->filterField($data,true);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -117,7 +117,7 @@ class Media extends Model
     {
         $ret = [];
         $curtime = time();
-        $data['createtime'] = $curtime;
+        $data['create_time'] = $curtime;
         $errors = $this->filterField($data,false);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -223,7 +223,7 @@ class Media extends Model
         }else{
             $end_time = strtotime($data['endtime_str']);
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
             ->join('vox_media_type b', 'a.type_id=b.id')
             ->whereor($cond_or)

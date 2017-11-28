@@ -12,17 +12,16 @@ class Inform extends Model{
     protected $table = 'vox_inform';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'source_user_id','target_user_id', 'content',
-        'operation', 'priority','status','createtime','updatetime'
+        'id','target_user_id','title','content',
+        'operation', 'priority','status','create_time','update_time'
     );
     protected $type = [
         'id' => 'integer',
-        'source_user_id' => 'integer',
         'target_user_id' => 'integer',
         'priority' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -33,9 +32,9 @@ class Inform extends Model{
         if(!isset($cond['status'])){
             $cond['status'] = ['<>', 2];
         }
-        $res = $this->field('id,source_user_id,target_user_id,title,content,
-        operation,priority,status,createtime')
-            ->order('priority asc, createtime desc')
+        $res = $this->field('id,target_user_id,title,content,
+        operation,priority,status,create_time')
+            ->order('priority asc, create_time desc')
             ->where($cond)
             ->select();
         return $res;
@@ -47,8 +46,8 @@ class Inform extends Model{
      * @return mixed
      */
     public function getById($id){
-        $res = $this->field('id,source_user_id,target_user_id,title,content,
-        operation,priority,status,createtime')
+        $res = $this->field('id,target_user_id,title,content,
+        operation,priority,status,create_time')
             ->where(['id' => $id])
             ->find();
         return $res;
@@ -64,7 +63,7 @@ class Inform extends Model{
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)){
-            $data['updatetime'] = time();
+            $data['update_time'] = time();
             $this->save($data, ['id' => $id]);
         }
         return $ret;
@@ -135,9 +134,6 @@ class Inform extends Model{
     private function filterField($data){
         $ret = [];
         $errors = [];
-        if(isset($data['source_user_id']) && !$data['source_user_id']){
-            $errors['source_user_id'] = '发送用户不能为空';
-        }
         if(isset($data['target_user_id']) && !$data['target_user_id']){
             $errors['target_user_id'] = '接收用户不能为空';
         }

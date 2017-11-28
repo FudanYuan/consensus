@@ -85,7 +85,7 @@ class Theme extends Common{
      */
     public function  bubbleList(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $list = D('Theme')->getBubbleList($data);
         $ret['data'] = $list;
         $this->jsonReturn($ret);
@@ -178,7 +178,7 @@ class Theme extends Common{
      */
     public function getT2ByT1AJAX(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $ret['data'] = D('Theme')->getT2List([],$data,[]);
         $this->jsonReturn($ret);
     }

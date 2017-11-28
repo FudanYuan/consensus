@@ -12,7 +12,7 @@ class Tag extends Model{
     protected $table = 'vox_tag';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'title','section','status','createtime','updatetime'
+        'id', 'title','section','status','create_time','update_time'
     );
     protected $type = [
         'id' => 'integer',
@@ -74,7 +74,7 @@ class Tag extends Model{
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)){
-            $data['updatetime'] = time();
+            $data['update_time'] = time();
             $this->save($data, ['id' => $id]);
         }
         return $ret;
@@ -90,7 +90,7 @@ class Tag extends Model{
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)){
-            $data['createtime'] = time();
+            $data['create_time'] = time();
             if(!isset($data['status']))
                 $data['status'] = 1;
             $this->save($data);

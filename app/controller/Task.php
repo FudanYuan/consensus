@@ -24,15 +24,15 @@ class Task extends Common{
      */
     public function getTaskList(){
         $params = input('post.');
-        $ret = ['errorcode' => 0, 'msg' => '成功'];
+        $ret = ['error_code' => 0, 'msg' => '成功'];
         if(empty($params)){
-            $list = D('Task')->getTaskList([],[],'createtime desc');
+            $list = D('Task')->getTaskList([],[],'create_time desc');
             $ret["data"] = $list;
             $this->jsonReturn($ret);
         }
         $task_name = input('post.name','');
-        $taskStatus = input('post.taskstatus',-1);
-        $order = input('post.sortCol', 'createtime desc');
+        $taskStatus = input('post.task_status',-1);
+        $order = input('post.sortCol', 'create_time desc');
         $page = input('post.current_page',0);
         $per_page = input('post.per_page',0);
         $cond_and = [];
@@ -40,39 +40,39 @@ class Task extends Common{
         if($taskStatus!=-1){
             switch ($taskStatus){
                 case '0':
-                    $cond_and['taskstatus'] = ['=' , 0];
+                    $cond_and['task_status'] = ['=' , 0];
                     break;
                 case '1':
-                    $cond_and['taskstatus'] = ['=' , 1];
+                    $cond_and['task_status'] = ['=' , 1];
                     break;
                 case '2':
-                    $cond_and['taskstatus'] = ['=' , 2];
+                    $cond_and['task_status'] = ['=' , 2];
                     break;
             }
         }
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
         for($i=0;$i<count($list);$i++){
-            $curtime = time();
-            $begintime = $list[$i]['begintime'];
-            $pretime = $list[$i]['pretime'];
-            $time = $curtime - $begintime;//计算已耗时间
+            $curTime = time();
+            $beginTime = $list[$i]['begin_time'];
+            $preTime = $list[$i]['time_predict'];
+            $time = $curTime - $beginTime;//计算已耗时间
             if($time < 0){
                 $time = 0;
             }
             ///未修改////
             /// 采集进度条逻辑////
-            if($curtime>($begintime+$pretime)){
+            if($curTime>($beginTime+$preTime)){
                 $progress = 100;
-            }else if($curtime<$begintime){
+            }else if($curTime<$beginTime){
                 $progress = 0;
             }else{
                 if($time>0){
-                    $progress =($time/$pretime)*100;
+                    $progress =($time/$preTime)*100;
                 }else{
                     $progress = 100;
                 }
             }
-            $list[$i]['pretime'] = round($pretime/3600,1);
+            $list[$i]['time_predict'] = round($preTime/3600,1);
             $list[$i]['progress'] =round($progress,2);
             $list[$i]['time'] = round($time/3600, 1);
             $list[$i]['count'] = number_format($list[$i]['count']);
@@ -95,17 +95,17 @@ class Task extends Common{
      * 终止
      */
     public function stop(){
-        $ret = ['code' => 1, 'msg' => '成功'];
+        $ret = ['error_code' => 0, 'msg' => '成功'];
         $ids = input('post.ids');
         try{
-            $res = D('Task')->end_task(['id' => ['in', $ids]]);
+            D('Task')->end_task(['id' => ['in', $ids]]);
             $log['user_id'] = $this->getUserId();
             $log['IP'] = $this->getUserIp();
             $log['section'] = '舆情采集';
             $log['action_descr'] = '用户终止采集';
             D('OperationLog')->addData($log);
         }catch(MyException $e){
-            $ret['code'] = 2;
+            $ret['error_code'] = 1;
             $ret['msg'] = '终止失败';
         }
         $this->jsonReturn($ret);
@@ -124,7 +124,7 @@ class Task extends Common{
         }
         $website_list = D('MediaType')->getMedTypeList();
         if(!empty($data)) {
-            $ret = ['code' => 1, 'msg' => '成功'];
+            $ret = ['error_code' => 0, 'msg' => '成功'];
             $ret['data'] = $data;
             if (!isset($data['theme'])) {
                 $data['theme'] = [];
@@ -138,7 +138,7 @@ class Task extends Common{
             $theme = $data['theme'];
             $website = $data['website'];
             if (!empty($res_task['errors'])) {
-                $ret['code'] = 2;
+                $ret['error_code'] = 1;
                 $ret['msg'] = '新建失败';
                 $ret['errors'] = $res_task['errors'];
                 $this->jsonReturn($ret);
@@ -156,7 +156,7 @@ class Task extends Common{
                     for ($j = 0; $j < count($theme_3_data); $j++) {
                         $task_theme_data['task_id'] = $task_id;
                         $task_theme_data['theme_id'] = $theme_3_data[$j]['t3_id'];
-                        D('TaskTheme')->addData($task_theme_data);
+                        //D('TaskTheme')->addData($task_theme_data);
                     }
                 }
                 // 添加task_media_type
@@ -164,9 +164,9 @@ class Task extends Common{
                 for ($i = 0; $i < count($website); $i++) {
                     $task_media_data['task_id'] = $task_id;
                     $task_media_data['media_type_id'] = $website[$i];
-                    D('TaskMediaType')->addData($task_media_data);
+                   // D('TaskMediaType')->addData($task_media_data);
                 }
-                $this->jsonReturn($ret);
+            $this->jsonReturn($ret);
             }
         }
         return view('', ['theme_list' => $theme_list, 'website_list' => $website_list]);

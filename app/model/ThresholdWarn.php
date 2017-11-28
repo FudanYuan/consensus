@@ -17,7 +17,7 @@ class ThresholdWarn extends Model
     protected $table = 'vox_threshold_warn';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'task_id','day_all_count','day_negative_count','status','createtime','updatetime'
+        'id', 'task_id','day_all_count','day_negative_count','status','create_time','update_time'
     );
     protected $type = [
         'id' => 'integer',
@@ -25,8 +25,8 @@ class ThresholdWarn extends Model
         'day_all_count ' => 'integer',
         'day_negative_count' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -70,7 +70,7 @@ class ThresholdWarn extends Model
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if (empty($errors)) {
-            $data['createtime'] = time();
+            $data['create_time'] = time();
             $data['status'] = 1;
             $this->save($data);
         }
@@ -210,7 +210,7 @@ class ThresholdWarn extends Model
      */
     private function  save_1($data){
         $insert_data = ['loop'=>$data['loop'],'begintime' => strtotime($data['begintime_str']),'status' => $data['status']
-            ,'createtime' => $data['createtime'],'taskstatus' => 0];
+            ,'create_time' => $data['create_time'],'taskstatus' => 0];
         $res = $this->insertGetId($insert_data);
         return $res;
     }

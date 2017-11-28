@@ -97,7 +97,8 @@ class DataAnalysis extends Common
     public function getAnalysisIndex(){
         $params = input('post.');
         $task_id = input('post.task_id', -1);
-        $ret = ['errorcode' => 0,'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0,'data' => [], 'msg' => ''];
+       $params['params'] = $params;
         $cond = [];
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
@@ -148,7 +149,8 @@ class DataAnalysis extends Common
         $params = input('post.');
         $task_id = input('post.task_id', -1);
         $nature = input('post.nature', 0);
-        $ret = ['errorcode' => 0,'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0,'data' => [], 'msg' => ''];
+        $ret['params'] = $params;
         $cond = [];
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
@@ -186,9 +188,8 @@ class DataAnalysis extends Common
         $task_id = input('post.task_id', -1);
         $stime = input('post.begintime_str', '');
         $etime = input('post.endtime_str', '');
-
-        $ret = ['errorcode' => 0, 'msg' => ''];
-        $cond = [];
+        $ret['params'] = $params;
+        $ret = ['error_code' => 0, 'msg' => ''];
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
         }
@@ -290,8 +291,8 @@ class DataAnalysis extends Common
     public function getMediaDistrubution(){
         $params = input('post.');
         $task_id = input('post.task_id', -1);
-
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret['params'] = $params;
+        $ret = ['error_code' => 0, 'msg' => ''];
 
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id

@@ -14,14 +14,14 @@ class Theme extends Model
     protected $table = 'vox_theme_3';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 't2_id', 'name', 'status', 'createtime', 'updatetime'
+        'id', 't2_id', 'name', 'status', 'create_time', 'update_time'
     );
     protected $type = [
         'id' => 'integer',
         't2_id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -278,7 +278,7 @@ class Theme extends Model
         } else {
             $end_time = strtotime($data['endtime_str']);
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $res = $this->alias('a')->field(
             'a.id as t3_id,a.name as t3_name,a.t2_id,b.name as t2_name,b.t1_id,
              c.name as t1_name')
@@ -301,20 +301,20 @@ class Theme extends Model
             ->where('status <> 2')
             ->select();
         $lastWeekUpdateNum = $this->field('count(id) as lw_num')
-            ->wheretime('createtime', 'last week')
+            ->wheretime('create_time', 'last week')
             ->where('status <> 2')
             ->select();
         $thisWeekUpdateNum = $this->field('count(id) as tw_num')
-            ->wheretime('createtime', 'week')
+            ->wheretime('create_time', 'week')
             ->where('status <> 2')
             ->select();
         $thisYearUpdateNum = $this->field('count(id) as ty_num')
             ->where('status <> 2')
-            ->wheretime('createtime', 'year')
+            ->wheretime('create_time', 'year')
             ->select();
         $thisMonthUpdateNum = $this->field('count(id) as tm_num')
             ->where('status <> 2')
-            ->wheretime('createtime', 'month')
+            ->wheretime('create_time', 'month')
             ->select();
         $percent = $thisMonthUpdateNum[0]['tm_num'];
         return $percent;
@@ -329,7 +329,7 @@ class Theme extends Model
     {
         $ret = [];
         $curTime = time();
-        $data['createtime'] = $curTime;
+        $data['create_time'] = $curTime;
         $errors = $this->filterField_3($data, false);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -350,7 +350,7 @@ class Theme extends Model
     {
         $ret = [];
         $curTime = time();
-        $data['createtime'] = $curTime;
+        $data['create_time'] = $curTime;
         $errors = $this->filterField_2($data, false);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -370,7 +370,7 @@ class Theme extends Model
     {
         $ret = [];
         $curTime = time();
-        $data['createtime'] = $curTime;
+        $data['create_time'] = $curTime;
         $errors = $this->filterField_1($data, false);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -391,7 +391,7 @@ class Theme extends Model
     {
         $ret = [];
         $curTime = time();
-        $data['updatetime'] = $curTime;
+        $data['update_time'] = $curTime;
         $errors = $this->filterField_3($data, true);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -411,7 +411,7 @@ class Theme extends Model
     {
         $ret = [];
         $curTime = time();
-        $data['updatetime'] = $curTime;
+        $data['update_time'] = $curTime;
         $errors = $this->filterField_2($data, true);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -430,7 +430,7 @@ class Theme extends Model
     {
         $ret = [];
         $curTime = time();
-        $data['updatetime'] = $curTime;
+        $data['update_time'] = $curTime;
         $errors = $this->filterField_1($data, true);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -547,7 +547,7 @@ class Theme extends Model
     private function save_2($data)
     {
         $insert_data = ['t1_id' => $data['t1_id'], 'name' => $data['name'], 'status' => $data['status']
-            , 'createtime' => $data['createtime']];
+            , 'create_time' => $data['create_time']];
         $res = Db('theme_2')->insertGetId($insert_data);
         return $res;
     }
@@ -560,7 +560,7 @@ class Theme extends Model
     private function save_1($data)
     {
         $insert_data = ['name' => $data['name'], 'status' => $data['status']
-            , 'createtime' => $data['createtime']];
+            , 'create_time' => $data['create_time']];
         $res = Db('theme_1')->insertGetId($insert_data);
         return $res;
     }
@@ -573,7 +573,7 @@ class Theme extends Model
     public function update_2($where, $data)
     {
         $update_data = ['t1_id' => $data['t1_id'], 'name' => $data['name'], 'status' => $data['status']
-            , 'updatetime' => $data['updatetime']];
+            , 'update_time' => $data['update_time']];
         $res = Db('theme_2')
             ->where("id = '$where'")
             ->update($update_data);
@@ -588,7 +588,7 @@ class Theme extends Model
     public function update_1($where, $data)
     {
         $update_data = ['name' => $data['name'], 'status' => $data['status']
-            , 'updatetime' => $data['updatetime']];
+            , 'update_time' => $data['update_time']];
         $res = Db('theme_1')
             ->where("id = '$where'")
             ->update($update_data);

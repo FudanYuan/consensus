@@ -9,16 +9,20 @@
 namespace app\controller;
 
 class DataMonitor extends Common{
-    public $exportCols = ['id','theme','task_id','title','content','digest',
-        'source','userID','media_type_id','nature','url','relevance','publishtime','similar_num','is_collect','is_warn','status','createtime', 'updatetime'];
-    public $colsText = ['序号', '主题','任务编号','标题','内容','概述','来源','用户ID','媒体类型id','舆情属性','网址','关联度','发表时间','相似文章数','是否收藏','是否预警'];
+    public $exportCols = [ 'id','theme','task_id','media_type_id','title',
+        'content','digest','source','userID','url','publish_time','nature',
+        'relevance','similar_num','is_collect','is_warn','is_analysis',
+        'status','create_time', 'update_time'];
+    public $colsText = ['序号', '主题组合','任务编号','媒体类型id','标题','内容',
+        '摘要','来源媒体','用户ID','网址','发表时间','舆情属性','关联度','相似文章数',
+        '是否收藏','是否预警','是否分析','状态','创建时间','更新时间'];
 
     /**
-     * 数据总览
-     * @return \think\response\View
+     *  数据总览
+     * @return mixed
      */
     public function index(){
-        $task = D('Task')->getTaskList([],[],'createtime desc');
+        $task = D('Task')->getTaskList([],[],'create_time desc');
         $media_type = D('MediaType')->getMedTypeList();
         return view('', ['task'=>$task, 'area' => [], 'media_type' => $media_type]);
     }
@@ -59,7 +63,7 @@ class DataMonitor extends Common{
         $keywords = input('post.keywords', '');
         $stime = input('post.begintime_str', '');
         $etime = input('post.endtime_str', '');
-        $order = input('post.sortCol', 'publishtime');
+        $order = input('post.sortCol', 'publish_time');
         $is_collect = input('post.is_collect',-1);
         $is_warn = input('post.is_warn',-1);
         $page = input('post.current_page',0);
@@ -71,13 +75,13 @@ class DataMonitor extends Common{
             $cond_or['b.name|a.content|a.source|a.nature|a.url|a.digest|a.userID|a.title'] = ['like','%'.$keywords.'%'];
         }
         if($stime && $etime){
-            $cond_and['publishtime'] = ['between', [strtotime($stime), strtotime($etime)]];
+            $cond_and['publish_time'] = ['between', [strtotime($stime), strtotime($etime)]];
         }
         else if(!$stime && $etime){
-            $cond_and['publishtime'] = ['between', [0, strtotime($etime)]];
+            $cond_and['publish_time'] = ['between', [0, strtotime($etime)]];
         }
         else if($stime && !$etime){
-            $cond_and['publishtime'] = ['between', [strtotime($stime), time()]];
+            $cond_and['publish_time'] = ['between', [strtotime($stime), time()]];
         }
         if($is_collect != -1){
             $cond_and['is_collect'] = ['=',1];
@@ -107,7 +111,7 @@ class DataMonitor extends Common{
         if($task_id != -1){
             $cond_and['a.task_id'] = ['=',$task_id];
         }
-        $ret = ['errorcode' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
+        $ret = ['error_code' => 0, 'data' => [], 'params' => $params, 'msg' => ""];
         $list = D('DataMonitor')->publicList($cond_or,$cond_and,$order);
         //分页时需要获取记录总数，键值为 total
         $ret["total"] = count($list);
@@ -129,7 +133,7 @@ class DataMonitor extends Common{
         $params = input('post.');
         $id = input('post.id', -1);
         $isCollected = input('post.is_collect');
-        $ret = ['errorcode' => 0, 'msg' => '','id' => $id,'isCollected' => $isCollected];
+        $ret = ['error_code' => 0, 'msg' => '','id' => $id,'isCollected' => $isCollected];
         // 收藏逻辑
         if($id != '-1'){
             $data = D('DataMonitor')->getDataById($id);
@@ -164,7 +168,7 @@ class DataMonitor extends Common{
         $id = input('post.id', -1);
         $nature = input('post.nature', '');
         $relevance = input('post.relevance', '');
-        $ret = ['errorcode' => 0, 'msg' => '修改成功','nature' =>$nature,'relevance'=>$relevance];
+        $ret = ['error_code' => 0, 'msg' => '修改成功','nature' =>$nature,'relevance'=>$relevance];
         // 编辑逻辑
         if($id != '-1'){
             // 修改成功，msg为 '编辑成功'，否则 '编辑失败'
@@ -213,7 +217,7 @@ class DataMonitor extends Common{
      * 获取预警关键词列表
      */
     public function getKeywordsConfig(){
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['error_code' => 0, 'msg' => ''];
         // 查询结果，
         // 逻辑： 先判断关键词预警是否开启，若开启，获取关键词列表，否则返回数据为空
         $data = D('KeywordWarn')->getKeywordList();
@@ -323,7 +327,7 @@ class DataMonitor extends Common{
         } else {
             $media = $params['media'];
         }
-        $ret = ['errorcode' => 0, 'msg' => '','params' => $params];
+        $ret = ['error_code' => 0, 'msg' => '','params' => $params];
         // 更新预警设置逻辑
         // code here
         if($keywordsSwitch == 'true') {
@@ -346,7 +350,7 @@ class DataMonitor extends Common{
                 $data['media_type'] = $media_warn;
                 $res = D('KeywordWarn')->addData($data);
                 if (!empty($res['errors'])) {
-                    $ret = ['errorcode' => 1, 'msg' => $res['errors']];
+                    $ret = ['error_code' => 1, 'msg' => $res['errors']];
                 }
                 $log['user_id'] = $this->getUserId();
                 $log['IP'] = $this->getUserIp();
@@ -362,9 +366,9 @@ class DataMonitor extends Common{
                     $ret['data'] = $data;
                     $res = D('KeywordWarn')->saveData($data['id'],$data);
                     if (!empty($res['errors'])) {
-                        $ret = ['errorcode' => 1, 'msg' => '关闭失败'];
+                        $ret = ['error_code' => 1, 'msg' => '关闭失败'];
                     } else{
-                        $ret = ['errorcode' => 0, 'msg' => '关闭成功'];
+                        $ret = ['error_code' => 0, 'msg' => '关闭成功'];
                     }
                     $log['user_id'] = $this->getUserId();
                     $log['IP'] = $this->getUserIp();
@@ -383,9 +387,9 @@ class DataMonitor extends Common{
                 $ret['data'] = $data;
                 $res = D('KeywordWarn')->saveData($data['id'],$data);
                 if (!empty($res['errors'])) {
-                    $ret = ['errorcode' => 1, 'msg' => '关闭失败'];
+                    $ret = ['error_code' => 1, 'msg' => '关闭失败'];
                 } else{
-                    $ret = ['errorcode' => 0, 'msg' => '关闭成功'];
+                    $ret = ['error_code' => 0, 'msg' => '关闭成功'];
                 }
                 $log['user_id'] = $this->getUserId();
                 $log['IP'] = $this->getUserIp();
@@ -408,7 +412,7 @@ class DataMonitor extends Common{
         /**
          * status: 1 预警中； 2 关闭； 3 删除
          */
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['error_code' => 0, 'msg' => ''];
         // 查询结果
         $list = D('ThresholdWarn')->getWarnList([],[],[]);
         //分页时需要获取记录总数，键值为 total
@@ -475,7 +479,7 @@ class DataMonitor extends Common{
         $task = input('post.task', '');
         $dayAllCount = input('post.dayAllCount',-1);
         $dayNegativeCount = input('post.dayNegativeCount',-1);
-        $ret = ['errorcode' => 0, 'msg' => '','params'=>$params];
+        $ret = ['error_code' => 0, 'msg' => '','params'=>$params];
         // 添加预警设置逻辑
         // code here
         $data['day_all_count'] = $dayAllCount;
@@ -488,7 +492,7 @@ class DataMonitor extends Common{
         }
         $res = D('ThresholdWarn')->addData($data);
         if(!empty($res['errors'])){
-            $ret = ['errorcode' => 2, 'msg' => $res['errors']];
+            $ret = ['error_code' => 2, 'msg' => $res['errors']];
         }
         $log['user_id'] = $this->getUserId();
         $log['IP'] = $this->getUserIp();
@@ -516,7 +520,7 @@ class DataMonitor extends Common{
         $task = input('post.task', '');
         $dayAllCount = input('post.dayAllCount', -1);
         $dayNegativeCount = input('post.dayNegativeCount', -1);
-        $ret = ['errorcode' => 0, 'msg' => ''];
+        $ret = ['error_code' => 0, 'msg' => ''];
         // 编辑预警设置逻辑
         // code here
         if($status){
@@ -535,7 +539,7 @@ class DataMonitor extends Common{
         }
         $res = D('ThresholdWarn')->saveData($id,$data);
         if(!empty($res['errors'])){
-            $ret = ['errorcode' => 2, 'msg' => $res['errors']];
+            $ret = ['error_code' => 2, 'msg' => $res['errors']];
         }
         $log['user_id'] = $this->getUserId();
         $log['IP'] = $this->getUserIp();
@@ -618,7 +622,7 @@ class DataMonitor extends Common{
      */
     public function  getBubbleData(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
             $begin_time = 0;
         }else{
@@ -638,7 +642,7 @@ class DataMonitor extends Common{
                 $limit = $data['bubble_num_limit'];
             }
         }
-        $cond = "$begin_time < a.createtime and a.createtime < $end_time";
+        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $list = D('DataMonitor')->getBubbleData([],$cond,$limit);
         $ret['data'] = $list;
         $this->jsonReturn($ret);
@@ -649,7 +653,7 @@ class DataMonitor extends Common{
      */
     public function getBarData(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $list = D('DataMonitor')->getBarData($data);
         $ret['data'] = $list;
         $this->jsonReturn($ret);
@@ -676,7 +680,7 @@ class DataMonitor extends Common{
      */
     public function websiteThemePie(){
         $data = input('get.');
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $list = D('DataMonitor')->getTypePie($data);
         $ret['data'] = $list;
         $this->jsonReturn($ret);

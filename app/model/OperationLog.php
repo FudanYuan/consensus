@@ -9,17 +9,17 @@ namespace app\model;
 use think\Model;
 
 class OperationLog extends Model{
-    protected $table = 'vox_operationlog';
+    protected $table = 'vox_operation_log';
     protected $pk = 'id';
     protected $fields = array(
-        'id', 'user_id','section', 'IP', 'action_descr', 'status','createtime','updatetime'
+        'id', 'user_id','IP','section', 'action_descr', 'status','create_time','update_time'
     );
     protected $type = [
         'id' => 'integer',
         'user_id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -30,8 +30,8 @@ class OperationLog extends Model{
         if(!isset($cond['status'])){
             $cond['status'] = ['<>', 2];
         }
-        $res = $this->field('user_id,section,IP,action_descr,createtime')
-            ->order('createtime desc')
+        $res = $this->field('user_id,section,IP,action_descr,create_time')
+            ->order('create_time desc')
             ->where($cond)
             ->select();
         return $res;
@@ -47,7 +47,7 @@ class OperationLog extends Model{
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)){
-            $data['createtime'] = time();
+            $data['create_time'] = time();
             if(!isset($data['status']))
                 $data['status'] = 1;
             $this->save($data);

@@ -17,13 +17,13 @@ class KeywordWarn extends Model
     protected $table = 'vox_keyword_warn';
     protected $pk = 'id';
     protected $fields = array(
-        'id','keyword','nature','media_type','status', 'createtime', 'updatetime'
+        'id','keyword','nature','media_type','status', 'create_time', 'update_time'
     );
     protected $type = [
         'id' => 'integer',
         'status' => 'integer',
-        'createtime' => 'integer',
-        'updatetime' => 'integer'
+        'create_time' => 'integer',
+        'update_time' => 'integer'
     ];
 
     /**
@@ -54,7 +54,7 @@ class KeywordWarn extends Model
     public function addData($data){
         $ret = [];
         $curtime = time();
-        $data['createtime'] = $curtime;
+        $data['create_time'] = $curtime;
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -96,7 +96,7 @@ class KeywordWarn extends Model
         $ret['errors'] = $errors;
         if (empty($errors)) {
             $curTime = time();
-            $data['updatetime'] = $curTime;
+            $data['update_time'] = $curTime;
             $this->save($data, ['id' => $id]);
         }
         return $ret;
@@ -135,16 +135,16 @@ class KeywordWarn extends Model
         $totalNum = $this->field('count(id) as t_num')
             ->select();
         $lastWeekUpdateNum = $this->field('count(id) as lw_num')
-            ->wheretime('createtime','last week')
+            ->wheretime('create_time','last week')
             ->select();
         $thisWeekUpdateNum = $this->field('count(id) as tw_num')
-            ->wheretime('createtime','week')
+            ->wheretime('create_time','week')
             ->select();
         $thisYearUpdateNum = $this->field('count(id) as ty_num')
-            ->wheretime('createtime','year')
+            ->wheretime('create_time','year')
             ->select();
         $thisMonthUpdateNum = $this->field('count(id) as tm_num')
-            ->wheretime('createtime','month')
+            ->wheretime('create_time','month')
             ->select();
         $percent = $thisMonthUpdateNum[0]['tm_num'];
         return $percent;
