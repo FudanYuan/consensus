@@ -123,7 +123,7 @@
     function submit() {
         getParams();
         $.post('__PRO_PATH__/OperationLog/getLogList', vm.params, function (res) {
-            if (res.error_codew == 0) {
+            if (res.error_code == 0) {
                 vm.total = res.total;
                 vm.pages = Math.ceil(res.total / vm.per_page);
                 vm.current_page = res.current_page;

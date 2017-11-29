@@ -13,8 +13,9 @@ class UserAdmin extends Model{
  	protected $table = 'vox_user_admin';
  	protected $pk = 'id';
  	protected $fields = array(
- 		'id','logo','username','pass','role_id','remark','status',
-        'login_time','create_time','update_time'
+        'id', 'logo', 'username', 'pass', 'role_id', 'name', 'photo', 'gender',
+        'age', 'position', 'phone', 'email', 'address', 'postcode', 'remark',
+        'status', 'login_time', 'create_time', 'update_time'
  	);
  	protected $type = [
  			'id' => 'integer',
@@ -32,9 +33,11 @@ class UserAdmin extends Model{
  		if(!isset($cond['status'])){
  			$cond['status'] = ['<>', 2];
  		}
- 		return $this->field('id,username,status,create_time,login_time,remark')
+ 		return $this->field('id, logo, username, pass, role_id, name, photo, gender,
+ 		age, position, phone, email, address, postcode, remark,
+        status, login_time, create_time')
             ->where($cond)
-            ->paginate(10);
+            ->select();
  	}
 
     /**
@@ -43,7 +46,9 @@ class UserAdmin extends Model{
      * @return mixed
      */
  	public function getById($id){
- 		return $this->field('id,logo,username,pass,role_id,remark,status')
+ 		return $this->field('id, logo, username, pass, role_id, name, photo, gender,
+ 		age, position, phone, email, address, postcode, remark,
+        status, login_time, create_time')
             ->where('id', $id)
             ->find();
  	}
@@ -68,9 +73,18 @@ class UserAdmin extends Model{
      * @return false|int
      */
  	public function saveData($id, $data){
- 		$data['update_time'] = $_SERVER['REQUEST_TIME'];
- 		if(isset($data['pass']) && $data['pass']) $data['pass'] = md5($data['pass']);
- 		return $this->save($data, ['id' => $id]);
+ 		$errors = $this->filterField($data);
+        $ret['errors'] = $errors;
+        if(empty($errors)){
+            $data['update_time'] = $_SERVER['REQUEST_TIME'];
+            if(isset($data['pass']) && $data['pass']) $data['pass'] = md5($data['pass']);
+            $res = $this->save($data, ['id' => $id]);
+            if(!$res){
+                $ret['errors'] = ['msg' => '保存失败'];
+            }
+
+        }
+ 		return $ret;
  	}
 
     /**
@@ -101,7 +115,7 @@ class UserAdmin extends Model{
      * @return mixed
      */
  	public function getUserByUsername($username){
- 		return $this->field('id,username,pass,status,role_id')
+ 		return $this->field('id,logo,username,pass,status,role_id')
             ->where(['username' => $username, 'status' => ['<>', 2]])
             ->find();
  	}
@@ -182,5 +196,54 @@ class UserAdmin extends Model{
  		$rand = $_SERVER['REQUEST_TIME'].rand(0, 1000);
  		return md5($id.$rand);
  	}
+
+    /**
+     * 检查密码是否正确
+     * @param $user_id
+     * @param $pass
+     * @return bool
+     */
+    public function checkPass($user_id, $pass){
+        $res['errors'] = [];
+        $user = $this->getById($user_id);
+        if(md5($pass) != $user['pass']){
+            $res['errors'] = ['pass' => '密码错误'];
+        }
+        return $res;
+    }
+
+    /**
+     * 过滤必要字段
+     * @param $data
+     * @return array
+     */
+    private function filterField($data){
+        $errors = [];
+        if(isset($data['pass']) && !$data['pass']){
+            $errors['pass'] = '密码不能为空';
+        }
+        if(isset($data['name']) && !$data['name']){
+            $errors['name'] = '名字不能为空';
+        }
+        if(isset($data['gender']) && !$data['gender']){
+            $errors['gender'] = '性别不能为空';
+        }
+        if(isset($data['age']) && !$data['age']){
+            $errors['age'] = '年龄不能为空';
+        }
+        if(isset($data['position']) && !$data['position']){
+            $errors['position'] = '职称不能为空';
+        }
+        if(isset($data['phone']) && !$data['phone']){
+            $errors['phone'] = '联系方式不能为空';
+        }
+        if(isset($data['email']) && !$data['email']){
+            $errors['email'] = '常用邮箱不能为空';
+        }
+        if(isset($data['address']) && !$data['address']){
+            $errors['address'] = '联系地址不能为空';
+        }
+        return $errors;
+    }
  }
 ?>

@@ -270,12 +270,11 @@
         getParams();
         vm.resetParams();
         $.post('__PRO_PATH__/Task/getTaskList', vm.params, function (res) {
-            if(res.error_cdoe == 0){
+            if(res.error_code == 0){
                 vm.total = res.total;
                 vm.pages = Math.ceil(res.total / vm.per_page);
                 vm.current_page = res.current_page;
                 vm.list = res.data;
-                console.log(vm.pages);
             }
         })
     }

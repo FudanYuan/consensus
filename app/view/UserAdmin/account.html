@@ -128,7 +128,7 @@
                                 <div :class="['form-group', errors.phone != '' ? 'has-error' : '']">
                                     <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">电话：</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input name="phone" id="phone" value="{$data.phone ?? ''}" readonly="" class="form-control col-md-7 col-xs-12" type="text">
+                                        <input name="phone" id="phone" value="{$data.phone ?? ''}" class="form-control col-md-7 col-xs-12" type="text" placeholder="请输入您的电话">
                                     </div>
                                     <p class="help-block">{{errors.phone}}</p>
                                 </div>
@@ -155,22 +155,6 @@
                                         <input class="form-control" type="text" name="postcode" value="{$data.postcode ?? ''}" placeholder="请输入您的邮编" id="postcode">
                                     </div>
                                     <p class="help-block">{{errors.postcode}}</p>
-                                </div>
-
-                                <div :class="['form-group', errors.info != '' ? 'has-error' : '']" >
-                                    <label for="info" class="control-label col-md-3 col-sm-3 col-xs-12">详细信息：</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea class="form-control" name="info" id="info" placeholder="请输入您的详细信息">{$data.info ?? ''}</textarea>
-                                    </div>
-                                    <p class="help-block">{{errors.info}}</p>
-                                </div>
-
-                                <div :class="['form-group', errors.honor != '' ? 'has-error' : '']" >
-                                    <label for="honor" class="control-label col-md-3 col-sm-3 col-xs-12">所获荣誉：</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea class="form-control" name="honor" id="honor" placeholder="请输入您所获荣誉">{$data.honor ?? ''}</textarea>
-                                    </div>
-                                    <p class="help-block">{{errors.honor}}</p>
                                 </div>
 
                                 <div :class="['form-group', errors.remark != '' ? 'has-error' : '']" >
@@ -229,7 +213,6 @@
 {include file="Common/popup_warn" /}
 {include file="Common/bottom" /}
 {include file="Common/upload"}
-<script src="__PUBLIC__/js/ajaxupload.3.5.js"></script>
 <script>
     $('#consultation-nav-account').addClass('active');
     $("input[name='gender'][value='{$data.gender?? ''}']").attr("checked",true);
@@ -249,10 +232,6 @@
                 email: '',
                 address: '',
                 postcode: '',
-                hospital: '',
-                office: '',
-                info: '',
-                honor: '',
                 remark: ''
             }
         },
@@ -269,7 +248,6 @@
                 $.each(data, function() {
                     vm_info.params[this.name] = this.value;
                 });
-                console.log(JSON.stringify(vm_info.params));
             },
             submit: function () {
                 vm_info.getParams();
@@ -281,7 +259,6 @@
                         $.each(res.errors, function (k, v) {
                             vm_info.errors[k] = v;
                         });
-                        console.log(JSON.stringify(vm_info.errors));
                     }
                 });
             }
@@ -332,7 +309,6 @@
                 $.each(data, function() {
                     vm_pass.params[this.name] = this.value;
                 });
-                console.log(JSON.stringify(vm_pass.params));
             },
             check: function () {
                 vm_pass.getParams();
@@ -360,7 +336,6 @@
                         $.each(res.errors, function (k, v) {
                             vm_pass.errors[k] = v;
                         });
-                        console.log(JSON.stringify(vm_pass.errors));
                     }
                 });
             }
