@@ -41,7 +41,9 @@ class UserAdmin extends Common{
      */
     public function account()
     {
-        return view('', []);
+        $user_id = $this->getUserId();
+        $data = D('UserAdmin')->getById($user_id);
+        return view('', ['data' => $data]);
     }
 
     /**
@@ -171,9 +173,10 @@ class UserAdmin extends Common{
 		if(!empty($data)){
 			$ret = ['error_code' => 0, 'msg' => '编辑用户成功'];
 			$res = D('UserAdmin')->saveData($data['id'], $data);
-			if(!$res){
+			if(!empty($res['errors'])){
 				$ret['error_code'] = 1;
 				$ret['msg'] = '编辑用户失败';
+                $ret['errors'] = $res['errors'];
                 $this->jsonReturn($ret);
 			}
 
@@ -232,16 +235,13 @@ class UserAdmin extends Common{
         $data = input('post.');
         if(!empty($data)){
             $ret = ['error_code' => 0, 'msg' => '编辑账户成功'];
-            $logo = input('post.logo', '');
-            if($logo != ''){
-                $ret['res'] = $logo;
-                $user_id = $this->getUserId();
-                $res = D('UserAdmin')->saveData($user_id, ['logo' => $logo]);
-                if(!$res){
-                    $ret['error_code'] = 1;
-                    $ret['msg'] = '修改失败';
-                    $this->jsonReturn($ret);
-                }
+            $user_id = $this->getUserId();
+            $res = D('UserAdmin')->saveData($user_id, $data);
+            if(!empty($res['errors'])){
+                $ret['error_code'] = 1;
+                $ret['msg'] = '修改失败';
+                $ret['errors'] = $res['errors'];
+                $this->jsonReturn($ret);
             }
             $log['user_id'] = $this->getUserId();
             $log['IP'] = $this->getUserIp();
@@ -271,9 +271,10 @@ class UserAdmin extends Common{
             $this->jsonReturn($ret);
         }
         $res = D('UserAdmin')->saveData($user_id, ['pass' => $confirmPwd]);
-        if(!$res){
+        if(!empty($res['errors'])){
             $ret['error_code'] = 1;
             $ret['msg'] = '修改失败';
+            $ret['errors'] = $res['errors'];
             $this->jsonReturn($ret);
         }
         $this->jsonReturn($ret);

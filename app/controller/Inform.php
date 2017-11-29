@@ -94,7 +94,6 @@ class Inform extends Common
                 $params['content'] = '';
             }
 
-            $data['source_user_id'] = $this->getUserId();
             $data['title'] = $title;
             $data['content'] = $params['content'];
             $data['operation'] = '查看';
