@@ -161,22 +161,24 @@ class DataAnalysis extends Common
         }
 
         // 查找逻辑， 未实现
-
-        // 测试数据
-        $public = [];
-        $public[0] = ['id'=>1, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[1] = ['id'=>2, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[2] = ['id'=>3, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[3] = ['id'=>4, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[4] = ['id'=>5, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[5] = ['id'=>6, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[6] = ['id'=>7, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[7] = ['id'=>8, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[8] = ['id'=>9, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-        $public[9] = ['id'=>10, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-
+        $select = ['a.id as id,a.title as title,nature,b.name as media_type,a.create_time as publishtime'];
+        $public = D('DataMonitor')->getNewest($select,$cond,'id desc',10);
         $ret['data'] = $public;
         $this->jsonReturn($ret);
+
+        //
+        // 测试数
+//        $public[0] = ['id'=>1, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[1] = ['id'=>2, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[2] = ['id'=>3, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[3] = ['id'=>4, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[4] = ['id'=>5, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[5] = ['id'=>6, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[6] = ['id'=>7, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[7] = ['id'=>8, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[8] = ['id'=>9, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+//        $public[9] = ['id'=>10, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
+
     }
 
     /**
