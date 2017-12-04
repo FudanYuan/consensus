@@ -1,5 +1,6 @@
 {include file="Common/top" title="首页" metas='' /}
 {include file="Common/search" /}
+{if condition="authority('DataAnalysisMedia')"}
 <style>
     .params{
         display: inline;
@@ -23,7 +24,8 @@
             <li><a href="__PRO_PATH__/DataAnalysis/index">舆情分析</a></li>
             <li>媒体分布</li>
         </ul>
-        <!--:style="{display: active.trend == 0 ? 'inline' : 'none'}"-->
+
+        {if condition="$error eq ''"}
         <div class="col-lg-8" style="background-color: #fff">
             <div id="media_pie_chart" style="height: 400px;"></div>
         </div>
@@ -36,6 +38,10 @@
                 </div>
             </div>
         </div>
+
+        {else /}
+        <div class="row" style="text-align: center">{$error ?? ''}</div>
+        {/if}
     </div>
 </div><!-- /main-container -->
 {include file="Common/popup_warn" /}
@@ -194,3 +200,13 @@
         console.log(JSON.stringify(vm.params));
     }
 </script>
+{else /}
+<div class="main-container">
+    <div class="padding-md">
+        <span class="col-lg-12" style="font-size: larger; text-align: center">
+			<strong>抱歉，您访问的页面不存在！</strong>
+		</span>
+    </div>
+</div>
+{include file="Common/bottom" /}
+{/if}

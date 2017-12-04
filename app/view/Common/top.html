@@ -311,7 +311,7 @@
                         <ul class="submenu bg-palette4">
                             <li id="consensus-nav-data-analysis-tasks">
                                 <a href="javascript:;" style="background-color: #0b1014; color: white; font-size: 13px;">
-                                    <span class="submenu-label" id="analysis_task"></span>
+                                    <span class="submenu-label" id="analysis_task">任务列表</span>
                                     <span class="submenu-label" id="analysis_task_id" style="display: none"></span>
                                     <span class="analysis-tasks-icon">
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -333,14 +333,14 @@
                             </li>
                             {/if}
                             {if condition="authority('DataAnalysisSearchWords')"}
-                            <li id="consensus-nav-data-analysis-sub2">
+                            <li id="consensus-nav-data-analysis-sub2" hidden>
                                 <a href="__PRO_PATH__/DataAnalysis/searchwords">
                                     <span class="submenu-label">搜索词分析</span>
                                 </a>
                             </li>
                             {/if}
                             {if condition="authority('DataAnalysisOpinion')"}
-                            <li id="consensus-nav-data-analysis-sub3">
+                            <li id="consensus-nav-data-analysis-sub3" hidden>
                                 <a href="__PRO_PATH__/DataAnalysis/opinion">
                                     <span class="submenu-label">观点分析</span>
                                 </a>
@@ -354,21 +354,21 @@
                             </li>
                             {/if}
                             {if condition="authority('DataAnalysisSpread')"}
-                            <li id="consensus-nav-data-analysis-sub5">
+                            <li id="consensus-nav-data-analysis-sub5" hidden>
                                 <a href="__PRO_PATH__/DataAnalysis/spread">
                                     <span class="submenu-label">传播分析</span>
                                 </a>
                             </li>
                             {/if}
                             {if condition="authority('DataAnalysisAudience')"}
-                            <li id="consensus-nav-data-analysis-sub6">
+                            <li id="consensus-nav-data-analysis-sub6" hidden>
                                 <a href="__PRO_PATH__/DataAnalysis/audience">
                                     <span class="submenu-label">受众分析</span>
                                 </a>
                             </li>
                             {/if}
                             {if condition="authority('DataAnalysisEvent')"}
-                            <li id="consensus-nav-data-analysis-sub7">
+                            <li id="consensus-nav-data-analysis-sub7" hidden>
                                 <a href="__PRO_PATH__/DataAnalysis/event">
                                     <span class="submenu-label">事件分析</span>
                                 </a>
@@ -379,7 +379,7 @@
                     {/if}
 
                     {if condition="authority('DataReport')"}
-                    <li class="bg-palette1" id="consensus-nav-data-report">
+                    <li class="bg-palette1" id="consensus-nav-data-report" hidden>
                         <a href="__PRO_PATH__/DataReport/index">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
@@ -427,7 +427,7 @@
                     </li>
 
                     {if condition="authority('DataProcess')"}
-                    <li class="openable bg-palette4" id="consensus-nav-data-process">
+                    <li class="openable bg-palette4" id="consensus-nav-data-process" hidden>
                         <a href="javascript:;">
                             <span class="menu-content block">
                                 <span class="menu-icon"><i class="block fa fa-database fa-lg"></i></span>

@@ -27,6 +27,11 @@ class Task extends Common{
         $ret = ['error_code' => 0, 'msg' => '成功'];
         if(empty($params)){
             $list = D('Task')->getTaskList([],[],'create_time desc');
+            if(!count($list)){
+                $ret["error_code"] = 1;
+                $ret["msg"] = '暂无任务';
+                $this->jsonReturn($ret);
+            }
             $ret["data"] = $list;
             $this->jsonReturn($ret);
         }

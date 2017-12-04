@@ -24,6 +24,7 @@
             <li>趋势分析</li>
         </ul>
 
+        {if condition="$error eq ''"}
         <div class="list-search">
             <div>
                 <a href="javascript:;" @click="changeSection(0)" :class="active.type == 0 ? 'params-active' : 'params'">舆情趋势</a>
@@ -48,6 +49,9 @@
         <div :style="{display: active.type == 1 ? 'inline' : 'none'}">
             <div id="mediaTrend_line_chart" style="height: 400px; width: 100%;"></div>
         </div>
+        {else /}
+        <div class="row" style="text-align: center">{$error ?? ''}</div>
+        {/if}
     </div>
 </div><!-- /main-container -->
 {include file="Common/popup_warn" /}
