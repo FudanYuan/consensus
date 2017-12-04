@@ -96,7 +96,7 @@ class DataMonitor extends Model
      * @return mixed
      */
     public function getListExport(){
-        $res = $this
+        $res = $this->field('*')
             ->where('status <> 2')
             ->select();
         for($i = 0;$i<count($res);$i++){
@@ -107,6 +107,26 @@ class DataMonitor extends Model
         return $res;
     }
 
+    /**
+     * 获取最新舆情
+     * @param $select
+     * @param $cond
+     * @param $order
+     * @param $limit
+     * @return mixed
+     */
+    public function getNewest($select,$cond,$order,$limit){
+        if(!isset($cond_and['a.status'])){
+            $cond_and['a.status'] = ['<>', 2];
+        }
+        $res = $this->alias('a')->field($select)
+            ->join('vox_media_type b','b.id = a.media_type_id')
+            ->where($cond)
+            ->order($order)
+            ->limit($limit)
+            ->select();
+        return $res;
+    }
     /**
      * 过滤舆情信息
      * @param $data
