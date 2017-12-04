@@ -48,7 +48,7 @@ class DataAnalysis extends Common
                 $params['task_id'] = $task_id;
             }
         }
-        return view('', ['params' => $params]);
+        return view('', ['error' => '', 'params' => $params]);
     }
 
     /**
@@ -88,7 +88,7 @@ class DataAnalysis extends Common
                 $params['task_id'] = $task_id;
             }
         }
-        return view('', ['params' => $params]);
+        return view('', ['error' => '', 'params' => $params]);
     }
 
     /**
@@ -108,7 +108,7 @@ class DataAnalysis extends Common
                 $params['task_id'] = $task_id;
             }
         }
-        return view('', ['params' => $params]);
+        return view('', ['error' => '', 'params' => $params]);
     }
 
     /**
