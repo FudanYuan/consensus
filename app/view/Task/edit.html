@@ -1,5 +1,5 @@
 {include file="Common/top" title="首页" metas='' /}
-{if condition="authority('TaskCreate')"}
+{if condition="authority('TaskEdit')"}
 {include file="Common/search" /}
 <script src="__PUBLIC__/js/multiple-select/multiple-select.js"></script>
 <div class="main-container">
@@ -7,9 +7,9 @@
         <ul class="breadcrumb">
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
             <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/Task/index">舆情采集</a></li>
-            <li>新建任务</li>
+            <li>编辑任务</li>
         </ul>
-        <div class="form-wrapper" id="task-create">
+        <div class="form-wrapper" id="task-edit">
             <form class="form-horizontal" method="post" id="new-task-form">
                 <div :class="['form-group', errors.name != '' ? 'has-error' : '']">
                     <label for="new-task-form-name" class="col-sm-2 control-label">任务名称：</label>
@@ -56,15 +56,15 @@
                     </div>
                 </div>
 
-                <div :class="['form-group', errors.media_type != '' ? 'has-error' : '']">
+                <div :class="['form-group', errors.website != '' ? 'has-error' : '']">
                     <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站：</label>
                     <div class="col-sm-4">
-                        <select multiple="multiple" class="multiple" id="new-task-form-web" name="media_type">
-                            {foreach name="media_type_list" item="media_type"}
-                            <option value="{$media_type.type_id}">{$media_type.type_name}</option>
+                        <select multiple="multiple" class="multiple" id="new-task-form-web" name="website">
+                            {foreach name="website_list" item="website"}
+                            <option value="{$website.type_id}">{$website.type_name}</option>
                             {/foreach}
                         </select>
-                        <p class="help-block">{{errors.media_type}}</p>
+                        <p class="help-block">{{errors.website}}</p>
                     </div>
                 </div>
 
@@ -183,8 +183,9 @@
     $('#consensus-nav-task-sub1').addClass('active');
 
     var vm = new Vue({
-        el: '#task-create',
+        el: '#task-edit',
         data:{
+            id: "{$id ?? ''}",
             addKeywords: '',
             addUnKeywords: '',
             necessary_keywords: [],
@@ -197,7 +198,7 @@
                 loop: '',
                 begin_time: '',
                 theme: '',
-                media_type: '',
+                website: '',
                 match_accuracy: '',
                 match_type: '',
                 necessary_keywords: '',
@@ -205,15 +206,19 @@
             }
         },
         mounted: function () {
+            $(function () {
+                submit();
+            });
+
             $(".multiple").multipleSelect({
                 filter: true,
                 multiple: true,
                 selectAll: true
             });
-            $(function () {
-                $("#new-task-form-theme").multipleSelect("checkAll");
-                $("#new-task-form-web").multipleSelect("checkAll");
-            });
+//            $(function () {
+//                $("#new-task-form-theme").multipleSelect("checkAll");
+//                $("#new-task-form-web").multipleSelect("checkAll");
+//            });
             $(".flatpickr").flatpickr({time_24hr:true});
         },
         methods:{
@@ -263,30 +268,44 @@
             },
             cancel: function () {
                 window.location.href = '__PRO_PATH__/Task/index';
+            },
+
+            saveEdit: function () {
+                getParams();
+                $.post('__PRO_PATH__/Apply/Edit', vm.params, function (res) {
+                    if (res.error_code == 0) {
+                        $.each(vm.errors, function (k) {
+                            vm.errors[k] = '';
+                        });
+                        popWarn(res.msg, '__PRO_PATH__/Apply/index');
+                    } else if (res.error_code == 1) {
+                        $.each(vm.errors, function (k) {
+                            vm.errors[k] = '';
+                        });
+                        $.each(res.errors, function (k, v) {
+                            vm.errors[k] = v;
+                        });
+                    }
+                });
             }
         }
     });
-    
+
+    // 异步加载数据
     function submit() {
-        getParams();
-        $.post('__PRO_PATH__/Task/create', vm.params, function(res){
-            vm.resetError();
+        $.post('__PRO_PATH__/Task/getTaskInfo', {id: vm.id}, function(res){
             if(res.error_code == 0){
-                popWarn('新建成功', '__PRO_PATH__/Task/index');
-            }else if(res.error_code == 1){
-                $.each(res.errors, function(k, v){
-                    vm.errors[k] = v;
-                });
+
             }
         });
     }
-    
+
     function getParams() {
         vm.params['theme'] = [];
-        vm.params['media_type'] = [];
+        vm.params['website'] = [];
         var data = $('#new-task-form').serializeArray();
         $.each(data, function() {
-            if(this.name == 'theme' || this.name == 'media_type'){
+            if(this.name == 'theme' || this.name == 'website'){
                 vm.params[this.name].push(this.value);
             }
             else{

@@ -53,12 +53,12 @@
         <div class="list-btns">
             {if condition="authority('TaskAdd')"}
             <div class="btn-group">
-                <button type="button" class="btn btn-success" @click="createNewTask">新建</button>
+                <button type="button" class="btn btn-success" @click="create">新建</button>
             </div>
             {/if}
             {if condition="authority('TaskStop')"}
             <div class="btn-group">
-                <button type="button" class="btn btn-default" @click="stopTasks([])">终止</button>
+                <button type="button" class="btn btn-default" @click="operate([], 2)">终止</button>
             </div>
             {/if}
         </div>
@@ -102,11 +102,42 @@
                             <span class="label label-success" v-if="model.task_status == 0">未开始</span>
                             <span class="label label label-danger" v-else-if="model.task_status == 1">中断</span>
                             <span class="label label label-info" v-else-if="model.task_status == 2">结束</span>
-                            <span class="label label label-info" v-else-if="model.task_status == 3">正在处理</span>
+                            <span class="label label label-info" v-else-if="model.task_status == 3">采集中</span>
                         </td>
                         <td>
-                            <a href="javascript:;" @click="stopTasks([model.id])" v-if="model.task_status == 0">终止</a>
-                            <a href="javascript:;" @click="contact" v-if="model.task_status == 1">联系管理员</a>
+                            {if condition="authority('TaskPause')"}
+                            <a href="javascript:;" @click="operate([model.id], 1)" v-if="model.task_status == 3" title="暂停">
+                                <i class="fa fa-pause" aria-hidden="true" style="margin-right: 10px;"></i>
+                            </a>
+                            {/if}
+                            {if condition="authority('TaskStop')"}
+                            <a href="javascript:;" @click="operate([model.id], 2)" v-if="model.task_status == 3" title="终止">
+                                <i class="fa fa-stop" aria-hidden="true" style="color: red; margin-right: 10px;"></i>
+                            </a>
+                            {/if}
+                            {if condition="authority('TaskContinue')"}
+                            <a href="javascript:;" @click="operate([model.id], 3)" v-if="model.task_status <= 1" :title="model.task_status == 0 ? '立即开始' : '继续'">
+                                <i class="fa fa-play" aria-hidden="true" style="color: green;margin-right: 10px;"></i>
+                            </a>
+                            {/if}
+                            {if condition="authority('TaskEdit')"}
+                            <a :href="'__PRO_PATH__/Task/edit?id='+model.id" v-if="model.task_status != 2" title="编辑">
+                                <i class="fa fa-pencil-square fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
+                            </a>
+                            {/if}
+                            {if condition="authority('TaskInfo')"}
+                            <a :href="'__PRO_PATH__/Task/info?id='+model.id" title="详情">
+                                <i class="fa fa-info-circle fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
+                            </a>
+                            {/if}
+                            <a href="javascript:;" @click="contact" v-if="model.task_status == 1" title="联系管理员">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            </a>
+                            {if condition="authority('TaskRemove')"}
+                            <a href="javascript:;" @click="remove([model.id])" title="删除">
+                                <i class="fa fa-trash  fa-lg" aria-hidden="true" style="margin-right: 0;"></i>
+                            </a>
+                            {/if}
                         </td>
                     </tr>
                 </template>
@@ -123,7 +154,7 @@
 </div><!-- /main-container -->
 {include file="Common/calendar" /}
 {include file="Common/popup_warn" /}
-{include file="Common/popup_list" /}
+{include file="Common/popup_task" /}
 {include file="Common/bottom" /}
 <script>
     $('#consensus-nav-task').addClass('active');
@@ -227,11 +258,31 @@
                 }
                 this.check_all = !this.check_all;
             },
-            createNewTask: function () {
+            create: function () {
                 window.location.href = '__PRO_PATH__/Task/create';
             },
-            // 终止一个任务
-            stopTasks: function (id) {
+            remove: function (id) {
+                var ids = [];
+                if(id.length==0){
+                    ids = this.select;
+                }
+                else{
+                    if(this.select.indexOf(id[0]) == -1){
+                        this.select.push(id[0]);
+                    }
+                    ids = id;
+                }
+                this.select = ids;
+                // 删除
+                popupTask({
+                    url: '__PRO_PATH__/Task/remove',
+                    ids: vm.select
+                }, function () {
+                    submit();
+                });
+                $('#remove-confirm-popup').popup('show');
+            },
+            operate: function (id, task_status) {
                 var ids = [];
                 if(id.length==0){
                     ids = this.select;
@@ -244,13 +295,21 @@
                 }
                 this.select = ids;
                 // 终止
-                popupList({
-                    stop: '__PRO_PATH__/Task/stop',
-                    ids: vm.select
+                popupTask({
+                    url: '__PRO_PATH__/Task/operate',
+                    ids: vm.select,
+                    task_status: task_status
                 }, function () {
                     submit();
                 });
-                $('#stop-confirm-popup').popup('show');
+
+                if(task_status == 1){
+                    $('#pause-confirm-popup').popup('show');
+                } else if(task_status == 2){
+                    $('#stop-confirm-popup').popup('show');
+                } else if(task_status == 3){
+                    $('#continue-confirm-popup').popup('show');
+                }
             },
             contact: function () {
                 popWarn('请联系管理员：Admin <br/><br/> 联系方式：1234567890');
@@ -258,6 +317,7 @@
         },
         filters:{
             moment: function (value, formatString) {
+                if(!value) return '';
                 formatString = formatString || 'yyyy年M月d日 hh:mm';
                 var time=new Date(parseInt(value) * 1000).format(formatString);
                 return time;

@@ -1,0 +1,320 @@
+{include file="Common/top" title="首页" metas='' /}
+{if condition="authority('TaskInfo')"}
+{include file="Common/search" /}
+<script src="__PUBLIC__/js/multiple-select/multiple-select.js"></script>
+<div class="main-container">
+    <div class="padding-md">
+        <ul class="breadcrumb">
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/">首页</a></li>
+            <li><span class="primary-font"><i class="icon-home"></i></span><a href="__PRO_PATH__/Task/index">舆情采集</a></li>
+            <li>任务详情</li>
+        </ul>
+        <div class="form-wrapper" id="task-info">
+            <form class="form-horizontal" method="post" id="new-task-form">
+                <div :class="['form-group', errors.name != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">任务名称：</label>
+                    <div class="col-sm-4 control-label" style="text-align: left">
+                        {{params.name}}
+                        <p class="help-block">{{errors.name}}</p>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.loop != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">爬取周期：</label>
+                    <div class="col-sm-4 control-label" style="text-align: left">
+                        {{params.loop | getLoop}}
+                        <p class="help-block">{{errors.loop}}</p>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.begin_time != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">开始时间：</label>
+                    <div class="col-sm-4 control-label" style="text-align: left">
+                        {{params.begin_time | moment}}
+                        <p class="help-block">{{errors.begin_time}}</p>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.theme != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">爬取主题：</label>
+                    <div class="col-sm-10">
+                        <div class="keywords-content">
+                            <template  v-for="(theme_1,index) in params.theme">
+                                <div class="keyword-item">
+                                    <span>{{theme_1.t1_name}}: </span>
+                                </div>
+                                <template  v-for="(theme_2,index) in theme_1.t1_content">
+                                    <div class="keyword-item">
+                                        <span>{{theme_2.t2_name}}</span>
+                                    </div>
+                                </template>
+                                <br/>
+                            </template>
+                        </div>
+                        <span class="help-block">{{errors.theme}}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.media_type != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">爬取网站：</label>
+                    <div class="col-sm-10">
+                        <div class="keywords-content">
+                            <template  v-for="model in params.media_type">
+                                <div class="keyword-item">
+                                    <span>{{model.media_type_name}}</span>
+                                    <!--<a href="javascript:;" class="keyword-del" @click="deleteKeyword(1, necessary_keyword)" :title="'删除 '+necessary_keyword">x</a>-->
+                                </div>
+                            </template>
+                        </div>
+                        <span class="help-block">{{errors.media_type}}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.match_accuracy != '' ? 'has-error' : '']">
+                    <label for="new-task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
+                    <div class="col-sm-4 control-label" id="new-task-form-accuracy" style="text-align: left">
+                        {{params.match_accuracy | getMatchAccuracy}}
+                    </div>
+                    <p class="help-block">{{errors.match_accuracy}}</p>
+                </div>
+
+                <div :class="['form-group', errors.match_type != '' ? 'has-error' : '']">
+                    <label for="new-task-form-match_type" class="col-sm-2 control-label">匹配类型：</label>
+                    <div class="col-sm-4 control-label" id="new-task-form-match_type" style="text-align: left">
+                        {{params.match_type | getMatchType}}
+                    </div>
+                    <p class="help-block">{{errors.match_type}}</p>
+                </div>
+
+                <div :class="['form-group', errors.necessary_keywords != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">必要关键词：</label>
+                    <div class="col-sm-10">
+                        <div class="keywords-content">
+                            <template  v-for="necessary_keyword in params.necessary_keywords">
+                                <div class="keyword-item">
+                                    <span>{{necessary_keyword}}</span>
+                                    <!--<a href="javascript:;" class="keyword-del" @click="deleteKeyword(1, necessary_keyword)" :title="'删除 '+necessary_keyword">x</a>-->
+                                </div>
+                            </template>
+                        </div>
+                        <span class="help-block">{{errors.necessary_keywords}}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.unnecessary_keywords != '' ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">非必要关键词：</label>
+                    <div class="col-sm-10">
+                        <div class="keywords-content">
+                            <template  v-for="unnecessary_keyword in params.unnecessary_keywords">
+                                <div class="keyword-item">
+                                    <span>{{unnecessary_keyword}}</span>
+                                    <!--<a href="javascript:;" class="keyword-del" @click="deleteKeyword(2, unnecessary_keyword)" :title="'删除 '+unnecessary_keyword">x</a>-->
+                                </div>
+                            </template>
+                        </div>
+                        <span class="help-block">{{errors.unnecessary_keywords}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 lab-btns">
+                        <a class="btn btn-success" @click="edit">编辑</a>
+                        <a class="btn btn-info" @click="cancel">返回</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- /main-container -->
+{include file="Common/calendar" /}
+{include file="Common/popup_warn" /}
+{include file="Common/bottom" /}
+<script>
+    $('#consensus-nav-task').addClass('active open');
+    $('#consensus-nav-task-sub1').addClass('active');
+
+    var vm = new Vue({
+        el: '#task-info',
+        data:{
+            params:{
+                id: "{$id ?? ''}",
+                name: '',
+                loop: '',
+                begin_time: '',
+                theme: [],
+                media_type: [],
+                match_accuracy: '',
+                match_type: '',
+                necessary_keywords: [],
+                unnecessary_keywords: []
+            },
+            errors:{
+                name: '',
+                loop: '',
+                begin_time: '',
+                theme: '',
+                media_type: '',
+                match_accuracy: '',
+                match_type: '',
+                necessary_keywords: '',
+                unnecessary_keywords: ''
+            }
+        },
+        mounted: function () {
+            $(function () {
+                submit();
+            });
+        },
+        methods:{
+            resetError: function () {
+                $.each(vm.errors, function (k, v) {
+                    vm.errors[k] = '';
+                });
+            },
+            pushKeywords: function (type, value) {
+                switch (type){
+                    case 1:{
+                        if(value != ""){
+                            vm.necessary_keywords.push(value);
+                            vm.addKeywords = '';
+                            // console.log(value);
+                        }
+                        break;
+                    }
+                    case 2:{
+                        if(value != ""){
+                            vm.unnecessary_keywords.push(value);
+                            vm.addUnKeywords = '';
+                            // console.log(value);
+                        }
+                        break;
+                    }
+                }
+            },
+            deleteKeyword:function (type, item) {
+                // console.log(item);
+                Array.prototype.remove = function(val) {
+                    var index = this.indexOf(val);
+                    if (index > -1) {
+                        this.splice(index, 1);
+                    }
+                };
+                switch (type){
+                    case 1:{
+                        vm.necessary_keywords.remove(item);
+                        break;
+                    }
+                    case 2:{
+                        vm.unnecessary_keywords.remove(item);
+                        break;
+                    }
+                }
+            },
+            edit: function () {
+                window.location.href = '__PRO_PATH__/Task/edit?id='+vm.id;
+            },
+            cancel: function () {
+                window.location.href = '__PRO_PATH__/Task/index';
+            }
+        },
+        filters:{
+            moment: function (value, formatString) {
+                formatString = formatString || 'yyyy年M月d日 hh:mm';
+                var time=new Date(parseInt(value) * 1000).format(formatString);
+                return time;
+            },
+            getLoop: function (value) {
+                var ret = "";
+                if(value==86400){
+                    ret = "每天";
+                }
+                if(value==604800){
+                    ret = "每周";
+                }
+                if(value==2592000){
+                    ret = "每月";
+                }
+                return ret;
+            },
+            getMatchAccuracy: function (value) {
+                var ret = "";
+                if(value==1){
+                    ret = "弱";
+                }
+                if(value==2){
+                    ret = "中";
+                }
+                if(value==3){
+                    ret = "强";
+                }
+                return ret;
+            },
+            getMatchType: function (value) {
+                var ret = '';
+                if(value == 1){
+                    ret = '按内容匹配';
+                }
+                if(value == 2){
+                    ret = '按主题匹配';
+                }
+                return ret;
+            },
+            formatText: function (text, len) {
+                return cutString(text, len);
+            }
+        }
+    });
+
+    // 异步加载数据
+    function submit() {
+        $.post('__PRO_PATH__/Task/getTaskInfo', {id: vm.params.id}, function(res){
+            if(res.error_code == 0){
+                $.each(res.info, function(k, v) {
+                    if(k == 'necessary_keywords') {
+                        v = v.split('-');
+                    } else if(k == 'unnecessary_keywords') {
+                        v = v.split('-');
+                    }
+                    vm.params[k] = v;
+                });
+                // 对主题进行归类
+                var theme_1_ids = [];
+                for(var i=0;i<res.theme.length;i++){
+                    var theme_1_temp = [];
+                    var theme_2_temp = [];
+                    var theme_1_id = res.theme[i]['theme_1_id'];
+                    var theme_1_name = res.theme[i]['theme_1_name'];
+                    var theme_2_id = res.theme[i]['theme_2_id'];
+                    var theme_2_name = res.theme[i]['theme_2_name'];
+                    var index = $.inArray(theme_1_id, theme_1_ids);
+                    if(index == -1){
+                        theme_1_ids.push(theme_1_id);
+                        theme_1_temp['t1_id'] = theme_1_id;
+                        theme_1_temp['t1_name'] = theme_1_name;
+                        theme_1_temp['t1_content'] = [];
+                        theme_2_temp['t2_id'] = theme_2_id;
+                        theme_2_temp['t2_name'] = theme_2_name;
+                        theme_1_temp['t1_content'].push(theme_2_temp);
+                        vm.params.theme.push(theme_1_temp);
+                    } else{
+                        theme_2_temp['t2_id'] = theme_2_id;
+                        theme_2_temp['t2_name'] = theme_2_name;
+                        vm.params.theme[index]['t1_content'].push(theme_2_temp);
+                    }
+                }
+                console.log(vm.params.theme);
+                vm.params.media_type = res.media_type;
+            }
+        });
+    }
+</script>
+{else /}
+<div class="main-container">
+    <div class="padding-md">
+        <span class="col-lg-12" style="font-size: larger; text-align: center">
+			<strong>抱歉，您访问的页面不存在！</strong>
+		</span>
+    </div>
+</div>
+{include file="Common/bottom" /}
+{/if}

@@ -18,17 +18,7 @@ class DataAnalysis extends Common
     public function index(){
         $params = input('get.');
         $task_id = input('get.task_id', '');
-        if(!$task_id){
-            $list = D('Task')->getTaskList([],[],'create_time desc');
-            if(!count($list)){
-                $params['task_id'] = '';
-                return view('', ['error' => '抱歉，目前暂无采集任务！', 'params' => $params]);
-            } else{
-                $task_id = $list[0]['id'];
-                $params['task_id'] = $task_id;
-            }
-        }
-        return view('', ['error' => '', 'params' => $params]);
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -38,17 +28,7 @@ class DataAnalysis extends Common
     public function trend(){
         $params = input('get.');
         $task_id = input('get.task_id', '');
-        if(!$task_id){
-            $list = D('Task')->getTaskList([],[],'create_time desc');
-            if(!count($list)){
-                $params['task_id'] = '';
-                return view('', ['error' => '抱歉，目前暂无采集任务！', 'params' => $params]);
-            } else{
-                $task_id = $list[0]['id'];
-                $params['task_id'] = $task_id;
-            }
-        }
-        return view('', ['error' => '', 'params' => $params]);
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -57,8 +37,8 @@ class DataAnalysis extends Common
      */
     public function searchwords(){
         $params = input('get.');
-        $task_id = input('get.task_id');
-        return view('', ['params' => $params]);
+        $task_id = input('get.task_id', '');
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -67,8 +47,8 @@ class DataAnalysis extends Common
      */
     public function opinion(){
         $params = input('get.');
-        $task_id = input('get.task_id');
-        return view('', ['params' => $params]);
+        $task_id = input('get.task_id', '');
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -78,17 +58,7 @@ class DataAnalysis extends Common
     public function media(){
         $params = input('get.');
         $task_id = input('get.task_id', '');
-        if(!$task_id){
-            $list = D('Task')->getTaskList([],[],'create_time desc');
-            if(!count($list)){
-                $params['task_id'] = '';
-                return view('', ['error' => '抱歉，目前暂无采集任务！', 'params' => $params]);
-            } else{
-                $task_id = $list[0]['id'];
-                $params['task_id'] = $task_id;
-            }
-        }
-        return view('', ['error' => '', 'params' => $params]);
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -98,17 +68,7 @@ class DataAnalysis extends Common
     public function spread(){
         $params = input('get.');
         $task_id = input('get.task_id', '');
-        if(!$task_id){
-            $list = D('Task')->getTaskList([],[],'create_time desc');
-            if(!count($list)){
-                $params['task_id'] = '';
-                return view('', ['error' => '抱歉，目前暂无采集任务！', 'params' => $params]);
-            } else{
-                $task_id = $list[0]['id'];
-                $params['task_id'] = $task_id;
-            }
-        }
-        return view('', ['error' => '', 'params' => $params]);
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -117,8 +77,8 @@ class DataAnalysis extends Common
      */
     public function audience(){
         $params = input('get.');
-        $task_id = input('get.task_id');
-        return view('', ['params' => $params]);
+        $task_id = input('get.task_id', '');
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -127,8 +87,8 @@ class DataAnalysis extends Common
      */
     public function event(){
         $params = input('get.');
-        $task_id = input('get.task_id');
-        return view('', ['params' => $params]);
+        $task_id = input('get.task_id', '');
+        return $this->checkTaskId($params, $task_id);
     }
 
     /**
@@ -351,4 +311,25 @@ class DataAnalysis extends Common
         $ret['data'] = $trend;
         $this->jsonReturn($ret);
     }
+
+    /**
+     * 检测task_id
+     * @param $params
+     * @param $task_id
+     * @return \think\response\View
+     */
+    public function checkTaskId(&$params, &$task_id){
+        if(!$task_id){
+            $list = D('Task')->getTaskList([],[],'create_time desc');
+            if(!count($list)){
+                $params['task_id'] = '';
+                return view('', ['error' => '抱歉，目前暂无采集任务！', 'params' => $params]);
+            } else{
+                $task_id = $list[0]['id'];
+                $params['task_id'] = $task_id;
+            }
+        }
+        return view('', ['error' => '', 'params' => $params]);
+    }
+
 }

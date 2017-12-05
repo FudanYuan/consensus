@@ -58,7 +58,7 @@
             {/if}
             {if condition="authority('MediaImport')"}
             <div class="btn-group fr">
-                <a href="__PRO_PATH__/Media/import" target="_blank" type="button" class="btn btn-default">导入</a>
+                <button type="button" class="btn btn-default" id="importItem">导入</button>
             </div>
             {/if}
         </div>
@@ -113,6 +113,8 @@
 {include file="Common/popup_warn" /}
 {include file="Common/popup_list" /}
 {include file="Common/bottom" /}
+{include file="Common/upload" /}
+{include file="Common/popup_import" /}
 <script>
     $('#consensus-nav-warehouse').addClass('active open');
     $('#consensus-nav-warehouse-sub3').addClass('active');
@@ -195,5 +197,7 @@
         createSecond: '__PRO_PATH__/Media/create_url',
         remove: '__PRO_PATH__/Media/remove'
     });
-
+    popupImport({
+        import: '__PRO_PATH__/Media/import'
+    });
 </script>

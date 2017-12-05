@@ -1,0 +1,116 @@
+<!-- 必须包含
+	Common/popup_warn
+
+	调用：popupList(配置);
+ -->
+<div class="custom-popup" id="remove-confirm-popup" style="width:200px;">
+    <div class="popup-body text-center">
+        <h5>您确定要删除吗？</h5>
+        <div class="text-center m-top-lg">
+            <a class="btn btn-success m-right-sm confirm-remove">删除</a>
+            <a class="btn btn-default confirm-remove-cancel">取消</a>
+        </div>
+    </div>
+</div>
+<div class="custom-popup" id="continue-confirm-popup" style="width:200px;">
+    <div class="popup-body text-center">
+        <h5>您确定要开始任务吗？</h5>
+        <div class="text-center m-top-lg">
+            <a class="btn btn-success m-right-sm confirm-continue">开始</a>
+            <a class="btn btn-default confirm-continue-cancel">取消</a>
+        </div>
+    </div>
+</div>
+
+<div class="custom-popup" id="pause-confirm-popup" style="width:200px;">
+    <div class="popup-body text-center">
+        <h5>您确定要暂停任务吗？</h5>
+        <div class="text-center m-top-lg">
+            <a class="btn btn-info m-right-sm confirm-pause">暂停</a>
+            <a class="btn btn-default confirm-pause-cancel">取消</a>
+        </div>
+    </div>
+</div>
+
+<div class="custom-popup" id="stop-confirm-popup" style="width:200px;">
+    <div class="popup-body text-center">
+        <h5>您确定要终止任务吗？</h5>
+        <div class="text-center m-top-lg">
+            <a class="btn btn-warning m-right-sm confirm-stop">终止</a>
+            <a class="btn btn-default confirm-stop-cancel">取消</a>
+        </div>
+    </div>
+</div>
+<script>
+    function popupTask(config, callback) {
+        $('.confirm-stop').unbind('click').on('click', function () {
+            $('#stop-confirm-popup').popup('hide');
+            post(config, callback);
+        });
+        $('.confirm-continue').unbind('click').on('click', function () {
+            $('#continue-confirm-popup').popup('hide');
+            post(config, callback);
+        });
+        $('.confirm-pause').unbind('click').on('click', function () {
+            $('#pause-confirm-popup').popup('hide');
+            post(config, callback);
+        });
+        $('.confirm-remove').unbind('click').on('click', function () {
+            $('#remove-confirm-popup').popup('hide');
+            post(config, callback);
+        });
+    }
+
+    function post(config, callback) {
+        var ids = config.ids;
+        config.task_status = config.task_status || '';
+        if (ids.length <= 0) {
+            $('#warn-popup h5').html('请选择至少一条');
+            $('#warn-popup').popup('show');
+            return;
+        }
+        $.post(config.url, {ids: ids.join(','), task_status: config.task_status}, function (res) {
+            if (res['error_code'] == 0) {
+                callback();
+            } else {
+                popWarn(res.msg);
+            }
+        });
+    }
+
+    $('.confirm-remove-cancel').on('click', function () {
+        $('#remove-confirm-popup').popup('hide');
+    });
+    $('.confirm-continue-cancel').on('click', function () {
+        $('#continue-confirm-popup').popup('hide');
+    });
+    $('.confirm-pause-cancel').on('click', function () {
+        $('#pause-confirm-popup').popup('hide');
+    });
+    $('.confirm-stop-cancel').on('click', function () {
+        $('#stop-confirm-popup').popup('hide');
+    });
+
+    $(function () {
+        $('#remove-confirm-popup').popup({
+            vertical: 'top',
+            transition: 'all 0.3s'
+        });
+
+        $('#continue-confirm-popup').popup({
+            vertical: 'top',
+            transition: 'all 0.3s'
+        });
+
+        $('#pause-confirm-popup').popup({
+            vertical: 'top',
+            transition: 'all 0.3s'
+        });
+
+        $('#stop-confirm-popup').popup({
+            vertical: 'top',
+            transition: 'all 0.3s'
+        });
+
+    });
+</script>

@@ -101,7 +101,7 @@
                 if (res['error_code'] == 0) {
                     callback();
                 } else {
-                    popWarn('终止失败');
+                    popWarn(res.msg);
                 }
             });
         });

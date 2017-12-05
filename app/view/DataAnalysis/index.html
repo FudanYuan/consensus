@@ -432,7 +432,7 @@
     var vm = new Vue({
         el: '#analysisIndex',
         data: {
-            task_id: '{$params.task_id}',
+            task_id: '{$params.task_id ?? \'\'}',
             index: [],
             nature: {},
             trend: [],
