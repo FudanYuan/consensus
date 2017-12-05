@@ -228,14 +228,15 @@ class DataAnalysis extends Common
         $params = input('post.');
         $obj = input('post.obj', '');
         $task_id = input('post.task_id', -1);
-        $stime = input('post.begintime_str', '');
-        $etime = input('post.endtime_str', '');
-        $ret['params'] = $params;
+        $sTime = input('post.begin_time_str', '');
+        $eTime = input('post.end_time_str', '');
         $ret = ['error_code' => 0, 'msg' => ''];
+        $ret['params'] = $params;
         if($task_id == -1){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
         }
         $ret['task_id'] = $task_id;
+
         /**
          * 1. $stime == $etime: 最近24小时(比如现在是12点)
          *    xAixs = [12:00, 13:00, 14:00, 15:00, ···, 00:00, 01:00, 02:00, ···,  09:00, 10:00, 11:00, 12:00];
@@ -307,14 +308,48 @@ class DataAnalysis extends Common
 
         $ret['xAixs'] = ['周一','周二','周三','周四','周五','周六','周日'];
         // 查找逻辑， 未实现
-
-        $trend = [];
+        $week_time = [];//最近一周的时间戳
+        $oneDay = 86400;
+        for($i =0;$i<8;$i++){
+            $week_time[$i] =strtotime($sTime)  + $oneDay*$i;
+            //1511600361
+        }
+        $trend[0] = ['media_type' => '微博','data' => [0,0,0,0,0,0,0]];
+        $trend[1] = ['media_type' => '微信','data' => [0,0,0,0,0,0,0]];
+        $trend[2] = ['media_type' => '新闻','data' => [0,0,0,0,0,0,0]];
+        $trend[3] = ['media_type' => '论坛','data' => [0,0,0,0,0,0,0]];
         switch ($obj){
             case 'media':{  // media trend
-                $trend[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-                $trend[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-                $trend[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-                $trend[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+                $select = ['count(id) as num,source as media_type'];
+                $group = 'source';
+                $ret['week_time'] = $week_time;
+                for($i=0;$i<count($week_time)-1;$i++){
+                       $j = $i+1;
+                       $cond = "create_time between $week_time[$i] and $week_time[$j]";
+                       $res = D('DataMonitor')->getNumBySource($select,$cond,$group);
+                       foreach ($res as $v){
+                           if($v['media_type'] == '微博'){
+                               $trend[0]['data'][$i] = $v['num'];
+                           }elseif ($v['media_type'] == '微信'){
+                               $trend[1]['data'][$i] = $v['num'];
+                           }elseif ($v['media_type'] == '新闻'){
+                               $trend[2]['data'][$i] = $v['num'];
+                           }elseif ($v['media_type'] == '论坛'){
+                               $trend[3]['data'][$i] = $v['num'];
+                           }
+                       }
+                    if($i == 0) {
+                        $ret['trend'] = $res;
+                    }
+                }
+//                $trend[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//
+//                $trend[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//
+//                $trend[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//
+//                $trend[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+
                 break;
             }
             case 'public':{     // public trend

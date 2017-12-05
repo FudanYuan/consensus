@@ -617,7 +617,6 @@ class Theme extends Model
     {
         $res['errors'] = [];
         $list_t3 = $this->getT1ByName($data['t3_name']);
-        mydump($list_t3);
         if (!empty($list_t3)) {
             if ($list_t3['t1_name'] == $data['t1_name'] && $list_t3['t2_name'] == $data['t2_name'] && $list_t3['t3_name'] == $data['t3_name']) {
                 $res['errors'] = "数据已存在";

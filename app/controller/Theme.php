@@ -222,7 +222,7 @@ class Theme extends Common{
      * 批量删除
      */
     public function remove(){
-        $ret = ['code' => 1, 'msg' => '成功'];
+        $ret = ['error_code' => 1, 'msg' => '成功'];
         $ids = input('get.ids');
         try{
             $log['user_id'] = $this->getUserId();
@@ -230,9 +230,9 @@ class Theme extends Common{
             $log['section'] = '库管理/主题库';
             $log['action_descr'] = '用户删除主题';
             D('OperationLog')->addData($log);
-            $res = D('Theme')->remove(['id' => ['in', $ids]]);
+            D('Theme')->remove(['id' => ['in', $ids]]);
         }catch(MyException $e){
-            $ret['code'] = 2;
+            $ret['error_code'] = 2;
             $ret['msg'] = '删除失败';
         }
         $this->jsonReturn($ret);
@@ -242,9 +242,7 @@ class Theme extends Common{
      * 主题导出
      */
     public function export(){
-        $cond_or = [];
-        $cond_and = [];
-        $order = [];
+
         $list = D('Theme')->getT3List([],[],[], -1);
         $data = [];
         // 匹配键值
@@ -269,13 +267,11 @@ class Theme extends Common{
      */
     public function import(){
         $params = input('post.');
-        $ret[0] = ['code' => 1, 'msg' => '导入成功'];
+        $ret[0] = ['error_code' => 0, 'msg' => '导入成功'];
         $res = D('Excel')->import($params);
-//        $ret['data'] = $res;
-//        $this->jsonReturn($ret);
         if(!empty($res['errors'])){
             $ret[0]['errors'] = $res['errors'];
-            $ret[0]['code'] = 2;
+            $ret[0]['error_code'] = 1;
             $ret[0]['msg'] = '导入失败';
         }else{
             $keys = $res['keys'];
@@ -289,14 +285,11 @@ class Theme extends Common{
                 $res = D('Theme')->import_theme($item);
                 if (!empty($res['errors'])){
                     $ret[$i]['errors'] = $res['errors'];
-                    $ret[$i]['code'] = 3;
+                    $ret[$i]['error_code'] = 1;
                     $ret[$i]['msg'] = '导入失败';
                     $count--;
                 }
-                $ret[$i]['list_t1'] = $res['data_t3'];
             }
-            $ret['count'] = $count;
-
         }
         $log['user_id'] = $this->getUserId();
         $log['IP'] = $this->getUserIp();
