@@ -202,12 +202,15 @@ class Task extends Model
         $this->timeToStamp($data);
         $this->unsetOtherField($data);
         $errors = $this->filterField($data);
+        $theme = $data['theme'];
+        $media_type = $data['media_type'];
         $ret['errors'] = $errors;
         $data_filter = $this->getTableField($data);
         if (empty($errors)) {
             $data_filter['create_time'] = $_SERVER['REQUEST_TIME'];
-            if (!isset($data_filter['status']))
+            if (!isset($data_filter['status'])){
                 $data_filter['status'] = 1;
+            }
             if($data_filter['loop'] == 0){
                 $data_filter['loop'] = 86400;
             }elseif ($data_filter['loop'] == 1){
@@ -218,11 +221,41 @@ class Task extends Model
             if(!isset($data_filter['task_status'])){
                 $data_filter['task_status'] = 0;
             }
+            if (!isset($data_filter['task_num'])){
+                $data_filter['task_num'] = count($theme);
+            }
             if(!isset($data_filter['time_predict'])){
                 $data_filter['time_predict'] = $data_filter['task_num']*10000;
             }
-            $task_id = Db::table('vox_task')->insertGetId($data_filter);
-            $ret['task_id'] = $task_id;
+
+            Db::startTrans();
+            $flag = true;
+            $res = $this->save($data_filter);
+            if($res && $theme){
+                $task_id = $this->id;
+                $lines = $this->addTaskTheme($task_id, $theme);
+                if($lines != count($theme)){
+                    $flag = false;
+                }
+            } else{
+                $flag = false;
+            }
+
+            if($res && $media_type){
+                $task_id = $this->id;
+                $lines = $this->addTaskMediaType($task_id, $media_type);
+                if($lines != count($media_type)){
+                    $flag = false;
+                }
+            } else{
+                $flag = false;
+            }
+            if($flag){
+                Db::commit();
+            }else{
+                Db::rollback();
+                $ret['errors'] = ['msg' => '新建失败'];
+            }
         }
         return $ret;
     }
@@ -238,11 +271,13 @@ class Task extends Model
         $this->timeToStamp($data);
         $this->unsetOtherField($data);
         $errors = $this->filterField($data);
+        $theme = $data['theme'];
+        $media_type = $data['media_type'];
         $ret['errors'] = $errors;
         $data_filter = $this->getTableField($data);
         if(empty($errors)){
-            if(!isset($data['update_time'])){
-                $data['update_time'] = $_SERVER['REQUEST_TIME'];
+            if(!isset($data_filter['update_time'])){
+                $data_filter['update_time'] = $_SERVER['REQUEST_TIME'];
             }
             if($data_filter['loop'] == 0){
                 $data_filter['loop'] = 86400;
@@ -251,9 +286,125 @@ class Task extends Model
             }elseif ($data_filter['loop'] == 2){
                 $data_filter['loop'] = 2592000;
             }
-            $this->save($data_filter, ['id' => $id]);
+
+            Db::startTrans();
+            $flag = true;
+            $res = $this->save($data_filter, ['id' => $id]);
+            if($res){
+                $themes = $this->getTaskTheme($id);
+                $removes = array_diff($themes, $theme);
+                $ret['removes'] = $removes;
+                $adds = array_diff($theme, $themes);
+                $ret['adds'] = $adds;
+                if(!empty($removes)){
+                    $res2 = $this->removeTaskTheme($id, $removes);
+                    if($res2 != count($removes)){
+                        $flag = false;
+                    }
+                }
+                if(!empty($adds)){
+                    $res3 = $this->addTaskTheme($id, $adds);
+                    if($res3 != count($adds)){
+                        $flag = false;
+                    }
+                }
+
+                $media_types = $this->getTaskMediaType($id);
+                $removes = array_diff($media_types, $media_type);
+                $adds = array_diff($media_type, $media_types);
+                if(!empty($removes)){
+                    $res2 = $this->removeTaskMediaType($id, $removes);
+                    if($res2 != count($removes)){
+                        $flag = false;
+                    }
+                }
+                if(!empty($adds)){
+                    $res3 = $this->addTaskMediaType($id, $adds);
+                    if($res3 != count($adds)){
+                        $flag = false;
+                    }
+                }
+            }else{
+                $flag = false;
+            }
+            if($flag){
+                Db::commit();
+            }else{
+                Db::rollback();
+                $ret['errors'] = ['msg' => '保存失败'];
+            }
         }
         return $ret;
+    }
+
+
+    /**
+     * 添加task-theme
+     * @param $task_id
+     * @param $theme_3_ids
+     * @return int|string
+     */
+    public function addTaskTheme($task_id, $theme_3_ids){
+        $data = [];
+        $time = $_SERVER['REQUEST_TIME'];
+        foreach($theme_3_ids as $v){
+            array_push($data, ['theme_id' => $v, 'task_id' => $task_id, 'status' => 1, 'create_time' => $time, 'update_time' => $time]);
+        }
+        return Db::table('vox_task_theme')->insertAll($data);
+
+    }
+
+    /**
+     * 添加task-mediaType
+     * @param $task_id
+     * @param $media_types
+     * @return int|string
+     */
+    public function addTaskMediaType($task_id, $media_types){
+        $data = [];
+        $time = $_SERVER['REQUEST_TIME'];
+        foreach($media_types as $v){
+            array_push($data, ['media_type_id' => $v, 'task_id' => $task_id, 'status' => 1, 'create_time' => $time, 'update_time' => $time]);
+        }
+        return Db::table('vox_task_media_type')->insertAll($data);
+    }
+
+    /**
+     * 获取task-theme
+     * @param $task_id
+     * @return array
+     */
+    public function getTaskTheme($task_id){
+        return Db::table('vox_task_theme')->where(['task_id' => $task_id, 'status' => 1])->column('theme_id');
+    }
+
+    /**
+     * 获取task-media
+     * @param $task_id
+     * @return array
+     */
+    public function getTaskMediaType($task_id){
+        return Db::table('vox_task_media_type')->where(['task_id' => $task_id, 'status' => 1])->column('media_type_id');
+    }
+
+    /**
+     * 删除task-theme
+     * @param $task_id
+     * @param $theme_ids
+     * @return int
+     */
+    public function removeTaskTheme($task_id, $theme_ids){
+        return Db::table('vox_task_theme')->where(['task_id' => $task_id, 'theme_id' => ['in', $theme_ids]])->delete();
+    }
+
+    /**
+     * 删除task-media
+     * @param $task_id
+     * @param $media_type_ids
+     * @return int
+     */
+    public function removeTaskMediaType($task_id, $media_type_ids){
+        return Db::table('vox_task_media_type')->where(['task_id' => $task_id, 'media_type_id' => ['in', $media_type_ids]])->delete();
     }
 
     /**

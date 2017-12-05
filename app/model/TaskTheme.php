@@ -19,7 +19,7 @@ class TaskTheme extends Model
     );
     protected $type = [
         'task_id' => 'integer',
-        'theme_3_id' => 'integer',
+        'theme_id' => 'integer',
         'status' => 'integer',
         'create_time' => 'integer',
         'update_time' => 'integer'
@@ -70,14 +70,14 @@ class TaskTheme extends Model
      */
     public function addData($data){
         $ret = [];
-        $curtime = time();
-        $data['create_time'] = $curtime;
+        $time = $_SERVER['REQUEST_TIME'];
+        $data['create_time'] = $time;
         $errors = $this->filterField($data);
         $ret['errors'] = $errors;
         if(empty($errors)) {
             if (!isset($data['status']))
                 $data['status'] = 1;
-            Db('task_theme')->insertGetId($data);
+            $this->save($data);
         }
         return $ret;
     }
@@ -92,8 +92,8 @@ class TaskTheme extends Model
         if (isset($data['task_id']) && !$data['task_id']) {
             $errors['task_id'] = '任务编号不能为空';
         }
-        if (isset($data['theme_3_id']) && !$data['theme_3_id']) {
-            $errors['theme_3_id'] = '采集主题不能为空';
+        if (isset($data['theme_id']) && !$data['theme_id']) {
+            $errors['theme_id'] = '采集主题不能为空';
         }
         return $errors;
     }

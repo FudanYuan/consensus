@@ -86,7 +86,7 @@ class Theme extends Model
         }
         $res = DB('theme_2')->alias('a')->field('a.id as t2_id,a.name as t2_name,b.name as t1_name')
             ->join('theme_1 b', 'b.id=a.t1_id')
-            ->whereor($cond_or)
+            ->whereOr($cond_or)
             ->where($cond_and)
             ->order($order)
             ->select();
@@ -211,16 +211,16 @@ class Theme extends Model
     }
 
     /**
-     * 查找3级主题byt2_id
-     * @param $id
+     * 查找3级主题byt2
+     * @param array $cond
      * @return mixed
      */
-    public function getT3ByT2id($id)
+    public function getT3ByT2($cond=[])
     {
         $res = $this->alias('a')->field('a.id as t3_id,a.name as t3_name,a.t2_id as t2_id,
             b.name as t2_name')
             ->join('vox_theme_2 b', 'a.t2_id=b.id')
-            ->where(['b.id' => $id])
+            ->where($cond)
             ->select();
         return $res;
     }
