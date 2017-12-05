@@ -90,7 +90,7 @@ class DataMonitor extends Model
 //        }
 
     }
-
+    
     /**
      * 导出数据表
      * @return mixed
@@ -106,7 +106,7 @@ class DataMonitor extends Model
         }
         return $res;
     }
-
+    
     /**
      * 获取最新舆情
      * @param $select
@@ -127,6 +127,23 @@ class DataMonitor extends Model
             ->select();
         return $res;
     }
+
+    /**
+     * 获取数量，根据媒体来源
+     * @param $select
+     * @param $cond
+     * @param $group
+     * @return mixed
+     */
+    public function getNumBySource($select,$cond,$group){
+        $res = $this->field($select)
+            ->where($cond)
+            ->group($group)
+            ->select();
+        return $res;
+
+    }
+    //SELECT count(id) as number,source as media_type FROM `vox_data` WHERE create_time BETWEEN  GROUP BY source
     /**
      * 过滤舆情信息
      * @param $data
@@ -195,7 +212,8 @@ class DataMonitor extends Model
         if ($res === false) throw new MyException('2', '删除失败');
         return $res;
     }
-
+    
+    
 
 
     ////未修改/////
@@ -248,7 +266,7 @@ class DataMonitor extends Model
                     a.content as content,a.source as source,a.media_type as media_type,
                     a.nature as nature,a.url as url,a.relevance as relevance,a.time as time
                     a.similar_num as similar_num')
-            ->join('vox_website_type b','b.id = a.websitetype_id')
+            ->join('vox_website_type b','b.id = a.website_type_id')
             ->join('vox_theme_3 c','c.id = a.theme_3_id')
             ->join('vox_theme_2 d','d.id = c.t2_id')
             ->join('vox_theme_1 e','e.id = d.t1_id')
@@ -350,15 +368,15 @@ class DataMonitor extends Model
             $limit = $data['bar_num_limit'];
         }
         ///起止时间限制///
-        if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
+        if(empty($data['begin_time_str'])||(isset($data['begin_time_str']) && !$data['begin_time_str'])){
             $begin_time = 0;
         }else{
-            $begin_time = strtotime($data['begintime_str']);
+            $begin_time = strtotime($data['begin_time_str']);
         }
-        if(empty($data['endtime_str'])||(isset($data['endtime_str']) && !$data['endtime_str'])){
+        if(empty($data['end_time_str'])||(isset($data['end_time_str']) && !$data['end_time_str'])){
             $end_time = time();
         }else{
-            $end_time = strtotime($data['endtime_str']);
+            $end_time = strtotime($data['end_time_str']);
         }
         ///主题限制///
         if(empty($data['bar_theme_limit'])||(isset($data['bar_theme_limit']) && !$data['bar_theme_limit'])||$data['bar_theme_limit']==-1){
@@ -394,21 +412,21 @@ class DataMonitor extends Model
             $cond_and['a.status'] = ['<>', 2];
         }
         ///起止时间限制///
-        if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
+        if(empty($data['begin_time_str'])||(isset($data['begin_time_str']) && !$data['begin_time_str'])){
             $begin_time = 0;
         }else{
-            $begin_time = strtotime($data['begintime_str']);
+            $begin_time = strtotime($data['begin_time_str']);
         }
-        if(empty($data['endtime_str'])||(isset($data['endtime_str']) && !$data['endtime_str'])){
+        if(empty($data['end_time_str'])||(isset($data['end_time_str']) && !$data['end_time_str'])){
             $end_time = time();
         }else{
-            $end_time = strtotime($data['endtime_str']);
+            $end_time = strtotime($data['end_time_str']);
         }
         $cond = "$begin_time < a.create_time and a.create_time < $end_time";
 
         $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
             ->join('tax_theme_3 b', 'a.theme_3_id=b.id')
-            ->join('tax_website_type c','a.websitetype_id = c.id')
+            ->join('tax_website_type c','a.website_type_id = c.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)
@@ -433,20 +451,20 @@ class DataMonitor extends Model
             $cond_and['a.status'] = ['<>', 2];
         }
         ///起止时间限制///
-        if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
+        if(empty($data['begin_time_str'])||(isset($data['begin_time_str']) && !$data['begin_time_str'])){
             $begin_time = 0;
         }else{
-            $begin_time = strtotime($data['begintime_str']);
+            $begin_time = strtotime($data['begin_time_str']);
         }
-        if(empty($data['endtime_str'])||(isset($data['endtime_str']) && !$data['endtime_str'])){
+        if(empty($data['end_time_str'])||(isset($data['end_time_str']) && !$data['end_time_str'])){
             $end_time = time();
         }else{
-            $end_time = strtotime($data['endtime_str']);
+            $end_time = strtotime($data['end_time_str']);
         }
         $cond = "$begin_time < a.create_time and a.create_time < $end_time";
         $res = $this->alias('a')->field('c.name as name,count(a.id) as value')
             ->join('tax_theme_3 b', 'a.theme_3_id=b.id')
-            ->join('tax_website_type c','a.websitetype_id = c.id')
+            ->join('tax_website_type c','a.website_type_id = c.id')
             ->whereor($cond_or)
             ->where($cond_and)
             ->where($cond)
@@ -464,7 +482,7 @@ class DataMonitor extends Model
         $list = $this->field('*')->select();
         for($i = 0;$i < count($list);$i++ ){
             $type = ($i%5)+1;
-            $this->update(['websitetype_id' => $type,'id' => $list[$i]['id']]);
+            $this->update(['website_type_id' => $type,'id' => $list[$i]['id']]);
         }
 
     }
@@ -475,9 +493,9 @@ class DataMonitor extends Model
      * @param unknown $data
      */
     private function timeTostamp_begin(&$data){
-        isset($data['begintime_str']) && $data['begintime'] = $data['begintime_str'] ? strtotime($data['begintime_str']) : 0;
+        isset($data['begin_time_str']) && $data['begintime'] = $data['begin_time_str'] ? strtotime($data['begin_time_str']) : 0;
     }
     private function timeTostamp_end(&$data){
-        isset($data['endtime_str']) && $data['endtime'] = $data['endtime_str'] ? strtotime($data['endtime_str']) : 0;
+        isset($data['end_time_str']) && $data['endtime'] = $data['end_time_str'] ? strtotime($data['end_time_str']) : 0;
     }
 }
