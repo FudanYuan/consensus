@@ -274,9 +274,9 @@ class Theme extends Common{
             $ret[0]['error_code'] = 1;
             $ret[0]['msg'] = '导入失败';
         }else{
-            $keys = $res['keys'];
+           // $keys = $res['keys'];
             $data = $res['data'];
-            $colsDic = array_combine($this->colsText, $this->exportCols);
+            array_combine($this->colsText, $this->exportCols);
             $count = 0;
             $i=0;
             foreach ($data as $item){

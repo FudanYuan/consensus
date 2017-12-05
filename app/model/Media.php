@@ -116,8 +116,8 @@ class Media extends Model
     public function addData($data)
     {
         $ret = [];
-        $curtime = time();
-        $data['create_time'] = $curtime;
+        $curTime = time();
+        $data['create_time'] = $curTime;
         $errors = $this->filterField($data,false);
         $ret['errors'] = $errors;
         if (empty($errors)) {
@@ -202,41 +202,41 @@ class Media extends Model
     }
 
     /**
-     * 获取饼状图
-     * @param $data
+     * @param $name
      * @return mixed
      */
-    public function getTypePie($data){
-        $cond_and = [];
-        $cond_or = [];
-        if (!isset($cond_and['a.status'])) {
-            $cond_and['a.status'] = ['<>', 2];
-        }
-        ///起止时间限制///
-        if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
-            $begin_time = 0;
-        }else{
-            $begin_time = strtotime($data['begintime_str']);
-        }
-        if(empty($data['endtime_str'])||(isset($data['endtime_str']) && !$data['endtime_str'])){
-            $end_time = time();
-        }else{
-            $end_time = strtotime($data['endtime_str']);
-        }
-        $cond = "$begin_time < a.create_time and a.create_time < $end_time";
-        $res = $this->alias('a')->field('b.name as name,count(a.id) as value')
-            ->join('vox_media_type b', 'a.type_id=b.id')
-            ->whereor($cond_or)
-            ->where($cond_and)
-            ->where($cond)
-            ->group('a.type_id')
-            ->order('count(a.id) desc')
-            ->limit(15)
-            ->select();
+    public function getMediaTypeByName($name){
+        $res = DB('media_type')->field('*')
+            ->where(['name' => $name])
+            ->find();
         return $res;
     }
 
-    public function import_Media(){
 
+    public function addMediaType($name){
+        $insert_data = ['name' => $name,'status' => 1,'create_time' => time()];
+        $res = Db('media_type')->insertGetId($insert_data);
+        return $res;
+    }
+
+    /**
+     *
+     * @param $data
+     * @return mixed
+     */
+    public function import_Media($data){
+        $media_type = $this->getMediaTypeByName($data['type_name']);
+        $data_media = [];
+        if (!empty($media_type)) {
+            $data_media['type_id'] = $media_type['id'];
+        }else{
+            $res = $this->addMediaType($data['type_name']);
+            $ret['res'] = $res;
+            $data_media['type_id'] = $res;
+        }
+        $data_media['name'] = $data['name'];
+        $data_media['url'] = $data['url'];
+        $res = $this->addData($data_media);
+        return $res;
     }
 }

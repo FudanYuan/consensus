@@ -47,7 +47,7 @@ class Media extends Common
      */
     public function remove()
     {
-        $ret = ['code' => 1, 'msg' => '成功'];
+        $ret = ['error_code' => 1, 'msg' => '成功'];
         $ids = input('get.ids');
         try {
             D('Media')->remove(['id' => ['in', $ids]]);
@@ -57,7 +57,7 @@ class Media extends Common
             $log['action_descr'] = '用户删除媒体';
             D('OperationLog')->addData($log);
         } catch (MyException $e) {
-            $ret['code'] = 2;
+            $ret['error_code'] = 2;
             $ret['msg'] = '删除失败';
         }
         $this->jsonReturn($ret);
@@ -178,32 +178,34 @@ class Media extends Common
         D('Excel')->export($data, 'Media.xls');
     }
     /**
-     * 主题导入
+     * 网站导入
      */
     public function import(){
         $params = input('post.');
-        //$file = input('post.file', '');
-        $ret[0] = ['code' => 1, 'msg' => '导入成功'];
+        $ret = ['error_code' => 0, 'msg' => '导入成功'];
         $res = D('Excel')->import($params);
         if(!empty($res['errors'])){
             $ret[0]['errors'] = $res['errors'];
-            $ret[0]['code'] = 2;
+            $ret[0]['error_code'] = 1;
             $ret[0]['msg'] = '导入失败';
         }else{
             $data = $res['data'];
             array_combine($this->colsText, $this->exportCols);
+            $ret['data'] = $data;
             $count = 0;
             $i=0;
             foreach ($data as $item){
                 $count++;
                 $i++;
-                $res = D('Media')->import_theme($item);
+                $res = D('Media')->import_Media($item);
                 if (!empty($res['errors'])){
-                    $ret[$i]['errors'] = $res['errors'];
-                    $ret[$i]['code'] = 3;
-                    $ret[$i]['msg'] = '导入失败';
                     $count--;
                 }
+            }
+            if($count>0){
+                $ret = ['error_code' => 0, 'msg' => '导入成功'];
+            }else{
+                $ret = ['error_code' => 1, 'msg' => '导入失败'];
             }
             $ret['count'] = $count;
             $log['user_id'] = $this->getUserId();

@@ -567,8 +567,9 @@ class Theme extends Model
 
     /**
      * 更新2级主题信息
-     * @param $data
      * @param $where
+     * @param $data
+     * @return int|string
      */
     public function update_2($where, $data)
     {
@@ -577,7 +578,7 @@ class Theme extends Model
         $res = Db('theme_2')
             ->where("id = '$where'")
             ->update($update_data);
-        return res;
+        return $res;
     }
 
     /**
