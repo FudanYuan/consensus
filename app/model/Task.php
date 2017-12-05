@@ -201,9 +201,9 @@ class Task extends Model
         $ret = [];
         $this->timeToStamp($data);
         $this->unsetOtherField($data);
-        $data_filter = $this->getTableField($data);
-        $errors = $this->filterField($data_filter);
+        $errors = $this->filterField($data);
         $ret['errors'] = $errors;
+        $data_filter = $this->getTableField($data);
         if (empty($errors)) {
             $data_filter['create_time'] = $_SERVER['REQUEST_TIME'];
             if (!isset($data_filter['status']))
@@ -237,12 +237,19 @@ class Task extends Model
         $ret = [];
         $this->timeToStamp($data);
         $this->unsetOtherField($data);
-        $data_filter = $this->getTableField($data);
-        $errors = $this->filterField($data_filter);
+        $errors = $this->filterField($data);
         $ret['errors'] = $errors;
+        $data_filter = $this->getTableField($data);
         if(empty($errors)){
             if(!isset($data['update_time'])){
                 $data['update_time'] = $_SERVER['REQUEST_TIME'];
+            }
+            if($data_filter['loop'] == 0){
+                $data_filter['loop'] = 86400;
+            }elseif ($data_filter['loop'] == 1){
+                $data_filter['loop'] = 604800;
+            }elseif ($data_filter['loop'] == 2){
+                $data_filter['loop'] = 2592000;
             }
             $this->save($data_filter, ['id' => $id]);
         }
@@ -271,8 +278,8 @@ class Task extends Model
         if (isset($data['theme']) && !$data['theme']) {
             $errors['theme'] = '采集主题不能为空';
         }
-        if (isset($data['website']) && !$data['website']) {
-            $errors['website'] = '采集媒体类型不能为空';
+        if (isset($data['media_type']) && !$data['media_type']) {
+            $errors['media_type'] = '采集媒体类型不能为空';
         }
         if(isset($data['name']) && !$data['name']){
             $errors['name'] = '任务名字不能为空';

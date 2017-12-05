@@ -10,7 +10,7 @@
             <li>任务详情</li>
         </ul>
         <div class="form-wrapper" id="task-info">
-            <form class="form-horizontal" method="post" id="new-task-form">
+            <form class="form-horizontal" method="post" id="task-form">
                 <div :class="['form-group', errors.name != '' ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">任务名称：</label>
                     <div class="col-sm-4 control-label" style="text-align: left">
@@ -71,16 +71,16 @@
                 </div>
 
                 <div :class="['form-group', errors.match_accuracy != '' ? 'has-error' : '']">
-                    <label for="new-task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
-                    <div class="col-sm-4 control-label" id="new-task-form-accuracy" style="text-align: left">
+                    <label for="task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
+                    <div class="col-sm-4 control-label" id="task-form-accuracy" style="text-align: left">
                         {{params.match_accuracy | getMatchAccuracy}}
                     </div>
                     <p class="help-block">{{errors.match_accuracy}}</p>
                 </div>
 
                 <div :class="['form-group', errors.match_type != '' ? 'has-error' : '']">
-                    <label for="new-task-form-match_type" class="col-sm-2 control-label">匹配类型：</label>
-                    <div class="col-sm-4 control-label" id="new-task-form-match_type" style="text-align: left">
+                    <label for="task-form-match_type" class="col-sm-2 control-label">匹配类型：</label>
+                    <div class="col-sm-4 control-label" id="task-form-match_type" style="text-align: left">
                         {{params.match_type | getMatchType}}
                     </div>
                     <p class="help-block">{{errors.match_type}}</p>
@@ -219,7 +219,7 @@
         },
         filters:{
             moment: function (value, formatString) {
-                formatString = formatString || 'yyyy年M月d日 hh:mm';
+                formatString = formatString || 'yyyy-MM-dd hh:mm';
                 var time=new Date(parseInt(value) * 1000).format(formatString);
                 return time;
             },
@@ -302,7 +302,6 @@
                         vm.params.theme[index]['t1_content'].push(theme_2_temp);
                     }
                 }
-                console.log(vm.params.theme);
                 vm.params.media_type = res.media_type;
             }
         });

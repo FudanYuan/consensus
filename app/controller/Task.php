@@ -148,7 +148,6 @@ class Task extends Common{
         $media_type_list = D('MediaType')->getMedTypeList();
         if(!empty($data)) {
             $ret = ['error_code' => 0, 'msg' => '成功'];
-            $ret['data'] = $data;
             if (!isset($data['theme'])) {
                 $data['theme'] = [];
             }
@@ -166,12 +165,12 @@ class Task extends Common{
                 $ret['errors'] = $res_task['errors'];
                 $this->jsonReturn($ret);
             } else {
+                $task_id = $res_task['task_id'];
                 $log['user_id'] = $this->getUserId();
                 $log['IP'] = $this->getUserIp();
                 $log['section'] = '舆情采集';
-                $log['action_descr'] = '用户新建采集任务';
+                $log['action_descr'] = '用户新建采集任务 #' . $task_id;
                 D('operationLog')->addData($log);
-                $task_id = $res_task['task_id'];
                 // 添加task_theme,
                 for ($i = 0; $i < count($theme); $i++) {
                     $theme_3_data = D('Theme')->getT3ByT2id($theme[$i]);
@@ -211,14 +210,47 @@ class Task extends Common{
         $media_type_list = D('MediaType')->getMedTypeList();
         $data = input('post.');
         if(!empty($data)) {
+            if (!isset($data['theme'])) {
+                $data['theme'] = [];
+            }
+            if (!isset($data['media_type'])) {
+                $data['media_type'] = [];
+            }
+            $task_id = $data['id'];
+            $theme = $data['theme'];
+            $media_type = $data['media_type'];
             $ret = ['error_code' => 0, 'msg' => '保存成功'];
-            $res = D('Task')->saveData($data['id'], $data);
+            $res = D('Task')->saveData($task_id, $data);
             if(!empty($res['errors'])){
                 $ret['error_code'] = 1;
                 $ret['errors'] = $res['errors'];
                 $ret['msg'] = '保存失败';
+            } else {
+                $log['user_id'] = $this->getUserId();
+                $log['IP'] = $this->getUserIp();
+                $log['section'] = '舆情采集';
+                $log['action_descr'] = '用户编辑采集任务 #' . $task_id;
+                D('operationLog')->addData($log);
+
+                // 添加task_theme,
+                for ($i = 0; $i < count($theme); $i++) {
+                    $theme_3_data = D('Theme')->getT3ByT2id($theme[$i]);
+                    $task_theme_data = [];
+                    for ($j = 0; $j < count($theme_3_data); $j++) {
+                        $task_theme_data['task_id'] = $task_id;
+                        $task_theme_data['theme_id'] = $theme_3_data[$j]['t3_id'];
+                        D('TaskTheme')->addData($task_theme_data);
+                    }
+                }
+                // 添加task_media_type
+                $task_media_data = [];
+                for ($i = 0; $i < count($media_type); $i++) {
+                    $task_media_data['task_id'] = $task_id;
+                    $task_media_data['media_type_id'] = $media_type[$i];
+                    D('TaskMediaType')->addData($task_media_data);
+                }
+                $this->jsonReturn($ret);
             }
-            $this->jsonReturn($ret);
         }
         return view('', ['id' => $id, 'theme_list' => $theme_list, 'media_type_list' => $media_type_list]);
     }

@@ -10,19 +10,19 @@
             <li>新建任务</li>
         </ul>
         <div class="form-wrapper" id="task-create">
-            <form class="form-horizontal" method="post" id="new-task-form">
+            <form class="form-horizontal" method="post" id="task-form">
                 <div :class="['form-group', errors.name != '' ? 'has-error' : '']">
-                    <label for="new-task-form-name" class="col-sm-2 control-label">任务名称：</label>
+                    <label for="task-form-name" class="col-sm-2 control-label">任务名称：</label>
                     <div class="col-sm-4">
-                        <input class="form-control" id="new-task-form-name" type="text" name="name" value="" placeholder="请输入任务名称">
+                        <input class="form-control" id="task-form-name" type="text" name="name" value="" placeholder="请输入任务名称">
                         <p class="help-block">{{errors.name}}</p>
                     </div>
                 </div>
 
                 <div :class="['form-group', errors.loop != '' ? 'has-error' : '']">
-                    <label for="new-task-form-loop" class="col-sm-2 control-label">爬取周期：</label>
+                    <label for="task-form-loop" class="col-sm-2 control-label">爬取周期：</label>
                     <div class="col-sm-4">
-                        <select class="form-control" id="new-task-form-loop" name="loop">
+                        <select class="form-control" id="task-form-loop" name="loop">
                             <option value="-1">--请选择--</option>
                             <option value="0">每天</option>
                             <option value="1">每周</option>
@@ -33,17 +33,17 @@
                 </div>
 
                 <div :class="['form-group', errors.begin_time != '' ? 'has-error' : '']">
-                    <label for="new-task-form-stime" class="col-sm-2 control-label">开始时间：</label>
+                    <label for="task-form-stime" class="col-sm-2 control-label">开始时间：</label>
                     <div class="col-sm-4">
-                        <input id="new-task-form-stime" name="begin_time_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">
+                        <input id="task-form-stime" name="begin_time_str" data-enable-time=true data-time_24hr=true class="form-control flatpickr">
                         <p class="help-block">{{errors.begin_time}}</p>
                     </div>
                 </div>
 
                 <div :class="['form-group', errors.theme != '' ? 'has-error' : '']">
-                    <label for="new-task-form-theme" class="col-sm-2 control-label">爬取主题：</label>
+                    <label for="task-form-theme" class="col-sm-2 control-label">爬取主题：</label>
                     <div class="col-sm-4">
-                        <select multiple="multiple" class="multiple" id="new-task-form-theme" name="theme">
+                        <select multiple="multiple" class="multiple" id="task-form-theme" name="theme">
                             {foreach name="theme_list" item="t1"}
                             <optgroup label="{$t1.t1_name}">
                                 {foreach name="t1['t1_content']" item="t2"}
@@ -57,9 +57,9 @@
                 </div>
 
                 <div :class="['form-group', errors.media_type != '' ? 'has-error' : '']">
-                    <label for="new-task-form-web" class="col-sm-2 control-label">爬取网站：</label>
+                    <label for="task-form-web" class="col-sm-2 control-label">爬取网站：</label>
                     <div class="col-sm-4">
-                        <select multiple="multiple" class="multiple" id="new-task-form-web" name="media_type">
+                        <select multiple="multiple" class="multiple" id="task-form-web" name="media_type">
                             {foreach name="media_type_list" item="media_type"}
                             <option value="{$media_type.type_id}">{$media_type.type_name}</option>
                             {/foreach}
@@ -69,8 +69,8 @@
                 </div>
 
                 <div :class="['form-group', errors.match_accuracy != '' ? 'has-error' : '']">
-                    <label for="new-task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
-                    <div class="col-sm-4" id="new-task-form-accuracy">
+                    <label for="task-form-accuracy" class="col-sm-2 control-label">匹配强度：</label>
+                    <div class="col-sm-4" id="task-form-accuracy">
                         <div class="radio inline-block">
                             <div class="custom-radio m-right-xs">
                                 <input type="radio" id="accuracy1" name="match_accuracy" value="1" checked>
@@ -97,8 +97,8 @@
                 </div>
 
                 <div :class="['form-group', errors.match_type != '' ? 'has-error' : '']">
-                    <label for="new-task-form-match_type" class="col-sm-2 control-label">匹配类型：</label>
-                    <div class="col-sm-4" id="new-task-form-match_type">
+                    <label for="task-form-match_type" class="col-sm-2 control-label">匹配类型：</label>
+                    <div class="col-sm-4" id="task-form-match_type">
                         <div class="radio inline-block">
                             <div class="custom-radio m-right-xs">
                                 <input type="radio" id="match_type1" name="match_type" value="1" checked>
@@ -167,7 +167,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 lab-btns">
-                        <a class="btn btn-success" id="new-task-form-save" onclick="submit()">保存</a>
+                        <a class="btn btn-success" id="task-form-save" onclick="submit()">保存</a>
                         <a class="btn btn-info" @click="cancel">取消</a>
                     </div>
                 </div>
@@ -211,8 +211,8 @@
                 selectAll: true
             });
             $(function () {
-                $("#new-task-form-theme").multipleSelect("checkAll");
-                $("#new-task-form-web").multipleSelect("checkAll");
+                $("#task-form-theme").multipleSelect("checkAll");
+                $("#task-form-web").multipleSelect("checkAll");
             });
             $(".flatpickr").flatpickr({time_24hr:true});
         },
@@ -284,7 +284,7 @@
     function getParams() {
         vm.params['theme'] = [];
         vm.params['media_type'] = [];
-        var data = $('#new-task-form').serializeArray();
+        var data = $('#task-form').serializeArray();
         $.each(data, function() {
             if(this.name == 'theme' || this.name == 'media_type'){
                 vm.params[this.name].push(this.value);

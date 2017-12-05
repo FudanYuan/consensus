@@ -103,8 +103,9 @@
     setInterval(startTime, 1000);//每一秒中重新加载startTime()方法
 
     function myMoment(value, formatString) {
-        formatString = formatString || 'YYYY-MM-DD HH:mm';
-        return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+        formatString = formatString || 'yyyy-MM-dd hh:mm';
+        var time=new Date(parseInt(value) * 1000).format(formatString);
+        return time;
     }
 
     $('.logout').on('click', function () {
