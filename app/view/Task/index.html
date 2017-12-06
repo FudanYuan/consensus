@@ -17,31 +17,45 @@
                     <label for="task_status">采集状态：</label>
                     <ul class="radio-group" id="task_status">
                         <li class="radio-list">
-                            <input type="radio" name="task_status" class="labelauty" id="nature-all" value="-1" style="display: none;" checked>
-                            <label for="nature-all">
+                            <input type="radio" name="task_status" class="labelauty" id="status-all" value="-1" style="display: none;" checked>
+                            <label for="status-all">
                                 <span class="labelauty-unchecked">全部</span>
                                 <span class="labelauty-checked">全部</span>
                             </label>
                         </li>
                         <li class="radio-list">
-                            <input type="radio" name="task_status" class="labelauty" id="nature-pos" value="0" style="display: none;">
-                            <label for="nature-pos">
-                                <span class="labelauty-unchecked">进行中</span>
-                                <span class="labelauty-checked">进行中</span>
+                            <input type="radio" name="task_status" class="labelauty" id="status-wait" value="0" style="display: none;">
+                            <label for="status-wait">
+                                <span class="labelauty-unchecked">未开始</span>
+                                <span class="labelauty-checked">未开始</span>
                             </label>
                         </li>
                         <li class="radio-list">
-                            <input type="radio" name="task_status" class="labelauty" id="nature-neu" value="1" style="display: none;">
-                            <label for="nature-neu">
+                            <input type="radio" name="task_status" class="labelauty" id="status-ing" value="1" style="display: none;">
+                            <label for="status-ing">
+                                <span class="labelauty-unchecked">采集中</span>
+                                <span class="labelauty-checked">采集中</span>
+                            </label>
+                        </li>
+                        <li class="radio-list">
+                            <input type="radio" name="task_status" class="labelauty" id="status-break" value="2" style="display: none;">
+                            <label for="status-break">
                                 <span class="labelauty-unchecked">中断</span>
                                 <span class="labelauty-checked">中断</span>
                             </label>
                         </li>
                         <li class="radio-list">
-                            <input type="radio" name="task_status" class="labelauty" id="nature-neg" value="2" style="display: none;">
-                            <label for="nature-neg">
+                            <input type="radio" name="task_status" class="labelauty" id="status-end" value="3" style="display: none;">
+                            <label for="status-end">
                                 <span class="labelauty-unchecked">结束</span>
                                 <span class="labelauty-checked">结束</span>
+                            </label>
+                        </li>
+                        <li class="radio-list">
+                            <input type="radio" name="task_status" class="labelauty" id="status-over" value="4" style="display: none;">
+                            <label for="status-over">
+                                <span class="labelauty-unchecked">已终止</span>
+                                <span class="labelauty-checked">已终止</span>
                             </label>
                         </li>
                     </ul>
@@ -100,28 +114,29 @@
                         <td v-else>未结束</td>
                         <td>
                             <span class="label label-success" v-if="model.task_status == 0">未开始</span>
-                            <span class="label label label-danger" v-else-if="model.task_status == 1">中断</span>
-                            <span class="label label label-info" v-else-if="model.task_status == 2">结束</span>
-                            <span class="label label label-info" v-else-if="model.task_status == 3">采集中</span>
+                            <span class="label label label-danger" v-else-if="model.task_status == 1">采集中</span>
+                            <span class="label label label-info" v-else-if="model.task_status == 2">中断</span>
+                            <span class="label label label-info" v-else-if="model.task_status == 3">已结束</span>
+                            <span class="label label label-warning" v-else-if="model.task_status == 4">已终止</span>
                         </td>
                         <td>
+                            {if condition="authority('TaskContinue')"}
+                            <a href="javascript:;" @click="operate([model.id], 1)" v-if="model.task_status == 2" title="继续">
+                                <i class="fa fa-play" aria-hidden="true" style="color: green;margin-right: 10px;"></i>
+                            </a>
+                            {/if}
                             {if condition="authority('TaskPause')"}
-                            <a href="javascript:;" @click="operate([model.id], 1)" v-if="model.task_status == 3" title="暂停">
+                            <a href="javascript:;" @click="operate([model.id], 2)" v-if="model.task_status == 1" title="暂停">
                                 <i class="fa fa-pause" aria-hidden="true" style="margin-right: 10px;"></i>
                             </a>
                             {/if}
                             {if condition="authority('TaskStop')"}
-                            <a href="javascript:;" @click="operate([model.id], 2)" v-if="model.task_status == 3" title="终止">
+                            <a href="javascript:;" @click="operate([model.id], 4)" v-if="model.task_status <= 3" title="终止">
                                 <i class="fa fa-stop" aria-hidden="true" style="color: red; margin-right: 10px;"></i>
                             </a>
                             {/if}
-                            {if condition="authority('TaskContinue')"}
-                            <a href="javascript:;" @click="operate([model.id], 3)" v-if="model.task_status <= 1" :title="model.task_status == 0 ? '立即开始' : '继续'">
-                                <i class="fa fa-play" aria-hidden="true" style="color: green;margin-right: 10px;"></i>
-                            </a>
-                            {/if}
                             {if condition="authority('TaskEdit')"}
-                            <a :href="'__PRO_PATH__/Task/edit?id='+model.id" v-if="model.task_status != 2" title="编辑">
+                            <a :href="'__PRO_PATH__/Task/edit?id='+model.id" v-if="model.task_status != 4" title="编辑">
                                 <i class="fa fa-pencil-square fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
                             </a>
                             {/if}
@@ -130,11 +145,11 @@
                                 <i class="fa fa-info-circle fa-lg" aria-hidden="true" style="margin-right: 10px;"></i>
                             </a>
                             {/if}
-                            <a href="javascript:;" @click="contact" v-if="model.task_status == 1" title="联系管理员">
+                            <a href="javascript:;" @click="contact" v-if="model.task_status == 2" title="联系管理员">
                                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
                             </a>
                             {if condition="authority('TaskRemove')"}
-                            <a href="javascript:;" @click="remove([model.id])" title="删除">
+                            <a href="javascript:;" @click="remove([model.id])" v-if="model.task_status == 4" title="删除">
                                 <i class="fa fa-trash  fa-lg" aria-hidden="true" style="margin-right: 0;"></i>
                             </a>
                             {/if}
@@ -304,11 +319,11 @@
                 });
 
                 if(task_status == 1){
-                    $('#pause-confirm-popup').popup('show');
-                } else if(task_status == 2){
-                    $('#stop-confirm-popup').popup('show');
-                } else if(task_status == 3){
                     $('#continue-confirm-popup').popup('show');
+                } else if(task_status == 2){
+                    $('#pause-confirm-popup').popup('show');
+                } else if(task_status == 4){
+                    $('#stop-confirm-popup').popup('show');
                 }
             },
             contact: function () {

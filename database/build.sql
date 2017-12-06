@@ -259,7 +259,7 @@ CREATE TABLE `vox_task` (
   `task_num` INT DEFAULT NULL COMMENT '任务量',
   `quantity_complete` INT DEFAULT NULL COMMENT '已完成数量',
   `time_predict` INT DEFAULT NULL COMMENT '预计耗时',
-  `task_status` TINYINT DEFAULT NULL COMMENT '任务状态：0->正常；1->中断；2->结束',
+  `task_status` TINYINT DEFAULT NULL COMMENT '任务状态：0->未开始；1->进行中；2->中断；3->结束；4->终止',
   `status` TINYINT DEFAULT NULL COMMENT '状态：1->启用；2->关闭',
   `create_time` INT DEFAULT NULL COMMENT '创建时间',
   `update_time` INT DEFAULT NULL COMMENT '更新时间',

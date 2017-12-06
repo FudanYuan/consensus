@@ -45,9 +45,9 @@
             var params = {};
             params['file'] = file;
             $.post(config.import, params, function (res) {
+                clearFormData();
                 if (res.error_code == 0) {
                     $('#form-popup').popup('hide');
-                    clearFormData();
                     if(config.callback != undefined && config.callback != ''){
                         popWarn(res.msg, config.callback);
                     }
@@ -64,6 +64,7 @@
         });
 
         $('#importItem').on('click', function () {
+            clearFormData();
             $('#form-popup').popup('show');
         });
 
@@ -94,7 +95,7 @@
             var res = JSON.parse(result.response);
             $("input[name='file']").val(res.result.file);
         },
-        isMulti: false
+        isMulti: true
     });
 
     function clearFormData(){

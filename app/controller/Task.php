@@ -54,17 +54,7 @@ class Task extends Common{
             $cond_and['name'] = $task_name;
         }
         if($taskStatus!=-1){
-            switch ($taskStatus){
-                case '0':
-                    $cond_and['task_status'] = ['=' , 0];
-                    break;
-                case '1':
-                    $cond_and['task_status'] = ['=' , 1];
-                    break;
-                case '2':
-                    $cond_and['task_status'] = ['=' , 2];
-                    break;
-            }
+            $cond_and['task_status'] = $taskStatus;
         }
         $list = D('Task')->getTaskList($cond_or,$cond_and,$order);
         for($i=0;$i<count($list);$i++){
