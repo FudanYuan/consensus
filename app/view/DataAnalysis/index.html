@@ -352,10 +352,10 @@
                                     <tbody>
                                         <template v-if="publicList.length != 0">
                                             <tr v-for="model in publicList">
-                                                <td>{{model.title | formatText(40, model.title)}}</td>
+                                                <td><a target="_blank" :href="model.url">{{model.title | formatText(40, model.title)}}</a></td>
                                                 <td>{{model.media_type}}</td>
                                                 <td>{{model.nature}}</td>
-                                                <td>{{model.publishtime | moment}}</td>
+                                                <td>{{model.publish_time | moment}}</td>
                                             </tr>
                                         </template>
                                         <template v-else>

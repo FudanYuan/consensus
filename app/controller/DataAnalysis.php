@@ -153,7 +153,7 @@ class DataAnalysis extends Common
         }
 
         // 查找逻辑， 未实现
-        $select = ['a.id as id,a.title as title,nature,b.name as media_type,a.create_time as publishtime'];
+        $select = ['a.id as id,a.title as title, a.url as url, nature,b.name as media_type,a.publish_time'];
         $public = D('DataMonitor')->getNewest($select,$cond,'id desc',10);
         $ret['data'] = $public;
         $this->jsonReturn($ret);
