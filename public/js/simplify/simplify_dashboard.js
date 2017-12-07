@@ -36,12 +36,13 @@ $(window).resize(function(e){
 	// Redraw All Chart
 	setTimeout(function() {
 		var limit = parseInt($('#theme_bubble_limit').text());
-		showThemeBubble({limit: limit});
+		//showThemeBubble({limit: limit});
 		limit = parseInt($('#bubble_num_limit').text());
-		showCompanyBubble({bubble_num_limit: limit});
+		//showCompanyBubble({bubble_num_limit: limit});
 		//showCompanyRankPie([]);
 		//totalVisitChart.redraw();
 		//plotWithOptions();
+		showMedia();
 	},500);
 });
 
@@ -49,12 +50,13 @@ $('#sidebarToggleLG').click(function()	{
 	// Redraw All Chart
 	setTimeout(function() {
 		var limit = parseInt($('#theme_bubble_limit').text());
-		showThemeBubble({limit: limit});
+		//showThemeBubble({limit: limit});
 		limit = parseInt($('#bubble_num_limit').text());
-		showCompanyBubble({bubble_num_limit: limit});
+		//showCompanyBubble({bubble_num_limit: limit});
 		//showCompanyRankPie([]);
 		//totalVisitChart.redraw();
 		//plotWithOptions();
+		showMedia();
 	},500);
 });
 
@@ -62,11 +64,12 @@ $('#sidebarToggleSM').click(function()	{
 	// Redraw All Chart
 	setTimeout(function() {
 		var limit = parseInt($('#theme_bubble_limit').text());
-		showThemeBubble({limit: limit});
+		//showThemeBubble({limit: limit});
 		limit = parseInt($('#bubble_num_limit').text());
-		showCompanyBubble({bubble_num_limit: limit});
+		//showCompanyBubble({bubble_num_limit: limit});
 		//showCompanyRankPie([]);
 		//totalVisitChart.redraw();
 		//plotWithOptions();
+		showMedia();
 	},500);
 });
