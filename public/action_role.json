@@ -1,540 +1,884 @@
 [
   {
     "id": 1,
-    "name": "置顶窗口",
-    "tag": "Banner",
+    "name": "系统设置",
+    "tag": "Setting",
     "pid": 0,
     "pids": "0",
     "level": 1
   },
   {
-    "id": 2,
-    "name": "研究方向",
-    "tag": "ResearchArea",
-    "pid": 0,
-    "pids": "0",
-    "level": 1
-  },
+  "id": 2,
+  "name": "账户设置",
+  "tag": "Account",
+  "pid": 0,
+  "pids": "0",
+  "level": 1
+   },
   {
     "id": 3,
-    "name": "科研成果",
-    "tag": "Result",
+    "name": "舆情监测",
+    "tag": "DataMonitor",
     "pid": 0,
     "pids": "0",
     "level": 1
   },
   {
     "id": 4,
-    "name": "团队成员",
-    "tag": "Member",
+    "name": "舆情分析",
+    "tag": "DataAnalysis",
     "pid": 0,
     "pids": "0",
     "level": 1
   },
   {
     "id": 5,
-    "name": "最新动态",
-    "tag": "News",
+    "name": "舆情采集",
+    "tag": "Task",
     "pid": 0,
     "pids": "0",
     "level": 1
   },
   {
     "id": 6,
-    "name": "账户设置",
-    "tag": "User",
+    "name": "库管理",
+    "tag": "Tank",
+    "pid": 0,
+    "pids": "0",
+    "level": 1
+  },
+  {
+    "id": 7,
+    "name": "通知公告",
+    "tag": "Inform",
+    "pid": 0,
+    "pids": "0",
+    "level": 1
+  },
+  {
+    "id": 8,
+    "name": "操作日志",
+    "tag": "OperationLog",
     "pid": 0,
     "pids": "0",
     "level": 1
   },
 
-  {
-    "id": 7,
-    "name": "查询",
-    "tag": "Banner_select",
-    "pid": 1,
-    "pids": "1",
-    "level": 2
-  },
-  {
-    "id": 8,
-    "name": "查看",
-    "tag": "Banner_find",
-    "pid": 1,
-    "pids": "1",
-    "level": 2
-  },
+
   {
     "id": 9,
-    "name": "取消置顶",
-    "tag": "Banner_del",
+    "name": "操作权限",
+    "tag": "Authority",
     "pid": 1,
     "pids": "1",
     "level": 2
   },
   {
     "id": 10,
-    "name": "查询",
-    "tag": "ResearchArea_select",
-    "pid": 2,
-    "pids": "2",
-    "level": 2
+    "name": "查看",
+    "tag": "AuthorityResult",
+    "pid": 9,
+    "pids": "1-9",
+    "level": 3
   },
   {
     "id": 11,
-    "name": "查看",
-    "tag": "ResearchArea_find",
-    "pid": 2,
-    "pids": "2",
-    "level": 2
+    "name": "新建",
+    "tag": "AuthorityCreate",
+    "pid": 9,
+    "pids": "1-9",
+    "level": 3
   },
   {
     "id": 12,
-    "name": "新建",
-    "tag": "ResearchArea_add",
-    "pid": 2,
-    "pids": "2",
-    "level": 2
+    "name": "删除",
+    "tag": "AuthorityRemove",
+    "pid": 9,
+    "pids": "1-9",
+    "level": 3
   },
   {
     "id": 13,
-    "name": "编辑",
-    "tag": "ResearchArea_edit",
-    "pid": 2,
-    "pids": "2",
-    "level": 2
+    "name": "清空",
+    "tag": "AuthorityClear",
+    "pid": 9,
+    "pids": "1-9",
+    "level": 3
   },
   {
     "id": 14,
-    "name": "置顶",
-    "tag": "ResearchArea_top",
-    "pid": 2,
-    "pids": "2",
-    "level": 2
+    "name": "导入",
+    "tag": "AuthorityImport",
+    "pid": 9,
+    "pids": "1-9",
+    "level": 3
   },
   {
     "id": 15,
-    "name": "推荐",
-    "tag": "ResearchArea_recomm",
-    "pid": 2,
-    "pids": "2",
-    "level": 2
+    "name": "导出",
+    "tag": "AuthorityExport",
+    "pid": 9,
+    "pids": "1-9",
+    "level": 3
   },
+
+
   {
     "id": 16,
-    "name": "删除",
-    "tag": "ResearchArea_del",
-    "pid": 2,
-    "pids": "2",
+    "name": "用户角色",
+    "tag": "Role",
+    "pid": 1,
+    "pids": "1",
     "level": 2
   },
   {
     "id": 17,
     "name": "查询",
-    "tag": "Result_select",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "tag": "RoleSelect",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
   {
     "id": 18,
     "name": "查看",
-    "tag": "Result_find",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "tag": "RoleResult",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
   {
     "id": 19,
     "name": "新建",
-    "tag": "Result_add",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "tag": "RoleCreate",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
   {
     "id": 20,
     "name": "编辑",
-    "tag": "Result_edit",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "tag": "RoleEdit",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
   {
     "id": 21,
-    "name": "置顶",
-    "tag": "Result_top",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "name": "删除",
+    "tag": "RoleRemove",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
   {
     "id": 22,
-    "name": "推荐",
-    "tag": "Result_recomm",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "name": "导入",
+    "tag": "RoleImport",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
   {
     "id": 23,
-    "name": "删除",
-    "tag": "Result_del",
-    "pid": 3,
-    "pids": "3",
-    "level": 2
+    "name": "导出",
+    "tag": "RoleExport",
+    "pid": 16,
+    "pids": "1-16",
+    "level": 3
   },
-
   {
     "id": 24,
-    "name": "在校",
-    "tag": "CurMember",
-    "pid": 4,
-    "pids": "4",
+    "name": "用户设置",
+    "tag": "User",
+    "pid": 1,
+    "pids": "1",
     "level": 2
   },
   {
     "id": 25,
-    "name": "校友",
-    "tag": "ProMember",
+    "name": "查询",
+    "tag": "UserSelect",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 26,
+    "name": "查看",
+    "tag": "UserResult",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 27,
+    "name": "新建",
+    "tag": "UserCreate",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 28,
+    "name": "编辑",
+    "tag": "UserEdit",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 29,
+    "name": "删除",
+    "tag": "UserRemove",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 30,
+    "name": "导入",
+    "tag": "UserImport",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 31,
+    "name": "导出",
+    "tag": "UserExport",
+    "pid": 24,
+    "pids": "1-24",
+    "level": 3
+  },
+  {
+    "id": 32,
+    "name": "账户编辑",
+    "tag": "AccountEdit",
+    "pid": 2,
+    "pids": "2",
+    "level": 2
+  },
+  {
+    "id": 33,
+    "name": "更改密码",
+    "tag": "AccountPwd",
+    "pid": 2,
+    "pids": "2",
+    "level": 2
+  },
+
+
+  {
+    "id": 34,
+    "name": "实时舆情",
+    "tag": "RealTimeData",
+    "pid": 3,
+    "pids": "3",
+    "level": 2
+  },
+  {
+    "id": 35,
+    "name": " 全部舆情",
+    "tag": "RealTimeDataAll",
+    "pid": 34,
+    "pids": "3-34",
+    "level": 3
+  },
+  {
+    "id": 36,
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 35,
+    "pids": "3-34-35",
+    "level": 4
+  },
+  {
+    "id": 37,
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 35,
+    "pids": "3-34-35",
+    "level": 4
+  },
+  {
+    "id": 38,
+    "name": "查询",
+    "tag": "DataSelect",
+    "pid": 35,
+    "pids": "3-34-35",
+    "level": 4
+  },
+  {
+    "id": 39,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 35,
+    "pids": "3-34-35",
+    "level": 4
+  },
+  {
+    "id": 40,
+    "name": "导出",
+    "tag": "DataExport",
+    "pid": 35,
+    "pids": "3-34-35",
+    "level": 4
+  },
+
+
+  {
+    "id": 41,
+    "name": "我的收藏",
+    "tag": "DataMonitorCollect",
+    "pid": 34,
+    "pids": "3-34",
+    "level": 3
+  },
+
+  {
+    "id": 42,
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 41,
+    "pids": "3-34-41",
+    "level": 4
+  },
+  {
+    "id": 43,
+    "name": "查询",
+    "tag": "DataSelect",
+    "pid": 41,
+    "pids": "3-34-41",
+    "level": 4
+  },
+  {
+    "id": 44,
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 41,
+    "pids": "3-34-41",
+    "level": 4
+  },
+  {
+    "id": 45,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 41,
+    "pids": "3-34-41",
+    "level": 4
+  },
+  {
+    "id": 46,
+    "name": "导出",
+    "tag": "DataExport",
+    "pid": 41,
+    "pids": "3-34-41",
+    "level": 4
+  },
+
+
+
+
+
+  {
+    "id": 47,
+    "name": "舆情预警",
+    "tag": "DataMonitorWarn",
+    "pid": 3,
+    "pids": "3",
+    "level": 2
+  },
+  {
+    "id": 48,
+    "name": "预警舆情",
+    "tag": "WarnData",
+    "pid": 47,
+    "pids": "3-47",
+    "level": 3
+  },
+  {
+    "id": 49,
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 48,
+    "pids": "3-47-48",
+    "level": 4
+  },
+  {
+    "id": 50,
+    "name": "查询",
+    "tag": "DataSelect",
+    "pid": 48,
+    "pids": "3-47-48",
+    "level": 4
+  },
+  {
+    "id": 51,
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 48,
+    "pids": "3-47-48",
+    "level": 4
+  },
+  {
+    "id": 52,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 48,
+    "pids": "3-47-48",
+    "level": 4
+  },
+  {
+    "id": 53,
+    "name": "导出",
+    "tag": "DataExport",
+    "pid": 48,
+    "pids": "3-47-48",
+    "level": 4
+  },
+
+
+  {
+    "id": 54,
+    "name": "预警设置",
+    "tag": "WarnSetting",
+    "pid": 47,
+    "pids": "3-47",
+    "level": 3
+  },
+  {
+    "id": 55,
+    "name": "关键词预警",
+    "tag": "KeywordsWarn",
+    "pid": 54,
+    "pids": "3-47-54",
+    "level": 4
+  },
+  {
+    "id": 56,
+    "name": "修改",
+    "tag": "KeywordsWarnEdit",
+    "pid": 55,
+    "pids": "3-47-54-55",
+    "level": 4
+  },
+
+  {
+    "id": 57,
+    "name": "警戒线预警",
+    "tag": "KeywordsWarn",
+    "pid": 54,
+    "pids": "3-47-54",
+    "level": 4
+  },
+
+  {
+    "id": 58,
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 57,
+    "pids": "3-47-54-57",
+    "level": 5
+  },
+  {
+    "id": 59,
+    "name": "添加",
+    "tag": "DataAdd",
+    "pid": 57,
+    "pids": "3-47-54-57",
+    "level": 5
+  },
+  {
+    "id": 60,
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 57,
+    "pids": "3-47-54-57",
+    "level": 5
+  },
+  {
+    "id": 61,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 57,
+    "pids": "3-47-54-57",
+    "level": 5
+  },
+
+
+
+  {
+    "id": 62,
+    "name": "任务列表",
+    "tag": "TaskList",
+    "pid": 4,
+    "pids": "4",
+    "level": 2
+  },
+
+
+
+  {
+    "id": 63,
+    "name": "预警概览",
+    "tag": "Overview",
     "pid": 4,
     "pids": "4",
     "level": 2
   },
   {
-    "id": 26,
-    "name": "查询",
-    "tag": "CurMember_select",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 27,
-    "name": "查看",
-    "tag": "CurMember_find",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 28,
-    "name": "新建",
-    "tag": "CurMember_add",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 29,
-    "name": "编辑",
-    "tag": "CurMember_edit",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 30,
-    "name": "置顶",
-    "tag": "CurMember_top",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 31,
-    "name": "推荐",
-    "tag": "CurMember_recomm",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 32,
-    "name": "删除",
-    "tag": "CurMember_del",
-    "pid": 24,
-    "pids": "4-24",
-    "level": 3
-  },
-  {
-    "id": 33,
-    "name": "查询",
-    "tag": "ProMember_select",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 34,
-    "name": "查看",
-    "tag": "ProMember_find",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 35,
-    "name": "新建",
-    "tag": "ProMember_add",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 36,
-    "name": "编辑",
-    "tag": "ProMember_edit",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 37,
-    "name": "置顶",
-    "tag": "ProMember_top",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 38,
-    "name": "推荐",
-    "tag": "ProMember_recomm",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 39,
-    "name": "删除",
-    "tag": "ProMember_del",
-    "pid": 25,
-    "pids": "4-25",
-    "level": 3
-  },
-  {
-    "id": 40,
-    "name": "查询",
-    "tag": "News_select",
-    "pid": 5,
-    "pids": "5",
-    "level": 2
-  },
-  {
-    "id": 41,
-    "name": "查看",
-    "tag": "News_find",
-    "pid": 5,
-    "pids": "5",
-    "level": 2
-  },
-  {
-    "id": 42,
-    "name": "新建",
-    "tag": "News_add",
-    "pid": 5,
-    "pids": "5",
-    "level": 2
-  },
-  {
-    "id": 43,
-    "name": "编辑",
-    "tag": "News_edit",
-    "pid": 5,
-    "pids": "5",
-    "level": 2
-  },
-  {
-    "id": 44,
-    "name": "置顶",
-    "tag": "News_top",
-    "pid": 5,
-    "pids": "5",
-    "level": 2
-  },
-  {
-    "id": 45,
-    "name": "推荐",
-    "tag": "News_recomm",
-    "pid": 5,
-    "pids": "5",
-    "level": 2
-  },
-  {
-    "id": 46,
-    "name": "标签设置",
-    "tag": "Tag",
-    "pid": 6,
-    "pids": "6",
-    "level": 2
-  },
-  {
-    "id": 47,
-    "name": "权限设置",
-    "tag": "Authority",
-    "pid": 6,
-    "pids": "6",
-    "level": 2
-  },
-  {
-    "id": 48,
-    "name": "查询",
-    "tag": "Tag_select",
-    "pid": 46,
-    "pids": "6-46",
-    "level": 3
-  },
-  {
-    "id": 49,
-    "name": "查看",
-    "tag": "Tag_find",
-    "pid": 46,
-    "pids": "6-46",
-    "level": 3
-  },
-  {
-    "id": 50,
-    "name": "新建",
-    "tag": "Tag_add",
-    "pid": 46,
-    "pids": "6-46",
-    "level": 3
-  },
-  {
-    "id": 51,
-    "name": "编辑",
-    "tag": "Tag_edit",
-    "pid": 46,
-    "pids": "6-46",
-    "level": 3
-  },
-  {
-    "id": 52,
-    "name": "删除",
-    "tag": "Tag_del",
-    "pid": 46,
-    "pids": "6-46",
-    "level": 3
-  },
-  {
-    "id": 53,
-    "name": "查询",
-    "tag": "Authority_select",
-    "pid": 47,
-    "pids": "6-47",
-    "level": 3
-  },
-  {
-    "id": 54,
-    "name": "查看",
-    "tag": "Authority_find",
-    "pid": 47,
-    "pids": "6-47",
-    "level": 3
-  },
-  {
-    "id": 54,
-    "name": "新建",
-    "tag": "Authority_add",
-    "pid": 47,
-    "pids": "6-47",
-    "level": 3
-  },
-  {
-    "id": 56,
-    "name": "编辑",
-    "tag": "Authority_edit",
-    "pid": 47,
-    "pids": "6-47",
-    "level": 3
-  },
-  {
-    "id": 57,
-    "name": "删除",
-    "tag": "Authority_del",
-    "pid": 47,
-    "pids": "6-47",
-    "level": 3
-  },
-  {
-    "id": 58,
-    "name": "账号名称",
-    "tag": "Authority_edit_select",
-    "pid": 56,
-    "pids": "6-47-56",
-    "level": 4
-  },
-  {
-    "id": 59,
-    "name": "账号密码",
-    "tag": "Authority_edit_find",
-    "pid": 56,
-    "pids": "6-47-56",
-    "level": 4
-  },
-  {
-    "id": 60,
-    "name": "账号权限",
-    "tag": "Authority_edit_add",
-    "pid": 56,
-    "pids": "6-47-56",
-    "level": 4
-  },
-  {
-    "id": 61,
-    "name": "角色设置",
-    "tag": "Role",
-    "pid": 6,
-    "pids": "6",
-    "level": 2
-  },
-  {
-    "id": 62,
-    "name": "查询",
-    "tag": "Role_select",
-    "pid": 61,
-    "pids": "6-61",
-    "level": 3
-  },
-  {
-    "id": 63,
-    "name": "查看",
-    "tag": "Role_find",
-    "pid": 61,
-    "pids": "6-61",
-    "level": 3
-  },
-  {
     "id": 64,
-    "name": "新建",
-    "tag": "Role_add",
-    "pid": 61,
-    "pids": "6-61",
+    "name": "查看",
+    "tag": "DataResult",
+    "pid": 63,
+    "pids": "4-63",
     "level": 3
   },
   {
     "id": 65,
-    "name": "编辑",
-    "tag": "Role_edit",
-    "pid": 61,
-    "pids": "6-61",
-    "level": 3
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 64,
+    "pids": "4-63-64",
+    "level": 4
   },
   {
     "id": 66,
-    "name": "删除",
-    "tag": "Role_del",
-    "pid": 61,
-    "pids": "6-61",
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 63,
+    "pids": "4-63",
     "level": 3
   },
   {
     "id": 67,
     "name": "删除",
-    "tag": "News_del",
+    "tag": "DataRemove",
+    "pid": 63,
+    "pids": "4-63",
+    "level": 3
+  },
+
+  {
+    "id": 68,
+    "name": "趋势分析",
+    "tag": "Trend",
+    "pid": 4,
+    "pids": "4",
+    "level": 2
+  },
+  {
+    "id": 69,
+    "name": "查看",
+    "tag": "DataResult",
+    "pid": 68,
+    "pids": "4-68",
+    "level": 3
+  },
+  {
+    "id": 70,
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 69,
+    "pids": "4-68-69",
+    "level": 4
+  },
+  {
+    "id": 71,
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 68,
+    "pids": "4-68",
+    "level": 3
+  },
+  {
+    "id": 72,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 68,
+    "pids": "4-68",
+    "level": 3
+  },
+
+  {
+    "id": 73,
+    "name": "媒体分布",
+    "tag": "Media",
+    "pid": 4,
+    "pids": "4",
+    "level": 2
+  },
+  {
+    "id": 74,
+    "name": "查看",
+    "tag": "DataResult",
+    "pid": 73,
+    "pids": "4-73",
+    "level": 3
+  },
+  {
+    "id": 75,
+    "name": "详情",
+    "tag": "DataInfo",
+    "pid": 74,
+    "pids": "4-73-74",
+    "level": 4
+  },
+
+  {
+    "id": 76,
+    "name": "编辑",
+    "tag": "DataEdit",
+    "pid": 73,
+    "pids": "4-73",
+    "level": 3
+  },
+  {
+    "id": 77,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 73,
+    "pids": "4-73",
+    "level": 3
+  },
+
+
+
+
+
+
+
+  {
+    "id": 78,
+    "name": "查看",
+    "tag": "TaskResult",
     "pid": 5,
     "pids": "5",
+    "level": 2
+  },
+  {
+    "id": 79,
+    "name": "详情",
+    "tag": "TaskInfo",
+    "pid": 78,
+    "pids": "5-78",
+    "level": 3
+  },
+  {
+    "id": 80,
+    "name": "新建",
+    "tag": "TaskAdd",
+    "pid": 5,
+    "pids": "5",
+    "level": 2
+  },
+  {
+    "id": 81,
+    "name": "终止",
+    "tag": "TaskStop",
+    "pid": 5,
+    "pids": "5",
+    "level": 2
+  },
+  {
+    "id": 82,
+    "name": "编辑",
+    "tag": "TaskEdit",
+    "pid": 5,
+    "pids": "5",
+    "level": 2
+  },
+  {
+    "id": 83,
+    "name": "删除",
+    "tag": "DataRemove",
+    "pid": 5,
+    "pids": "5",
+    "level": 2
+  },
+
+
+
+
+
+
+  {
+    "id": 84,
+    "name": "主题库",
+    "tag": "Theme",
+    "pid": 6,
+    "pids": "6",
+    "level": 2
+  },
+
+
+  {
+    "id": 85,
+    "name": "新建",
+    "tag": "ThemeAdd",
+    "pid": 84,
+    "pids": "6-84",
+    "level": 3
+  },
+  {
+    "id": 86,
+    "name": "编辑",
+    "tag": "ThemeEdit",
+    "pid": 84,
+    "pids": "6-84",
+    "level": 3
+  },
+  {
+    "id": 87,
+    "name": "删除",
+    "tag": "ThemeRemove",
+    "pid": 84,
+    "pids": "6-84",
+    "level": 3
+  },
+  {
+    "id": 88,
+    "name": "导入",
+    "tag": "ThemeImport",
+    "pid": 84,
+    "pids": "6-84",
+    "level": 3
+  },
+  {
+    "id": 89,
+    "name": "导出",
+    "tag": "ThemeExport",
+    "pid": 84,
+    "pids": "6-84",
+    "level": 3
+  },
+
+  {
+    "id": 90,
+    "name": "媒体库",
+    "tag": "Media",
+    "pid": 6,
+    "pids": "6",
+    "level": 2
+  },
+  {
+    "id": 91,
+    "name": "新建",
+    "tag": "MediaAdd",
+    "pid": 90,
+    "pids": "6-90",
+    "level": 3
+  },
+  {
+    "id": 92,
+    "name": "编辑",
+    "tag": "MediaEdit",
+    "pid": 90,
+    "pids": "6-90",
+    "level": 3
+  },
+  {
+    "id": 93,
+    "name": "删除",
+    "tag": "MediaRemove",
+    "pid": 90,
+    "pids": "6-90",
+    "level": 3
+  },
+  {
+    "id": 94,
+    "name": "导入",
+    "tag": "MediaImport",
+    "pid": 90,
+    "pids": "6-90",
+    "level": 3
+  },
+  {
+    "id": 95,
+    "name": "导出",
+    "tag": "MediaExport",
+    "pid": 90,
+    "pids": "6-90",
+    "level": 3
+  },
+
+
+
+
+  {
+    "id": 96,
+    "name": "新建",
+    "tag": "InformCreate",
+    "pid": 7,
+    "pids": "7",
+    "level": 2
+  },
+  {
+    "id": 97,
+    "name": "标为已读",
+    "tag": "InformMarkRead",
+    "pid": 7,
+    "pids": "7",
+    "level": 2
+  },
+  {
+    "id": 98,
+    "name": "查看",
+    "tag": "InformResult",
+    "pid": 7,
+    "pids": "7",
+    "level": 2
+  },
+  {
+    "id": 99,
+    "name": "详情",
+    "tag": "InformInfo",
+    "pid": 81,
+    "pids": "7-81",
+    "level": 3
+  },
+  {
+    "id": 100,
+    "name": "删除",
+    "tag": "InformRemove",
+    "pid": 7,
+    "pids": "7",
+    "level": 2
+  },
+  {
+    "id": 101,
+    "name": "导航",
+    "tag": "InformNavigation",
+    "pid": 7,
+    "pids": "7",
+    "level": 2
+  },
+
+
+
+  {
+    "id": 102,
+    "name": "查询",
+    "tag": "OperationLogSelect",
+    "pid": 8,
+    "pids": "8",
+    "level": 2
+  },
+  {
+    "id": 103,
+    "name": "查看",
+    "tag": "OperationLogResult",
+    "pid": 8,
+    "pids": "8",
+    "level": 2
+  },
+  {
+    "id": 104,
+    "name": "导出",
+    "tag": "OperationLogExport",
+    "pid": 8,
+    "pids": "8",
     "level": 2
   }
 ]

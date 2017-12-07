@@ -325,7 +325,7 @@ class DataAnalysis extends Common
     /**
      * 获取媒体分布饼形图
      */
-    public function getMediaDistrubution(){
+    public function getMediaDistribution(){
         $params = input('post.');
         $task_id = input('post.task_id', -1);
         $ret['params'] = $params;
