@@ -26,11 +26,11 @@
         </ul>
 
         {if condition="$error eq ''"}
-        <div class="col-lg-8" style="background-color: #fff">
+        <div class="col-lg-12" style="background-color: #fff">
             <div id="media_pie_chart" style="height: 400px;"></div>
         </div>
 
-        <div class="col-lg-4" style="background-color: #fff">
+        <div class="col-lg-4" style="background-color: #fff" hidden>
             <div id="media_list" style="height: 400px;">
                 <div class="list-search">
                     <a href="javascript:;" @click="changeSection(0)" :class="active.type == 0 ? 'params-active' : 'params'">媒体类型</a>
@@ -58,12 +58,21 @@
     var vm = new Vue({
         el: '#analysisMedia',
         data: {
-            task_id: '{$params.task_id}',
+            task_id: "{$params.task_id ?? ''}",
+            task_name: "{$params.task_name ?? ''}",
             media: [],
             params: {},
             active:{
                 type: 0
             }
+        },
+        mounted:function () {
+            $(function () {
+                if(getTaskList()){
+                    submit();
+                }
+                changeAnalysisUrl(vm.task_id, vm.task_name);
+            })
         },
         methods:{
             changeSection: function (value) {
@@ -75,7 +84,18 @@
                 myChart.showLoading();
                 $.post('__PRO_PATH__/DataAnalysis/getMediaDistribution', vm.params, function (res) {
                     if(res.error_code==0){
-                        vm.media = res.data;
+                        vm.data = res.data;
+                        var legend = [];
+                        var data = [];
+                        for(var i=0;i<vm.data.length;i++){
+                            var type = vm.data[i]['media_type'];
+                            var d = vm.data[i]['num'];
+                            legend.push(type);
+                            data.push({
+                                name: type,
+                                value: d
+                            });
+                        }
                         var option = {
                             tooltip: {
                                 trigger: 'item',
@@ -83,36 +103,14 @@
                             },
                             legend: {
                                 orient: 'vertical',
-                                x: 'left',
-                                data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+                                x: 'right',
+                                data: legend // 所有的媒体来源
                             },
                             series: [
                                 {
-                                    name:'访问来源',
+                                    name:'媒体类型',
                                     type:'pie',
-                                    selectedMode: 'single',
-                                    radius: [0, '30%'],
-
-                                    label: {
-                                        normal: {
-                                            position: 'inner'
-                                        }
-                                    },
-                                    labelLine: {
-                                        normal: {
-                                            show: false
-                                        }
-                                    },
-                                    data:[
-                                        {value:335, name:'直达', selected:true},
-                                        {value:679, name:'营销广告'},
-                                        {value:1548, name:'搜索引擎'}
-                                    ]
-                                },
-                                {
-                                    name:'访问来源',
-                                    type:'pie',
-                                    radius: ['45%', '50%'],
+                                    radius: ['45%', '55%'],
                                     label: {
                                         normal: {
                                             formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
@@ -157,16 +155,7 @@
                                             }
                                         }
                                     },
-                                    data:[
-                                        {value:335, name:'直达'},
-                                        {value:310, name:'邮件营销'},
-                                        {value:234, name:'联盟广告'},
-                                        {value:135, name:'视频广告'},
-                                        {value:1048, name:'百度'},
-                                        {value:251, name:'谷歌'},
-                                        {value:147, name:'必应'},
-                                        {value:102, name:'其他'}
-                                    ]
+                                    data: data
                                 }
                             ]
                         };
@@ -183,10 +172,6 @@
 
         }
     });
-
-    if(getTaskList()){
-        submit();
-    }
 
     // 异步提交数据
     function submit() {

@@ -96,20 +96,16 @@ class DataAnalysis extends Common
      */
     public function getAnalysisIndex(){
         $params = input('post.');
-        $task_id = input('post.task_id', -1);
+        $task_id = input('post.task_id', '');
         $ret = ['error_code' => 0,'data' => [], 'msg' => ''];
         $params['params'] = $params;
         $cond = [];
-        if($task_id == -1){
-            $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
-        }
         $ret['task_id'] = $task_id;
         $index = [];
         $index[0] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $index[1] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $index[2] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $ret['index'] = $index;
-
 
         $nature = [];
         $nature_name = ['正面','负面','中立'];
@@ -147,14 +143,10 @@ class DataAnalysis extends Common
      */
     public function getPublicList(){
         $params = input('post.');
-        $task_id = input('post.task_id', -1);
+        $task_id = input('post.task_id', '');
         $nature = input('post.nature', 0);
         $ret = ['error_code' => 0,'data' => [], 'msg' => ''];
-        $ret['params'] = $params;
         $cond = [];
-        if($task_id == -1){
-            $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
-        }
         $ret['task_id'] = $task_id;
         if($nature == 1){
             $cond['nature'] = ['=', '负面'];
@@ -187,12 +179,12 @@ class DataAnalysis extends Common
     public function getTrendLine(){
         $params = input('post.');
         $obj = input('post.obj', '');
-        $task_id = input('post.task_id', -1);
+        $task_id = input('post.task_id', '');
         $sTime = input('post.begin_time_str', '');
         $eTime = input('post.end_time_str', '');
         $ret = ['error_code' => 0, 'msg' => ''];
         $ret['params'] = $params;
-        if($task_id == -1){
+        if(!$task_id){
             $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
         }
         $ret['task_id'] = $task_id;
@@ -274,10 +266,10 @@ class DataAnalysis extends Common
             $week_time[$i] =strtotime($sTime)  + $oneDay*$i;
             //1511600361
         }
-        $trend[0] = ['media_type' => '微博','data' => [0,0,0,0,0,0,0]];
-        $trend[1] = ['media_type' => '微信','data' => [0,0,0,0,0,0,0]];
-        $trend[2] = ['media_type' => '新闻','data' => [0,0,0,0,0,0,0]];
-        $trend[3] = ['media_type' => '论坛','data' => [0,0,0,0,0,0,0]];
+        $data[0] = ['media_type' => '微博','data' => [0,0,0,0,0,0,0]];
+        $data[1] = ['media_type' => '微信','data' => [0,0,0,0,0,0,0]];
+        $data[2] = ['media_type' => '新闻','data' => [0,0,0,0,0,0,0]];
+        $data[3] = ['media_type' => '论坛','data' => [0,0,0,0,0,0,0]];
         switch ($obj){
             case 'media':{  // media trend
                 $select = ['count(id) as num,source as media_type'];
@@ -289,36 +281,36 @@ class DataAnalysis extends Common
                        $res = D('DataMonitor')->getNumBySource($select,$cond,$group);
                        foreach ($res as $v){
                            if($v['media_type'] == '微博'){
-                               $trend[0]['data'][$i] = $v['num'];
+                               $data[0]['data'][$i] = $v['num'];
                            }elseif ($v['media_type'] == '微信'){
-                               $trend[1]['data'][$i] = $v['num'];
+                               $data[1]['data'][$i] = $v['num'];
                            }elseif ($v['media_type'] == '新闻'){
-                               $trend[2]['data'][$i] = $v['num'];
+                               $data[2]['data'][$i] = $v['num'];
                            }elseif ($v['media_type'] == '论坛'){
-                               $trend[3]['data'][$i] = $v['num'];
+                               $data[3]['data'][$i] = $v['num'];
                            }
                        }
                     if($i == 0) {
                         $ret['trend'] = $res;
                     }
                 }
-//                $trend[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//                $data[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
 //
-//                $trend[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//                $data[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
 //
-//                $trend[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//                $data[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
 //
-//                $trend[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+//                $data[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
 
                 break;
             }
             case 'public':{     // public trend
-                $trend[0] = ['type'=>'热点舆情', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-                $trend[1] = ['type'=>'健康度', 'data' => [50, 30, 12, 13, 12, 30, 90]];
+                $data[0] = ['type'=>'热点舆情', 'data' => [120, 132, 101, 134, 90, 230, 210]];
+                $data[1] = ['type'=>'健康度', 'data' => [50, 30, 12, 13, 12, 30, 90]];
                 break;
             }
         }
-        $ret['data'] = $trend;
+        $ret['data'] = $data;
         $this->jsonReturn($ret);
     }
 
@@ -327,23 +319,14 @@ class DataAnalysis extends Common
      */
     public function getMediaDistribution(){
         $params = input('post.');
-        $task_id = input('post.task_id', -1);
-        $ret['params'] = $params;
+        $task_id = input('post.task_id', '');
         $ret = ['error_code' => 0, 'msg' => ''];
-
-        if($task_id == -1){
-            $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
-        }
         $ret['task_id'] = $task_id;
 
-        // 查找逻辑， 未实现
-
-        $trend = [];
-        $trend[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-        $trend[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-        $trend[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-        $trend[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-        $ret['data'] = $trend;
+        $select = ['count(id) as num,source as media_type'];
+        $group = 'source';
+        $data = D('DataMonitor')->getNumBySource($select,[],$group);
+        $ret['data'] = $data;
         $this->jsonReturn($ret);
     }
 
@@ -358,12 +341,19 @@ class DataAnalysis extends Common
             $list = D('Task')->getTaskList([],[],'create_time desc');
             if(!count($list)){
                 $params['task_id'] = '';
+                $params['task_name'] = '';
                 return view('', ['error' => '抱歉，目前暂无采集任务！', 'params' => $params]);
             } else{
                 $task_id = $list[0]['id'];
                 $params['task_id'] = $task_id;
+                $params['task_name'] = $list[0]['name'];
             }
         }
+        else{
+            $list = D('Task')->getTaskList([],['id' => $task_id],'create_time desc');
+            $params['task_name'] = $list[0]['name'];
+        }
+
         return view('', ['error' => '', 'params' => $params]);
     }
 

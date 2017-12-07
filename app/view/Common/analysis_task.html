@@ -81,9 +81,9 @@
     });
 
     // 更改分析的任务
-    function changeTask(task, task_id, callback) {
-        $('#analysis_task').html(task);
+    function changeTask(task_id, task_name) {
         $('#analysis_task_id').html(task_id);
+        $('#analysis_task').html(task_name);
         $('#tasks-list-sidebar-menu').animate({"left":0}, 500).hide();
         var taskIcon = $('.analysis-tasks-icon i');
         var className = String(taskIcon.attr("class"));
@@ -92,12 +92,13 @@
         } else{
             taskIcon.removeClass().addClass('fa fa-angle-left');
         }
-        changeAnalysisUrl(task_id);
-        if(arguments.length == 3){callback();}
+        window.location.href = "__PRO_PATH__/DataAnalysis/index?task_id="+task_id;
     }
 
     // 修改链接
-    function changeAnalysisUrl(task_id) {
+    function changeAnalysisUrl(task_id, task_name) {
+        $('#analysis_task_id').html(task_id);
+        $('#analysis_task').html(task_name);
         $('#consensus-nav-data-analysis-sub0 a').attr("href","__PRO_PATH__/DataAnalysis/index?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub1 a').attr("href","__PRO_PATH__/DataAnalysis/trend?task_id="+task_id);
         $('#consensus-nav-data-analysis-sub2 a').attr("href","__PRO_PATH__/DataAnalysis/searchwords?task_id="+task_id);
@@ -113,13 +114,10 @@
         $.post('__PRO_PATH__/Task/getTaskList', {}, function (res) {
             var content = '<li style="font-size: large;">任务列表</li>';
             if(res.error_code==0){
-                $('#analysis_task').html(res.data[0]['name']);
-                $('#analysis_task_id').html(res.data[0]['id']);
-                changeAnalysisUrl(res.data[0]['id']);
                 for(var i=0;i<res.data.length;i++){
                     content += "<li>" +
-                            "<a onclick=\"changeTask('" + res.data[i]['name']  + "', "+
-                            res.data[i]['id'] +", function() { submit(); })\">"+
+                            "<a onclick=\"changeTask(" + res.data[i]['id']  + ", '"+
+                            res.data[i]['name'] +"')\">"+
                             res.data[i]['name'] +
                             "</a>" +
                             "</li>";
@@ -134,7 +132,6 @@
     }
 
     $('#dataAnalysis').click(function () {
-        var task_id = $('#analysis_task_id').html();
         getTaskList();
     });
 </script>
