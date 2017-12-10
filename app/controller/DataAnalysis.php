@@ -16,6 +16,7 @@ class DataAnalysis extends Common
      * @return \think\response\View
      */
     public function index(){
+//        $this->getTrendLine();
         $params = input('get.');
         $task_id = input('get.task_id', '');
         return $this->checkTaskId($params, $task_id);
@@ -99,43 +100,106 @@ class DataAnalysis extends Common
         $task_id = input('post.task_id', '');
         $ret = ['error_code' => 0,'data' => [], 'msg' => ''];
         $params['params'] = $params;
-        $cond = [];
         $ret['task_id'] = $task_id;
         $index = [];
-        $index[0] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
-        $index[1] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
-        $index[2] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
+        $index[0] = ['舆情总量' => 0];
+        $index[1] = ['舆情总量' => 0];
+        $index[2] = ['舆情总量' => 0];
+        $media_types = ['舆情总量'];
+        $media_type = D('MediaType')->getMedTypeList();
+
+        for($i=0;$i<count($media_type);$i++){
+            array_push($media_types, $media_type[$i]['type_name']);
+            $index[0][$media_type[$i]['type_name']] = 0;
+            $index[1][$media_type[$i]['type_name']] = 0;
+            $index[2][$media_type[$i]['type_name']] = 0;
+        }
+
+        $ret['media_types'] = $media_types;
+
+        // 舆情指数；
+        $now = time();
+        $date = date('Y-m-d', $now);
+        $per_day = 86400;
+        $begin_time = strtotime($date);
+        $end_time = $begin_time + $per_day;
+
+        $cond = [];
+        $cond['a.publish_time'] = "between $begin_time and $end_time";
+        $res = D('DataMonitor')->getDataNumberByMediaType($cond);
+        for($i=0;$i<count($res);$i++){
+            $name = $res[$i]['media_type'];
+            $count = $res[$i]['count'];
+            $index[0][$name] = $count;
+        }
+
+        $begin_time = strtotime($date.'-1 day');
+        $end_time = $begin_time + $per_day;
+
+        $cond['a.publish_time'] = "between $begin_time and $end_time";
+        $res = D('DataMonitor')->getDataNumberByMediaType($cond);
+        for($i=0;$i<count($res);$i++){
+            $name = $res[$i]['media_type'];
+            $count = $res[$i]['count'];
+            $index[1][$name] = $count;
+        }
+
+        $begin_time = strtotime($date.'-6 days');
+        $end_time = $begin_time + $per_day * 6;
+
+        $cond['a.publish_time'] = "between $begin_time and $end_time";
+        $res = D('DataMonitor')->getDataNumberByMediaType($cond);
+        for($i=0;$i<count($res);$i++){
+            $name = $res[$i]['media_type'];
+            $count = $res[$i]['count'];
+            $index[2][$name] = $count;
+        }
+
+        for($i=0;$i<count($index);$i++){
+            foreach ($index[$i] as $k => $v){
+                $index[$i]['舆情总量'] += (int)$v;
+            }
+        }
+
         $ret['index'] = $index;
 
         $nature = [];
-        $nature_name = ['正面','负面','中立'];
-        $i = 0;
-        foreach ($nature_name as $nv){
-            $cond['nature'] = ['=',$nv];
-            $nature_value = D('DataMonitor')->getNatureNum($cond);
-            $nature[$i] = ['name' => $nv, 'value' => $nature_value];
-            $i++;
+        $nature[0] = ['name' => '正面', 'value' => 0];
+        $nature[1] = ['name' => '负面', 'value' => 0];
+        $nature[2] = ['name' => '中立', 'value' => 0];
+
+        $res = D('DataMonitor')->getNatureNum();
+
+        for($i=0;$i<count($res);$i++){
+            switch ($res[$i]['nature']){
+                case '正面':{
+                    $nature[0]['value'] = $res[$i]['count'];
+                    break;
+                }
+                case '负面':{
+                    $nature[1]['value'] = $res[$i]['count'];
+                    break;
+                }
+                case '中立':{
+                    $nature[2]['value'] = $res[$i]['count'];
+                    break;
+                }
+            }
         }
         $ret['nature'] = $nature;
-
         $events = [];
-        $events[0] = ['id' => 1, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[1] = ['id' => 2, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[2] = ['id' => 3, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[3] = ['id' => 4, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[4] = ['id' => 5, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[5] = ['id' => 6, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[6] = ['id' => 7, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[7] = ['id' => 8, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[8] = ['id' => 9, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
-        $events[9] = ['id' => 10, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[0] = ['id' => 1, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[1] = ['id' => 2, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[2] = ['id' => 3, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[3] = ['id' => 4, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[4] = ['id' => 5, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[5] = ['id' => 6, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[6] = ['id' => 7, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[7] = ['id' => 8, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[8] = ['id' => 9, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+//        $events[9] = ['id' => 10, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
         $ret['event'] = $events;
         $this->jsonReturn($ret);
-
-        //        $nature = [];
-//        $nature[0] = ['name' => '正面', 'value' => 1200];
-//        $nature[1] = ['name' => '中立', 'value' => 120];
-//        $nature[2] = ['name' => '负面', 'value' => 120];
     }
 
     /**
@@ -150,8 +214,8 @@ class DataAnalysis extends Common
         if(!$task_id){
             $ret['task_id'] = $task_id;
         }
-        if($nature == 1){
-            $cond['nature'] = ['=', '负面'];
+        if($nature == 2){
+            $cond['nature'] = '负面';
         }
 
         // 查找逻辑， 未实现
@@ -159,20 +223,6 @@ class DataAnalysis extends Common
         $public = D('DataMonitor')->getNewest($select,$cond,'id desc',10);
         $ret['data'] = $public;
         $this->jsonReturn($ret);
-
-        //
-        // 测试数
-//        $public[0] = ['id'=>1, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[1] = ['id'=>2, 'title'=>'测试测试测试测试测试测试测试测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[2] = ['id'=>3, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[3] = ['id'=>4, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[4] = ['id'=>5, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[5] = ['id'=>6, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[6] = ['id'=>7, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[7] = ['id'=>8, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[8] = ['id'=>9, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-//        $public[9] = ['id'=>10, 'title'=>'测试测试测试测试测试测试测试','nature'=>'正面', 'media_type'=>'微博', 'publishtime' => 289989228];
-
     }
 
     /**
@@ -181,21 +231,56 @@ class DataAnalysis extends Common
     public function getTrendLine(){
         $params = input('post.');
         $obj = input('post.obj', '');
+        $range = input('post.range', '');
         $task_id = input('post.task_id', '');
         $sTime = input('post.begin_time_str', '');
         $eTime = input('post.end_time_str', '');
         $ret = ['error_code' => 0, 'msg' => ''];
         $ret['params'] = $params;
-        if(!$task_id){
-            $task_id = 3; //这里为测试，实际上要获取task表中最后一条有效数据的id
-        }
         $ret['task_id'] = $task_id;
 
         /**
-         * 1. $stime == $etime: 最近24小时(比如现在是12点)
-         *    xAixs = [12:00, 13:00, 14:00, 15:00, ···, 00:00, 01:00, 02:00, ···,  09:00, 10:00, 11:00, 12:00];
-         * 2.
+         * 获取横坐标
          */
+        $per_day = 86400;
+        $xAxis = [];
+        $now = time();
+        $timeRange = [];
+        if(!$range){
+            $days = $eTime - $sTime;
+            if($days == 0){
+
+            }
+        }
+        else if($range == 1){
+            $hour = (int)date("H", $now); //获取当前小时数
+            $begin = strtotime($sTime);
+            for($i=$hour;$i<24;$i++){
+                array_push($xAxis, ($i<=9 ? '0'.$i : $i) . ':00');
+                array_push($timeRange, $begin-(24-$i)*3600);
+            }
+            for($i=0;$i<=$hour;$i++){
+                array_push($xAxis, ($i<=9 ? '0' . $i : $i) . ':00');
+                array_push($timeRange, $begin+$i*3600);
+            }
+        } else if($range == 2){
+            $date = date('Y-m-d', $now);
+            $begin_time = strtotime($date.'-6 days');
+            for($i=0;$i<7;$i++){
+                $end_time = $begin_time + $per_day*$i;
+                array_push($timeRange, $end_time);
+                array_push($xAxis, date('m-d', $end_time));
+            }
+        } else{
+            $date = date('Y-m-d', $now);
+            $begin_time = strtotime($date.'-29 days');
+            for($i=0;$i<30;$i++){
+                $end_time = $begin_time + $per_day*$i;
+                array_push($timeRange, $end_time);
+                array_push($xAxis, date('m-d', $end_time));
+            }
+        }
+
         /**
          * 参考代码
          *     // 如果开始时间和结束时间相同，则为一天（今天、昨天或自定义某一天）
@@ -260,53 +345,41 @@ class DataAnalysis extends Common
         }
          */
 
-        $ret['xAixs'] = ['周一','周二','周三','周四','周五','周六','周日'];
-        // 查找逻辑， 未实现
-        $week_time = [];//最近一周的时间戳
-        $oneDay = 86400;
-        for($i =0;$i<8;$i++){
-            $week_time[$i] =strtotime($sTime)  + $oneDay*$i;
-            //1511600361
-        }
-        $data[0] = ['media_type' => '微博','data' => [0,0,0,0,0,0,0]];
-        $data[1] = ['media_type' => '微信','data' => [0,0,0,0,0,0,0]];
-        $data[2] = ['media_type' => '新闻','data' => [0,0,0,0,0,0,0]];
-        $data[3] = ['media_type' => '论坛','data' => [0,0,0,0,0,0,0]];
+        $ret['xAxis'] = $xAxis;
+        $ret['timeRange'] = $timeRange;
+        // 查找逻辑
+        $data = [];
+
+        // strtotime('2017-12-04'), strtotime('2017-12-10')
+        $ret['res']  = [];
+        $cond = [];
         switch ($obj){
             case 'media':{  // media trend
-                $select = ['count(id) as num,source as media_type'];
-                $group = 'source';
-                $ret['week_time'] = $week_time;
-                for($i=0;$i<count($week_time)-1;$i++){
-                       $j = $i+1;
-                       $cond = "create_time between $week_time[$i] and $week_time[$j]";
-                       $res = D('DataMonitor')->getNumBySource($select,$cond,$group);
-                       foreach ($res as $v){
-                           if($v['media_type'] == '微博'){
-                               $data[0]['data'][$i] = $v['num'];
-                           }elseif ($v['media_type'] == '微信'){
-                               $data[1]['data'][$i] = $v['num'];
-                           }elseif ($v['media_type'] == '新闻'){
-                               $data[2]['data'][$i] = $v['num'];
-                           }elseif ($v['media_type'] == '论坛'){
-                               $data[3]['data'][$i] = $v['num'];
-                           }
-                       }
-                    if($i == 0) {
-                        $ret['trend'] = $res;
+                $media_type = D('MediaType')->getMedTypeList();
+
+                for($i=0;$i<count($media_type);$i++){
+                    $data[$i]['media_type'] = $media_type[$i]['type_name'];
+                    $data[$i]['data'] = [];
+                    for($j=0;$j<count($timeRange);$j++){
+                        array_push($data[$i]['data'], 0);
                     }
                 }
-//                $data[0] = ['media_type'=>'微博', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-//
-//                $data[1] = ['media_type'=>'微信', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-//
-//                $data[2] = ['media_type'=>'新闻', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-//
-//                $data[3] = ['media_type'=>'论坛', 'data' => [120, 132, 101, 134, 90, 230, 210]];
 
+                for($i=0;$i<count($timeRange);$i++){
+                    $begin = $timeRange[$i];
+                    $end = $timeRange[$i] + 3600 * ($range == 1 ? 1 : 24);
+                    $cond['a.publish_time'] = "between $begin and $end";
+                    array_push($ret['res'], $cond['a.publish_time']);
+                    $res = D('DataMonitor')->getDataNumberByMediaType($cond);
+                    for($j=0;$j<count($res);$j++){
+                        $type = $res[$j]['media_type'];
+                        $index = array_search($type, $media_type);
+                        $data[$index]['data'] += $res[$j]['count'];
+                    }
+                }
                 break;
             }
-            case 'public':{     // public trend
+            case 'public':{// public trend
                 $data[0] = ['type'=>'热点舆情', 'data' => [120, 132, 101, 134, 90, 230, 210]];
                 $data[1] = ['type'=>'健康度', 'data' => [50, 30, 12, 13, 12, 30, 90]];
                 break;
