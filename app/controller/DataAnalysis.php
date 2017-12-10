@@ -105,12 +105,17 @@ class DataAnalysis extends Common
         }
         $ret['task_id'] = $task_id;
         $index = [];
+        $search_time = ['today','yesterday','week'];
+        foreach ($search_time as $time){
+            $select_count = ['count(id) as count'];
+            $time_cond = ['create_time' => $time];
+            $res = D('DataMonitor')->getNumBySource($select_count,[],[],$time_cond);
+            $ret['res'] = $res;
+        }
         $index[0] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $index[1] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $index[2] = ['count' => 12219, 'search' => 1123, 'weibo' => 1212, 'note' => 1999, 'news' => 1231];
         $ret['index'] = $index;
-
-
         $nature = [];
         $nature_name = ['正面','负面','中立'];
         $i = 0;
@@ -123,6 +128,7 @@ class DataAnalysis extends Common
         $ret['nature'] = $nature;
 
         $events = [];
+
         $events[0] = ['id' => 1, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
         $events[1] = ['id' => 2, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
         $events[2] = ['id' => 3, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
@@ -133,6 +139,7 @@ class DataAnalysis extends Common
         $events[7] = ['id' => 8, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
         $events[8] = ['id' => 9, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
         $events[9] = ['id' => 10, 'name' => '测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试测试测试测试测饿测试测试', 'count' => 100];
+
         $ret['event'] = $events;
         $this->jsonReturn($ret);
 
