@@ -956,60 +956,90 @@ function showMedia(params) {
     if(params.hasOwnProperty('type')){
         type = params['type'];
     }
-    console.log(JSON.stringify(params));
-    var chartDom = document.getElementById('meida_distribution_pie_chart');
-    var myChart = echarts.init(chartDom);
+    var chartDom = document.getElementById('media_pie_chart');
+    var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
     myChart.showLoading();
-    // $.get('/DataMonitor/websiteThemePie', params, function (res) {
-    //     if (res.errorcode == 0) {
-            myChart.hideLoading();
-            // var data = res.data;
-            // var legendData = [];
-            // for(var i=0;i<data.length;i++){
-            //     legendData.push(data[i]['name']);
-            // }
+    $.post('/DataAnalysis/getMediaDistribution', {}, function (res) {
+        if(res.error_code==0){
+            var legend = [];
+            var data = [];
+            for(var i=0;i<res.data.length;i++){
+                var type = res.data[i]['media_type'];
+                var d = res.data[i]['num'];
+                legend.push(type);
+                data.push({
+                    name: type,
+                    value: d
+                });
+            }
             var option = {
-                title : {
-                    text: '今日媒体类型覆盖情况',
-                    x:'center'
-                },
-                tooltip : {
+                tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c}万+ ({d}%)"
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
                 },
                 legend: {
-                    x : 'center',
-                    y : 'bottom',
-                    data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+                    orient: 'vertical',
+                    x: 'right',
+                    data: legend // 所有的媒体来源
                 },
-                calculable : true,
-                series : [
+                series: [
                     {
-                        name:'媒体类型覆盖情况',
+                        name:'媒体类型',
                         type:'pie',
-                        radius : [20, 110],
-                        center : ['50%', '50%'],
-                        roseType : 'area',
-                        data:[
-                            {value:3.2, name:'微博'},
-                            {value:2.5, name:'论坛'},
-                            {value:1.5, name:'新闻'},
-                            {value:2.5, name:'贴吧'},
-                            {value:2.0, name:'政府'},
-                            {value:3.5, name:'博客'},
-                            {value:1.3, name:'其他'}
-                        ]
+                        radius: ['45%', '55%'],
+                        label: {
+                            normal: {
+                                formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                                backgroundColor: '#eee',
+                                borderColor: '#aaa',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                // shadowBlur:3,
+                                // shadowOffsetX: 2,
+                                // shadowOffsetY: 2,
+                                // shadowColor: '#999',
+                                // padding: [0, 7],
+                                rich: {
+                                    a: {
+                                        color: '#999',
+                                        lineHeight: 22,
+                                        align: 'center'
+                                    },
+                                    // abg: {
+                                    //     backgroundColor: '#333',
+                                    //     width: '100%',
+                                    //     align: 'right',
+                                    //     height: 22,
+                                    //     borderRadius: [4, 4, 0, 0]
+                                    // },
+                                    hr: {
+                                        borderColor: '#aaa',
+                                        width: '100%',
+                                        borderWidth: 0.5,
+                                        height: 0
+                                    },
+                                    b: {
+                                        fontSize: 16,
+                                        lineHeight: 33
+                                    },
+                                    per: {
+                                        color: '#eee',
+                                        backgroundColor: '#334455',
+                                        padding: [2, 4],
+                                        borderRadius: 2
+                                    }
+                                }
+                            }
+                        },
+                        data: data
                     }
                 ]
             };
+            myChart.hideLoading();
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
             //用于使chart自适应高度和宽度
             window.onresize = myChart.resize();
-
-        // } else {
-        //     popWarn(res.msg);
-        // }
-    // });
-// }
+        }
+    });
 }

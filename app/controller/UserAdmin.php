@@ -16,6 +16,8 @@ class UserAdmin extends Common{
 		$data = input('post.');
 		if(!empty($data)){
 			$ret = ['error_code' => 0, 'msg' => '登陆成功'];
+            $code = $data['code'];
+            unset($data['code']);
 			try{
 				D('UserAdmin')->dologin($data);
                 $log['user_id'] = $this->getUserId();
@@ -30,6 +32,9 @@ class UserAdmin extends Common{
 				$ret['error_code'] = 1;
 				$ret['msg'] = $e->getMessage();
 			}
+            if(!$this->check_verify($code)){
+                $ret = ['error_code' => 1, 'msg' => '验证码错误'];
+            }
 			$this->jsonReturn($ret);
 		}
 		return view('', []);

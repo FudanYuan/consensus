@@ -15,26 +15,16 @@ class Index extends Common{
 	 * @return \think\response\View
 	 */
 	public function index(){
-        //$data = input('get.')
-        $data['limit'] = -1;
-        $count = [];
-        $count['theme'] = formatNum(D('Theme')->getT3Number());
-        $count['data'] = formatNum(D('DataMonitor')->getDataNumber());
-        $count['url'] = formatNum(D('Media')->getMedNumber());
-        $count['task'] = formatNum(D('Task')->getTaskNumber());
-
-        $compare = [];
-        $compare['data'] = formatNum(D('DataMonitor')->getPercentNumber());
-        $compare['url'] = formatNum(D('Media')->getPercentNumber());
-        $compare['theme'] = formatNum(D('Theme')->getPercentNumber());
-
-        $task = [];
-        $task['completed'] = formatNum(D('Task')->getCompletedNum());
-        $task['todeal'] = formatNum(D('Task')->getTodealNum());
-        $task['time_consume'] = 5;
-        $task['percent'] = formatNum(D('Task')->getPercentCompleted());
-        $list = D('Theme')->getbubbleList($data);
-
+	    $data = [];
+        $data['count'] = D('DataMonitor')->getDataNumber();
+        $data['positive'] = D('DataMonitor')->getDataNumber(['nature' => '正面']);
+        $data['negative'] = D('DataMonitor')->getDataNumber(['nature' => '负面']);
+        $data['neutral'] = D('DataMonitor')->getDataNumber(['nature' => '中立']);
+        $data['warn'] = D('DataMonitor')->getDataNumber(['is_warn' => 1]);
+        $data['level'] = '一般';
+        if($data['warn'] > 10){
+            $data['level'] = '紧急';
+        }
         $news[] = ['title' => '★★从一无所有到年入百万，讲讲我的真实经历和感悟—', 'url' => 'https://tieba.baidu.com/p/5113168953', 'origin' => '农业吧', 'time' => 1508222979];
         $news[] = ['title' => '【经验篇】此篇献给那些还在奋斗之路迷茫的朋友。', 'url' => 'https://tieba.baidu.com/p/5365072533',  'origin' => '农业吧', 'time' => 1508222979];
         $news[] = ['title' => '光伏农业大棚补贴政策', 'url' => 'http://weibo.com/u/5245496522?refer_flag=1001030103_', 'origin' => '微博', 'time' => 1508222989];
@@ -43,7 +33,7 @@ class Index extends Common{
         $news[] = ['title' => '政策加速落实 农业供给侧改革概念股迎风口（附股）', 'url' => 'https://finance.sina.cn/2017-10-12/detail-ifymviyp0358665.d.html', 'origin' => '大众证券报', 'time' => 1508222579];
         $news[] = ['title' => '助推脱贫攻坚，贵州为农业植入大数据“基因”', 'url' => 'http://news.163.com/17/1015/14/D0PVM8QQ00018AOQ.html', 'origin' => '新华社新媒体专线(广州)', 'time' => 1508222279];
         $news[] = ['title' => '农业部信息中心与奥科美强强联合 农业大数据助力产业扶贫', 'url' => 'http://city.sina.com.cn/invest/t/2017-09-19/16366942.html', 'origin' => '中青在线', 'time' => 1508222179];
-        return view('', ['count' => $count, 'task' => $task, 'theme_company'=>$list, 'news' => $news]);
+        return view('', ['data' => $data, 'news' => $news]);
 
 	}
 	/**

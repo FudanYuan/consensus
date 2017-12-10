@@ -352,10 +352,10 @@
                                     <tbody>
                                         <template v-if="publicList.length != 0">
                                             <tr v-for="model in publicList">
-                                                <td>{{model.title | formatText(40, model.title)}}</td>
+                                                <td><a target="_blank" :href="model.url">{{model.title | formatText(40, model.title)}}</a></td>
                                                 <td>{{model.media_type}}</td>
                                                 <td>{{model.nature}}</td>
-                                                <td>{{model.publishtime | moment}}</td>
+                                                <td>{{model.publish_time | moment}}</td>
                                             </tr>
                                         </template>
                                         <template v-else>
@@ -432,7 +432,8 @@
     var vm = new Vue({
         el: '#analysisIndex',
         data: {
-            task_id: '{$params.task_id ?? \'\'}',
+            task_id: "{$params.task_id ?? ''}",
+            task_name: "{$params.task_name ?? ''}",
             index: [],
             nature: {},
             trend: [],
@@ -443,6 +444,14 @@
                 'timeRange': 0,
                 'public': 0
             }
+        },
+        mounted:function () {
+            $(function () {
+                if(getTaskList()){
+                    submit();
+                }
+                changeAnalysisUrl(vm.task_id, vm.task_name);
+            })
         },
         methods:{
             showTrendLine: function (value) {
@@ -467,6 +476,7 @@
                 console.log(params);
                 $.post('__PRO_PATH__/DataAnalysis/getTrendLine', params, function (res) {
                     if(res.error_code==0){
+                        vm.task_id = res.task_id;
                         vm.trend = res.data;
                         var xAixs = res.xAixs;
                         var option = {};
@@ -553,11 +563,12 @@
                 this.active['public'] = value;
                 $.post('__PRO_PATH__/DataAnalysis/getPublicList', {task_id: this.task_id, nature: value}, function (res) {
                     if(res.error_code==0){
+                        vm.task_id = res.task_id;
                         vm.publicList = res.data;
                     }
                 });
             },
-            showNatuePie: function () {
+            showNaturePie: function () {
                 var chartDom = document.getElementById('nature_pie_chart');
                 var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 var option = {
@@ -633,7 +644,6 @@
 
     // 异步提交数据
     function submit() {
-        console.log('second');
         //getWordCloud();
         $.post('__PRO_PATH__/DataAnalysis/getAnalysisIndex', {task_id: vm.task_id}, function (res) {
             if (res.error_code == 0) {
@@ -641,17 +651,11 @@
                 vm.index = res.index;
                 vm.nature = res.nature;
                 vm.event = res.event;
-                vm.showNatuePie();
-                console.log(vm.task_id);
+                vm.showNaturePie();
             }
         });
-
         vm.showTrendLine(0);
         vm.getPublicList(0);
-    }
-
-    if(getTaskList()){
-        submit();
     }
 
     function getWordCloud() {

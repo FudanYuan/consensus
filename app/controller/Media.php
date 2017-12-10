@@ -47,7 +47,7 @@ class Media extends Common
      */
     public function remove()
     {
-        $ret = ['error_code' => 1, 'msg' => '成功'];
+        $ret = ['error_code' => 0, 'msg' => '成功'];
         $ids = input('get.ids');
         try {
             D('Media')->remove(['id' => ['in', $ids]]);
@@ -57,7 +57,7 @@ class Media extends Common
             $log['action_descr'] = '用户删除媒体';
             D('OperationLog')->addData($log);
         } catch (MyException $e) {
-            $ret['error_code'] = 2;
+            $ret['error_code'] = 1;
             $ret['msg'] = '删除失败';
         }
         $this->jsonReturn($ret);
@@ -147,7 +147,7 @@ class Media extends Common
         }else{
             $list = D('Media')->getTypePie($data);
         }
-        $ret = ['errorcode' => 0, 'data' => [], 'msg' => ''];
+        $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
         $ret['data'] = $list;
         $this->jsonReturn($ret);
     }
