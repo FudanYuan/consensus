@@ -147,7 +147,9 @@ class DataAnalysis extends Common
         $nature = input('post.nature', 0);
         $ret = ['error_code' => 0,'data' => [], 'msg' => ''];
         $cond = [];
-        $ret['task_id'] = $task_id;
+        if(!$task_id){
+            $ret['task_id'] = $task_id;
+        }
         if($nature == 1){
             $cond['nature'] = ['=', '负面'];
         }

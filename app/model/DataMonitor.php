@@ -30,10 +30,15 @@ class DataMonitor extends Model
 
     /**
      * 获取总舆情量
+     * @param array $cond
+     * @return mixed
      */
-    public function getDataNumber(){
+    public function getDataNumber($cond = []){
+        if(!isset($cond['status'])){
+            $cond['status'] = ['<>', 2];
+        }
         $res = $this->field('count(id) as data')
-            ->where('status <> 2')
+            ->where($cond)
             ->select();
         return $res[0]['data'];
     }
