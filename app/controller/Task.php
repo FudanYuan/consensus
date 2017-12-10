@@ -93,7 +93,7 @@ class Task extends Common{
         $log['IP'] = $this->getUserIp();
         $log['section'] = '舆情采集';
         $log['action_descr'] = '用户查看采集列表';
-        D('operationLog')->addData($log);
+        D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }
 
@@ -165,7 +165,7 @@ class Task extends Common{
                 $log['IP'] = $this->getUserIp();
                 $log['section'] = '舆情采集';
                 $log['action_descr'] = '用户新建采集任务 #' . $data['name'];
-                D('operationLog')->addData($log);
+                D('OperationLog')->addData($log);
             }
             $this->jsonReturn($ret);
         }
@@ -212,7 +212,7 @@ class Task extends Common{
                 $log['IP'] = $this->getUserIp();
                 $log['section'] = '舆情采集';
                 $log['action_descr'] = '用户编辑采集任务 #' . $task_id;
-                D('operationLog')->addData($log);
+                D('OperationLog')->addData($log);
             }
             $this->jsonReturn($ret);
         }
@@ -266,7 +266,7 @@ class Task extends Common{
             $log['IP'] = $this->getUserIp();
             $log['section'] = '舆情采集';
             $log['action_descr'] = '用户'. $task_status_str .'采集任务 #' . $ids;
-            D('operationLog')->addData($log);
+            D('OperationLog')->addData($log);
         }catch(MyException $e){
             $ret['error_code'] = 1;
             $ret['msg'] = '操作失败';
