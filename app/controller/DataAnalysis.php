@@ -183,6 +183,7 @@ class DataAnalysis extends Common
                 case '中立':{
                     $nature[2]['value'] = $res[$i]['count'];
                     break;
+
                 }
             }
         }
