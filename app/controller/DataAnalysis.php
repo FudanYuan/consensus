@@ -125,7 +125,7 @@ class DataAnalysis extends Common
         $end_time = $begin_time + $per_day;
 
         $cond = [];
-        $cond['a.publish_time'] = "between $begin_time and $end_time";
+        $cond['a.publish_time'] = ["between", [$begin_time, $end_time]];
         $res = D('DataMonitor')->getDataNumberByMediaType($cond);
         for($i=0;$i<count($res);$i++){
             $name = $res[$i]['media_type'];
@@ -136,7 +136,7 @@ class DataAnalysis extends Common
         $begin_time = strtotime($date.'-1 day');
         $end_time = $begin_time + $per_day;
 
-        $cond['a.publish_time'] = "between $begin_time and $end_time";
+        $cond['a.publish_time'] = ["between", [$begin_time, $end_time]];
         $res = D('DataMonitor')->getDataNumberByMediaType($cond);
         for($i=0;$i<count($res);$i++){
             $name = $res[$i]['media_type'];
@@ -147,7 +147,7 @@ class DataAnalysis extends Common
         $begin_time = strtotime($date.'-6 days');
         $end_time = $begin_time + $per_day * 6;
 
-        $cond['a.publish_time'] = "between $begin_time and $end_time";
+        $cond['a.publish_time'] = ["between", [$begin_time, $end_time]];
         $res = D('DataMonitor')->getDataNumberByMediaType($cond);
         for($i=0;$i<count($res);$i++){
             $name = $res[$i]['media_type'];
@@ -295,7 +295,7 @@ class DataAnalysis extends Common
         $data = [];
 
         // strtotime('2017-12-04'), strtotime('2017-12-10')
-        $ret['res']  = [];
+        $ret['debug'] = [];
         $cond = [];
         switch ($obj){
             case 'media':{  // media trend
@@ -312,7 +312,7 @@ class DataAnalysis extends Common
                 for($i=0;$i<count($timeRange);$i++){
                     $begin = $timeRange[$i];
                     $end = $timeRange[$i] + 3600 * ($range == 1 ? 1 : 24);
-                    $cond['a.publish_time'] = "between $begin and $end";
+                    $cond['publish_time'] = ["between", [$begin, $end]];
                     $res = D('DataMonitor')->getDataNumberByMediaType($cond);
                     for($j=0;$j<count($res);$j++){
                         $type = $res[$j]['media_type'];
@@ -329,22 +329,24 @@ class DataAnalysis extends Common
                     array_push($data[0]['data'], 0);
                     array_push($data[1]['data'], 0);
                 }
-
+                $in = 1;
                 for($i=0;$i<count($timeRange);$i++){
                     $begin = $timeRange[$i];
                     $end = $timeRange[$i] + 3600 * ($range == 1 ? 1 : 24);
-                    $cond['publish_time'] = "between $begin and $end";
-                    $cond['nature'] = "负面";
+                    $cond['publish_time'] = ["between", [$begin, $end]];
                     $res = D('DataMonitor')->getNatureNum($cond);
                     for($j=0;$j<count($res);$j++){
+                        file_put_contents("/tmp/text1.txt", $in++."---".$data[1]['data'][$i]."---".$i."---".$j."\n\r", FILE_APPEND);
                         $type = $res[$j]['nature'];
                         if($type == '负面'){
-                            $data[1]['data'][$i] += $res[$j]['count'];
+                            $data[1]['data'][$i] += intval($res[$j]['count']);
                         }
                         $data[0]['data'][$i] += $res[$j]['count'];
-                        if($data[0]['data'][$i]){
-                            $data[1]['data'][$i] = round(($data[1]['data'][$i] / $data[0]['data'][$i]) * 100, 2);
-                        }
+                    }
+                    if($data[0]['data'][$i]){
+                        array_push($ret['debug'], abs($data[0]['data'][$i] - $data[1]['data'][$i]));
+                        $health = abs($data[0]['data'][$i] - $data[1]['data'][$i]);
+                        $data[1]['data'][$i] = round($health / $data[0]['data'][$i]* 100, 2) ;
                     }
                 }
                 break;
