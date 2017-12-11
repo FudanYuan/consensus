@@ -121,7 +121,7 @@ class DataMonitor extends Common{
         $log['user_id'] = $this->getUserId();
         $log['IP'] = $this->getUserIp();
         $log['section'] = '实时舆情/全部舆情';
-        $log['action_descr'] = '用户查看舆情';
+        $log['action_descrp'] = '用户查看舆情';
         D('OperationLog')->addData($log);
         $this->jsonReturn($ret);
     }

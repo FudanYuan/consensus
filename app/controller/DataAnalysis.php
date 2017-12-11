@@ -118,8 +118,8 @@ class DataAnalysis extends Common
         $ret['media_types'] = $media_types;
 
         // 舆情指数；
-        $now = time();
-        $date = date('Y-m-d', $now);
+        $eTime = time();
+        $date = date('Y-m-d', $eTime);
         $per_day = 86400;
         $begin_time = strtotime($date);
         $end_time = $begin_time + $per_day;
@@ -231,7 +231,6 @@ class DataAnalysis extends Common
     public function getTrendLine(){
         $params = input('post.');
         $obj = input('post.obj', '');
-        $range = input('post.range', '');
         $task_id = input('post.task_id', '');
         $sTime = input('post.begin_time_str', '');
         $eTime = input('post.end_time_str', '');
@@ -243,17 +242,17 @@ class DataAnalysis extends Common
          * 获取横坐标
          */
         $per_day = 86400;
-        $xAxis = [];
-        $now = time();
-        $timeRange = [];
-        if(!$range){
-            $days = $eTime - $sTime;
-            if($days == 0){
+        $days = (strtotime($eTime) - strtotime($sTime)) / $per_day;
 
+        $xAxis = [];
+        $timeRange = [];
+
+        if($days == 0){ // 时间间隔为一天
+            $range = 1;
+            $hour = (int)date("H", strtotime($eTime)); //获取当前小时数
+            if($eTime == date('Y-m-d', time())){
+                $hour = (int)date("H", time());
             }
-        }
-        else if($range == 1){
-            $hour = (int)date("H", $now); //获取当前小时数
             $begin = strtotime($sTime);
             for($i=$hour;$i<24;$i++){
                 array_push($xAxis, ($i<=9 ? '0'.$i : $i) . ':00');
@@ -263,87 +262,31 @@ class DataAnalysis extends Common
                 array_push($xAxis, ($i<=9 ? '0' . $i : $i) . ':00');
                 array_push($timeRange, $begin+$i*3600);
             }
-        } else if($range == 2){
-            $date = date('Y-m-d', $now);
-            $begin_time = strtotime($date.'-6 days');
+        } else if($days == 6){ // 时间间隔为7天
+            $range = 2;
+            $begin_time = strtotime($eTime.'-6 days');
             for($i=0;$i<7;$i++){
                 $end_time = $begin_time + $per_day*$i;
                 array_push($timeRange, $end_time);
                 array_push($xAxis, date('m-d', $end_time));
             }
-        } else{
-            $date = date('Y-m-d', $now);
-            $begin_time = strtotime($date.'-29 days');
+        } else if($days == 29){ // 时间间隔为30天
+            $range = 3;
+            $begin_time = strtotime($eTime.'-29 days');
             for($i=0;$i<30;$i++){
                 $end_time = $begin_time + $per_day*$i;
                 array_push($timeRange, $end_time);
                 array_push($xAxis, date('m-d', $end_time));
             }
+        } else{ // 时间间隔为自定义
+            $range = 4;
+            $begin_time = strtotime($eTime.'-' . $days . ' days');
+            for($i=0;$i<$days;$i++){
+                $end_time = $begin_time + $per_day*$i;
+                array_push($timeRange, $end_time);
+                array_push($xAxis, date('m-d', $end_time));
+            }
         }
-
-        /**
-         * 参考代码
-         *     // 如果开始时间和结束时间相同，则为一天（今天、昨天或自定义某一天）
-        if ($days == 0) {
-        for ($i = 0; $i <= 23; $i++) {
-        $hour = $i;
-        if ($i <= 9)
-        $hour = '0' . $i;
-        $datetime_hour = $beginTime . ' ' . $hour;
-
-        // get time
-        $sqlTime = "select sum(time_len) as time from statistic_view where mer_id= {$mer_id} and consume_t like '{$datetime_hour}%'";
-        $time = $adminDB->ExecSQL($sqlTime, $conn);
-        array_push($return['time'], $time[0]['time'] == null ? 0 : $time[0]['time']);
-
-        // get money
-        $sqlMoney = "select sum(cost) as money from statistic_view where mer_id = {$mer_id}  and consume_t like '{$datetime_hour}%'";
-        $money = $adminDB->ExecSQL($sqlMoney, $conn);
-        array_push($return['money'], $money[0]['money'] == null ? 0 : $money[0]['money']);
-
-        // set xAxis
-        array_push($return['xAxis'], ($i <= 9 ? ('0' . $i) : $i) . ':00');
-        }
-
-        } else if ($days <= 31) {
-        for ($i = 0; $i <= $days; $i++) {
-        $datetime = date('Y-m-d', strtotime($beginTime . '+' . $i . 'days'));
-
-        // get time
-        $sqlTime = "select sum(time_len) as time from statistic_view where mer_id = {$mer_id}  and consume_t like '{$datetime}%'";
-        $time = $adminDB->ExecSQL($sqlTime, $conn);
-        array_push($return['time'], $time[0]['time'] == null ? 0 : $time[0]['time']);
-
-        // get money
-        $sqlMoney = "select sum(cost) as money from statistic_view where mer_id = {$mer_id}  and consume_t like '{$datetime}%'";
-        $money = $adminDB->ExecSQL($sqlMoney, $conn);
-        array_push($return['money'], $money[0]['money'] == null ? 0 : $money[0]['money']);
-
-        // set xAxis
-        array_push($return['xAxis'], $datetime);
-        }
-        } else {
-        $datetimeBegin = date('m', strtotime($beginTime));
-        $datetimeEnd = date('m', strtotime($endTime));
-        $months = $datetimeEnd - $datetimeBegin;
-        $year = date('Y', strtotime($beginTime));
-
-        for ($i = 0; $i <= $months; $i++) {
-        $datetime = $year . '-' . (($datetimeBegin + $i) <= 9 ? '0' . ($datetimeBegin + $i) : $datetimeBegin + $i);
-        // get time
-        $sqlTime = "select sum(time_len) as time from statistic_view where mer_id = {$mer_id}  and consume_t like '{$datetime}%'";
-        $time = $adminDB->ExecSQL($sqlTime, $conn);
-        array_push($return['time'], $time[0]['time'] == null ? 0 : $time[0]['time']);
-
-        // get money
-        $sqlMoney = "select sum(cost) as money from statistic_view where mer_id='{$mer_id}' and consume_t like '{$datetime}%'";
-        $money = $adminDB->ExecSQL($sqlMoney, $conn);
-        array_push($return['money'], $money[0]['money'] == null ? 0 : $money[0]['money']);
-
-        array_push($return['xAxis'], $datetime);
-        }
-        }
-         */
 
         $ret['xAxis'] = $xAxis;
         $ret['timeRange'] = $timeRange;
@@ -369,19 +312,40 @@ class DataAnalysis extends Common
                     $begin = $timeRange[$i];
                     $end = $timeRange[$i] + 3600 * ($range == 1 ? 1 : 24);
                     $cond['a.publish_time'] = "between $begin and $end";
-                    array_push($ret['res'], $cond['a.publish_time']);
                     $res = D('DataMonitor')->getDataNumberByMediaType($cond);
                     for($j=0;$j<count($res);$j++){
                         $type = $res[$j]['media_type'];
                         $index = array_search($type, $media_type);
-                        $data[$index]['data'] += $res[$j]['count'];
+                        $data[$index]['data'][$i] += $res[$j]['count'];
                     }
                 }
                 break;
             }
             case 'public':{// public trend
-                $data[0] = ['type'=>'热点舆情', 'data' => [120, 132, 101, 134, 90, 230, 210]];
-                $data[1] = ['type'=>'健康度', 'data' => [50, 30, 12, 13, 12, 30, 90]];
+                $data[0] = ['media_type' => '热点舆情', 'data' => []];
+                $data[1] = ['media_type' => '健康度', 'data' => []];
+                for($j=0;$j<count($timeRange);$j++){
+                    array_push($data[0]['data'], 0);
+                    array_push($data[1]['data'], 0);
+                }
+
+                for($i=0;$i<count($timeRange);$i++){
+                    $begin = $timeRange[$i];
+                    $end = $timeRange[$i] + 3600 * ($range == 1 ? 1 : 24);
+                    $cond['publish_time'] = "between $begin and $end";
+                    $cond['nature'] = "负面";
+                    $res = D('DataMonitor')->getNatureNum($cond);
+                    for($j=0;$j<count($res);$j++){
+                        $type = $res[$j]['nature'];
+                        if($type == '负面'){
+                            $data[1]['data'][$i] += $res[$j]['count'];
+                        }
+                        $data[0]['data'][$i] += $res[$j]['count'];
+                        if($data[0]['data'][$i]){
+                            $data[1]['data'][$i] = round(($data[1]['data'][$i] / $data[0]['data'][$i]) * 100, 2);
+                        }
+                    }
+                }
                 break;
             }
         }
