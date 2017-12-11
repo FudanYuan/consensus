@@ -116,27 +116,24 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>舆情指数</th>
-                                            <th>搜索指数</th>
-                                            <th>微博量</th>
-                                            <th>发帖量</th>
-                                            <th>新闻发布量</th>
+                                            <template v-for="type in media_types">
+                                                <td>{{type}}</td>
+                                            </template>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <template v-if="index.length != 0">
                                             <tr v-for="(model, i) in index">
                                                 <td>{{i | getIndexItem}}</td>
-                                                <td :class="i == 0 ? 'emphsis' : 'noemphsis'">{{model.count}}</td>
-                                                <td :class="i == 0 ? 'emphsis' : 'noemphsis'">{{model.search}}</td>
-                                                <td :class="i == 0 ? 'emphsis' : 'noemphsis'">{{model.weibo}}</td>
-                                                <td :class="i == 0 ? 'emphsis' : 'noemphsis'">{{model.note}}</td>
-                                                <td :class="i == 0 ? 'emphsis' : 'noemphsis'">{{model.news}}</td>
+                                                <template v-for="type in media_types">
+                                                    <td :class="i == 0 ? 'emphsis' : 'noemphsis'">{{model[type]}}</td>
+                                                </template>
+
                                             </tr>
                                         </template>
                                         <template v-else>
                                             <tr>
-                                                <td colspan="6" class="nodata">暂无数据</td>
+                                                <td colspan="5" class="nodata">暂无数据</td>
                                             </tr>
                                         </template>
                                     </tbody>
@@ -198,9 +195,9 @@
                 <div class="smart-widget widget-green">
                     <div class="smart-widget-header">
                         舆情趋势
-                        <a href="javascript:;" @click="showTrendLine(0)" :class="active.timeRange == 0 ? 'params-active' : 'params'">最近24小时</a>
-                        <a href="javascript:;" @click="showTrendLine(1)" :class="active.timeRange == 1 ? 'params-active' : 'params'">最近7日</a>
-                        <a href="javascript:;" @click="showTrendLine(2)" :class="active.timeRange == 2 ? 'params-active' : 'params'">最近30日</a>
+                        <a href="javascript:;" @click="showTrendLine(1)" :class="active.timeRange == 1 ? 'params-active' : 'params'">最近24小时</a>
+                        <a href="javascript:;" @click="showTrendLine(2)" :class="active.timeRange == 2 ? 'params-active' : 'params'">最近7日</a>
+                        <a href="javascript:;" @click="showTrendLine(3)" :class="active.timeRange == 3 ? 'params-active' : 'params'">最近30日</a>
                         <span class="smart-widget-option">
                             <span class="refresh-icon-animated">
                                 <i class="fa fa-circle-o-notch fa-spin"></i>
@@ -306,8 +303,8 @@
                 <div class="smart-widget widget-green">
                     <div class="smart-widget-header">
                         舆情内容
-                        <a href="javascript:;" @click="getPublicList(0)" :class="active.public == 0 ? 'params-active' : 'params'" style="margin-left: 20px">最新</a>
-                        <a href="javascript:;" @click="getPublicList(1)" :class="active.public == 1 ? 'params-active' : 'params'">负面</a>
+                        <a href="javascript:;" @click="getPublicList(1)" :class="active.public == 1 ? 'params-active' : 'params'" style="margin-left: 20px">最新</a>
+                        <a href="javascript:;" @click="getPublicList(2)" :class="active.public == 2 ? 'params-active' : 'params'">负面</a>
                         <span class="smart-widget-option">
                             <span class="refresh-icon-animated">
                                 <i class="fa fa-circle-o-notch fa-spin"></i>
@@ -434,6 +431,7 @@
         data: {
             task_id: "{$params.task_id ?? ''}",
             task_name: "{$params.task_name ?? ''}",
+            media_types: [],
             index: [],
             nature: {},
             trend: [],
@@ -441,8 +439,8 @@
             publicList: [],
             keywords: [],
             active:{
-                'timeRange': 0,
-                'public': 0
+                'timeRange': 1,
+                'public': 1
             }
         },
         mounted:function () {
@@ -458,12 +456,13 @@
                 this.active['timeRange'] = value;
                 var params = {};
                 params['obj'] = 'media';
+                params['range'] = value;
                 params['task_id'] = this.task_id;
 
-                if(value == 0) { // 最近24时
+                if(value == 1) { // 最近24时
                     params['begin_time_str'] = moment().startOf('day').format('YYYY-MM-DD');
                     params['end_time_str'] = moment().format('YYYY-MM-DD');
-                } else if (value == 1){
+                } else if (value == 2){
                     params['begin_time_str'] = moment().subtract(6, 'days').format('YYYY-MM-DD');
                     params['end_time_str'] = moment().format('YYYY-MM-DD');
                 } else {
@@ -473,12 +472,12 @@
                 var chartDom = document.getElementById('trend_line_chart');
                 var myChart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
                 myChart.showLoading();
-                console.log(params);
+                // console.log(params);
                 $.post('__PRO_PATH__/DataAnalysis/getTrendLine', params, function (res) {
                     if(res.error_code==0){
                         vm.task_id = res.task_id;
                         vm.trend = res.data;
-                        var xAixs = res.xAixs;
+                        var xAxis = res.xAxis;
                         var option = {};
                         var legend = [];
                         var data = [];
@@ -530,7 +529,7 @@
                                 {
                                     type : 'category',
                                     boundaryGap : false,
-                                    data: xAixs,
+                                    data: xAxis,
                                     axisPointer: {
                                         type: 'shadow'
                                     }
@@ -648,14 +647,15 @@
         $.post('__PRO_PATH__/DataAnalysis/getAnalysisIndex', {task_id: vm.task_id}, function (res) {
             if (res.error_code == 0) {
                 vm.task_id = res.task_id;
+                vm.media_types = res.media_types;
                 vm.index = res.index;
                 vm.nature = res.nature;
                 vm.event = res.event;
                 vm.showNaturePie();
             }
         });
-        vm.showTrendLine(0);
-        vm.getPublicList(0);
+        vm.showTrendLine(1);
+        vm.getPublicList(1);
     }
 
     function getWordCloud() {

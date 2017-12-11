@@ -157,14 +157,14 @@
                     if(res.error_code==0){
                         vm.trend = res.data;
                         vm.task_id = res.task_id;
-                        var xAixs = res.xAixs;
+                        var xAxis = res.xAxis;
                         var option = {};
                         var legend = [];
                         var data = [];
                         switch(vm.params['obj']){
                             case 'public':{
                                 for(var i=0;i<vm.trend.length;i++){
-                                    var type = vm.trend[i]['type'];
+                                    var type = vm.trend[i]['media_type'];
                                     var d = vm.trend[i]['data'];
                                     legend.push(type);
                                     if(i == vm.trend-1){
@@ -203,7 +203,7 @@
                                         {
                                             type : 'category',
                                             boundaryGap : false,
-                                            data: xAixs,
+                                            data: xAxis,
                                             axisPointer: {
                                                 type: 'shadow'
                                             }
@@ -281,7 +281,7 @@
                                         {
                                             type : 'category',
                                             boundaryGap : false,
-                                            data: xAixs,
+                                            data: xAxis,
                                             axisPointer: {
                                                 type: 'shadow'
                                             }
@@ -329,6 +329,5 @@
             vm.params[this.name] = this.value;
         });
         vm.params['task_id'] = vm.task_id;
-        console.log(JSON.stringify(vm.params));
     }
 </script>

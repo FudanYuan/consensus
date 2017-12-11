@@ -61,8 +61,8 @@ class DataMonitor extends Common{
         $area = input('post.area',-1);
         $media_type = input('post.media_type',-1);
         $keywords = input('post.keywords', '');
-        $stime = input('post.begintime_str', '');
-        $etime = input('post.endtime_str', '');
+        $s_time = input('post.begin_time_str', '');
+        $e_time = input('post.end_time_str', '');
         $order = input('post.sortCol', 'publish_time');
         $is_collect = input('post.is_collect',-1);
         $is_warn = input('post.is_warn',-1);
@@ -74,14 +74,14 @@ class DataMonitor extends Common{
         if($keywords){
             $cond_or['b.name|a.content|a.source|a.nature|a.url|a.digest|a.userID|a.title'] = ['like','%'.$keywords.'%'];
         }
-        if($stime && $etime){
-            $cond_and['publish_time'] = ['between', [strtotime($stime), strtotime($etime)]];
+        if($s_time && $e_time){
+            $cond_and['publish_time'] = ['between', [strtotime($s_time), strtotime($e_time)]];
         }
-        else if(!$stime && $etime){
-            $cond_and['publish_time'] = ['between', [0, strtotime($etime)]];
+        else if(!$s_time && $e_time){
+            $cond_and['publish_time'] = ['between', [0, strtotime($e_time)]];
         }
-        else if($stime && !$etime){
-            $cond_and['publish_time'] = ['between', [strtotime($stime), time()]];
+        else if($s_time && !$e_time){
+            $cond_and['publish_time'] = ['between', [strtotime($s_time), time()]];
         }
         if($is_collect != -1){
             $cond_and['is_collect'] = ['=',1];
@@ -623,15 +623,15 @@ class DataMonitor extends Common{
     public function  getBubbleData(){
         $data = input('get.');
         $ret = ['error_code' => 0, 'data' => [], 'msg' => ''];
-        if(empty($data['begintime_str'])||(isset($data['begintime_str']) && !$data['begintime_str'])){
+        if(empty($data['begin_time_str'])||(isset($data['begin_time_str']) && !$data['begin_time_str'])){
             $begin_time = 0;
         }else{
-            $begin_time = strtotime($data['begintime_str']);
+            $begin_time = strtotime($data['begin_time_str']);
         }
-        if(empty($data['endtime_str'])||(isset($data['endtime_str']) && !$data['endtime_str'])){
+        if(empty($data['end_time_str'])||(isset($data['end_time_str']) && !$data['end_time_str'])){
             $end_time = time();
         }else{
-            $end_time = strtotime($data['endtime_str']);
+            $end_time = strtotime($data['end_time_str']);
         }
         if(empty($data['bubble_num_limit'])||(isset($data['bubble_num_limit']) && !$data['bubble_num_limit'])){
             $limit = D('DataMonitor')->getDataNumber();

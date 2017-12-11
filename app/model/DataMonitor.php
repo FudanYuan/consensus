@@ -44,6 +44,23 @@ class DataMonitor extends Model
     }
 
     /**
+     * 根据来源获取数据量
+     * @param array $cond
+     * @return mixed
+     */
+    public function getDataNumberByMediaType($cond = []){
+        if(!isset($cond['a.status'])){
+            $cond['a.status'] = ['<>', 2];
+        }
+        $res = $this->alias('a')->field('b.name as media_type, count(a.id) as count')
+            ->join('vox_media_type b','a.media_type_id = b.id')
+            ->where($cond)
+            ->group('a.source')
+            ->select();
+        return $res;
+    }
+
+    /**
      * 获取舆情ById
      * @param $id
      * @return mixed
@@ -60,14 +77,15 @@ class DataMonitor extends Model
      * @param $cond
      * @return mixed
      */
-    public function getNatureNum($cond){
+    public function getNatureNum($cond = []){
         if(!isset($cond['status'])){
             $cond['status'] = ['<>', 2];
         }
-        $res = $this->field('count(id) as natureNum')
+        $res = $this->field('nature, count(id) as count')
             ->where($cond)
+            ->group('nature')
             ->select();
-        return $res[0]['natureNum'];
+        return $res;
     }
 
     /**
@@ -81,19 +99,16 @@ class DataMonitor extends Model
         if(!isset($cond_and['a.status'])){
             $cond_and['a.status'] = ['<>', 2];
         }
-        $res = $this->alias('a')->field('a.id as id,a.title as title, a.source as source,a.url as url,b.name as media_type,a.nature as nature,
-            a.publish_time as publish_time,a.content as content,a.similar_num as similar_num,a.relevance as relevance,a.is_collect as is_collect')
+        $res = $this->alias('a')->field('a.id as id, a.title as title, a.content as content, a.digest as digest,
+        a.source as source, a.url as url, a.userID as userID, b.name as media_type,a.nature as nature,
+        a.publish_time as publish_time,a.content as content,a.similar_num as similar_num,
+        a.relevance as relevance,a.is_collect as is_collect')
             ->join('vox_media_type b','a.media_type_id = b.id')
             ->where($cond_or)
             ->where($cond_and)
             ->order($order)
             ->select();
         return $res;
-//        $res = $this->field('*')->select();
-//        for($i=0;$i<count($res);$i++){
-//            $this->where('id',$res[$i]['id'])->update(['task_id' =>(($i%12)+1)]);
-//        }
-
     }
     
     /**
@@ -148,7 +163,7 @@ class DataMonitor extends Model
         return $res;
 
     }
-    //SELECT count(id) as number,source as media_type FROM `vox_data` WHERE create_time BETWEEN  GROUP BY source
+
     /**
      * 过滤舆情信息
      * @param $data
@@ -182,27 +197,27 @@ class DataMonitor extends Model
      */
     public function saveData($data,$id){
         $ret = [];
-            $curTime = time();
-            $data['update_time'] = $curTime;
-            $data_save = [];
-            $data_save['id'] = $data['id'];
-            $data_save['theme'] = $data['theme'];
-            $data_save['media_type_id'] = $data['media_type_id'];
-            $data_save['task_id'] = $data['task_id'];
-            $data_save['title'] = $data['title'];
-            $data_save['content'] = $data['content'];
-            $data_save['source'] = $data['source'];
-            $data_save['nature'] = $data['nature'];
-            $data_save['url'] = $data['url'];
-            $data_save['relevance'] = $data['relevance'];
-            $data_save['publish_time'] = $data['publish_time'];
-            $data_save['similar_num'] = $data['similar_num'];
-            $data_save['is_collect'] = $data['is_collect'];
-            $data_save['is_warn'] = $data['is_warn'];
-            $data_save['status'] = $data['status'];
-            $data_save['create_time'] = $data['create_time'];
-            $data_save['update_time'] = $data['update_time'];
-            $this->save($data_save, ['id' => $id]);
+        $curTime = time();
+        $data['update_time'] = $curTime;
+        $data_save = [];
+        $data_save['id'] = $data['id'];
+        $data_save['theme'] = $data['theme'];
+        $data_save['media_type_id'] = $data['media_type_id'];
+        $data_save['task_id'] = $data['task_id'];
+        $data_save['title'] = $data['title'];
+        $data_save['content'] = $data['content'];
+        $data_save['source'] = $data['source'];
+        $data_save['nature'] = $data['nature'];
+        $data_save['url'] = $data['url'];
+        $data_save['relevance'] = $data['relevance'];
+        $data_save['publish_time'] = $data['publish_time'];
+        $data_save['similar_num'] = $data['similar_num'];
+        $data_save['is_collect'] = $data['is_collect'];
+        $data_save['is_warn'] = $data['is_warn'];
+        $data_save['status'] = $data['status'];
+        $data_save['create_time'] = $data['create_time'];
+        $data_save['update_time'] = $data['update_time'];
+        $this->save($data_save, ['id' => $id]);
         return $ret;
     }
 
@@ -313,9 +328,6 @@ class DataMonitor extends Model
         }
         return $ret;
     }
-
-
-
 
     /**
      * 根据id获取数据信息
@@ -481,7 +493,7 @@ class DataMonitor extends Model
     }
 
     /**
-     * 测试用  添数据
+     * 测试用添数据
      */
     public function getTypePie2(){
         $list = $this->field('*')->select();
@@ -491,16 +503,15 @@ class DataMonitor extends Model
         }
 
     }
-
-
+    
     /**
      * 将字符串时间转化成时间戳
      * @param unknown $data
      */
-    private function timeTostamp_begin(&$data){
-        isset($data['begin_time_str']) && $data['begintime'] = $data['begin_time_str'] ? strtotime($data['begin_time_str']) : 0;
+    private function timeToStampBegin(&$data){
+        isset($data['begin_time_str']) && $data['begin_time'] = $data['begin_time_str'] ? strtotime($data['begin_time_str']) : 0;
     }
-    private function timeTostamp_end(&$data){
-        isset($data['end_time_str']) && $data['endtime'] = $data['end_time_str'] ? strtotime($data['end_time_str']) : 0;
+    private function timeToStampEnd(&$data){
+        isset($data['end_time_str']) && $data['end_time'] = $data['end_time_str'] ? strtotime($data['end_time_str']) : 0;
     }
 }
